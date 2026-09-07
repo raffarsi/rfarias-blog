@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  category: string;
+  tag: 'tech' | 'carreira';
+  date: string;
+  readTime: string;
+  excerpt: string;
+}
+
+const { title, slug, category, tag, date, readTime, excerpt } = Astro.props;
+const badgeClass = tag === 'carreira' ? 'badge-carreira' : 'badge-tech';
+const accentColor = tag === 'carreira' ? 'var(--coral)' : 'var(--blue)';
+---
+
+<a href={`/posts/${slug}`} class="post-card">
+  <div class="post-meta">
+    <span class:list={['badge', badgeClass]}>{category}</span>
+    <span class="date">{date}</span>
+    <span class="read-time">{readTime}</span>
+  </div>
+
+  <h3 class="post-title">{title}</h3>
+
+  <p class="post-excerpt">{excerpt}</p>
+
+  <span class="read-link" style={`color: ${accentColor}`}>Ler artigo</span>
+</a>
+
+<style>
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .post-card:hover {
+    box-shadow: 0 4px 20px rgba(26, 86, 219, 0.08);
+    border-color: var(--blue);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+
+  .date, .read-time {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  .read-time {
+    margin-left: auto;
+  }
+
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .post-excerpt {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .read-link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+</style>

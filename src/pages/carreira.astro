@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = [
+  {
+    slug: 'aula-ms-project',
+    title: 'O que aprendi dando aula de MS Project pra quem nunca viu gestão de projetos',
+    category: 'Carreira',
+    tag: 'carreira' as const,
+    date: '23 Ago 2026',
+    readTime: '5 min',
+    excerpt: 'Reflexões sobre adaptar o plano de aula para alunos sem experiência em gestão de projetos.',
+  },
+  {
+    slug: '17-anos-mesma-empresa',
+    title: '17 anos na mesma empresa — o que me fez ficar (e o que quase me fez sair)',
+    category: 'Carreira',
+    tag: 'carreira' as const,
+    date: '16 Ago 2026',
+    readTime: '6 min',
+    excerpt: 'Longevidade em uma empresa não é inércia. Decisões conscientes em cada fase.',
+  },
+  {
+    slug: 'simulado-gamificado-az900',
+    title: 'Como montei um simulado gamificado de AZ-900 para meus alunos',
+    category: 'Carreira',
+    tag: 'carreira' as const,
+    date: '9 Ago 2026',
+    readTime: '7 min',
+    excerpt: 'Plataforma com banco de questões, XP, ranking e conquistas para estudo do AZ-900.',
+  },
+];
+---
+
+<BaseLayout title="Carreira — rfarias" description="Bastidores da docência, palestras e vida de Tech Leader.">
+  <div class="container category-page">
+    <div class="category-header">
+      <h1>Carreira</h1>
+      <p>Bastidores da docência, palestras, liderança técnica e reflexões sobre construir uma carreira longa em tecnologia.</p>
+    </div>
+
+    <div class="filters">
+      <a href="/" class="filter-btn">Todos</a>
+      <a href="/tecnologia" class="filter-btn">Tecnologia</a>
+      <a href="/carreira" class="filter-btn active">Carreira</a>
+    </div>
+
+    <section class="post-grid">
+      {posts.map(post => <PostCard {...post} />)}
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page { padding-top: 2rem; padding-bottom: 2rem; }
+  .category-header { margin-bottom: 2rem; }
+  .category-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .category-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; }
+  .filters { display: flex; gap: 0.375rem; margin-bottom: 1.5rem; }
+  .filter-btn {
+    font-size: 0.8125rem; font-weight: 500; padding: 0.375rem 1rem;
+    border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--coral); color: var(--coral); }
+  .filter-btn.active { background: var(--coral); color: #fff; border-color: var(--coral); }
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+  @media (max-width: 768px) { .post-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = [
+  {
+    slug: 'private-endpoints-azure',
+    title: 'Como configurar Private Endpoints no Azure sem perder o acesso ao portal',
+    category: 'Azure',
+    tag: 'tech' as const,
+    date: '27 Ago 2026',
+    readTime: '8 min',
+    excerpt: 'Passo a passo com as armadilhas de DNS que a documentação não destaca.',
+  },
+  {
+    slug: 'azure-ai-foundry',
+    title: 'Azure AI Foundry: criando seu primeiro projeto de IA Generativa',
+    category: 'IA',
+    tag: 'tech' as const,
+    date: '20 Ago 2026',
+    readTime: '12 min',
+    excerpt: 'Guia prático para montar uma PoC de chatbot com RAG no Azure AI Foundry.',
+  },
+  {
+    slug: 'nsg-vs-asg',
+    title: 'Network Security Groups vs Application Security Groups: quando usar cada um',
+    category: 'Azure',
+    tag: 'tech' as const,
+    date: '13 Ago 2026',
+    readTime: '10 min',
+    excerpt: 'NSG e ASG parecem redundantes, mas resolvem problemas diferentes.',
+  },
+];
+---
+
+<BaseLayout title="Tecnologia — rfarias" description="Artigos técnicos sobre Azure, Cloud e IA Generativa.">
+  <div class="container category-page">
+    <div class="category-header">
+      <h1>Tecnologia</h1>
+      <p>Artigos técnicos sobre Azure, Cloud, IA Generativa e infraestrutura — sempre com contexto real e passo a passo.</p>
+    </div>
+
+    <div class="filters">
+      <a href="/" class="filter-btn">Todos</a>
+      <a href="/tecnologia" class="filter-btn active">Tecnologia</a>
+      <a href="/carreira" class="filter-btn">Carreira</a>
+    </div>
+
+    <section class="post-grid">
+      {posts.map(post => <PostCard {...post} />)}
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .category-header {
+    margin-bottom: 2rem;
+  }
+
+  .category-header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-header p {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    max-width: 560px;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.375rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-btn {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.375rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .filter-btn.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .post-grid { grid-template-columns: 1fr; }
+  }
+</style>
