@@ -1,2 +1,2 @@
-# Redirect www to apex
-https://www.rfarias.dev/* https://rfarias.dev/:splat 301
+https://www.rfarias.com/* https://rfarias.com/:splat 301
+https://rfarias-blog.pages.dev/* https://rfarias.com/:splat 301
