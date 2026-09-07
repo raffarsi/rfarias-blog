@@ -13,7 +13,7 @@ next:
 
 Uma coisa que sempre me incomodou nos simulados de certificação é que eles são chatos. Você responde 60 perguntas, recebe uma nota e pronto. Não tem progressão, não tem desafio incremental, não tem motivo para voltar.
 
-Resolvi mudar isso para os meus alunos do Senac. Criei uma plataforma de simulados gamificada focada no AZ-900, hospedada no GitHub Pages.
+Resolvi mudar isso para os meus alunos do Senac. Criei uma plataforma de simulados gamificada focada no AZ-900, integrada diretamente ao meu blog.
 
 ## O que a plataforma tem
 
