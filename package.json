@@ -12,8 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.2.10"
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^4.16.18"
   },
   "allowScripts": {
     "esbuild": true
