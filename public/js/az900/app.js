@@ -1332,4 +1332,4 @@ function renderRankingRows(container, rows, columnLabel, formatRow) {
 // ----------------------------------------------------------------------------
 // 17) INICIALIZAÇÃO
 // ----------------------------------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
+// Init handled by init.js
