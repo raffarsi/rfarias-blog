@@ -3,21 +3,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="AZ-900 — Treinamentos — rfarias" description="Simulados, banco de questões e gamificação para a certificação Microsoft Azure Fundamentals.">
-  <div class="az-breadcrumb container">
-    <a href="/treinamentos">← Treinamentos</a>
-    <span class="sep">/</span>
-    <span class="current">AZ-900 · Azure Fundamentals</span>
+  <!-- Load original platform CSS with blog token overrides -->
+  <link rel="stylesheet" href="/css/az900.css" />
+
+  <div class="az-breadcrumb">
+    <div class="container">
+      <a href="/treinamentos">← Treinamentos</a>
+      <span class="sep">/</span>
+      <span class="current">AZ-900 · Azure Fundamentals</span>
+    </div>
   </div>
 
-  <!-- App Header (internal nav for the platform) -->
-  <header id="app-header" class="az-header">
-    <div class="container az-header-inner">
+  <!-- Platform header with nav -->
+  <header id="app-header">
+    <div class="container" style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;">
       <nav class="app-nav" aria-label="Navegação da plataforma">
         <button class="nav-btn" data-screen="dashboard">🏠 Início</button>
-        <button class="nav-btn" data-screen="bank">📖 Questões</button>
+        <button class="nav-btn" data-screen="bank">📖 Banco de Questões</button>
         <button class="nav-btn" data-screen="simulado">📝 Simulado</button>
         <button class="nav-btn" data-screen="games">🎮 Jogos</button>
-        <button class="nav-btn" data-screen="labs">🧪 Labs</button>
+        <button class="nav-btn" data-screen="labs">🧪 Laboratórios</button>
         <button class="nav-btn" data-screen="history">📊 Histórico</button>
         <button class="nav-btn" data-screen="achievements">🏅 Conquistas</button>
         <button class="nav-btn" data-screen="ranking">🏆 Ranking</button>
@@ -29,13 +34,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div id="xp-bar-outer" class="xp-bar-outer"><div id="xp-bar-fill" class="xp-bar-fill" style="width:0%"></div></div>
         </div>
         <span id="student-badge" class="student-badge"></span>
-        <button id="switch-student-btn" class="btn-mini" title="Trocar aluno">🔄</button>
+        <button id="switch-student-btn" class="btn-mini" title="Trocar aluno">🔄 Trocar aluno</button>
       </div>
     </div>
   </header>
 
-  <!-- Main content area - sections rendered by app.js -->
-  <main id="app-main" class="container az-main">
+  <!-- Main content - sections rendered by app.js -->
+  <main id="app-main" class="container" style="padding-top:1.5rem;padding-bottom:2rem;min-height:60vh;">
     <section id="screen-landing" class="screen"></section>
     <section id="screen-azurehub" class="screen"></section>
     <section id="screen-cursoslivreshub" class="screen"></section>
@@ -52,7 +57,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <div id="toast-container" aria-live="polite"></div>
 
-  <!-- Load platform scripts -->
+  <!-- Scripts -->
   <script src="/js/az900/questions.js" is:inline></script>
   <script src="/js/az900/games.js" is:inline></script>
   <script src="/js/az900/labs.js" is:inline></script>
@@ -60,574 +65,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <script src="/js/az900/init.js" is:inline></script>
 </BaseLayout>
 
-<style is:global>
-  /* ============================================
-     AZ-900 Platform — rfarias theme override
-     ============================================ */
-
+<style>
+  /* Breadcrumb */
   .az-breadcrumb {
-    padding-top: 1rem;
-    padding-bottom: 0.75rem;
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-  }
-  .az-breadcrumb a {
-    color: var(--blue);
-    font-weight: 500;
-  }
-  .az-breadcrumb .sep {
-    margin: 0 0.5rem;
-    color: var(--border);
-  }
-  .az-breadcrumb .current {
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  /* Platform header */
-  .az-header {
     background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+    font-size: 0.8125rem;
+  }
+  .az-breadcrumb a { color: var(--blue); font-weight: 500; }
+  .az-breadcrumb .sep { margin: 0 0.5rem; color: var(--border); }
+  .az-breadcrumb .current { font-weight: 600; color: var(--text); }
+
+  /* Make header sticky below blog nav */
+  #app-header {
+    position: sticky;
+    top: 56px;
+    z-index: 90;
     border-bottom: 1px solid var(--border);
     padding: 0.5rem 0;
-    position: sticky;
-    top: 56px; /* below blog nav */
-    z-index: 90;
   }
 
-  .az-header-inner {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .app-nav {
-    display: flex;
-    gap: 2px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .nav-btn {
-    background: none;
-    border: none;
-    font-family: var(--font-sans);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    color: var(--text-muted);
-    padding: 0.375rem 0.625rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-
-  .nav-btn:hover {
-    background: var(--blue-light);
-  }
-
-  .nav-btn.active {
-    background: var(--blue);
-    color: #fff;
-    font-weight: 600;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-  }
-
-  #xp-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 3px;
-  }
-
-  #xp-label {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    color: var(--text-muted);
-  }
-
-  .xp-bar-outer {
-    width: 120px;
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .xp-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--blue) 0%, var(--coral) 100%);
-    border-radius: 3px;
-    transition: width 0.3s ease;
-  }
-
-  .student-badge {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .btn-mini {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .btn-mini:hover {
-    border-color: var(--blue);
-  }
-
-  /* Screens */
-  .az-main {
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
-    min-height: 60vh;
-  }
-
-  .screen { display: none; }
-  .screen.active { display: block; }
-
-  /* Pre-auth state: hide platform nav */
-  body.pre-auth .az-header { display: none; }
-
-  /* ============================================
-     Platform content styles (adapted from original)
-     ============================================ */
-
-  /* Login screen */
-  .login-card {
-    max-width: 420px;
-    margin: 3rem auto;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .login-card h2 {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .login-card p {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .login-card label {
-    display: block;
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.875rem;
-    margin-bottom: 0.375rem;
-  }
-
-  .login-card input {
-    width: 100%;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    transition: border-color 0.15s;
-    background: var(--bg);
-  }
-
-  .login-card input:focus {
-    outline: none;
-    border-color: var(--blue);
-  }
-
-  .login-card button[type="submit"],
-  .login-card .btn-primary {
-    width: 100%;
-    padding: 0.75rem;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-
-  .login-card button:hover { opacity: 0.9; }
-
-  /* Dashboard */
-  .dash-greeting h2 {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    margin-bottom: 0.375rem;
-  }
-
-  .dash-greeting p {
-    color: var(--text-muted);
-    font-size: 0.9375rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .dash-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .stat-card .stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--blue);
-    display: block;
-  }
-
-  .stat-card .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .dash-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .dash-actions button,
-  .dash-actions [data-go] {
-    padding: 0.625rem 1.25rem;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 0.8125rem;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
-
-  .dash-actions button:hover { opacity: 0.9; }
-
-  /* Question cards / quiz */
-  .question-card,
-  .simulado-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .question-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    margin-bottom: 1rem;
-  }
-
-  .option-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    line-height: 1.4;
-  }
-
-  .option-btn:hover { border-color: var(--blue); background: var(--blue-light); }
-  .option-btn.correct { border-color: #16a34a; background: #dcfce7; }
-  .option-btn.wrong { border-color: #dc2626; background: #fef2f2; }
-  .option-btn.selected { border-color: var(--blue); background: var(--blue-light); }
-
-  .explanation-box {
-    background: var(--blue-light);
-    border-left: 3px solid var(--blue);
-    border-radius: 0 8px 8px 0;
-    padding: 1rem 1.25rem;
-    margin-top: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-
-  .explanation-box.wrong-explanation {
-    background: var(--coral-light);
-    border-left-color: var(--coral);
-  }
-
-  /* Simulado setup */
-  .simulado-setup {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  .simulado-setup label {
-    font-weight: 600;
-    font-size: 0.875rem;
-    display: block;
-    margin-bottom: 0.375rem;
-  }
-
-  .simulado-setup select,
-  .simulado-setup input[type="number"] {
-    width: 100%;
-    padding: 0.625rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    background: var(--bg);
-    font-family: var(--font-sans);
-  }
-
-  .simulado-setup .btn-primary,
-  .btn-primary {
-    padding: 0.75rem 1.5rem;
-    background: var(--blue);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-
-  .btn-primary:hover { opacity: 0.9; }
-
-  .btn-secondary {
-    padding: 0.625rem 1.25rem;
-    background: transparent;
-    color: var(--blue);
-    border: 1px solid var(--blue);
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.8125rem;
-    cursor: pointer;
-    font-family: var(--font-sans);
-  }
-
-  /* Question navigation grid (simulado) */
-  .question-nav-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin: 1rem 0;
-  }
-
-  .q-nav-item {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    background: var(--bg);
-  }
-
-  .q-nav-item.answered { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
-  .q-nav-item.current { background: var(--blue); color: #fff; border-color: var(--blue); }
-  .q-nav-item.correct-review { background: #dcfce7; border-color: #16a34a; }
-  .q-nav-item.wrong-review { background: #fef2f2; border-color: #dc2626; }
-
-  /* History table */
-  .history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8125rem;
-  }
-
-  .history-table th {
-    text-align: left;
-    padding: 0.625rem;
-    border-bottom: 2px solid var(--border);
-    font-weight: 600;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-  }
-
-  .history-table td {
-    padding: 0.625rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .ranking-you { background: var(--blue-light); }
-
-  /* Achievements grid */
-  .achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .achievement-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    transition: border-color 0.15s;
-  }
-
-  .achievement-card.unlocked { border-color: #f59e0b; background: #fffbeb; }
-  .achievement-card.locked { opacity: 0.5; }
-
-  .achievement-icon { font-size: 1.5rem; flex-shrink: 0; }
-  .achievement-name { font-weight: 600; font-size: 0.875rem; }
-  .achievement-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
-
-  /* Games area */
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .game-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-
-  .game-card:hover {
-    border-color: var(--blue);
-    box-shadow: 0 2px 12px rgba(26, 86, 219, 0.08);
-  }
-
-  .game-card h3 { font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 0.375rem; }
-  .game-card p { font-size: 0.8125rem; color: var(--text-muted); }
-
-  /* Labs */
-  .labs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .lab-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .lab-card:hover { border-color: var(--blue); }
-  .lab-card.completed { border-color: #16a34a; background: #f0fdf4; }
-  .lab-card h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem; }
-  .lab-card p { font-size: 0.8125rem; color: var(--text-muted); }
-
-  /* Toast notifications */
-  #toast-container {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    pointer-events: none;
-  }
-
-  .toast {
-    background: var(--text);
-    color: #fff;
-    padding: 0.625rem 1.25rem;
-    border-radius: 8px;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    animation: toastIn 0.3s ease;
-    pointer-events: auto;
-  }
-
-  .toast.celebration {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--coral) 100%);
-  }
-
-  @keyframes toastIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Generic section styling */
-  .screen h2:first-child {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    margin-bottom: 1rem;
-  }
-
-  /* Domain filter buttons */
-  .domain-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    margin-bottom: 1rem;
-  }
-
-  .domain-filter button {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-family: var(--font-sans);
-    transition: all 0.15s;
-  }
-
-  .domain-filter button:hover,
-  .domain-filter button.active {
-    background: var(--blue);
-    color: #fff;
-    border-color: var(--blue);
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .az-header-inner { flex-direction: column; align-items: flex-start; }
-    .app-nav { order: 2; overflow-x: auto; width: 100%; }
-    .header-right { order: 1; width: 100%; justify-content: space-between; }
-    .dash-stats { grid-template-columns: repeat(3, 1fr); }
-  }
+  /* Pre-auth: hide platform nav */
+  :global(body.pre-auth) #app-header { display: none; }
 </style>
