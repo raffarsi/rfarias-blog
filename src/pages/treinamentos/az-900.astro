@@ -3,8 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="AZ-900 — Treinamentos — rfarias" description="Simulados, banco de questões e gamificação para a certificação Microsoft Azure Fundamentals.">
-  <!-- Load original platform CSS with blog token overrides -->
-  <link rel="stylesheet" href="/css/az900.css" />
+
+  <script is:inline>
+    // Inject az900 CSS before page renders
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/css/az900.css';
+    document.head.appendChild(link);
+  </script>
 
   <div class="az-breadcrumb">
     <div class="container">
