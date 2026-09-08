@@ -3,68 +3,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 
 const posts = [
-  {
-    slug: 'private-endpoints-azure',
-    title: 'Como configurar Private Endpoints no Azure sem perder o acesso ao portal',
-    category: 'Azure',
-    tag: 'azure' as const,
-    date: '27 Ago 2026',
-    readTime: '8 min',
-    excerpt: 'Passo a passo com as armadilhas de DNS que a documentação não destaca.',
-  },
-  {
-    slug: 'aula-ms-project',
-    title: 'O que aprendi dando aula de MS Project pra quem nunca viu gestão de projetos',
-    category: 'Docência',
-    tag: 'docencia' as const,
-    date: '23 Ago 2026',
-    readTime: '5 min',
-    excerpt: 'Reflexões sobre adaptar o plano de aula para alunos sem experiência em gestão.',
-  },
-  {
-    slug: 'azure-ai-foundry',
-    title: 'Azure AI Foundry: criando seu primeiro projeto de IA Generativa',
-    category: 'IA',
-    tag: 'ia' as const,
-    date: '20 Ago 2026',
-    readTime: '12 min',
-    excerpt: 'Guia prático para montar uma PoC de chatbot com RAG no Azure AI Foundry.',
-  },
-  {
-    slug: '17-anos-mesma-empresa',
-    title: '17 anos na mesma empresa — o que me fez ficar (e o que quase me fez sair)',
-    category: 'Carreira',
-    tag: 'carreira' as const,
-    date: '16 Ago 2026',
-    readTime: '6 min',
-    excerpt: 'Longevidade em uma empresa não é inércia. Decisões conscientes em cada fase.',
-  },
-  {
-    slug: 'nsg-vs-asg',
-    title: 'Network Security Groups vs Application Security Groups: quando usar cada um',
-    category: 'Azure',
-    tag: 'azure' as const,
-    date: '13 Ago 2026',
-    readTime: '10 min',
-    excerpt: 'NSG e ASG parecem redundantes, mas resolvem problemas diferentes.',
-  },
-  {
-    slug: 'simulado-gamificado-az900',
-    title: 'Como montei um simulado gamificado de AZ-900 para meus alunos',
-    category: 'Docência',
-    tag: 'docencia' as const,
-    date: '9 Ago 2026',
-    readTime: '7 min',
-    excerpt: 'Plataforma com banco de questões, XP, ranking e conquistas para estudo do AZ-900.',
-  },
+  { slug: 'az104-16-custos', title: 'AZ-104 na prática [16] — Gerenciamento de custos no Azure', category: 'Azure', tag: 'azure' as const, date: '29 Ago 2026', readTime: '8 min', excerpt: 'Como monitorar, analisar e otimizar custos no Azure com Cost Management, reservas e Hybrid Benefit.' },
+  { slug: 'private-endpoints-azure', title: 'Como configurar Private Endpoints no Azure sem perder o acesso ao portal', category: 'Azure', tag: 'azure' as const, date: '27 Ago 2026', readTime: '8 min', excerpt: 'Passo a passo com as armadilhas de DNS que a documentação não destaca.' },
+  { slug: 'aula-ms-project', title: 'O que aprendi dando aula de MS Project pra quem nunca viu gestão de projetos', category: 'Docência', tag: 'docencia' as const, date: '23 Ago 2026', readTime: '5 min', excerpt: 'Dar aula pra quem está começando me obrigou a repensar tudo que eu achava óbvio.' },
+  { slug: 'az104-15-backup', title: 'AZ-104 na prática [15] — Backup e Azure Site Recovery', category: 'Azure', tag: 'azure' as const, date: '22 Ago 2026', readTime: '9 min', excerpt: 'Protegendo dados com Azure Backup e implementando DR com Azure Site Recovery.' },
+  { slug: 'azure-ai-foundry', title: 'Azure AI Foundry: criando seu primeiro projeto de IA Generativa', category: 'IA', tag: 'ia' as const, date: '20 Ago 2026', readTime: '12 min', excerpt: 'Guia prático para montar uma PoC de chatbot com RAG no Azure AI Foundry.' },
+  { slug: '17-anos-mesma-empresa', title: '17 anos na mesma empresa — o que me fez ficar (e o que quase me fez sair)', category: 'Carreira', tag: 'carreira' as const, date: '16 Ago 2026', readTime: '6 min', excerpt: 'Longevidade em uma empresa não é inércia. Decisões conscientes em cada fase.' },
+  { slug: 'az104-14-azure-monitor', title: 'AZ-104 na prática [14] — Azure Monitor e Log Analytics', category: 'Azure', tag: 'azure' as const, date: '15 Ago 2026', readTime: '9 min', excerpt: 'Monitoramento de recursos Azure com Azure Monitor, Log Analytics e KQL.' },
+  { slug: 'nsg-vs-asg', title: 'Network Security Groups vs Application Security Groups: quando usar cada um', category: 'Azure', tag: 'azure' as const, date: '13 Ago 2026', readTime: '10 min', excerpt: 'NSG e ASG parecem redundantes, mas resolvem problemas diferentes.' },
+  { slug: 'simulado-gamificado-az900', title: 'Como montei um simulado gamificado de AZ-900 para meus alunos', category: 'Docência', tag: 'docencia' as const, date: '9 Ago 2026', readTime: '7 min', excerpt: 'Plataforma com banco de questões, XP, ranking e conquistas para estudo do AZ-900.' },
+  { slug: 'az104-13-vpn-expressroute', title: 'AZ-104 na prática [13] — VPN Gateway e ExpressRoute', category: 'Azure', tag: 'azure' as const, date: '8 Ago 2026', readTime: '9 min', excerpt: 'Conectando redes on-premises ao Azure com VPN Gateway e ExpressRoute.' },
+  { slug: 'az104-12-load-balancer', title: 'AZ-104 na prática [12] — Load Balancer e Application Gateway', category: 'Azure', tag: 'azure' as const, date: '1 Ago 2026', readTime: '10 min', excerpt: 'Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7).' },
+  { slug: 'az104-11-nsg-roteamento', title: 'AZ-104 na prática [11] — NSG, UDR e roteamento', category: 'Azure', tag: 'azure' as const, date: '25 Jul 2026', readTime: '10 min', excerpt: 'Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure.' },
+  { slug: 'az104-10-vnets-subnets', title: 'AZ-104 na prática [10] — VNets, subnets e peering', category: 'Azure', tag: 'azure' as const, date: '18 Jul 2026', readTime: '11 min', excerpt: 'Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering.' },
+  { slug: 'az104-09-containers-aks', title: 'AZ-104 na prática [9] — Containers: ACI e AKS', category: 'Azure', tag: 'azure' as const, date: '11 Jul 2026', readTime: '10 min', excerpt: 'Azure Container Instances para containers simples e AKS para orquestração em escala.' },
+  { slug: 'az104-08-app-service', title: 'AZ-104 na prática [8] — Azure App Service', category: 'Azure', tag: 'azure' as const, date: '4 Jul 2026', readTime: '9 min', excerpt: 'Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações.' },
+  { slug: 'az104-07-vm-disponibilidade', title: 'AZ-104 na prática [7] — VMs: alta disponibilidade e Scale Sets', category: 'Azure', tag: 'azure' as const, date: '27 Jun 2026', readTime: '10 min', excerpt: 'Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade.' },
+  { slug: 'az104-06-virtual-machines', title: 'AZ-104 na prática [6] — VMs: criação, tamanhos e discos', category: 'Azure', tag: 'azure' as const, date: '20 Jun 2026', readTime: '12 min', excerpt: 'Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos.' },
+  { slug: 'az104-05-azure-files', title: 'AZ-104 na prática [5] — Azure Files e Azure File Sync', category: 'Azure', tag: 'azure' as const, date: '13 Jun 2026', readTime: '8 min', excerpt: 'Compartilhamentos SMB na nuvem com Azure Files e sincronização com servidores on-premises.' },
+  { slug: 'az104-04-storage-accounts', title: 'AZ-104 na prática [4] — Storage Accounts: tudo que você precisa saber', category: 'Azure', tag: 'azure' as const, date: '6 Jun 2026', readTime: '11 min', excerpt: 'Tipos de storage, redundância, acesso e lifecycle management no Azure Storage.' },
+  { slug: 'az104-03-azure-policy', title: 'AZ-104 na prática [3] — Azure Policy e governança', category: 'Azure', tag: 'azure' as const, date: '30 Mai 2026', readTime: '8 min', excerpt: 'Como usar Azure Policy para enforçar padrões, auditar conformidade e governar seu ambiente Azure.' },
+  { slug: 'az104-02-rbac-escopos', title: 'AZ-104 na prática [2] — RBAC: controle de acesso baseado em funções', category: 'Azure', tag: 'azure' as const, date: '23 Mai 2026', readTime: '9 min', excerpt: 'Como o RBAC funciona no Azure, como atribuir funções e entender escopos de forma prática.' },
+  { slug: 'az104-01-entra-id-na-pratica', title: 'AZ-104 na prática [1] — Gerenciando identidades com Microsoft Entra ID', category: 'Azure', tag: 'azure' as const, date: '16 Mai 2026', readTime: '10 min', excerpt: 'Como gerenciar usuários, grupos e identidades no Microsoft Entra ID para o exame AZ-104.' },
 ];
 
-// Contadores por tag
 const counts = {
   todos: posts.length,
   azure: posts.filter(p => p.tag === 'azure').length,
   ia: posts.filter(p => p.tag === 'ia').length,
-  cloud: posts.filter(p => p.tag === 'cloud').length,
   docencia: posts.filter(p => p.tag === 'docencia').length,
   carreira: posts.filter(p => p.tag === 'carreira').length,
 };
@@ -87,10 +53,7 @@ const filters = [
 
     <div class="filters" id="filters">
       {filters.map((f, i) => (
-        <button
-          class:list={['filter-btn', { active: i === 0 }]}
-          data-filter={f.tag}
-        >
+        <button class:list={['filter-btn', { active: i === 0 }]} data-filter={f.tag}>
           {f.label}
           {f.count > 0 && <span class="filter-count">{f.count}</span>}
         </button>
@@ -110,10 +73,8 @@ const filters = [
     document.getElementById('filters').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-filter]');
       if (!btn) return;
-
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       const filter = btn.dataset.filter;
       document.querySelectorAll('.post-item').forEach(item => {
         item.style.display = (filter === 'todos' || item.dataset.tag === filter) ? '' : 'none';
@@ -124,65 +85,24 @@ const filters = [
 
 <style>
   .artigos { padding-top: 2rem; padding-bottom: 2rem; }
-
   .artigos-header { margin-bottom: 2rem; }
   .artigos-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
   .artigos-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; }
 
-  .filters {
-    display: flex;
-    gap: 0.375rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-
+  .filters { display: flex; gap: 0.375rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
   .filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    font-family: var(--font-sans);
-    padding: 0.375rem 0.875rem;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.15s;
+    display: flex; align-items: center; gap: 0.375rem;
+    font-size: 0.8125rem; font-weight: 500; font-family: var(--font-sans);
+    padding: 0.375rem 0.875rem; border-radius: 20px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-muted); cursor: pointer; transition: all 0.15s;
   }
+  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .filter-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .filter-count { background: rgba(0,0,0,0.12); font-size: 0.6875rem; font-weight: 700; padding: 1px 6px; border-radius: 20px; line-height: 1.4; }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,0.25); }
 
-  .filter-btn:hover {
-    border-color: var(--blue);
-    color: var(--blue);
-  }
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
 
-  .filter-btn.active {
-    background: var(--blue);
-    color: #fff;
-    border-color: var(--blue);
-  }
-
-  .filter-count {
-    background: rgba(0,0,0,0.12);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 20px;
-    line-height: 1.4;
-  }
-
-  .filter-btn.active .filter-count {
-    background: rgba(255,255,255,0.25);
-  }
-
-  .post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 768px) {
-    .post-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 768px) { .post-grid { grid-template-columns: 1fr; } }
 </style>
