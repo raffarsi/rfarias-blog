@@ -77,6 +77,33 @@ const grid = posts.slice(1);
       />
     </section>
 
+    <!-- Credenciais -->
+    <div class="credentials">
+      <div class="cred-item"><span class="cred-number">17+</span> anos em tecnologia</div>
+      <div class="cred-sep"></div>
+      <div class="cred-item"><span class="cred-number">Professor</span> Senac Osasco</div>
+      <div class="cred-sep"></div>
+      <div class="cred-item"><span class="cred-number">Palestrante</span> MVPConf</div>
+      <div class="cred-sep"></div>
+      <div class="cred-item"><span class="cred-number">Mestrando</span> IA</div>
+    </div>
+
+    <!-- Banner Treinamentos -->
+    <a href="/treinamentos" class="training-banner">
+      <div class="training-banner-content">
+        <div class="training-badge">🎮 Plataforma Gamificada</div>
+        <h3>Treinamentos com simulados, XP, ranking e conquistas</h3>
+        <p>Prepare-se para certificações Azure e domine MS Project com banco de questões, jogos e laboratórios práticos — tudo integrado ao blog.</p>
+        <span class="training-cta">Acessar treinamentos →</span>
+      </div>
+      <div class="training-stats-bar">
+        <span>📝 400+ questões</span>
+        <span>🧪 28 labs</span>
+        <span>🏅 76 conquistas</span>
+        <span>🏆 Ranking entre alunos</span>
+      </div>
+    </a>
+
     <div class="filters">
       <a href="/artigos" class="filter-btn">Todos</a>
       <a href="/artigos" class="filter-btn">Tecnologia</a>
@@ -98,7 +125,107 @@ const grid = posts.slice(1);
   }
 
   .hero-section {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Credentials bar */
+  .credentials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cred-item {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .cred-number {
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .cred-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Training banner */
+  .training-banner {
+    display: block;
+    background: linear-gradient(135deg, #0f3285 0%, #1a56db 60%, #3b73e8 100%);
+    border-radius: 14px;
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .training-banner:hover {
+    box-shadow: 0 6px 24px rgba(26, 86, 219, 0.2);
+  }
+
+  .training-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .training-banner h3 {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    max-width: 540px;
+  }
+
+  .training-banner-content p {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    max-width: 520px;
+  }
+
+  .training-cta {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--coral);
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .training-stats-bar {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    flex-wrap: wrap;
+  }
+
+  .training-stats-bar span {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
   }
 
   .filters {

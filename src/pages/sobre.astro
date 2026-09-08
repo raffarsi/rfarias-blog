@@ -2,8 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Sobre — rfarias" description="Quem é Rafael Farias: Tech Leader, professor e palestrante.">
+<BaseLayout title="Sobre — rfarias" description="Rafael Farias da Silva: Software Engineer, IT Auditor, Professor e Palestrante com 17+ anos em tecnologia.">
   <div class="container about">
+
+    <!-- Header -->
     <div class="about-header">
       <div class="about-avatar">
         <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" width="160" height="160" />
@@ -15,42 +17,154 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Software Engineer/IT Auditor | Professor Tech
           </a>
         </p>
+        <div class="about-stats">
+          <div class="stat-item"><span class="stat-number">17+</span><span class="stat-text">anos em tecnologia</span></div>
+          <div class="stat-item"><span class="stat-number">2</span><span class="stat-text">carreiras paralelas</span></div>
+          <div class="stat-item"><span class="stat-number">MSc</span><span class="stat-text">IA em andamento</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="about-content prose">
-      <p>
-        Sou Tech Leader e Analista de Sistemas com mais de 17 anos de experiência no setor financeiro.
-        No dia a dia, trabalho com arquitetura de soluções, Cloud (Azure), IA Generativa e liderança técnica de times.
+    <!-- Intro -->
+    <div class="about-content">
+      <p class="lead">
+        Construo soluções em Cloud e IA Generativa no setor financeiro durante o dia, e ensino
+        tecnologia e gestão de projetos à noite. Acredito que a interseção entre prática corporativa
+        e sala de aula é onde o aprendizado mais valioso acontece.
       </p>
 
-      <p>
-        Além da vida corporativa, sou professor efetivo no Senac Osasco, onde leciono disciplinas ligadas a
-        tecnologia e gestão de projetos. Acredito que ensinar é a melhor forma de aprender — e que compartilhar
-        experiências reais é mais valioso do que qualquer manual.
-      </p>
+      <!-- Trajetória -->
+      <h2>Trajetória</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot current"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Atual</span>
+            <h3>Software Engineer / IT Auditor</h3>
+            <p>Bradesco · Arquitetura de soluções, Cloud Azure, IA Generativa e auditoria de TI. 17+ anos de carreira na empresa.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot current"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Atual</span>
+            <h3>Professor Efetivo</h3>
+            <p>Senac Osasco · Disciplinas de tecnologia, gestão de projetos (MS Project) e cursos técnicos de TI.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">2024 – 2028</span>
+            <h3>Mestrado em Inteligência Artificial</h3>
+            <p>American Global Tech University (AGTU) · Orlando, FL.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Comunidade</span>
+            <h3>Palestrante</h3>
+            <p>MVPConf e outros eventos da comunidade tech, trazendo casos práticos do ambiente corporativo.</p>
+          </div>
+        </div>
+      </div>
 
-      <p>
-        Também atuo como palestrante em eventos de tecnologia. Já participei da MVPConf e de outros encontros
-        da comunidade, sempre trazendo casos práticos do ambiente corporativo para a conversa.
-      </p>
+      <!-- Stack -->
+      <h2>Stack & Tecnologias</h2>
+      <div class="stack-grid">
+        <div class="stack-group">
+          <h3>Cloud & Infra</h3>
+          <div class="tags">
+            <span class="tag">Azure</span>
+            <span class="tag">Azure AI Foundry</span>
+            <span class="tag">Private Endpoints</span>
+            <span class="tag">NSG / ASG</span>
+            <span class="tag">VNets</span>
+            <span class="tag">Cloudflare</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>IA & Dados</h3>
+          <div class="tags">
+            <span class="tag accent">IA Generativa</span>
+            <span class="tag accent">RAG</span>
+            <span class="tag accent">Azure OpenAI</span>
+            <span class="tag accent">Prompt Engineering</span>
+            <span class="tag accent">AI Search</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Desenvolvimento</h3>
+          <div class="tags">
+            <span class="tag">C#</span>
+            <span class="tag">.NET</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <h3>Ensino</h3>
+          <div class="tags">
+            <span class="tag coral">MS Project</span>
+            <span class="tag coral">Gestão de Projetos</span>
+            <span class="tag coral">Gamificação</span>
+            <span class="tag coral">Certificações Azure</span>
+          </div>
+        </div>
+      </div>
 
+      <!-- Projetos -->
+      <h2>Projetos</h2>
+      <div class="projects-grid">
+        <div class="project-card featured">
+          <span class="project-icon">🎮</span>
+          <h3>Plataforma de Treinamentos</h3>
+          <p>Simulados gamificados com banco de questões, XP, níveis, conquistas e ranking. AZ-900 e MS Project integrados ao blog.</p>
+          <a href="/treinamentos" class="project-link">Ver plataforma →</a>
+        </div>
+        <div class="project-card">
+          <span class="project-icon">📝</span>
+          <h3>Blog rfarias</h3>
+          <p>Este blog — artigos técnicos sobre Azure, Cloud e IA com a abordagem didática da sala de aula.</p>
+          <a href="/artigos" class="project-link">Ver artigos →</a>
+        </div>
+        <div class="project-card">
+          <span class="project-icon">🤖</span>
+          <h3>IA Generativa com Azure AI Foundry</h3>
+          <p>PoC de chatbot corporativo com RAG, apresentada na MVPConf 2026.</p>
+        </div>
+      </div>
+
+      <!-- Eventos -->
+      <h2>Eventos & Comunidade</h2>
+      <div class="events">
+        <div class="event-item">
+          <span class="event-badge">2026</span>
+          <div>
+            <strong>MVPConf São Paulo</strong>
+            <p>Palestra sobre IA Generativa com Azure AI Foundry em ambiente corporativo.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Por que este blog -->
       <h2>Por que este blog</h2>
-
       <p>
         Criei o <strong>rfarias</strong> para documentar o que aprendo na interseção entre tecnologia e
         ensino. Aqui você encontra artigos técnicos sobre Azure, Cloud e IA — escritos com a abordagem
         que uso em sala de aula: contexto real, passo a passo e armadilhas que a documentação não destaca.
       </p>
-
       <p>
         Também escrevo sobre carreira, docência e os bastidores de equilibrar dois mundos profissionais.
         Se algo que publico aqui ajudar uma pessoa a resolver um problema ou tomar uma decisão melhor,
         o blog já cumpriu seu papel.
       </p>
 
+      <!-- Social -->
       <h2>Onde me encontrar</h2>
-
       <div class="social-links">
         <a href="https://linkedin.com/in/rafael-farias-da-silva" target="_blank" rel="noopener" class="social-link">
           <span class="social-icon">in</span>
@@ -69,13 +183,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .about {
     padding-top: 3rem;
     padding-bottom: 2rem;
-    max-width: 720px;
+    max-width: 780px;
   }
 
+  /* Header */
   .about-header {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    align-items: flex-start;
+    gap: 1.75rem;
     margin-bottom: 2.5rem;
   }
 
@@ -95,32 +210,227 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     object-position: center top;
   }
 
-  h1 {
-    font-size: 1.75rem;
-    margin-bottom: 0.25rem;
+  h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+
+  .about-tagline { font-size: 1rem; color: var(--text-muted); margin-bottom: 1rem; }
+  .about-tagline a { color: var(--blue); font-weight: 500; transition: opacity 0.15s; }
+  .about-tagline a:hover { opacity: 0.8; }
+
+  .about-stats {
+    display: flex;
+    gap: 1.5rem;
   }
 
-  .about-tagline {
-    font-size: 1rem;
-    color: var(--text-muted);
+  .stat-item {
+    display: flex;
+    flex-direction: column;
   }
 
-  .about-tagline a {
+  .stat-number {
+    font-size: 1.25rem;
+    font-weight: 700;
     color: var(--blue);
+    font-family: var(--font-serif);
+  }
+
+  .stat-text {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* Content */
+  .about-content { line-height: 1.7; font-size: 0.9375rem; }
+  .about-content p { margin-bottom: 1.25rem; color: var(--text); }
+  .about-content h2 {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    margin: 2.5rem 0 1rem;
+    color: var(--text);
+  }
+
+  .lead {
+    font-size: 1.0625rem;
+    color: var(--text-muted) !important;
+    line-height: 1.65;
+    border-left: 3px solid var(--blue);
+    padding-left: 1.25rem;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+  }
+
+  .timeline-dot.current {
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+
+  .timeline-date {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .timeline-content h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin: 0.125rem 0 0.25rem;
+  }
+
+  .timeline-content p {
+    font-size: 0.8125rem;
+    color: var(--text-muted) !important;
+    margin-bottom: 0 !important;
+    line-height: 1.5;
+  }
+
+  /* Stack */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .stack-group h3 {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+
+  .tag {
+    font-size: 0.6875rem;
     font-weight: 500;
-    transition: opacity 0.15s;
+    padding: 0.25rem 0.625rem;
+    border-radius: 20px;
+    background: var(--blue-light);
+    color: var(--blue);
   }
 
-  .about-tagline a:hover {
-    opacity: 0.8;
+  .tag.accent {
+    background: #ede9fe;
+    color: #6d28d9;
   }
 
-  .social-links {
+  .tag.coral {
+    background: var(--coral-light);
+    color: var(--coral);
+  }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    background: var(--surface);
+    transition: border-color 0.15s;
+  }
+
+  .project-card:hover { border-color: var(--blue); }
+
+  .project-card.featured {
+    border-color: var(--blue);
+    box-shadow: 0 2px 12px rgba(26, 86, 219, 0.06);
+  }
+
+  .project-icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+
+  .project-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 0.375rem;
+  }
+
+  .project-card p {
+    font-size: 0.8125rem;
+    color: var(--text-muted) !important;
+    line-height: 1.5;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .project-link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--blue);
+  }
+
+  /* Events */
+  .events { margin-bottom: 1rem; }
+
+  .event-item {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    background: var(--surface);
   }
+
+  .event-badge {
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .event-item strong { font-size: 0.875rem; }
+  .event-item p { font-size: 0.8125rem; color: var(--text-muted) !important; margin: 0.25rem 0 0 !important; }
+
+  /* Social */
+  .social-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
 
   .social-link {
     display: flex;
@@ -135,10 +445,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     transition: border-color 0.15s, color 0.15s;
   }
 
-  .social-link:hover {
-    border-color: var(--blue);
-    color: var(--blue);
-  }
+  .social-link:hover { border-color: var(--blue); color: var(--blue); }
 
   .social-icon {
     font-weight: 700;
@@ -154,9 +461,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   @media (max-width: 768px) {
-    .about-header {
-      flex-direction: column;
-      text-align: center;
-    }
+    .about-header { flex-direction: column; text-align: center; align-items: center; }
+    .about-stats { justify-content: center; }
+    .stack-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
   }
 </style>
