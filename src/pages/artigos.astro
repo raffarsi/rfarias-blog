@@ -7,7 +7,7 @@ const posts = [
     slug: 'private-endpoints-azure',
     title: 'Como configurar Private Endpoints no Azure sem perder o acesso ao portal',
     category: 'Azure',
-    tag: 'tech' as const,
+    tag: 'azure' as const,
     date: '27 Ago 2026',
     readTime: '8 min',
     excerpt: 'Passo a passo com as armadilhas de DNS que a documentação não destaca.',
@@ -15,8 +15,8 @@ const posts = [
   {
     slug: 'aula-ms-project',
     title: 'O que aprendi dando aula de MS Project pra quem nunca viu gestão de projetos',
-    category: 'Carreira',
-    tag: 'carreira' as const,
+    category: 'Docência',
+    tag: 'docencia' as const,
     date: '23 Ago 2026',
     readTime: '5 min',
     excerpt: 'Reflexões sobre adaptar o plano de aula para alunos sem experiência em gestão.',
@@ -25,7 +25,7 @@ const posts = [
     slug: 'azure-ai-foundry',
     title: 'Azure AI Foundry: criando seu primeiro projeto de IA Generativa',
     category: 'IA',
-    tag: 'tech' as const,
+    tag: 'ia' as const,
     date: '20 Ago 2026',
     readTime: '12 min',
     excerpt: 'Guia prático para montar uma PoC de chatbot com RAG no Azure AI Foundry.',
@@ -43,7 +43,7 @@ const posts = [
     slug: 'nsg-vs-asg',
     title: 'Network Security Groups vs Application Security Groups: quando usar cada um',
     category: 'Azure',
-    tag: 'tech' as const,
+    tag: 'azure' as const,
     date: '13 Ago 2026',
     readTime: '10 min',
     excerpt: 'NSG e ASG parecem redundantes, mas resolvem problemas diferentes.',
@@ -51,12 +51,30 @@ const posts = [
   {
     slug: 'simulado-gamificado-az900',
     title: 'Como montei um simulado gamificado de AZ-900 para meus alunos',
-    category: 'Carreira',
-    tag: 'carreira' as const,
+    category: 'Docência',
+    tag: 'docencia' as const,
     date: '9 Ago 2026',
     readTime: '7 min',
     excerpt: 'Plataforma com banco de questões, XP, ranking e conquistas para estudo do AZ-900.',
   },
+];
+
+// Contadores por tag
+const counts = {
+  todos: posts.length,
+  azure: posts.filter(p => p.tag === 'azure').length,
+  ia: posts.filter(p => p.tag === 'ia').length,
+  cloud: posts.filter(p => p.tag === 'cloud').length,
+  docencia: posts.filter(p => p.tag === 'docencia').length,
+  carreira: posts.filter(p => p.tag === 'carreira').length,
+};
+
+const filters = [
+  { label: 'Todos', tag: 'todos', count: counts.todos },
+  { label: 'Azure', tag: 'azure', count: counts.azure },
+  { label: 'IA', tag: 'ia', count: counts.ia },
+  { label: 'Docência', tag: 'docencia', count: counts.docencia },
+  { label: 'Carreira', tag: 'carreira', count: counts.carreira },
 ];
 ---
 
@@ -68,9 +86,15 @@ const posts = [
     </div>
 
     <div class="filters" id="filters">
-      <button class="filter-btn active" data-filter="todos">Todos</button>
-      <button class="filter-btn" data-filter="tech">Tecnologia</button>
-      <button class="filter-btn" data-filter="carreira">Carreira</button>
+      {filters.map((f, i) => (
+        <button
+          class:list={['filter-btn', { active: i === 0 }]}
+          data-filter={f.tag}
+        >
+          {f.label}
+          {f.count > 0 && <span class="filter-count">{f.count}</span>}
+        </button>
+      ))}
     </div>
 
     <section class="post-grid" id="post-grid">
@@ -109,13 +133,17 @@ const posts = [
     display: flex;
     gap: 0.375rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
 
   .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
     font-size: 0.8125rem;
     font-weight: 500;
     font-family: var(--font-sans);
-    padding: 0.375rem 1rem;
+    padding: 0.375rem 0.875rem;
     border-radius: 20px;
     border: 1px solid var(--border);
     background: transparent;
@@ -133,6 +161,19 @@ const posts = [
     background: var(--blue);
     color: #fff;
     border-color: var(--blue);
+  }
+
+  .filter-count {
+    background: rgba(0,0,0,0.12);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+    line-height: 1.4;
+  }
+
+  .filter-btn.active .filter-count {
+    background: rgba(255,255,255,0.25);
   }
 
   .post-grid {

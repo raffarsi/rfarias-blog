@@ -3,15 +3,34 @@ interface Props {
   title: string;
   slug: string;
   category: string;
-  tag: 'tech' | 'carreira';
+  tag: 'azure' | 'ia' | 'cloud' | 'docencia' | 'carreira' | 'tech';
   date: string;
   readTime: string;
   excerpt: string;
 }
 
 const { title, slug, category, tag, date, readTime, excerpt } = Astro.props;
-const badgeClass = tag === 'carreira' ? 'badge-carreira' : 'badge-tech';
-const accentColor = tag === 'carreira' ? 'var(--coral)' : 'var(--blue)';
+
+const badgeStyles: Record<string, string> = {
+  azure: 'badge-azure',
+  ia: 'badge-ia',
+  cloud: 'badge-cloud',
+  docencia: 'badge-docencia',
+  carreira: 'badge-carreira',
+  tech: 'badge-azure', // legado
+};
+
+const accentColors: Record<string, string> = {
+  azure: 'var(--blue)',
+  ia: '#6d28d9',
+  cloud: '#0891b2',
+  docencia: 'var(--coral)',
+  carreira: 'var(--coral)',
+  tech: 'var(--blue)',
+};
+
+const badgeClass = badgeStyles[tag] ?? 'badge-azure';
+const accentColor = accentColors[tag] ?? 'var(--blue)';
 ---
 
 <a href={`/posts/${slug}`} class="post-card">
@@ -79,4 +98,12 @@ const accentColor = tag === 'carreira' ? 'var(--coral)' : 'var(--blue)';
     font-size: 0.8125rem;
     font-weight: 600;
   }
+
+  /* Badges por categoria */
+  .badge-azure   { background: #e8effc; color: #1a56db; }
+  .badge-ia      { background: #ede9fe; color: #6d28d9; }
+  .badge-cloud   { background: #e0f2fe; color: #0891b2; }
+  .badge-docencia { background: #fdf0ee; color: #e8604c; }
+  .badge-carreira { background: #fdf0ee; color: #e8604c; }
+  .badge-tech    { background: #e8effc; color: #1a56db; }
 </style>
