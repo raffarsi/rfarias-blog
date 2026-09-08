@@ -79,13 +79,13 @@ const grid = posts.slice(1);
 
     <!-- Credenciais -->
     <div class="credentials">
-      <div class="cred-item"><span class="cred-number">17+</span> anos em tecnologia</div>
+      <div class="cred-item">🏢 <span class="cred-number">17+ anos</span> em tecnologia</div>
       <div class="cred-sep"></div>
-      <div class="cred-item"><span class="cred-number">Professor</span> Senac Osasco</div>
+      <div class="cred-item">🎓 <span class="cred-number">Professor</span> Senac Osasco</div>
       <div class="cred-sep"></div>
-      <div class="cred-item"><span class="cred-number">Palestrante</span> MVPConf</div>
+      <div class="cred-item">🎤 <span class="cred-number">Palestrante</span> MVPConf</div>
       <div class="cred-sep"></div>
-      <div class="cred-item"><span class="cred-number">Mestrando</span> IA</div>
+      <div class="cred-item">📚 <span class="cred-number">Mestrando</span> em IA</div>
     </div>
 
     <!-- Banner Treinamentos -->
@@ -103,6 +103,8 @@ const grid = posts.slice(1);
         <span>🏆 Ranking entre alunos</span>
       </div>
     </a>
+
+    <h2 class="section-title">Artigos recentes</h2>
 
     <div class="filters">
       <a href="/artigos" class="filter-btn">Todos</a>
@@ -156,6 +158,14 @@ const grid = posts.slice(1);
     border-radius: 50%;
     background: var(--border);
     flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
   }
 
   /* Training banner */
