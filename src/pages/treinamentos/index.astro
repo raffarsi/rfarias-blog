@@ -8,26 +8,35 @@ const trilhas = [
     title: 'AZ-900',
     subtitle: 'Microsoft Azure Fundamentals',
     description: 'Simulados, banco de questões, jogos e laboratórios para preparação da certificação de entrada do Azure.',
-    stats: { questoes: 200, dominios: 10, labs: 14 },
+    stats: { questoes: 200, dominios: 6, labs: 14 },
     status: 'disponivel',
   },
   {
-    slug: '#',
+    slug: 'ai901',
     icon: '🤖',
     title: 'AI-901',
     subtitle: 'Microsoft AI Fundamentals',
-    description: 'Preparação para a certificação de fundamentos de Inteligência Artificial no Azure.',
-    stats: null,
-    status: 'breve',
+    description: 'Banco de questões, simulados e gamificação para a certificação de fundamentos de Inteligência Artificial.',
+    stats: { questoes: 200, dominios: 5, labs: 10 },
+    status: 'disponivel',
   },
   {
-    slug: '#',
+    slug: 'dp900',
     icon: '📊',
     title: 'DP-900',
     subtitle: 'Azure Data Fundamentals',
-    description: 'Preparação para a certificação de fundamentos de dados no Azure.',
-    stats: null,
-    status: 'breve',
+    description: 'Simulados e banco de questões para a certificação de fundamentos de dados no Azure.',
+    stats: { questoes: 200, dominios: 5, labs: 10 },
+    status: 'disponivel',
+  },
+  {
+    slug: 'sc900',
+    icon: '🔐',
+    title: 'SC-900',
+    subtitle: 'Security, Compliance & Identity',
+    description: 'Banco de questões, simulados e gamificação para a certificação de fundamentos de segurança, conformidade e identidade.',
+    stats: { questoes: 30, dominios: 5, labs: 8 },
+    status: 'disponivel',
   },
   {
     slug: 'ms-project',
@@ -41,7 +50,7 @@ const trilhas = [
 ];
 ---
 
-<BaseLayout title="Treinamentos — rfarias" description="Simulados, questões e material de apoio para certificações Microsoft Azure.">
+<BaseLayout title="Treinamentos — rfarias" description="Simulados gamificados para certificações Microsoft Azure, AI, Data, Security e MS Project.">
   <div class="container treinamentos">
     <div class="treinamentos-header">
       <h1>Treinamentos</h1>
@@ -51,20 +60,17 @@ const trilhas = [
     <div class="trilhas-grid">
       {trilhas.map(trilha => (
         <a
-          href={trilha.status === 'disponivel' ? `/treinamentos/${trilha.slug}` : '#'}
+          href={`/treinamentos/${trilha.slug}`}
           class:list={['trilha-card', { disabled: trilha.status !== 'disponivel' }]}
         >
           <div class="trilha-top">
             <span class="trilha-icon">{trilha.icon}</span>
             {trilha.status === 'disponivel' && <span class="badge-disponivel">Disponível</span>}
             {trilha.status === 'breve' && <span class="badge-breve">Em breve</span>}
-            {trilha.status === 'planejado' && <span class="badge-planejado">Planejado</span>}
           </div>
-
           <h2 class="trilha-title">{trilha.title}</h2>
           <p class="trilha-subtitle">{trilha.subtitle}</p>
           <p class="trilha-desc">{trilha.description}</p>
-
           {trilha.stats && (
             <div class="trilha-stats">
               <div class="stat">
@@ -81,7 +87,6 @@ const trilhas = [
               </div>
             </div>
           )}
-
           {trilha.status === 'disponivel' && (
             <span class="trilha-cta">Acessar trilha →</span>
           )}
@@ -93,14 +98,13 @@ const trilhas = [
 
 <style>
   .treinamentos { padding-top: 3rem; padding-bottom: 2rem; }
-
   .treinamentos-header { margin-bottom: 2.5rem; }
   .treinamentos-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
   .treinamentos-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 620px; line-height: 1.6; }
 
   .trilhas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.25rem;
   }
 
@@ -119,73 +123,24 @@ const trilhas = [
     box-shadow: 0 4px 20px rgba(26, 86, 219, 0.08);
   }
 
-  .trilha-card.disabled {
-    opacity: 0.65;
-    cursor: default;
-  }
+  .trilha-card.disabled { opacity: 0.65; cursor: default; }
 
-  .trilha-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
+  .trilha-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
   .trilha-icon { font-size: 2rem; }
 
-  .badge-disponivel {
-    background: #dcfce7; color: #15803d;
-    font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 20px;
-  }
-  .badge-breve {
-    background: var(--blue-light); color: var(--blue);
-    font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 20px;
-  }
-  .badge-planejado {
-    background: #f3f4f6; color: var(--text-muted);
-    font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 20px;
-  }
+  .badge-disponivel { background: #dcfce7; color: #15803d; font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .badge-breve { background: var(--blue-light); color: var(--blue); font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
 
-  .trilha-title {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    font-weight: 700;
-    margin-bottom: 0.125rem;
-  }
+  .trilha-title { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 700; margin-bottom: 0.125rem; }
+  .trilha-subtitle { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .trilha-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 1rem; }
 
-  .trilha-subtitle {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    margin-bottom: 0.75rem;
-  }
-
-  .trilha-desc {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    flex: 1;
-    margin-bottom: 1rem;
-  }
-
-  .trilha-stats {
-    display: flex;
-    gap: 1.25rem;
-    padding: 0.75rem 0;
-    border-top: 1px solid var(--border);
-    margin-bottom: 0.75rem;
-  }
-
+  .trilha-stats { display: flex; gap: 1.25rem; padding: 0.75rem 0; border-top: 1px solid var(--border); margin-bottom: 0.75rem; }
   .stat { display: flex; flex-direction: column; align-items: center; }
   .stat-value { font-size: 1.125rem; font-weight: 700; color: var(--blue); }
   .stat-label { font-size: 0.6875rem; color: var(--text-muted); }
 
-  .trilha-cta {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--blue);
-  }
+  .trilha-cta { font-size: 0.875rem; font-weight: 600; color: var(--blue); }
 
-  @media (max-width: 768px) {
-    .trilhas-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 768px) { .trilhas-grid { grid-template-columns: 1fr; } }
 </style>

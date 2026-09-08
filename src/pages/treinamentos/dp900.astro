@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="DP-900 — Treinamentos — rfarias" description="Simulados e banco de questões para a certificação Microsoft Azure Data Fundamentals.">
+
+  <script is:inline>
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/css/dp900.css';
+    document.head.appendChild(link);
+  </script>
+
+  <div class="az-breadcrumb">
+    <div class="container">
+      <a href="/treinamentos">← Treinamentos</a>
+      <span class="sep">/</span>
+      <span class="current">DP-900 · Data Fundamentals</span>
+    </div>
+  </div>
+
+  <header id="app-header">
+    <div class="container" style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+      <nav class="app-nav" aria-label="Navegação da plataforma">
+        <button class="nav-btn" data-screen="dashboard">🏠 Início</button>
+        <button class="nav-btn" data-screen="bank">📖 Banco de Questões</button>
+        <button class="nav-btn" data-screen="simulado">📝 Simulado</button>
+        <button class="nav-btn" data-screen="games">🎮 Jogos</button>
+        <button class="nav-btn" data-screen="labs">🧪 Laboratórios</button>
+        <button class="nav-btn" data-screen="history">📊 Histórico</button>
+        <button class="nav-btn" data-screen="achievements">🏅 Conquistas</button>
+        <button class="nav-btn" data-screen="ranking">🏆 Ranking</button>
+      </nav>
+      <div class="header-right">
+        <div id="xp-indicator">
+          <span id="xp-label">Nível 1 · 0/150 XP</span>
+          <div id="xp-bar-outer" class="xp-bar-outer"><div id="xp-bar-fill" class="xp-bar-fill" style="width:0%"></div></div>
+        </div>
+        <span id="student-badge" class="student-badge"></span>
+        <button id="switch-student-btn" class="btn-mini" title="Trocar aluno">🔄 Trocar aluno</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app-main" class="container" style="padding-top:1.5rem;padding-bottom:2rem;min-height:60vh;">
+    <section id="screen-landing" class="screen"></section>
+    <section id="screen-azurehub" class="screen"></section>
+    <section id="screen-cursoslivreshub" class="screen"></section>
+    <section id="screen-login" class="screen"></section>
+    <section id="screen-dashboard" class="screen"></section>
+    <section id="screen-bank" class="screen"></section>
+    <section id="screen-simulado" class="screen"></section>
+    <section id="screen-games" class="screen"></section>
+    <section id="screen-labs" class="screen"></section>
+    <section id="screen-history" class="screen"></section>
+    <section id="screen-achievements" class="screen"></section>
+    <section id="screen-ranking" class="screen"></section>
+  </main>
+
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script src="/js/dp900/questions.js" is:inline></script>
+  <script src="/js/dp900/games.js" is:inline></script>
+  <script src="/js/dp900/labs.js" is:inline></script>
+  <script src="/js/dp900/app.js" is:inline></script>
+  <script src="/js/dp900/init.js" is:inline></script>
+</BaseLayout>
+
+<style>
+  .az-breadcrumb {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+    font-size: 0.8125rem;
+  }
+  .az-breadcrumb a { color: var(--blue); font-weight: 500; }
+  .az-breadcrumb .sep { margin: 0 0.5rem; color: var(--border); }
+  .az-breadcrumb .current { font-weight: 600; color: var(--text); }
+  #app-header {
+    position: sticky;
+    top: 56px;
+    z-index: 90;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+  :global(body.pre-auth) #app-header { display: none; }
+</style>
