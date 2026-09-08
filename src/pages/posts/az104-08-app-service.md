@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 8
-date: "11 Jul 2026"
+date: "4 Jul 2026"
 readTime: "9 min"
 description: "Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações."
 prev:

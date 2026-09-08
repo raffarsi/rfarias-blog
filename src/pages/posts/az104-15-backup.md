@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 15
-date: "29 Ago 2026"
+date: "22 Ago 2026"
 readTime: "9 min"
 description: "Protegendo dados com Azure Backup e implementando DR com Azure Site Recovery."
 prev:

@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 13
-date: "15 Ago 2026"
+date: "8 Ago 2026"
 readTime: "9 min"
 description: "Conectando redes on-premises ao Azure com VPN Gateway e ExpressRoute."
 prev:

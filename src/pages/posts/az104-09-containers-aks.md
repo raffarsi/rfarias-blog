@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 9
-date: "18 Jul 2026"
+date: "11 Jul 2026"
 readTime: "10 min"
 description: "Azure Container Instances para containers simples e Azure Kubernetes Service para orquestração."
 prev:

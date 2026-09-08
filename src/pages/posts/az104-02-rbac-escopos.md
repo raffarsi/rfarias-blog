@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 2
-date: "30 Mai 2026"
+date: "23 Mai 2026"
 readTime: "9 min"
 description: "Como o RBAC funciona no Azure, como atribuir funções e entender escopos de forma prática."
 prev:

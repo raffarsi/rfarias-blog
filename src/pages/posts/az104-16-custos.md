@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 16
-date: "5 Set 2026"
+date: "29 Ago 2026"
 readTime: "8 min"
 description: "Como monitorar, analisar e otimizar custos no Azure com Cost Management e estratégias de reserva."
 prev:

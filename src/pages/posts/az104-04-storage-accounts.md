@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 4
-date: "13 Jun 2026"
+date: "6 Jun 2026"
 readTime: "11 min"
 description: "Tipos de storage, redundância, acesso e lifecycle management no Azure Storage."
 prev:

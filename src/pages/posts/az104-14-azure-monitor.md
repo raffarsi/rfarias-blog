@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 14
-date: "22 Ago 2026"
+date: "15 Ago 2026"
 readTime: "9 min"
 description: "Monitoramento de recursos Azure com Azure Monitor, Log Analytics e alertas."
 prev:

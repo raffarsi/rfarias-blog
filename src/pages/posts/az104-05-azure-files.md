@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 5
-date: "20 Jun 2026"
+date: "13 Jun 2026"
 readTime: "8 min"
 description: "Compartilhamentos SMB na nuvem com Azure Files e sincronização com servidores on-premises."
 prev:

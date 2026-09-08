@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 10
-date: "25 Jul 2026"
+date: "18 Jul 2026"
 readTime: "11 min"
 description: "Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering."
 prev:
