@@ -66,16 +66,6 @@ const grid = posts.slice(1);
 
 <BaseLayout>
   <div class="container home">
-    <section class="hero-section">
-      <HeroPost
-        title={hero.title}
-        slug={hero.slug}
-        category={hero.category}
-        date={hero.date}
-        readTime={hero.readTime}
-        excerpt={hero.excerpt}
-      />
-    </section>
 
     <!-- Credenciais -->
     <div class="credentials">
@@ -87,6 +77,17 @@ const grid = posts.slice(1);
       <div class="cred-sep"></div>
       <div class="cred-item">📚 <span class="cred-number">Mestrando</span> em IA</div>
     </div>
+
+    <section class="hero-section">
+      <HeroPost
+        title={hero.title}
+        slug={hero.slug}
+        category={hero.category}
+        date={hero.date}
+        readTime={hero.readTime}
+        excerpt={hero.excerpt}
+      />
+    </section>
 
     <!-- Banner Treinamentos -->
     <a href="/treinamentos" class="training-banner">
