@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 3
-date: "7 Ago 2026"
+date: "6 Jun 2026"
 readTime: "8 min"
 description: "Como usar Azure Policy para enforçar padrões, auditar conformidade e governar seu ambiente Azure."
 prev:

@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 12
-date: "5 Set 2026"
+date: "8 Ago 2026"
 readTime: "10 min"
 description: "Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7)."
 prev:

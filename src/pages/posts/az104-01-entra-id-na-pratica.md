@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 1
-date: "1 Ago 2026"
+date: "23 Mai 2026"
 readTime: "10 min"
 description: "Como gerenciar usuários, grupos e identidades no Microsoft Entra ID para o exame AZ-104 e para o dia a dia."
 next:

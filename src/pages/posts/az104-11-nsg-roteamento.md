@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 11
-date: "3 Set 2026"
+date: "1 Ago 2026"
 readTime: "10 min"
 description: "Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure."
 prev:

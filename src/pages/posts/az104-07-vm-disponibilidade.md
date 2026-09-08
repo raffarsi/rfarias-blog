@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 7
-date: "21 Ago 2026"
+date: "4 Jul 2026"
 readTime: "10 min"
 description: "Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade."
 prev:

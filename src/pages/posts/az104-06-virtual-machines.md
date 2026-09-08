@@ -5,7 +5,7 @@ category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieNum: 6
-date: "18 Ago 2026"
+date: "27 Jun 2026"
 readTime: "12 min"
 description: "Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos."
 prev:
