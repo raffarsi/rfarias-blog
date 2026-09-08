@@ -69,6 +69,7 @@ const grid = posts.slice(1);
 
     <!-- Credenciais -->
     <div class="credentials">
+      <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" class="cred-avatar" />
       <div class="cred-item">🏢 <span class="cred-number">17+ anos</span> em tecnologia</div>
       <div class="cred-sep"></div>
       <div class="cred-item">🎓 <span class="cred-number">Professor</span> Senac Osasco</div>
@@ -135,11 +136,23 @@ const grid = posts.slice(1);
   .credentials {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    padding: 1rem 0;
+    gap: 1rem;
+    padding: 0.875rem 1.25rem;
     margin-bottom: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     flex-wrap: wrap;
+  }
+
+  .cred-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid var(--blue-light);
+    flex-shrink: 0;
   }
 
   .cred-item {
