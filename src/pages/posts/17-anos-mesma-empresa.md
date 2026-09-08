@@ -14,29 +14,33 @@ next:
   slug: "azure-ai-foundry"
 ---
 
-Quando conto que estou há mais de 17 anos na mesma empresa, a reação mais comum é um misto de surpresa e curiosidade. Em um mercado onde trocar de emprego a cada 2 anos virou quase norma, ficar tanto tempo no mesmo lugar levanta perguntas.
+Quando alguém descobre que estou há mais de 17 anos na mesma empresa, a reação mais comum é um misto de surpresa e curiosidade. Em um mercado onde trocar de emprego a cada 2 ou 3 anos virou quase norma, a pergunta inevitável é: "você nunca quis sair?"
 
-A mais frequente: "você nunca quis sair?"
-
-Quis. Mais de uma vez.
+A resposta honesta é: sim, mais de uma vez.
 
 ## Os momentos de dúvida
 
-Houve fases em que senti que estava estagnado. Projetos repetitivos, tecnologias que não evoluíam, aquela sensação de que o mundo lá fora estava andando mais rápido. Nesses momentos, atualizei o currículo, conversei com recrutadores, avaliei propostas.
+Houve fases em que senti que estava estagnado. Projetos repetitivos, tecnologias que não evoluíam, aquela sensação de que o mundo lá fora estava andando mais rápido. Nesses momentos, fiz o que qualquer profissional deveria fazer: atualizei o currículo, conversei com recrutadores, avaliei propostas.
 
-Mas antes de tomar qualquer decisão, sempre me fiz três perguntas: estou aprendendo algo novo? Tenho autonomia para propor mudanças? As pessoas ao meu redor me fazem crescer?
+Mas antes de tomar qualquer decisão, sempre me fiz três perguntas:
 
-Quando pelo menos duas respostas eram "sim", ficava.
+**Estou aprendendo algo novo?** Não precisa ser uma tecnologia revolucionária. Pode ser um novo domínio de negócio, uma habilidade de liderança, uma forma diferente de resolver problemas.
+
+**Tenho autonomia para propor mudanças?** Uma empresa que ouve é uma empresa onde vale a pena estar.
+
+**As pessoas ao meu redor me fazem crescer?** Times medíocres normalizam a mediocridade. Times fortes puxam você para cima.
+
+Quando pelo menos duas respostas eram "sim", eu ficava.
 
 ## O que me fez ficar
 
-Três coisas, em ordem de importância:
+Três coisas, em ordem de importância.
 
-A primeira foi a possibilidade de reinventar meu papel. Comecei como desenvolvedor, passei por análise de sistemas, arquitetura, e hoje atuo como Tech Leader. Cada transição foi uma empresa nova dentro da mesma empresa.
+A primeira foi a **possibilidade de reinventar meu papel**. Ao longo desses 17 anos, passei por desenvolvimento, análise de sistemas, arquitetura, auditoria de TI e liderança técnica. Cada transição foi, na prática, um emprego novo dentro da mesma empresa.
 
-A segunda foi o tamanho e a complexidade dos desafios. Trabalhar em uma instituição de grande porte significa lidar com escala, compliance, segurança e integração de uma forma que a maioria das startups nunca vai experimentar.
+A segunda foi o **tamanho e a complexidade dos desafios**. Trabalhar em uma instituição de grande porte significa lidar com escala, compliance regulatório, segurança de dados sensíveis e integração de sistemas legados com tecnologias novas. Esse tipo de desafio existe em poucas empresas.
 
-A terceira foi poder conciliar com a docência. O banco sempre respeitou meu trabalho como professor, e essa combinação me mantém afiado em duas frentes.
+A terceira foi poder **conciliar com a docência**. A empresa sempre respeitou meu trabalho como professor, e essa combinação me mantém afiado em duas frentes: no corporativo, resolvo problemas reais; na sala de aula, sou obrigado a explicar o que faço de um jeito que qualquer pessoa entenda.
 
 ## O que aprendi sobre longevidade
 

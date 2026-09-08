@@ -109,9 +109,11 @@ const grid = posts.slice(1);
     <h2 class="section-title">Artigos recentes</h2>
 
     <div class="filters">
-      <a href="/artigos" class="filter-btn">Todos</a>
-      <a href="/artigos" class="filter-btn">Tecnologia</a>
-      <a href="/artigos" class="filter-btn">Carreira</a>
+      <a href="/artigos" class="filter-btn active">Todos <span class="filter-count">6</span></a>
+      <a href="/artigos" class="filter-btn">Azure <span class="filter-count">2</span></a>
+      <a href="/artigos" class="filter-btn">IA <span class="filter-count">1</span></a>
+      <a href="/artigos" class="filter-btn">Docência <span class="filter-count">2</span></a>
+      <a href="/artigos" class="filter-btn">Carreira <span class="filter-count">1</span></a>
     </div>
 
     <section class="post-grid">
@@ -119,6 +121,10 @@ const grid = posts.slice(1);
         <PostCard {...post} />
       ))}
     </section>
+
+    <div class="ver-todos">
+      <a href="/artigos">Ver todos os artigos →</a>
+    </div>
   </div>
 </BaseLayout>
 
@@ -172,6 +178,29 @@ const grid = posts.slice(1);
     border-radius: 50%;
     background: var(--border);
     flex-shrink: 0;
+  }
+
+  .ver-todos {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .ver-todos a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--blue);
+  }
+
+  .filter-count {
+    background: rgba(0,0,0,0.08);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+  }
+
+  .filter-btn.active .filter-count {
+    background: rgba(255,255,255,0.25);
   }
 
   .section-title {

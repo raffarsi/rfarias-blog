@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Como montei um simulado gamificado de AZ-900 para meus alunos"
-category: "Carreira"
-tag: "carreira"
+category: "Docência"
+tag: "docencia"
 date: "9 Ago 2026"
 readTime: "7 min"
 description: "O processo de criação de uma plataforma de simulados com gamificação para preparação do AZ-900."
@@ -11,34 +11,38 @@ next:
   slug: "nsg-vs-asg"
 ---
 
-Uma coisa que sempre me incomodou nos simulados de certificação é que eles são chatos. Você responde 60 perguntas, recebe uma nota e pronto. Não tem progressão, não tem desafio incremental, não tem motivo para voltar.
+Simulados de certificação são, na maioria, entediantes. Você responde 60 perguntas, recebe uma nota e pronto. Não tem progressão, não tem desafio incremental, não tem motivo para voltar no dia seguinte.
 
-Resolvi mudar isso para os meus alunos do Senac. Criei uma plataforma de simulados gamificada focada no AZ-900, integrada diretamente ao meu blog.
+Quando comecei a preparar meus alunos do Senac para o AZ-900, decidi que o material de estudo precisava ser diferente. Criei uma plataforma de simulados com gamificação — banco de questões, sistema de XP e níveis, conquistas temáticas e ranking entre alunos, integrada diretamente ao meu blog.
+
+## O problema que eu queria resolver
+
+Certificações fundamentals como o AZ-900 cobrem um conteúdo amplo mas não profundo — 6 domínios com centenas de conceitos. O desafio do aluno não é entender cada conceito individualmente, é reter tudo junto.
+
+Simulados tradicionais testam retenção, mas não incentivam repetição. A gamificação resolve isso criando loops de engajamento: o aluno volta porque quer subir de nível, desbloquear uma conquista ou ultrapassar um colega no ranking.
 
 ## O que a plataforma tem
 
-A ideia foi pegar mecânicas de jogos que funcionam e aplicar ao estudo:
+**Banco de questões por domínio.** 200 questões organizadas pelos domínios do exame, com três níveis de dificuldade. Cada questão tem explicação detalhada para cada opção — o aluno não só descobre que errou, entende por que errou.
 
-O banco de questões é organizado por domínio do exame. Cada domínio tem questões de níveis diferentes, e o aluno vai desbloqueando conforme acerta. Isso cria uma sensação de progresso que o simulado tradicional não dá.
+**Sistema de XP e níveis.** Cada resposta certa dá pontos de experiência. Respostas consecutivas ativam um multiplicador (streak). Erros não punem — apenas não somam. A filosofia é incentivar tentativa, não penalizar erro.
 
-Implementei um sistema de XP e níveis. Cada resposta certa dá pontos, respostas em sequência dão bônus (streak), e erros não punem — apenas não somam. O objetivo é incentivar tentativa, não penalizar erro.
+**Simulados cronometrados.** O aluno pode fazer simulados completos (60 questões em 85 minutos, igual ao exame real) ou simulados por domínio. No final, recebe um relatório com acertos por domínio e comparação com tentativas anteriores.
 
-Tem um ranking entre os alunos da turma. Funciona como motivação social — ninguém quer ficar no final da lista, e quem lidera fica orgulhoso.
+**Laboratórios guiados.** 14 exercícios práticos com passo a passo no portal do Azure: criar uma VM, configurar um Storage Account, montar uma VNet.
 
-E tem conquistas temáticas: "Mestre do IaaS", "Guardião da Compliance", "Primeiro Simulado Completo". São marcos que reconhecem esforço, não apenas resultado.
+**Conquistas temáticas.** 38 conquistas desbloqueáveis: "Mestre do IaaS", "Guardião da Compliance", "Maratonista". São marcos que reconhecem esforço e especialização.
+
+**Ranking.** Classificação entre alunos por XP total — gera uma competição saudável.
 
 ## O impacto na turma
 
-A diferença foi visível. Antes da plataforma, os alunos estudavam na véspera da prova. Com a gamificação, comecei a ver acessos diários — às vezes de madrugada.
+A diferença foi visível. Antes da plataforma, o padrão era estudar na véspera. Com a gamificação, comecei a ver acessos diários.
 
-O ranking gerou uma competição saudável. Alunos que normalmente não participavam começaram a perguntar sobre os temas que estavam errando.
+O ranking gerou uma dinâmica que não esperava: quem liderava o ranking começou a ajudar quem estava atrás. A competição virou colaboração — ensinar é a melhor forma de fixar o conteúdo.
 
-E as conquistas funcionaram como mini-celebrações. Quando alguém desbloqueava uma conquista rara, compartilhava no grupo da turma.
+## Decisões técnicas
 
-## O que eu faria diferente
+A plataforma roda inteiramente no frontend — HTML, CSS e JavaScript puro, sem backend. Os dados ficam no localStorage. Essa decisão foi deliberada: qualquer aluno acessa de qualquer dispositivo sem criar conta, sem login, sem fricção.
 
-Se fosse começar hoje, adicionaria dois recursos: modo duelo (dois alunos competindo em tempo real) e relatório de gaps (mostrando quais domínios o aluno precisa reforçar com base no histórico).
-
-São funcionalidades que pretendo implementar quando migrar a plataforma para dentro do blog, na seção de Treinamentos.
-
-A lição principal desse projeto: aprender não precisa ser tedioso. Com as mecânicas certas, o estudo vira algo que o aluno *quer* fazer, não algo que ele *tem* que fazer.
+A plataforma está integrada ao blog, na seção [Treinamentos](/treinamentos). Os próximos passos são AI-900 e DP-900.

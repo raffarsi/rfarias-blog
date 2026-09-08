@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "O que aprendi dando aula de MS Project pra quem nunca viu gestão de projetos"
-category: "Carreira"
-tag: "carreira"
+title: "O que aprendi dando aula de MS Project para quem nunca viu gestão de projetos"
+category: "Docência"
+tag: "docencia"
 date: "23 Ago 2026"
 readTime: "5 min"
 description: "Reflexões sobre adaptar o plano de aula de MS Project para alunos sem experiência em gestão de projetos."
@@ -14,22 +14,34 @@ next:
   slug: "private-endpoints-azure"
 ---
 
-Quando aceitei lecionar MS Project no Senac, imaginei que o maior desafio seria dominar cada recurso da ferramenta. Estava errado. O maior desafio foi perceber que a maioria dos alunos nunca tinha ouvido falar em EAP, caminho crítico ou baseline.
+Lecionar MS Project parece simples na teoria: abra a ferramenta, mostre os menus, crie um cronograma. Mas quando a turma nunca ouviu falar em EAP, caminho crítico ou baseline, o desafio muda completamente.
 
-Eu preparei um plano de aula detalhado, com exercícios progressivos, simulações de cenário e até uma dinâmica de grupo onde cada equipe gerenciaria um projeto fictício. Na primeira aula, percebi que precisava dar três passos para trás antes de dar um para frente.
+## O erro que quase cometi
 
-## O ajuste que fiz
+Meu primeiro plano de aula era organizado pela ferramenta: aula 1 sobre a interface, aula 2 sobre criação de tarefas, aula 3 sobre dependências. Parecia lógico — progressão técnica linear.
 
-Ao invés de começar pela ferramenta, comecei pelo conceito. Dediquei a primeira aula inteira a responder uma pergunta simples: *por que projetos dão errado?*
+O problema é que essa abordagem assume que o aluno entende por que está fazendo cada coisa. Criar tarefas é trivial. Entender por que você precisa decompor o escopo antes de criar tarefas é o que faz a diferença entre apertar botões e gerenciar um projeto.
 
-Pedi para cada aluno contar uma situação onde algo saiu do controle — uma mudança, uma reforma, até organizar um evento. A partir dessas histórias reais, introduzi os conceitos de escopo, prazo e custo.
+## A inversão que funcionou
 
-Só na segunda aula abri o MS Project. E quando abri, os alunos já sabiam o *porquê* de cada campo que estavam preenchendo.
+Ao invés de começar pela ferramenta, comecei pelo problema. A primeira aula inteira responde uma pergunta: por que projetos dão errado?
+
+Peço para cada aluno contar uma situação onde algo saiu do controle — uma mudança, uma reforma da casa, organizar um evento de família. A partir dessas histórias reais, introduzo os conceitos de escopo, prazo e custo sem nenhuma terminologia técnica.
+
+Só na segunda aula o MS Project entra em cena. E quando abro a ferramenta, os alunos já sabem o porquê de cada campo que estão preenchendo.
+
+## Três princípios que aplico em toda aula
+
+**Conceito antes da ferramenta.** Nenhum recurso do MS Project é apresentado sem antes explicar o conceito de gestão de projetos que ele implementa. O aluno precisa saber o que é caminho crítico antes de ver a barra vermelha no Gantt.
+
+**Projeto fictício contínuo.** A turma trabalha no mesmo projeto do início ao fim do curso. Cada aula avança o projeto, aplicando os conceitos novos. No final, cada aluno tem um cronograma completo que construiu do zero.
+
+**Errar na ferramenta é parte do processo.** Deixo os alunos cometerem erros clássicos — como criar dependências circulares ou esquecer de atribuir recursos — e uso o erro como momento de ensino. O MS Project avisa quando algo está errado; ensinar a ler esses avisos é tão importante quanto ensinar a usar os menus.
 
 ## O que isso me ensinou sobre ensinar
 
-Ferramentas são meios, nunca fins. Se eu tivesse seguido o plano original, teria formado alunos que sabem clicar nos botões certos, mas não sabem *por que* estão clicando.
+A maior lição não foi sobre MS Project. Foi sobre empatia cognitiva: a capacidade de lembrar como era não saber algo que hoje parece óbvio.
 
-Essa experiência mudou minha forma de preparar aulas. Agora, antes de montar qualquer material, me pergunto: "se o aluno nunca ouviu falar disso, qual é a primeira pergunta que ele faria?" E começo por aí.
+Quando você domina um assunto, é fácil pular etapas mentais que para o iniciante são abismos. "Crie uma EAP" pressupõe que o aluno sabe o que é EAP, por que ela existe, e como pensar hierarquicamente. Cada uma dessas é uma habilidade separada.
 
-É um exercício de empatia que vai muito além da sala de aula — e que me fez melhor profissional no dia a dia do banco também.
+Essa consciência mudou não só minha forma de dar aula, mas também como explico decisões técnicas no trabalho. Se consigo explicar uma arquitetura para quem não é de TI, consigo explicar para qualquer um.

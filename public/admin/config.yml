@@ -8,37 +8,35 @@ public_folder: "/images"
 
 collections:
   - name: "posts-tech"
-    label: "Posts — Tecnologia"
+    label: "Posts — Tecnologia (Azure, IA, Cloud)"
     folder: "src/pages/posts"
     create: true
     slug: "{{slug}}"
-    filter:
-      field: tag
-      value: tech
     fields:
       - { label: "Layout", name: "layout", widget: "hidden", default: "../../layouts/PostLayout.astro" }
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoria", name: "category", widget: "select", options: ["Azure", "Cloud", "IA", "DevOps", "Arquitetura"] }
-      - { label: "Tag", name: "tag", widget: "hidden", default: "tech" }
-      - { label: "Data", name: "date", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Azure", "IA", "Cloud"] }
+      - { label: "Tag", name: "tag", widget: "select", options: ["azure", "ia", "cloud"] }
+      - { label: "Data", name: "date", widget: "string", hint: "Ex: 01 Set 2026" }
       - { label: "Tempo de leitura", name: "readTime", widget: "string", default: "8 min" }
       - { label: "Descrição (SEO)", name: "description", widget: "text" }
+      - { label: "Série (opcional)", name: "serie", widget: "string", required: false }
+      - { label: "Nº da série", name: "serieNum", widget: "number", required: false }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
 
-  - name: "posts-carreira"
-    label: "Posts — Carreira"
+  - name: "posts-humanos"
+    label: "Posts — Docência & Carreira"
     folder: "src/pages/posts"
     create: true
     slug: "{{slug}}"
-    filter:
-      field: tag
-      value: carreira
     fields:
       - { label: "Layout", name: "layout", widget: "hidden", default: "../../layouts/PostLayout.astro" }
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoria", name: "category", widget: "hidden", default: "Carreira" }
-      - { label: "Tag", name: "tag", widget: "hidden", default: "carreira" }
-      - { label: "Data", name: "date", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Docência", "Carreira"] }
+      - { label: "Tag", name: "tag", widget: "select", options: ["docencia", "carreira"] }
+      - { label: "Data", name: "date", widget: "string", hint: "Ex: 01 Set 2026" }
       - { label: "Tempo de leitura", name: "readTime", widget: "string", default: "5 min" }
       - { label: "Descrição (SEO)", name: "description", widget: "text" }
+      - { label: "Série (opcional)", name: "serie", widget: "string", required: false }
+      - { label: "Nº da série", name: "serieNum", widget: "number", required: false }
       - { label: "Conteúdo", name: "body", widget: "markdown" }

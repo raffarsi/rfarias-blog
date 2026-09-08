@@ -5,10 +5,12 @@ interface Props {
   frontmatter: {
     title: string;
     category: string;
-    tag: 'tech' | 'carreira';
+    tag: string;
     date: string;
     readTime: string;
     description?: string;
+    serie?: string;
+    serieNum?: number;
     prev?: { title: string; slug: string };
     next?: { title: string; slug: string };
   };
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const { frontmatter, headings = [] } = Astro.props;
-const isTech = frontmatter.tag === 'tech';
+const isTech = ['azure', 'ia', 'cloud', 'tech'].includes(frontmatter.tag);
 const badgeClass = isTech ? 'badge-tech' : 'badge-carreira';
 const tocHeadings = headings.filter(h => h.depth === 2);
 ---
@@ -24,6 +26,9 @@ const tocHeadings = headings.filter(h => h.depth === 2);
 <BaseLayout title={`${frontmatter.title} — rfarias`} description={frontmatter.description}>
   <article class="container post-page">
     <div class="post-header">
+      {frontmatter.serie && (
+        <span class="serie-label">📚 {frontmatter.serie} · #{frontmatter.serieNum}</span>
+      )}
       <span class:list={['badge', badgeClass]}>{frontmatter.category}</span>
       <span class="post-date">{frontmatter.date} · {frontmatter.readTime} de leitura</span>
     </div>
@@ -75,6 +80,16 @@ const tocHeadings = headings.filter(h => h.depth === 2);
     align-items: center;
     gap: 0.625rem;
     margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .serie-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6d28d9;
+    background: #ede9fe;
+    padding: 3px 10px;
+    border-radius: 20px;
   }
 
   .post-date {

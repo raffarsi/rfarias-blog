@@ -2,10 +2,10 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure AI Foundry: criando seu primeiro projeto de IA Generativa"
 category: "IA"
-tag: "tech"
+tag: "ia"
 date: "20 Ago 2026"
 readTime: "12 min"
-description: "Guia prático para criar uma prova de conceito de chatbot com RAG usando Azure AI Foundry."
+description: "Guia prático para criar uma PoC de chatbot com RAG usando Azure AI Foundry em ambiente corporativo."
 prev:
   title: "17 anos na mesma empresa"
   slug: "17-anos-mesma-empresa"
@@ -14,72 +14,84 @@ next:
   slug: "aula-ms-project"
 ---
 
-Uma das plataformas que mais me empolgou nos últimos meses foi o Azure AI Foundry. Ele unifica modelos, dados, orquestração e avaliação em um único hub — e facilita muito a vida de quem precisa montar uma PoC de IA Generativa em ambiente corporativo.
+O Azure AI Foundry é a plataforma unificada da Microsoft para construir aplicações de IA Generativa em ambiente corporativo. Ele substituiu o Azure AI Studio e centralizou catálogo de modelos, playgrounds, orquestração com Prompt Flow e ferramentas de avaliação em um único hub.
 
-Neste post, mostro o passo a passo que usei para criar um chatbot com RAG (Retrieval-Augmented Generation) do zero.
+Neste guia, mostro como criar um projeto do zero — do setup do hub até um chatbot com RAG funcional.
 
-## O que é o Azure AI Foundry
+## Por que o AI Foundry importa para o corporativo
 
-O AI Foundry é o sucessor do Azure AI Studio. Ele centraliza o catálogo de modelos (OpenAI, Meta, Mistral, Cohere e outros), playgrounds para teste, pipelines de prompt flow e ferramentas de avaliação.
+Antes do AI Foundry, montar uma PoC de IA Generativa no Azure exigia integrar manualmente 4 ou 5 serviços: Azure OpenAI para o modelo, Azure AI Search para o índice de busca, Azure Blob Storage para os documentos, algum orquestrador para conectar tudo, e Azure Monitor para observabilidade.
 
-A grande vantagem para o ambiente corporativo: tudo roda dentro da sua assinatura Azure, com controle de rede, identidade e compliance.
+O AI Foundry unifica isso. Tudo roda dentro da sua assinatura Azure, com controle de rede (Private Endpoints), identidade (Entra ID) e compliance. Para quem trabalha em instituições reguladas, isso é decisivo.
 
-## Criando o Hub e o Projeto
+## Conceitos fundamentais
 
-O primeiro passo é criar um AI Hub — o contêiner organizacional:
+**AI Hub** — O contêiner organizacional. Ele gerencia as conexões com modelos, compute e storage.
+
+**Projeto** — Dentro do hub, cada projeto é um workspace isolado. Cada PoC ou aplicação vive em seu próprio projeto, com seus dados, deployments e avaliações.
+
+**Catálogo de modelos** — O AI Foundry oferece modelos da OpenAI (GPT-4o, GPT-4o-mini), Meta (Llama), Mistral, Cohere e outros.
+
+## Setup: Hub e Projeto
 
 ```bash
 az ml workspace create \
   --kind hub \
-  --name meu-ai-hub \
+  --name hub-ia-corp \
   --resource-group rg-ia \
   --location eastus2
-```
 
-Dentro do hub, crie um projeto:
-
-```bash
 az ml workspace create \
   --kind project \
-  --name poc-chatbot \
-  --hub-id /subscriptions/.../meu-ai-hub \
+  --name poc-chatbot-docs \
+  --hub-id /subscriptions/{sub-id}/resourceGroups/rg-ia/providers/Microsoft.MachineLearningServices/workspaces/hub-ia-corp \
   --resource-group rg-ia
 ```
 
 ## Deployando o modelo
 
-No catálogo de modelos, escolhi o GPT-4o para a PoC. O deploy é feito como endpoint serverless:
+Para a maioria das PoCs, deploy serverless (pay-per-token) é suficiente e mais barato:
 
 ```bash
 az ml serverless-endpoint create \
-  --name gpt4o-endpoint \
-  --model-id azureml://registries/azure-openai/models/gpt-4o \
-  --workspace-name poc-chatbot \
+  --name gpt4o-mini-endpoint \
+  --model-id azureml://registries/azure-openai/models/gpt-4o-mini \
+  --workspace-name poc-chatbot-docs \
   --resource-group rg-ia
 ```
 
-## Configurando o RAG
+## Construindo o RAG
 
-Para o RAG funcionar, precisamos de três peças: um índice de busca (Azure AI Search), os documentos indexados, e a orquestração que conecta busca + modelo.
+RAG é o padrão mais comum em aplicações corporativas. A ideia: antes de enviar a pergunta para o modelo, você busca documentos relevantes na base da empresa e inclui esse contexto no prompt.
 
-O Prompt Flow do AI Foundry facilita essa orquestração com componentes visuais. Você literalmente arrasta os blocos e conecta:
+O Prompt Flow do AI Foundry facilita essa orquestração com componentes visuais:
 
 1. **Input** — pergunta do usuário
 2. **Embedding** — converte a pergunta em vetor
-3. **Index Lookup** — busca documentos similares no AI Search
+3. **Index Lookup** — busca trechos similares no Azure AI Search
 4. **LLM** — envia contexto + pergunta para o GPT-4o
 5. **Output** — resposta formatada
 
+**System prompt funcional:**
+
+```
+Você é um assistente que responde perguntas sobre os documentos internos da empresa.
+Use APENAS as informações do contexto fornecido para responder.
+Se a resposta não estiver no contexto, diga "Não encontrei essa informação nos documentos disponíveis."
+Sempre cite o nome do documento de onde veio a informação.
+Responda em português brasileiro, de forma clara e objetiva.
+```
+
 ## Avaliação
 
-O AI Foundry tem métricas de avaliação built-in: groundedness, relevance, coherence e fluency. Rodei um batch de 50 perguntas e obtive scores acima de 4.0 em todas as dimensões.
+O AI Foundry tem métricas integradas: **Groundedness** (evita alucinações), **Relevance**, **Coherence** e **Fluency**. Cada uma recebe nota de 1 a 5. Para produção, busque scores acima de 4.0 em todas as dimensões.
 
 <div class="callout">
-<strong>Dica:</strong> Sempre avalie com perguntas reais dos usuários, não com exemplos inventados. A diferença nos resultados é brutal.
+<strong>Dica:</strong> Avalie com perguntas reais dos usuários, não com exemplos fabricados. A diferença nos resultados é significativa — perguntas reais incluem ambiguidades e referências implícitas que exemplos inventados não capturam.
 </div>
 
-## Conclusão
+## Próximos passos
 
-O Azure AI Foundry reduziu drasticamente o tempo que eu levava para montar PoCs de IA. O que antes exigia integrar 4 ou 5 serviços separados agora está em um fluxo unificado.
+Com o RAG funcionando no playground, o caminho para produção envolve: autenticação via Entra ID, Private Endpoints para o AI Search e o endpoint do modelo, content filters e logging para monitorar a qualidade das respostas.
 
-Se você está pensando em levar IA Generativa para o seu ambiente corporativo, recomendo começar por aqui.
+O Azure AI Foundry reduziu drasticamente o tempo de montagem de PoCs de IA Generativa. O que antes levava semanas de integração manual agora está em um fluxo unificado.
