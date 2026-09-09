@@ -2,12 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="AI-901 — Treinamentos — rfarias" description="Simulados e banco de questões para a certificação Microsoft AI Fundamentals.">
+<BaseLayout title="AZ-104 — Treinamentos — rfarias" description="Simulados, banco de questões e laboratórios práticos para a certificação Microsoft Azure Administrator.">
 
   <script is:inline>
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/css/ai901.css';
+    link.href = '/css/az104.css';
     document.head.appendChild(link);
   </script>
 
@@ -15,7 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="container">
       <a href="/treinamentos">← Treinamentos</a>
       <span class="sep">/</span>
-      <span class="current">AI-901 · AI Fundamentals</span>
+      <span class="current">AZ-104 · Azure Administrator</span>
     </div>
   </div>
 
@@ -25,6 +25,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button class="nav-btn" data-screen="dashboard">🏠 Início</button>
         <button class="nav-btn" data-screen="bank">📖 Banco de Questões</button>
         <button class="nav-btn" data-screen="simulado">📝 Simulado</button>
+        <button class="nav-btn" data-screen="oficial">🎓 Simulado Oficial</button>
         <button class="nav-btn" data-screen="games">🎮 Jogos</button>
         <button class="nav-btn" data-screen="labs">🧪 Laboratórios</button>
         <button class="nav-btn" data-screen="history">📊 Histórico</button>
@@ -33,7 +34,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button class="nav-btn" data-screen="erros">📋 Erros</button>
         <button class="nav-btn" data-screen="dominios">📊 Domínios</button>
         <button class="nav-btn" data-screen="flashcards">🃏 Flashcards</button>
-        <button class="nav-btn" data-screen="oficial">🎓 Simulado Oficial</button>
         <button class="nav-btn" data-screen="plano">📅 Plano de Estudo</button>
         <button class="nav-btn" data-screen="relatorio">📤 Relatório</button>
         <button class="nav-btn" data-screen="ilabs">🔬 Labs Interativos</button>
@@ -57,6 +57,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <section id="screen-dashboard" class="screen"></section>
     <section id="screen-bank" class="screen"></section>
     <section id="screen-simulado" class="screen"></section>
+    <section id="screen-oficial" class="screen"></section>
     <section id="screen-games" class="screen"></section>
     <section id="screen-labs" class="screen"></section>
     <section id="screen-history" class="screen"></section>
@@ -65,7 +66,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <section id="screen-erros" class="screen"></section>
     <section id="screen-dominios" class="screen"></section>
     <section id="screen-flashcards" class="screen"></section>
-    <section id="screen-oficial" class="screen"></section>
     <section id="screen-plano" class="screen"></section>
     <section id="screen-relatorio" class="screen"></section>
     <section id="screen-ilabs" class="screen"></section>
@@ -73,33 +73,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <div id="toast-container" aria-live="polite"></div>
 
-  <script src="/js/ai901/article-links.js" is:inline></script>
-  <script src="/js/ai901/questions.js" is:inline></script>
-  <script src="/js/ai901/games.js" is:inline></script>
-  <script src="/js/ai901/labs.js" is:inline></script>
-  <script src="/js/ai901/app.js" is:inline></script>
-  <script src="/js/ai901/features.js" is:inline></script>
-  <script src="/js/ai901/features2.js" is:inline></script>
-  <script src="/js/ai901/labs-interactive.js" is:inline></script>
-  <script src="/js/ai901/init.js" is:inline></script>
+  <script src="/js/az104/article-links.js" is:inline></script>
+  <script src="/js/az104/questions.js" is:inline></script>
+  <script src="/js/az104/games.js" is:inline></script>
+  <script src="/js/az104/labs.js" is:inline></script>
+  <script src="/js/az104/app.js" is:inline></script>
+  <script src="/js/az104/features.js" is:inline></script>
+  <script src="/js/az104/features2.js" is:inline></script>
+  <script src="/js/az104/labs-interactive.js" is:inline></script>
+  <script src="/js/az104/init.js" is:inline></script>
 </BaseLayout>
 
 <style>
-  .az-breadcrumb {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0.75rem 0;
-    font-size: 0.8125rem;
-  }
-  .az-breadcrumb a { color: var(--blue); font-weight: 500; }
-  .az-breadcrumb .sep { margin: 0 0.5rem; color: var(--border); }
-  .az-breadcrumb .current { font-weight: 600; color: var(--text); }
-  #app-header {
-    position: sticky;
-    top: 56px;
-    z-index: 90;
-    border-bottom: 1px solid var(--border);
-    padding: 0.5rem 0;
-  }
-  :global(body.pre-auth) #app-header { display: none; }
+  .az-breadcrumb { background:var(--surface); border-bottom:1px solid var(--border); padding:0.75rem 0; font-size:0.8125rem; }
+  .az-breadcrumb a { color:var(--blue); font-weight:500; }
+  .az-breadcrumb .sep { margin:0 0.5rem; color:var(--border); }
+  .az-breadcrumb .current { font-weight:600; color:var(--text); }
+  #app-header { position:sticky; top:56px; z-index:90; border-bottom:1px solid var(--border); padding:0.5rem 0; }
+  :global(body.pre-auth) #app-header { display:none; }
 </style>

@@ -36,6 +36,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button class="nav-btn" data-screen="oficial">🎓 Simulado Oficial</button>
         <button class="nav-btn" data-screen="plano">📅 Plano de Estudo</button>
         <button class="nav-btn" data-screen="relatorio">📤 Relatório</button>
+        <button class="nav-btn" data-screen="ilabs">🔬 Labs Interativos</button>
       </nav>
       <div class="header-right">
         <div id="xp-indicator">
@@ -67,16 +68,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <section id="screen-oficial" class="screen"></section>
     <section id="screen-plano" class="screen"></section>
     <section id="screen-relatorio" class="screen"></section>
+    <section id="screen-ilabs" class="screen"></section>
   </main>
 
   <div id="toast-container" aria-live="polite"></div>
 
+  <script src="/js/sc900/article-links.js" is:inline></script>
   <script src="/js/sc900/questions.js" is:inline></script>
   <script src="/js/sc900/games.js" is:inline></script>
   <script src="/js/sc900/labs.js" is:inline></script>
   <script src="/js/sc900/app.js" is:inline></script>
   <script src="/js/sc900/features.js" is:inline></script>
   <script src="/js/sc900/features2.js" is:inline></script>
+  <script src="/js/sc900/labs-interactive.js" is:inline></script>
   <script src="/js/sc900/init.js" is:inline></script>
 </BaseLayout>
 

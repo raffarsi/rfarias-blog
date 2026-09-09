@@ -386,6 +386,7 @@ function buildFeedbackHTML(q, userIndex) {
           </div>`).join("")}
       </div>
       <div class="dica-box">💡 ${q.dica}</div>
+      ${(typeof buildArticleLinkHTML === 'function') ? buildArticleLinkHTML(q.domain) : ''}
     </div>
   `;
 }
@@ -399,30 +400,119 @@ RENDERERS.dashboard = function renderDashboard() {
   if (!p) { goToLogin(); return; }
   const info = levelInfo(p.xp);
   const accuracy = p.stats.totalAnswered
-    ? Math.round((p.stats.totalCorrect / p.stats.totalAnswered) * 100)
-    : 0;
+    ? Math.round((p.stats.totalCorrect / p.stats.totalAnswered) * 100) : 0;
+
+  // Calcular domínio mais fraco
+  const domStats = {};
+  QUESTION_BANK.forEach(q => { if (!domStats[q.domain]) domStats[q.domain] = { total:0, correct:0, seen:0 }; domStats[q.domain].total++; });
+  (p.history || []).forEach(h => (h.results||[]).forEach(r => {
+    const q = QUESTION_BANK.find(q => q.id === r.id);
+    if (!q) return;
+    domStats[q.domain].seen++;
+    if (r.correct) domStats[q.domain].correct++;
+  }));
+  const weakDomain = Object.entries(domStats)
+    .filter(([,s]) => s.seen >= 3)
+    .sort((a,b) => (a[1].correct/a[1].seen) - (b[1].correct/b[1].seen))[0];
+  const unseenDomain = Object.entries(domStats).find(([,s]) => s.seen === 0);
+
+  // Streak
+  const streak = (typeof getStreak === 'function') ? getStreak(p) : { current: 0 };
+
+  // Próxima conquista
+  const nextAch = ACHIEVEMENTS.find(a => !p.unlockedAchievements.includes(a.id));
+
+  // Último simulado oficial
+  const lastOficial = (p.history || []).find(h => h.oficial);
+
+  // Smart recommendation
+  let recommendation = null;
+  if (!p.stats.totalAnswered) {
+    recommendation = { icon:'🚀', title:'Comece agora!', desc:'Você ainda não respondeu nenhuma questão. Vá ao Banco de Questões para começar.', action:'bank', label:'Ir para o Banco de Questões' };
+  } else if (unseenDomain) {
+    recommendation = { icon:'🆕', title:`Domínio não estudado: ${unseenDomain[0]}`, desc:`Você ainda não praticou questões de "${unseenDomain[0]}". Este domínio vai cair na prova!`, action:'dominios', label:'Ver progresso por domínio' };
+  } else if (weakDomain && (weakDomain[1].correct/weakDomain[1].seen) < 0.6) {
+    const pct = Math.round(weakDomain[1].correct/weakDomain[1].seen*100);
+    recommendation = { icon:'🎯', title:`Foco em: ${weakDomain[0]}`, desc:`Você acertou apenas ${pct}% das questões de "${weakDomain[0]}". Pratique este domínio agora.`, action:'dominios', label:'Praticar este domínio', domain: weakDomain[0] };
+  } else if (streak.current === 0) {
+    recommendation = { icon:'🔥', title:'Retome sua sequência!', desc:'Você não estuda há mais de 1 dia. Faça pelo menos um simulado rápido para manter o ritmo.', action:'simulado', label:'Fazer simulado rápido' };
+  } else if (!lastOficial) {
+    recommendation = { icon:'🎓', title:'Teste seu nível real!', desc:'Você ainda não fez o Simulado Oficial. Ele mede seu desempenho com a pontuação real do exame (0–1000).', action:'oficial', label:'Fazer Simulado Oficial' };
+  } else if (lastOficial && !lastOficial.passed) {
+    recommendation = { icon:'📈', title:'Continue praticando!', desc:`Seu último simulado oficial: ${lastOficial.score}/1000. Você precisa de ${700-lastOficial.score} pontos a mais para aprovação.`, action:'oficial', label:'Refazer Simulado Oficial' };
+  } else {
+    recommendation = { icon:'🏆', title:'Ótimo desempenho!', desc:`Você passou no último simulado oficial com ${lastOficial.score}/1000. Continue praticando para garantir a aprovação.`, action:'bank', label:'Continuar praticando' };
+  }
+
+  const streakHtml = streak.current > 0
+    ? `<div class="dash-streak">${streak.current >= 7 ? '🔥' : '⚡'} <strong>${streak.current}</strong> dia${streak.current>1?'s':''} seguido${streak.current>1?'s':''}</div>` : '';
+
+  const nextAchHtml = nextAch
+    ? `<div class="dash-next-ach">🏅 Próxima conquista: <strong>${nextAch.name}</strong> — ${nextAch.desc}</div>` : '';
+
   el.innerHTML = `
-    <h2>Bem-vindo(a), ${STATE.currentStudent}! 👋</h2>
-    <p class="lead">Estude, pratique e simule sua aprovação na certificação Microsoft Azure AI Fundamentals (AI-901).</p>
-    <div class="dashboard-grid">
-      <div class="stat-card"><span class="stat-value">${info.level}</span><span class="stat-label">Nível atual</span></div>
-      <div class="stat-card"><span class="stat-value">${p.xp}</span><span class="stat-label">XP total</span></div>
-      <div class="stat-card"><span class="stat-value">${p.stats.totalAnswered}</span><span class="stat-label">Questões respondidas</span></div>
-      <div class="stat-card"><span class="stat-value">${accuracy}%</span><span class="stat-label">Taxa de acerto geral</span></div>
-      <div class="stat-card"><span class="stat-value">${p.stats.simuladosCompleted}</span><span class="stat-label">Simulados concluídos</span></div>
-      <div class="stat-card"><span class="stat-value">${(p.stats.labsCompleted || []).length}/${LAB_BANK.length}</span><span class="stat-label">Laboratórios concluídos</span></div>
-      <div class="stat-card"><span class="stat-value">${p.unlockedAchievements.length}/${ACHIEVEMENTS.length}</span><span class="stat-label">Conquistas</span></div>
+    <div class="dash-header">
+      <div class="dash-welcome">
+        <h2>Olá, ${STATE.currentStudent}! 👋</h2>
+        <p>Nível ${info.level} · ${p.xp} XP · ${accuracy}% de aproveitamento</p>
+      </div>
+      <div class="dash-header-right">
+        ${streakHtml}
+      </div>
     </div>
-    <div class="dashboard-actions">
-      <button class="btn btn-primary" data-go="bank">📖 Praticar no Banco de Questões</button>
-      <button class="btn btn-primary" data-go="simulado">📝 Fazer um Simulado</button>
-      <button class="btn btn-primary" data-go="games">🎮 Jogar e Ganhar XP</button>
-      <button class="btn btn-primary" data-go="labs">🧪 Laboratórios Práticos</button>
-      <button class="btn btn-secondary" data-go="ranking">🏆 Ver Ranking</button>
-      <button class="btn btn-secondary" data-go="history">📊 Ver Histórico e Desempenho</button>
+
+    ${recommendation ? `
+    <div class="dash-recommendation" id="dash-rec">
+      <div class="dash-rec-icon">${recommendation.icon}</div>
+      <div class="dash-rec-body">
+        <strong>${recommendation.title}</strong>
+        <p>${recommendation.desc}</p>
+      </div>
+      <button class="btn btn-primary dash-rec-btn" id="dash-rec-btn">${recommendation.label} →</button>
+    </div>` : ''}
+
+    <div class="dash-stats">
+      <div class="stat-card"><span class="stat-value">${p.stats.totalAnswered}</span><span class="stat-label">Questões</span></div>
+      <div class="stat-card"><span class="stat-value">${accuracy}%</span><span class="stat-label">Acerto geral</span></div>
+      <div class="stat-card"><span class="stat-value">${p.stats.simuladosCompleted}</span><span class="stat-label">Simulados</span></div>
+      <div class="stat-card"><span class="stat-value">${(p.stats.labsCompleted||[]).length}</span><span class="stat-label">Labs</span></div>
+      <div class="stat-card"><span class="stat-value">${p.unlockedAchievements.length}</span><span class="stat-label">Conquistas</span></div>
+      <div class="stat-card ${lastOficial ? (lastOficial.passed?'stat-pass':'stat-fail') : ''}">
+        <span class="stat-value">${lastOficial ? lastOficial.score : '—'}</span>
+        <span class="stat-label">Último oficial</span>
+      </div>
+    </div>
+
+    ${nextAchHtml}
+
+    <h3 class="dash-section-title">Acesso rápido</h3>
+    <div class="dash-quick">
+      <button class="dash-quick-btn" data-go="oficial">🎓<span>Simulado Oficial</span></button>
+      <button class="dash-quick-btn" data-go="bank">📖<span>Banco de Questões</span></button>
+      <button class="dash-quick-btn" data-go="simulado">📝<span>Simulado Livre</span></button>
+      <button class="dash-quick-btn" data-go="flashcards">🃏<span>Flashcards</span></button>
+      <button class="dash-quick-btn" data-go="erros">📋<span>Revisar Erros</span></button>
+      <button class="dash-quick-btn" data-go="dominios">📊<span>Por Domínio</span></button>
+      <button class="dash-quick-btn" data-go="plano">📅<span>Plano de Estudo</span></button>
+      <button class="dash-quick-btn" data-go="games">🎮<span>Jogos</span></button>
+      <button class="dash-quick-btn" data-go="labs">🧪<span>Laboratórios</span></button>
+      <button class="dash-quick-btn" data-go="ranking">🏆<span>Ranking</span></button>
     </div>
   `;
-  el.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => showScreen(b.dataset.go)));
+
+  // Recommendation action
+  const recBtn = document.getElementById('dash-rec-btn');
+  if (recBtn) {
+    recBtn.addEventListener('click', () => {
+      if (recommendation.domain) {
+        startSimuladoDominio(recommendation.domain);
+      } else {
+        showScreen(recommendation.action);
+      }
+    });
+  }
+
+  el.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => showScreen(b.dataset.go)));
 };
 
 // ----------------------------------------------------------------------------
@@ -879,6 +969,7 @@ function renderSimuladoReport(record) {
         </div>
         <h4 class="feedback-section-title">🧠 Resumo para memorização</h4>
         <div class="dica-box">💡 ${q.dica}</div>
+        ${(typeof buildArticleLinkHTML === 'function') ? buildArticleLinkHTML(q.domain) : ''}
       </div>
     `;
   }).join("");

@@ -1,17 +1,15 @@
 // ============================================================================
-// DP-900 Prep Hub — Motor da Aplicação (js/app.js)
-// Responsável por: identificação do aluno, navegação da SPA, Banco de
-// Questões (prática), Simulado configurável (Modo Prova / Modo Estudo),
-// gamificação por aluno (XP/níveis/conquistas), competição entre alunos
-// (registro de atividades + rankings por modalidade), persistência em
+// AZ-104 Prep Hub — Motor da Aplicação (js/app.js)
+// Responsável por: landing page, identificação do aluno, navegação da SPA,
+// Banco de Questões (prática), Simulado configurável (Modo Prova / Modo
+// Estudo), gamificação por aluno (XP/níveis/conquistas), competição entre
+// alunos (registro de atividades + rankings por modalidade), persistência em
 // localStorage e alternância de tema claro/escuro.
-// Depende de QUESTION_BANK (js/questions.js), Games (js/games.js) e LAB_BANK
-// (js/labs.js), que devem ser carregados antes deste arquivo no index.html.
-// Mesmo motor do AZ-900 Prep Hub; usa uma chave de armazenamento própria para
-// não colidir com o progresso salvo da trilha AZ-900.
+// Depende de QUESTION_BANK (js/questions.js) e Games (js/games.js), que devem
+// ser carregados antes deste arquivo no index.html.
 // ============================================================================
 
-const STORAGE_KEY = "az900_prep_hub_ai901_state_v1";
+const STORAGE_KEY = "az104_prep_hub_state_v1";
 
 // ----------------------------------------------------------------------------
 // 1) ESTADO E PERSISTÊNCIA (multi-aluno)
@@ -162,8 +160,8 @@ const GENERAL_ACHIEVEMENTS = [
     check: p => p.stats.totalAnswered >= 100 },
   { id: "quinhentas_questoes", name: "Enciclopédia Viva", icon: "🧠", desc: "Responda 500 questões no total.",
     check: p => p.stats.totalAnswered >= 500 },
-  { id: "todos_dominios", name: "Panorama Completo", icon: "🗺️", desc: "Acerte ao menos uma questão de cada um dos 4 domínios do edital.",
-    check: p => p.stats.domainsSeen.length >= 4 },
+  { id: "todos_dominios", name: "Panorama Completo", icon: "🗺️", desc: "Acerte ao menos uma questão de cada um dos 20 domínios do edital.",
+    check: p => p.stats.domainsSeen.length >= 20 },
   { id: "perfeccionista", name: "Perfeccionista", icon: "🎯", desc: "Obtenha 100% de acerto em um simulado com 20 ou mais questões.",
     check: p => p.stats.perfectSimulados >= 1 },
   { id: "maratonista", name: "Maratonista", icon: "🏃", desc: "Complete um simulado de 100 questões.",
@@ -180,24 +178,24 @@ const GENERAL_ACHIEVEMENTS = [
     check: p => p.stats.gamesCompleted.lightning },
   { id: "nivel_5", name: "Ascensão", icon: "⭐", desc: "Alcance o nível 5.",
     check: p => levelInfo(p.xp).level >= 5 },
-  { id: "especialista_ia", name: "Especialista em Dados", icon: "🌟", desc: "Alcance o nível 10.",
+  { id: "especialista_azure", name: "Especialista em Azure", icon: "🌟", desc: "Alcance o nível 10.",
     check: p => levelInfo(p.xp).level >= 10 },
   { id: "praticante", name: "Praticante", icon: "🧪", desc: "Complete seu primeiro laboratório prático no portal do Azure.",
     check: p => (p.stats.labsCompleted || []).length >= 1 },
   { id: "mao_na_massa", name: "Mão na Massa", icon: "🛠️", desc: "Complete 5 laboratórios práticos.",
     check: p => (p.stats.labsCompleted || []).length >= 5 },
-  { id: "arquiteto_ia", name: "Arquiteto de Dados", icon: "☁️", desc: "Complete todos os 10 laboratórios práticos.",
+  { id: "engenheiro_nuvem", name: "Engenheiro de Nuvem", icon: "☁️", desc: "Complete todos os 14 laboratórios práticos.",
     check: p => (p.stats.labsCompleted || []).length >= LAB_BANK.length },
 ];
 
-// Uma conquista "Expert em <domínio>" para cada um dos 4 domínios do edital,
-// desbloqueada quando o aluno acerta ao menos 8 das 20 questões daquele
+// Uma conquista "Expert em <domínio>" para cada um dos 20 domínios do edital,
+// desbloqueada quando o aluno acerta ao menos 8 das 10 questões daquele
 // domínio (contabilizando questões distintas respondidas corretamente).
 const DOMAIN_ACHIEVEMENTS = allDomainsStatic().map(domain => ({
   id: "expert_" + domain.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
   name: "Expert em " + domain,
   icon: "🎓",
-  desc: `Acerte ao menos 8 das 20 questões do domínio "${domain}".`,
+  desc: `Acerte ao menos 8 das 10 questões do domínio "${domain}".`,
   check: p => ((p.stats.domainCorrectIds || {})[domain] || []).length >= 8
 }));
 
@@ -275,8 +273,6 @@ function initNav() {
   if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
   const switchBtn = document.getElementById("switch-student-btn");
   if (switchBtn) switchBtn.addEventListener("click", goToLogin);
-  const backBtn = document.getElementById("back-to-hub-btn");
-  if (backBtn) backBtn.addEventListener("click", () => { window.location.href = "../index.html"; });
 }
 
 function enterApp() {
@@ -291,7 +287,104 @@ function goToLogin() {
 }
 
 // ----------------------------------------------------------------------------
-// 7) IDENTIFICAÇÃO DO ALUNO
+// 7) MÓDULO 0 — LANDING PAGE (escolha de trilha)
+// ----------------------------------------------------------------------------
+RENDERERS.landing = function renderLanding() {
+    const el = document.getElementById("screen-landing");
+    el.innerHTML = `
+        <div class="landing-hero">
+              <h1>Plataforma de Certificações Microsoft</h1>
+                    <p class="lead">Aprenda, pratique e teste seus conhecimentos através de simulados e gamificação.</p>
+                          <div class="landing-tracks">
+                                  <button class="track-card track-active" id="track-azure">
+                                            <span class="track-icon">☁️</span>
+                                                      <h3>Azure</h3>
+                                                                <p>AZ-900 · AI-901 · DP-900</p>
+                                                                        </button>
+                                                                                <button class="track-card track-disabled" id="track-tecnico" disabled>
+                                                                                          <span class="track-icon">💻</span>
+                                                                                                    <h3>Curso Técnico em Informática</h3>
+                                                                                                              <p>Formação técnica completa</p>
+                                                                                                                        <span class="track-badge">Em desenvolvimento. Disponível em breve.</span>
+                                                                                                                                </button>
+                                                                                                                                        <button class="track-card track-active" id="track-cursoslivres">
+                <span class="track-icon">📋</span>
+                          <h3>Cursos Livres</h3>
+                                    <p>MS Project e outras formações rápidas</p>
+                                            </button>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                                  </div>
+                                                                                                                                                                                                    `;
+    document.getElementById("track-azure").addEventListener("click", () => showScreen("azurehub"));
+    document.getElementById("track-cursoslivres").addEventListener("click", () => showScreen("cursoslivreshub"));
+};
+
+// ----------------------------------------------------------------------------
+// 7b) MÓDULO 0b — HUB AZURE (escolha de certificação dentro da trilha Azure)
+// ----------------------------------------------------------------------------
+RENDERERS.azurehub = function renderAzureHub() {
+    const el = document.getElementById("screen-azurehub");
+    el.innerHTML = `
+        <div class="landing-hero">
+              <button class="btn btn-secondary" id="azurehub-back-btn">← Voltar</button>
+                    <h1>☁️ Trilha Azure</h1>
+                          <p class="lead">Escolha a certificação Microsoft Azure que deseja estudar.</p>
+                                <div class="landing-tracks">
+                                        <button class="track-card track-active" id="track-az900">
+                                                  <span class="track-icon">☁️</span>
+                                                            <h3>AZ-900</h3>
+                                                                      <p>Microsoft Azure Administrator</p>
+                                                                              </button>
+                                                                                      <button class="track-card track-active" id="track-ai901">
+                                                                                                <span class="track-icon">🤖</span>
+                                                                                                          <h3>AI-901</h3>
+                                                                                                                    <p>Microsoft AI Fundamentals</p>
+                                                                                                                            </button>
+                                                                                                                                    <button class="track-card track-active" id="track-dp900">
+  <span class="track-icon">📊</span>
+  <h3>DP-900</h3>
+  <p>Microsoft Azure Data Fundamentals</p>
+</button>
+                                                                                                                                                                                          </div>
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                                `;
+    document.getElementById("azurehub-back-btn").addEventListener("click", () => showScreen("landing"));
+    document.getElementById("track-az900").addEventListener("click", goToLogin);
+    document.getElementById("track-ai901").addEventListener("click", () => {
+          window.location.href = "ai901-platform/index.html";
+    });
+    document.getElementById("track-dp900").addEventListener("click", () => {
+          window.location.href = "dp900-platform/index.html";
+    });
+  
+};
+
+// ----------------------------------------------------------------------------
+// 7c) MODULO 0c -- HUB CURSOS LIVRES
+// ----------------------------------------------------------------------------
+RENDERERS.cursoslivreshub = function renderCursosLivresHub() {
+    const el = document.getElementById("screen-cursoslivreshub");
+    el.innerHTML = `
+        <div class="landing-hero">
+              <button class="btn btn-secondary" id="cursoslivres-back-btn">← Voltar</button>
+                    <h1>📋 Cursos Livres</h1>
+                          <p class="lead">Formações rápidas e complementares, fora das trilhas de certificação Microsoft.</p>
+                                <div class="landing-tracks">
+                                        <button class="track-card track-active" id="track-msproject-course">
+                                                  <span class="track-icon">📋</span>
+                                                            <h3>MS Project</h3>
+                                                                      <p>Gestão de projetos com Microsoft Project (32h)</p>
+                                                                              </button>
+                                                                                      </div>
+                                                                                          </div>
+                                                                                            `;
+    document.getElementById("cursoslivres-back-btn").addEventListener("click", () => showScreen("landing"));
+    document.getElementById("track-msproject-course").addEventListener("click", () => {
+          window.location.href = "msproject-platform/index.html";
+    });
+};
+// ----------------------------------------------------------------------------
+// 8) IDENTIFICAÇÃO DO ALUNO
 // ----------------------------------------------------------------------------
 RENDERERS.login = function renderLogin() {
   const el = document.getElementById("screen-login");
@@ -322,7 +415,7 @@ RENDERERS.login = function renderLogin() {
 };
 
 // ----------------------------------------------------------------------------
-// 8) UTILITÁRIOS DE QUESTÕES
+// 9) UTILITÁRIOS DE QUESTÕES
 // ----------------------------------------------------------------------------
 function shuffleArr(arr) {
   const a = arr.slice();
@@ -344,9 +437,9 @@ function prepareQuestion(q) {
     dica: q.dica,
     opts: order.map(i => q.opts[i]),
     exp: order.map(i => q.exp[i]),
-    correct: order.indexOf(q.correct),
-    correctIndex: q.correct,
-    order: order,
+    correct: order.indexOf(q.correct),   // índice embaralhado
+    correctIndex: q.correct,             // índice original (para revisão de erros)
+    order: order,                        // mapeamento embaralhamento
     userAnswer: null,
     flagged: false
   };
@@ -371,6 +464,7 @@ function registerAnswer(domain, isCorrect, questionId) {
 // (usado no Banco de Questões e no Modo Estudo do simulado).
 function buildFeedbackHTML(q, userIndex) {
   const isCorrect = userIndex === q.correct;
+  const articleHTML = (typeof buildArticleLinkHTML === 'function') ? buildArticleLinkHTML(q.domain) : '';
   return `
     <div class="feedback-box ${isCorrect ? "feedback-correct" : "feedback-wrong"}">
       <p class="feedback-title">${isCorrect ? "✅ Resposta correta!" : "❌ Resposta incorreta."}</p>
@@ -386,13 +480,13 @@ function buildFeedbackHTML(q, userIndex) {
           </div>`).join("")}
       </div>
       <div class="dica-box">💡 ${q.dica}</div>
-      ${(typeof buildArticleLinkHTML === 'function') ? buildArticleLinkHTML(q.domain) : ''}
+      ${articleHTML}
     </div>
   `;
 }
 
 // ----------------------------------------------------------------------------
-// 9) DASHBOARD
+// 10) DASHBOARD
 // ----------------------------------------------------------------------------
 RENDERERS.dashboard = function renderDashboard() {
   const el = document.getElementById("screen-dashboard");
@@ -516,7 +610,7 @@ RENDERERS.dashboard = function renderDashboard() {
 };
 
 // ----------------------------------------------------------------------------
-// 10) BANCO DE QUESTÕES (modo prática, com feedback imediato)
+// 11) BANCO DE QUESTÕES (modo prática, com feedback imediato — Módulo 4)
 // ----------------------------------------------------------------------------
 let bankState = { domain: "todos", current: null, answered: 0, correct: 0, lastIds: [] };
 
@@ -524,7 +618,7 @@ RENDERERS.bank = function renderBank() {
   const el = document.getElementById("screen-bank");
   el.innerHTML = `
     <h2>📖 Banco de Questões</h2>
-    <p class="lead">200 questões originais, no estilo Microsoft Learn, cobrindo todos os domínios da DP-900. Pratique com feedback detalhado a cada resposta.</p>
+    <p class="lead">Mais de 200 questões originais, no estilo Microsoft Learn, cobrindo todos os domínios da AZ-900. Pratique com feedback detalhado a cada resposta.</p>
     <div class="bank-controls">
       <label for="bank-domain-select">Domínio:</label>
       <select id="bank-domain-select">
@@ -600,7 +694,7 @@ function answerBankQuestion(index) {
 }
 
 // ----------------------------------------------------------------------------
-// 11) SIMULADO PERSONALIZADO — Modo Prova / Modo Estudo
+// 12) SIMULADO PERSONALIZADO (Módulos 3, 4 e 5) — Modo Prova / Modo Estudo
 // ----------------------------------------------------------------------------
 let simulado = null; // sessão ativa
 
@@ -886,6 +980,7 @@ function finishSimulado() {
   const results = simulado.questions.map(q => ({
     id: q.id,
     correct: q.userAnswer !== null && q.userAnswer === q.correct,
+    // Mapear de volta para índice original: order[userAnswer] = índice original
     chosenIdx: q.userAnswer !== null && q.order ? q.order[q.userAnswer] : q.userAnswer,
   }));
 
@@ -976,16 +1071,16 @@ function renderSimuladoReport(record) {
 }
 
 // ----------------------------------------------------------------------------
-// 12) JOGOS
+// 13) JOGOS
 // ----------------------------------------------------------------------------
 RENDERERS.games = function renderGamesMenu() {
   const el = document.getElementById("screen-games");
   el.innerHTML = `
     <h2>🎮 Gamificação Educacional</h2>
-    <p class="lead">Aprenda conceitos da DP-900 de forma divertida e ganhe XP.</p>
+    <p class="lead">Aprenda conceitos da AZ-900 de forma divertida e ganhe XP.</p>
     <div class="games-grid">
       <div class="game-card" data-game="crossword"><span class="game-icon">🧩</span><h3>Cruzadinha</h3><p>Preencha os termos a partir das dicas.</p></div>
-      <div class="game-card" data-game="wordsearch"><span class="game-icon">🔍</span><h3>Caça-Palavras</h3><p>Encontre termos de IA escondidos no quadro.</p></div>
+      <div class="game-card" data-game="wordsearch"><span class="game-icon">🔍</span><h3>Caça-Palavras</h3><p>Encontre serviços do Azure escondidos no quadro.</p></div>
       <div class="game-card" data-game="dragdrop"><span class="game-icon">🎯</span><h3>Associação de Conceitos</h3><p>Combine termos com suas definições.</p></div>
       <div class="game-card" data-game="lightning"><span class="game-icon">⚡</span><h3>Desafio Relâmpago</h3><p>Responda rápido e ganhe bônus de velocidade.</p></div>
     </div>
@@ -1058,15 +1153,15 @@ function openGame(key) {
 }
 
 // ----------------------------------------------------------------------------
-// 13) LABORATÓRIOS PRÁTICOS (portal real do Azure)
+// 13b) LABORATÓRIOS PRÁTICOS (portal real do Azure)
 // ----------------------------------------------------------------------------
 RENDERERS.labs = function renderLabsMenu() {
   const el = document.getElementById("screen-labs");
   const p = currentProfile();
   el.innerHTML = `
     <h2>🧪 Laboratórios Práticos</h2>
-    <p class="lead">Coloque a mão na massa no portal real do Azure (portal.azure.com). Cada laboratório traz um passo a passo guiado e, ao final, um pequeno teste de verificação — só quem realmente navegou pelas telas responde com facilidade.</p>
-    <div class="labs-warning">⚠️ Use uma assinatura Azure gratuita ou de testes. Alguns recursos criados (bancos de dados, Synapse, etc.) podem gerar custo — exclua os recursos que não for mais utilizar ao final da sessão.</div>
+    <p class="lead">Coloque a mão na massa no portal real do Azure. Cada laboratório traz um passo a passo guiado e, ao final, um pequeno teste de verificação — só quem realmente navegou pelas telas responde com facilidade.</p>
+    <div class="labs-warning">⚠️ Use uma conta Azure gratuita ou de testes. Ao final de cada sessão, não esqueça do Laboratório 14 (Limpeza) para excluir os recursos criados e evitar cobranças.</div>
     <div class="games-grid" id="labs-grid"></div>
     <div id="lab-detail-area"></div>
   `;
@@ -1160,7 +1255,7 @@ function renderLabQuiz(lab, area) {
       });
       const expBox = document.createElement("div");
       expBox.className = "dica-box";
-      expBox.innerHTML = `💡 ${Array.isArray(q.exp) ? q.exp[q.correct] : q.exp}`;
+      expBox.innerHTML = `💡 ${q.exp}`;
       block.appendChild(expBox);
     });
 
