@@ -11,7 +11,7 @@
 // não colidir com o progresso salvo da trilha AZ-900.
 // ============================================================================
 
-const STORAGE_KEY = "az900_prep_hub_ai901_state_v1";
+const STORAGE_KEY = "dp900_prep_hub_state_v1";
 
 // ----------------------------------------------------------------------------
 // 1) ESTADO E PERSISTÊNCIA (multi-aluno)

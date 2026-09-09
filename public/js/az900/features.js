@@ -1,27 +1,4 @@
 
-// ─── PATCH showScreen (executado antes do DOMContentLoaded) ────────────────
-// Aguarda app.js definir showScreen e RENDERERS, depois aplica o patch
-(function waitAndPatch() {
-  function applyPatch() {
-    if (typeof showScreen !== 'function' || typeof RENDERERS === 'undefined') {
-      setTimeout(applyPatch, 50); return;
-    }
-    const _orig = showScreen;
-    window.showScreen = function(name) {
-      // Criar tela se não existir
-      if (!document.getElementById('screen-' + name)) {
-        const el = document.createElement('section');
-        el.id = 'screen-' + name;
-        el.className = 'screen hidden';
-        const main = document.getElementById('app-main') || document.body;
-        main.appendChild(el);
-      }
-      _orig(name);
-      if (RENDERERS[name]) RENDERERS[name]();
-    };
-  }
-  applyPatch();
-})();
 
 // ============================================================================
 // features.js — Módulo de extensão: revisão de erros, progresso por domínio,

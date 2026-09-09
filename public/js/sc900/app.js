@@ -9,7 +9,7 @@
 // ser carregados antes deste arquivo no index.html.
 // ============================================================================
 
-const STORAGE_KEY = "az900_prep_hub_state_v2";
+const STORAGE_KEY = "sc900_prep_hub_state_v1";
 
 // ----------------------------------------------------------------------------
 // 1) ESTADO E PERSISTÊNCIA (multi-aluno)
