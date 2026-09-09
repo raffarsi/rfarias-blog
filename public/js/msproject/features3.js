@@ -504,9 +504,9 @@ const INTERACTIVE_LABS = (function() {
   ];
 
   if (url.includes('sc900')) return sc900Labs;
-  if (url.includes('dp900')) return dp900Labs;
+  if (url.includes('dp900')) return [];
   if (url.includes('ai901')) return [];
-  if (url.includes('ms-project')) return [];
+  if (url.includes('ms-project')) return msprojectLabs;
   return az900Labs; // AZ-900 default
 })();
 
