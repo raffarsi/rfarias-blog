@@ -12,6 +12,9 @@ description: "Trocar UDR por Explicit Proxy parece simples. Até você esquecer 
 prev:
   title: "Azure Networking [5] — VNets privadas por padrão a partir de março de 2026"
   slug: "vnets-privadas-por-padrao-marco-2026"
+next:
+  title: "Azure Networking [7] — Fortinet SD-WAN vs Secured Hub nativa do Azure"
+  slug: "fortinet-sdwan-virtual-wan-secured-hub"
 
 ---
 
