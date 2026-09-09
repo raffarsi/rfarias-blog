@@ -8,6 +8,7 @@
   --coral-light: #fdf0ee;
   --bg: #fafbfd;
   --surface: #ffffff;
+  --surface-alt: #f5f7fa;
   --text: #1c1e21;
   --text-muted: #5f6368;
   --border: #e2e5ea;
@@ -19,10 +20,29 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+/* ── TEMA ESCURO ── */
+[data-theme="dark"] {
+  --blue: #4d8ef7;
+  --blue-dark: #2563eb;
+  --blue-light: #1e2d4a;
+  --coral: #f07060;
+  --coral-light: #2d1f1e;
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface-alt: #22263a;
+  --text: #e8eaf0;
+  --text-muted: #8b90a0;
+  --border: #2e3248;
+  --code-bg: #12141f;
+  --code-text: #cdd6f4;
+}
+
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
 }
 
 html {

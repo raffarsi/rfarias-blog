@@ -31,6 +31,15 @@ const currentPath = Astro.url.pathname;
   <title>{title}</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <SEO title={title} description={description} image={image} type={type} />
+  <!-- Anti-FOUC: aplica tema antes de renderizar -->
+  <script is:inline>
+    (function() {
+      const saved = localStorage.getItem('rfarias-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
 
@@ -68,6 +77,15 @@ const currentPath = Astro.url.pathname;
           </a>
         ))}
       </div>
+
+      <button
+        id="theme-toggle"
+        class="theme-toggle"
+        aria-label="Alternar tema"
+        title="Alternar tema claro/escuro"
+      >
+        <span id="theme-icon">🌙</span>
+      </button>
     </div>
   </nav>
 
@@ -99,15 +117,37 @@ const currentPath = Astro.url.pathname;
   </footer>
 
   <script>
+    // ── Menu mobile ──
     const btn = document.getElementById('menuBtn');
     const links = document.getElementById('navLinks');
     btn?.addEventListener('click', () => {
       links?.classList.toggle('open');
     });
+
+    // ── Tema escuro ──
+    const THEME_KEY = 'rfarias-theme';
+    const toggle = document.getElementById('theme-toggle');
+    const icon = document.getElementById('theme-icon');
+
+    function applyTheme(theme: string) {
+      document.documentElement.setAttribute('data-theme', theme);
+      if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    // Aplicar tema salvo ou preferência do sistema
+    const saved = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (prefersDark ? 'dark' : 'light');
+    applyTheme(initial);
+
+    toggle?.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
   </script>
 </body>
 </html>
-
 <style>
   .nav {
     background: var(--surface);
@@ -168,6 +208,26 @@ const currentPath = Astro.url.pathname;
     color: var(--text);
     cursor: pointer;
     margin-left: auto;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s;
+    margin-left: 0.5rem;
+  }
+  .theme-toggle:hover {
+    border-color: var(--blue);
+    background: var(--blue-light);
   }
 
   .footer {
