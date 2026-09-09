@@ -346,6 +346,8 @@ function prepareQuestion(q) {
     opts: order.map(i => q.opts[i]),
     exp: order.map(i => q.exp[i]),
     correct: order.indexOf(q.correct),
+    correctIndex: q.correct,
+    order: order,
     userAnswer: null,
     flagged: false
   };
@@ -791,12 +793,20 @@ function finishSimulado() {
   p.stats.simuladosCompleted++;
   if (percent === 100 && total >= 20) p.stats.perfectSimulados++;
 
+  // Salvar resultados individuais para revisão de erros
+  const results = simulado.questions.map(q => ({
+    id: q.id,
+    correct: q.userAnswer !== null && q.userAnswer === q.correct,
+    chosenIdx: q.userAnswer !== null && q.order ? q.order[q.userAnswer] : q.userAnswer,
+  }));
+
   const record = {
     date: new Date().toISOString(),
     playerName: simulado.playerName,
     mode: simulado.mode,
     total, correct, percent, timeSpent, performanceLevel,
-    domainStats, topicsMastered, topicsWeak
+    domainStats, topicsMastered, topicsWeak,
+    results,
   };
   p.history.unshift(record);
   saveState();

@@ -30,6 +30,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button class="nav-btn" data-screen="history">📊 Histórico</button>
         <button class="nav-btn" data-screen="achievements">🏅 Conquistas</button>
         <button class="nav-btn" data-screen="ranking">🏆 Ranking</button>
+        <button class="nav-btn" data-screen="erros">📋 Erros</button>
+        <button class="nav-btn" data-screen="dominios">📊 Domínios</button>
+        <button class="nav-btn" data-screen="flashcards">🃏 Flashcards</button>
       </nav>
       <div class="header-right">
         <div id="xp-indicator">
@@ -55,6 +58,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <section id="screen-history" class="screen"></section>
     <section id="screen-achievements" class="screen"></section>
     <section id="screen-ranking" class="screen"></section>
+    <section id="screen-erros" class="screen"></section>
+    <section id="screen-dominios" class="screen"></section>
+    <section id="screen-flashcards" class="screen"></section>
   </main>
 
   <div id="toast-container" aria-live="polite"></div>
@@ -63,6 +69,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <script src="/js/dp900/games.js" is:inline></script>
   <script src="/js/dp900/labs.js" is:inline></script>
   <script src="/js/dp900/app.js" is:inline></script>
+  <script src="/js/dp900/features.js" is:inline></script>
   <script src="/js/dp900/init.js" is:inline></script>
 </BaseLayout>
 
