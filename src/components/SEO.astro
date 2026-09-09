@@ -4,6 +4,9 @@ interface Props {
   description?: string;
   image?: string;
   type?: string;
+  articleDate?: string;
+  articleAuthor?: string;
+  articleSection?: string;
 }
 
 const {
@@ -11,23 +14,46 @@ const {
   description = 'Blog pessoal de Rafael Farias: artigos sobre Azure, Cloud, IA Generativa, docência e carreira em tecnologia.',
   image = '/og-default.png',
   type = 'website',
+  articleDate,
+  articleAuthor = 'Rafael Farias da Silva',
+  articleSection,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
 ---
 
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph -->
+<!-- Open Graph base -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site)} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="rfarias" />
+<meta property="og:locale" content="pt_BR" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.site)} />
+<!-- Article-specific OG -->
+{type === 'article' && articleDate && (
+  <meta property="article:published_time" content={articleDate} />
+)}
+{type === 'article' && (
+  <meta property="article:author" content={articleAuthor} />
+)}
+{type === 'article' && articleSection && (
+  <meta property="article:section" content={articleSection} />
+)}
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+<meta name="twitter:creator" content="@rafael.farias.s" />
+
+<!-- Author -->
+<meta name="author" content="Rafael Farias da Silva" />

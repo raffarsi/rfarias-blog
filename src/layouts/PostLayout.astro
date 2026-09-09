@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Newsletter from '../components/Newsletter.astro';
 
 interface Props {
   frontmatter: {
@@ -19,11 +20,19 @@ interface Props {
 
 const { frontmatter, headings = [] } = Astro.props;
 const isTech = ['azure', 'ia', 'cloud', 'tech'].includes(frontmatter.tag);
+
+// Open Graph
+const ogImage = `/og-default.png`;
 const badgeClass = isTech ? 'badge-tech' : 'badge-carreira';
 const tocHeadings = headings.filter(h => h.depth === 2);
 ---
 
-<BaseLayout title={`${frontmatter.title} — rfarias`} description={frontmatter.description}>
+<BaseLayout
+  title={`${frontmatter.title} — rfarias`}
+  description={frontmatter.description || `${frontmatter.title} — artigo por Rafael Farias sobre ${frontmatter.category}.`}
+  image={ogImage}
+  type="article"
+>
   <article class="container post-page">
     {frontmatter.serie && (
       <div class="serie-banner">
@@ -65,6 +74,8 @@ const tocHeadings = headings.filter(h => h.depth === 2);
         <slot />
       </div>
     </div>
+
+    <Newsletter compact={true} />
 
     {(frontmatter.prev || frontmatter.next) && (
       <nav class="post-nav">

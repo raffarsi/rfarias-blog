@@ -1,0 +1,47 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1f3d"/>
+      <stop offset="100%" style="stop-color:#1a3a6b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1100" cy="80" r="180" fill="#1A56DB" opacity="0.15"/>
+  <circle cx="100" cy="560" r="140" fill="#1A56DB" opacity="0.1"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="8" height="630" fill="#1A56DB"/>
+
+  <!-- Logo mark -->
+  <circle cx="100" cy="120" r="12" fill="#1A56DB"/>
+  <circle cx="72" cy="168" r="12" fill="#1A56DB"/>
+  <circle cx="128" cy="168" r="12" fill="#1A56DB"/>
+  <circle cx="100" cy="152" r="9" fill="#E84F4F"/>
+  <line x1="100" y1="132" x2="100" y2="143" stroke="#1A56DB" stroke-width="4"/>
+  <line x1="93" y1="158" x2="77" y2="166" stroke="#1A56DB" stroke-width="4"/>
+  <line x1="107" y1="158" x2="123" y2="166" stroke="#1A56DB" stroke-width="4"/>
+
+  <!-- Logo text -->
+  <text x="148" y="175" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="white">rfarias</text>
+
+  <!-- Main title -->
+  <text x="100" y="310" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="white">Tecnologia, Cloud e IA</text>
+  <text x="100" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="400" fill="#93b8f0">por Rafael Farias da Silva</text>
+
+  <!-- Tags -->
+  <rect x="100" y="440" width="130" height="40" rx="20" fill="#1A56DB" opacity="0.8"/>
+  <text x="165" y="466" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="600" fill="white">Azure</text>
+
+  <rect x="248" y="440" width="80" height="40" rx="20" fill="#1A56DB" opacity="0.5"/>
+  <text x="288" y="466" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="600" fill="white">IA</text>
+
+  <rect x="346" y="440" width="140" height="40" rx="20" fill="#1A56DB" opacity="0.5"/>
+  <text x="416" y="466" text-anchor="middle" font-family="system-ui" font-size="18" font-weight="600" fill="white">Carreira</text>
+
+  <!-- URL -->
+  <text x="100" y="580" font-family="system-ui" font-size="24" fill="#93b8f0" opacity="0.8">rfarias.com</text>
+</svg>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
+import Newsletter from '../components/Newsletter.astro';
 
 const allPosts = [
 // Posts das 4 séries fundamentals (Mar-Mai 2026)
@@ -67,16 +68,36 @@ const counts = {
 <BaseLayout>
   <div class="container home">
 
-    <!-- Credenciais -->
-    <div class="credentials">
-      <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" class="cred-avatar" />
-      <div class="cred-item">🏢 <span class="cred-number">17+ anos</span> em tecnologia</div>
-      <div class="cred-sep"></div>
-      <div class="cred-item">🎓 <span class="cred-number">Professor</span> Senac Osasco</div>
-      <div class="cred-sep"></div>
-      <div class="cred-item">🎤 <span class="cred-number">Palestrante</span> MVPConf</div>
-      <div class="cred-sep"></div>
-      <div class="cred-item">📚 <span class="cred-number">Mestrando</span> em IA</div>
+    <!-- Hero pessoal -->
+    <div class="personal-hero">
+      <div class="personal-hero-left">
+        <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" class="personal-avatar" />
+      </div>
+      <div class="personal-hero-right">
+        <h1 class="personal-name">Rafael Farias da Silva</h1>
+        <p class="personal-bio">
+          Software Engineer &amp; IT Auditor no Bradesco com 17+ anos de experiência.
+          Professor no Senac Osasco, palestrante em eventos de tecnologia e mestrando em IA.
+          Aqui escrevo sobre <strong>Azure, Cloud e IA Generativa</strong> — com casos reais, sem enrolação.
+        </p>
+        <div class="personal-badges">
+          <span class="pb">🏢 17+ anos em TI</span>
+          <span class="pb">🎓 Professor Senac</span>
+          <span class="pb">🎤 Palestrante</span>
+          <span class="pb">📚 Mestrando em IA</span>
+        </div>
+        <div class="personal-links">
+          <a href="https://linkedin.com/in/rafael-farias-da-silva" target="_blank" rel="noopener" class="pl-link pl-linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://instagram.com/rafael.farias.s" target="_blank" rel="noopener" class="pl-link pl-ig">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @rafael.farias.s
+          </a>
+          <a href="/sobre" class="pl-link pl-sobre">Saiba mais →</a>
+        </div>
+      </div>
     </div>
 
     <section class="hero-section">
@@ -132,6 +153,8 @@ const counts = {
     </div>
 
     <div class="carousel-dots" id="carouselDots"></div>
+
+    <Newsletter />
 
     <div class="ver-todos">
       <a href="/artigos">Ver todos os {counts.todos} artigos →</a>
@@ -201,21 +224,83 @@ const counts = {
 <style>
   .home { padding-top: 2rem; padding-bottom: 2rem; }
 
-  .credentials {
+  /* Hero pessoal */
+  .personal-hero {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.875rem 1.25rem;
-    margin-bottom: 1.5rem;
+    gap: 1.75rem;
+    align-items: flex-start;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    flex-wrap: wrap;
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
   }
-  .cred-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--blue-light); flex-shrink: 0; }
-  .cred-item { font-size: 0.8125rem; color: var(--text-muted); white-space: nowrap; }
-  .cred-number { font-weight: 700; color: var(--blue); }
-  .cred-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .personal-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 3px solid var(--blue-light, #EBF3FF);
+    flex-shrink: 0;
+  }
+  .personal-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .personal-bio {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.875rem;
+    max-width: 560px;
+  }
+  .personal-bio strong { color: var(--text); }
+  .personal-badges {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.875rem;
+  }
+  .pb {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--blue-light, #EBF3FF);
+    color: var(--blue);
+    white-space: nowrap;
+  }
+  .personal-links {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .pl-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .pl-linkedin { background: #0077b5; color: #fff; }
+  .pl-linkedin:hover { opacity: 0.9; }
+  .pl-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+  .pl-ig:hover { opacity: 0.9; }
+  .pl-sobre { color: var(--blue); border: 1px solid var(--blue); }
+  .pl-sobre:hover { background: var(--blue); color: #fff; }
+
+  @media (max-width: 580px) {
+    .personal-hero { flex-direction: column; gap: 1rem; }
+    .personal-avatar { width: 72px; height: 72px; }
+    .personal-name { font-size: 1.125rem; }
+  }
 
   .hero-section { margin-bottom: 1.5rem; }
 
