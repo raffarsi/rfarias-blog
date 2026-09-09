@@ -9,12 +9,12 @@ serieSlug: "serie-azure-networking-ia"
 date: "26 Ago 2026"
 readTime: "10 min"
 description: "Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. Spoiler: são pelo menos 4 saltos de rede escondidos numa única chamada — e a rede pode estar dominando mais que o modelo."
-prev:
-  title: "Azure Networking [1] — ExpressRoute 400G: vale a pena migrar?"
-  slug: "expressroute-400g-vale-a-pena-migrar"
 next:
   title: "Azure Networking [5] — VNets privadas por padrão a partir de março de 2026"
   slug: "vnets-privadas-por-padrao-marco-2026"
+prev:
+  title: "Azure Networking [3] — DNS privado em arquiteturas de IA multi-VNet"
+  slug: "dns-privado-arquiteturas-ia-multi-vnet"
 
 ---
 

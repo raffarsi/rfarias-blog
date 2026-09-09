@@ -7,18 +7,18 @@ const totalArtigos = 20;
 
 // Artigos publicados (em ordem da série)
 const publicados = [
-  { num:1,  slug:'expressroute-400g-vale-a-pena-migrar',    title:'ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa',              date:'8 Set 2026', readTime:'9 min',  excerpt:'A pergunta certa não é "dá pra ter" — é "eu preciso disso ou só quero o número maior".' },
-  { num:4,  slug:'latencia-rede-pipelines-rag-azure',       title:'Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI',  date:'26 Ago 2026', readTime:'10 min', excerpt:'Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. São 4 saltos de rede escondidos numa única chamada.' },
-  { num:5,  slug:'vnets-privadas-por-padrao-marco-2026',    title:'VNets privadas por padrão a partir de março de 2026: o que isso quebra e como migrar', date:'2 Set 2026',  readTime:'9 min',  excerpt:'Em março de 2026 o Azure muda o padrão. Se sua automação depende do comportamento antigo, vai quebrar.' },
-  { num:6,  slug:'azure-firewall-explicit-proxy-vs-udr',    title:'Azure Firewall com Explicit Proxy: guia prático e quando faz sentido trocar UDR',      date:'4 Set 2026',  readTime:'10 min', excerpt:'Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado — e derrubar todo o tráfego.' },
+  { num:1,  slug:'azure-openai-exposto-na-internet-private-link', title:'Seu Azure OpenAI está exposto na internet — e você provavelmente sabe',                                    date:'19 Ago 2026', readTime:'9 min',  excerpt:'Pipelines de RAG sobem em produção com acesso público "por enquanto" — e o por enquanto nunca acaba.' },
+  { num:2,  slug:'hub-and-spoke-ia-generativa-azure',             title:'Hub-and-spoke para IA generativa: onde colocar AI Foundry, Search e Storage na topologia',              date:'21 Ago 2026', readTime:'10 min', excerpt:'A topologia "óbvia" quebra a governança assim que a segunda squad de IA aparece.' },
+  { num:3,  slug:'dns-privado-arquiteturas-ia-multi-vnet',        title:'DNS privado em arquiteturas de IA multi-VNet: os erros mais comuns',                                     date:'26 Ago 2026', readTime:'10 min', excerpt:'O Private Endpoint está configurado certo. O recurso responde no telnet. E mesmo assim a aplicação não resolve o nome.' },
+  { num:4,  slug:'latencia-rede-pipelines-rag-azure',             title:'Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI',                   date:'26 Ago 2026', readTime:'10 min', excerpt:'Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. São pelo menos 4 saltos de rede escondidos numa única chamada.' },
+  { num:5,  slug:'vnets-privadas-por-padrao-marco-2026',          title:'VNets privadas por padrão a partir de março de 2026: o que isso quebra e como migrar sem downtime',     date:'2 Set 2026',  readTime:'9 min',  excerpt:'Em março de 2026 o Azure muda o padrão. Se sua automação depende do comportamento antigo, ela vai quebrar.' },
+  { num:6,  slug:'azure-firewall-explicit-proxy-vs-udr',          title:'Azure Firewall com Explicit Proxy: guia prático e quando faz sentido trocar UDR por proxy',             date:'4 Set 2026',  readTime:'10 min', excerpt:'Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado — e derrubar todo o tráfego de saída.' },
+  { num:1,  slug:'expressroute-400g-vale-a-pena-migrar',          title:'ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa',                               date:'8 Set 2026',  readTime:'9 min',  excerpt:'A pergunta certa não é "dá pra ter" — é "eu preciso disso ou só quero o número maior".' },
 ];
 
 // Artigos em breve (ainda não publicados)
 const emBreve = [
-  { num:2,  title:'Hub-and-Spoke com Azure Firewall: a arquitetura de referência para IA Generativa' },
-  { num:3,  title:'Private Endpoints para Azure OpenAI e AI Search: passo a passo com Bicep' },
-  { num:7,  title:'DNS privado no Azure: resolução de nomes para Private Endpoints' },
-  { num:8,  title:'Azure Front Door vs Application Gateway: quando usar cada um em frente ao seu agente de IA' },
+  { num:7,  title:'Azure Front Door vs Application Gateway: quando usar cada um em frente ao seu agente de IA' },
   { num:9,  title:'Network Security Groups vs Azure Firewall: onde cada um faz sentido' },
   { num:10, title:'Monitoramento de rede com Network Watcher e Connection Monitor' },
   { num:11, title:'VPN Gateway vs ExpressRoute: como escolher a conectividade híbrida certa' },
