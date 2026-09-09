@@ -469,6 +469,106 @@ const INTERACTIVE_LABS = (function() {
         },
       ],
     },
+    {
+      id: 'ilab-sc900-02',
+      title: 'Aplicar Zero Trust na prática',
+      domain: 'Conceitos de Segurança',
+      intro: 'Neste lab você vai identificar qual princípio do modelo Zero Trust está sendo aplicado ou violado em cada cenário corporativo.',
+      steps: [
+        {
+          instruction: 'Um funcionário acessa o sistema de RH a partir de um dispositivo pessoal não gerenciado. O que o modelo Zero Trust recomenda?',
+          type: 'choice',
+          options: [
+            'Bloquear o acesso completamente — apenas dispositivos corporativos são permitidos',
+            'Permitir o acesso normalmente — o usuário já foi autenticado com senha',
+            'Aplicar Acesso Condicional: verificar conformidade do dispositivo, exigir MFA e limitar acesso a dados sensíveis',
+            'Enviar um e-mail pedindo para o usuário usar o computador corporativo',
+          ],
+          correct: 2,
+          feedback: 'Correto! Zero Trust não bloqueia nem libera tudo — avalia o risco em tempo real. O Acesso Condicional verifica identidade, saúde do dispositivo e contexto antes de decidir o nível de acesso.',
+        },
+        {
+          instruction: 'Qual é o princípio central do modelo Zero Trust?',
+          type: 'choice',
+          options: [
+            'Confiar em usuários dentro da rede corporativa e desconfiar de usuários externos',
+            'Nunca confiar, sempre verificar — independente de onde o acesso vem',
+            'Usar VPN para todo acesso remoto',
+            'Criptografar todos os dados em repouso',
+          ],
+          correct: 1,
+          feedback: 'Correto! "Never trust, always verify" é o mantra do Zero Trust. Elimina o conceito de perímetro de rede seguro — mesmo dentro da rede corporativa, cada acesso é verificado.',
+        },
+        {
+          instruction: 'Uma empresa migrou para nuvem e quer implementar Zero Trust. Qual é o primeiro passo recomendado?',
+          type: 'choice',
+          options: [
+            'Comprar um firewall de nova geração',
+            'Fortalecer a identidade — habilitar MFA para todos e implementar Acesso Condicional',
+            'Criptografar todos os discos dos computadores',
+            'Treinar todos os funcionários em segurança',
+          ],
+          correct: 1,
+          feedback: 'Correto! Identidade é o novo perímetro no modelo Zero Trust. Sem controle forte de identidade (MFA + Acesso Condicional), os outros controles perdem eficácia. A Microsoft recomenda começar pela identidade.',
+        },
+        {
+          instruction: 'Qual ferramenta Microsoft implementa o pilar "verificar explicitamente" do Zero Trust para acesso a aplicações?',
+          type: 'choice',
+          options: [
+            'Microsoft Defender for Endpoint',
+            'Microsoft Entra ID com Acesso Condicional',
+            'Microsoft Sentinel',
+            'Microsoft Purview',
+          ],
+          correct: 1,
+          feedback: 'Correto! O Acesso Condicional do Microsoft Entra ID é o motor de Zero Trust para acesso a aplicações — avalia identidade, dispositivo, localização e risco em tempo real antes de conceder acesso.',
+        },
+      ],
+    },
+    {
+      id: 'ilab-sc900-03',
+      title: 'Identificar soluções de segurança Microsoft',
+      domain: 'Soluções de Segurança',
+      intro: 'Neste lab você vai praticar a escolha da solução de segurança Microsoft correta para cada cenário real.',
+      steps: [
+        {
+          instruction: 'O SOC da sua empresa precisa de uma solução para coletar logs de segurança de toda a infraestrutura Azure e on-premises, detectar ameaças com IA e responder a incidentes. Qual serviço usar?',
+          type: 'choice',
+          options: [
+            'Microsoft Defender for Cloud',
+            'Microsoft Sentinel',
+            'Microsoft Defender for Endpoint',
+            'Azure Firewall',
+          ],
+          correct: 1,
+          feedback: 'Correto! Microsoft Sentinel é o SIEM/SOAR nativo do Azure — coleta logs de múltiplas fontes, usa IA para detectar ameaças e automatiza respostas a incidentes. É a plataforma central do SOC moderno.',
+        },
+        {
+          instruction: 'A equipe de segurança quer monitorar a postura de segurança de VMs, bancos de dados e containers no Azure e receber recomendações de correção. Qual serviço?',
+          type: 'choice',
+          options: [
+            'Microsoft Sentinel',
+            'Microsoft Defender for Cloud',
+            'Microsoft Entra ID Protection',
+            'Azure DDoS Protection',
+          ],
+          correct: 1,
+          feedback: 'Correto! Microsoft Defender for Cloud é o CSPM (Cloud Security Posture Management) — monitora a postura de segurança dos recursos Azure, calcula o Secure Score e fornece recomendações priorizadas de correção.',
+        },
+        {
+          instruction: 'Um computador corporativo foi comprometido por malware. Qual solução Microsoft detecta e responde automaticamente a essa ameaça no endpoint?',
+          type: 'choice',
+          options: [
+            'Microsoft Defender for Cloud',
+            'Microsoft Sentinel',
+            'Microsoft Defender for Endpoint',
+            'Microsoft Entra ID Protection',
+          ],
+          correct: 2,
+          feedback: 'Correto! Microsoft Defender for Endpoint (MDE) é a solução EDR (Endpoint Detection and Response) — detecta comportamentos maliciosos, isola o dispositivo comprometido e fornece investigação forense do incidente.',
+        },
+      ],
+    },
   ];
 
   const dp900Labs = [
