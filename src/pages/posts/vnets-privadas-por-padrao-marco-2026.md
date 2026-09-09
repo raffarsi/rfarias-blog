@@ -9,9 +9,13 @@ serieSlug: "serie-azure-networking-ia"
 date: "2 Set 2026"
 readTime: "9 min"
 description: "A partir de 31 de março de 2026, VNets criadas no Azure nascem privadas por padrão. Se sua automação depende do comportamento antigo, ela vai quebrar. Guia completo de migração sem downtime."
+prev:
+  title: "Azure Networking [4] — Latência de rede em pipelines RAG"
+  slug: "latencia-rede-pipelines-rag-azure"
 next:
-  title: "Azure Firewall com Explicit Proxy: quando faz sentido trocar UDR por proxy"
+  title: "Azure Networking [6] — Azure Firewall com Explicit Proxy vs UDR"
   slug: "azure-firewall-explicit-proxy-vs-udr"
+
 ---
 
 Em março de 2026 o Azure muda o comportamento padrão de Virtual Networks: recursos implantados em VNets novas não terão mais acesso implícito à internet por padrão. Se sua automação, seus pipelines de CI/CD ou seus templates de IaC dependem do comportamento antigo, eles vão quebrar — silenciosamente, na maioria dos casos.

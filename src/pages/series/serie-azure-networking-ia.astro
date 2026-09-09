@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const color    = '#1A56DB';
+const colorBg  = '#EBF3FF';
+const totalArtigos = 20;
+
+// Artigos publicados (em ordem da série)
+const publicados = [
+  { num:1,  slug:'expressroute-400g-vale-a-pena-migrar',    title:'ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa',              date:'8 Set 2026', readTime:'9 min',  excerpt:'A pergunta certa não é "dá pra ter" — é "eu preciso disso ou só quero o número maior".' },
+  { num:4,  slug:'latencia-rede-pipelines-rag-azure',       title:'Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI',  date:'26 Ago 2026', readTime:'10 min', excerpt:'Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. São 4 saltos de rede escondidos numa única chamada.' },
+  { num:5,  slug:'vnets-privadas-por-padrao-marco-2026',    title:'VNets privadas por padrão a partir de março de 2026: o que isso quebra e como migrar', date:'2 Set 2026',  readTime:'9 min',  excerpt:'Em março de 2026 o Azure muda o padrão. Se sua automação depende do comportamento antigo, vai quebrar.' },
+  { num:6,  slug:'azure-firewall-explicit-proxy-vs-udr',    title:'Azure Firewall com Explicit Proxy: guia prático e quando faz sentido trocar UDR',      date:'4 Set 2026',  readTime:'10 min', excerpt:'Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado — e derrubar todo o tráfego.' },
+];
+
+// Artigos em breve (ainda não publicados)
+const emBreve = [
+  { num:2,  title:'Hub-and-Spoke com Azure Firewall: a arquitetura de referência para IA Generativa' },
+  { num:3,  title:'Private Endpoints para Azure OpenAI e AI Search: passo a passo com Bicep' },
+  { num:7,  title:'DNS privado no Azure: resolução de nomes para Private Endpoints' },
+  { num:8,  title:'Azure Front Door vs Application Gateway: quando usar cada um em frente ao seu agente de IA' },
+  { num:9,  title:'Network Security Groups vs Azure Firewall: onde cada um faz sentido' },
+  { num:10, title:'Monitoramento de rede com Network Watcher e Connection Monitor' },
+  { num:11, title:'VPN Gateway vs ExpressRoute: como escolher a conectividade híbrida certa' },
+  { num:12, title:'Azure DDoS Protection: o que protege e o que não protege' },
+  { num:13, title:'Roteamento BGP no ExpressRoute: filtros de rota e peering communities' },
+  { num:14, title:'Azure Virtual WAN: quando a rede de hub único não escala mais' },
+  { num:15, title:'Private Link Service: expondo serviços internos com segurança' },
+  { num:16, title:'Segmentação de rede para workloads de IA: subnets, NSGs e micro-segmentação' },
+  { num:17, title:'Latência P99 em produção: como instrumentar e monitorar pipelines RAG' },
+  { num:18, title:'Conectividade multi-região: replicação de dados e failover de rede' },
+  { num:19, title:'Checklist de rede antes de ir para produção com IA Generativa' },
+  { num:20, title:'Padrões de arquitetura: 5 topologias de rede para IA Generativa no Azure' },
+];
+
+const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
+---
+
+<BaseLayout
+  title="Série Azure Networking + IA Generativa — rfarias"
+  description="Série completa de 20 artigos sobre Azure Networking e IA Generativa — arquitetura de referência, decisões de rede e os erros mais comuns em produção."
+>
+  <div class="container serie-page">
+
+    <nav class="serie-breadcrumb">
+      <a href="/artigos">Artigos</a>
+      <span>›</span>
+      <a href="/series">Séries</a>
+      <span>›</span>
+      <span>Azure Networking + IA Generativa</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="serie-hero" style={`border-left: 5px solid ${color}`}>
+      <div class="serie-hero-cert" style={`background:${colorBg};color:${color}`}>Série em andamento</div>
+      <h1 class="serie-hero-title">Azure Networking + IA Generativa</h1>
+      <p class="serie-hero-desc">
+        Arquitetura de referência, decisões de rede e os erros mais comuns em produção.
+        Uma série de {totalArtigos} artigos publicados às terças e quintas — com casos reais do ambiente corporativo.
+      </p>
+      <div class="serie-hero-meta">
+        <span>📄 {totalArtigos} artigos planejados</span>
+        <span>✅ {publicados.length} publicados</span>
+        <span>⏱ ~{tempoTotal} min lidos até agora</span>
+        <span style="color:var(--blue)">📅 Terças e quintas</span>
+      </div>
+    </div>
+
+    <!-- Progresso -->
+    <div class="serie-progress-bar-wrap">
+      <div class="serie-progress-label">
+        <span>Progresso da série</span>
+        <span>{publicados.length}/{totalArtigos} artigos</span>
+      </div>
+      <div class="serie-progress-track">
+        <div class="serie-progress-fill" style={`width:${Math.round(publicados.length/totalArtigos*100)}%`}></div>
+      </div>
+    </div>
+
+    <div class="serie-progress-hint">
+      <span>💡 Leia em ordem — cada artigo constrói sobre o anterior.</span>
+      <a href={`/posts/${publicados[0].slug}`} class="btn-start-serie">Começar do início →</a>
+    </div>
+
+    <!-- Publicados -->
+    <h2 class="serie-section-title">✅ Publicados</h2>
+    <ol class="serie-posts-full">
+      {publicados.map((p, i) => (
+        <li class="serie-post-row">
+          <div class="spr-num" style={`background:${colorBg};color:${color}`}>{p.num}</div>
+          <div class="spr-body">
+            <a href={`/posts/${p.slug}`} class="spr-title">{p.title}</a>
+            <p class="spr-excerpt">{p.excerpt}</p>
+            <div class="spr-meta">
+              <span>{p.date}</span>
+              <span>⏱ {p.readTime}</span>
+              {i === 0 && <span class="spr-badge">Comece aqui</span>}
+            </div>
+          </div>
+          <a href={`/posts/${p.slug}`} class="spr-cta">Ler →</a>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Em breve -->
+    <h2 class="serie-section-title proximos">📅 Próximos artigos</h2>
+    <div class="embreve-grid">
+      {emBreve.map(p => (
+        <div class="embreve-card">
+          <span class="embreve-num" style={`background:${colorBg};color:${color}`}>{p.num}</span>
+          <span class="embreve-title">{p.title}</span>
+          <span class="embreve-badge">Em breve</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA seguir -->
+    <div class="serie-follow-cta">
+      <div class="serie-follow-inner">
+        <p>Sigo publicando terças e quintas. Acompanhe no LinkedIn para não perder.</p>
+        <a
+          href="https://linkedin.com/in/rafael-farias-da-silva"
+          target="_blank" rel="noopener"
+          class="btn-linkedin"
+        >
+          Seguir no LinkedIn →
+        </a>
+      </div>
+    </div>
+
+    <div class="serie-footer">
+      <a href="/series" class="btn-outline-blue">← Ver todas as séries</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .serie-page { padding: 1.5rem 0 3rem; max-width: 780px; }
+  .serie-breadcrumb { display:flex; gap:0.5rem; align-items:center; font-size:0.8125rem; color:var(--text-muted); margin-bottom:1.5rem; flex-wrap:wrap; }
+  .serie-breadcrumb a { color:var(--blue); }
+
+  .serie-hero { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.75rem; margin-bottom:1.25rem; }
+  .serie-hero-cert { display:inline-block; font-size:0.75rem; font-weight:800; padding:3px 14px; border-radius:20px; margin-bottom:0.75rem; letter-spacing:0.06em; }
+  .serie-hero-title { font-size:1.625rem; font-weight:800; margin-bottom:0.625rem; }
+  .serie-hero-desc { color:var(--text-muted); line-height:1.6; margin-bottom:1rem; }
+  .serie-hero-meta { display:flex; gap:1.25rem; align-items:center; font-size:0.875rem; color:var(--text-muted); flex-wrap:wrap; }
+
+  .serie-progress-bar-wrap { margin-bottom:0.5rem; }
+  .serie-progress-label { display:flex; justify-content:space-between; font-size:0.8125rem; color:var(--text-muted); margin-bottom:0.375rem; }
+  .serie-progress-track { height:8px; background:var(--border); border-radius:4px; overflow:hidden; }
+  .serie-progress-fill { height:100%; background:var(--blue); border-radius:4px; transition:width 0.6s; }
+
+  .serie-progress-hint { display:flex; justify-content:space-between; align-items:center; background:var(--surface-alt,#f8f9fa); border:1px solid var(--border); border-radius:10px; padding:0.875rem 1.25rem; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; font-size:0.875rem; color:var(--text-muted); }
+  .btn-start-serie { font-size:0.875rem; font-weight:700; color:var(--blue); white-space:nowrap; }
+
+  .serie-section-title { font-size:1rem; font-weight:700; margin:1.5rem 0 0.75rem; }
+  .serie-section-title.proximos { color:var(--text-muted); }
+
+  .serie-posts-full { list-style:none; padding:0; margin:0 0 2rem; border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .serie-post-row { display:flex; gap:1.25rem; align-items:flex-start; padding:1.25rem 1.5rem; border-bottom:1px solid var(--border); transition:background 0.15s; }
+  .serie-post-row:last-child { border-bottom:none; }
+  .serie-post-row:hover { background:var(--surface-alt,#f8f9fa); }
+  .spr-num { flex-shrink:0; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.875rem; font-weight:800; margin-top:2px; }
+  .spr-body { flex:1; min-width:0; }
+  .spr-title { font-size:1rem; font-weight:700; color:var(--text); line-height:1.4; display:block; margin-bottom:0.375rem; }
+  .spr-title:hover { color:var(--blue); }
+  .spr-excerpt { font-size:0.8125rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.5rem; }
+  .spr-meta { display:flex; gap:0.875rem; align-items:center; font-size:0.75rem; color:var(--text-muted); flex-wrap:wrap; }
+  .spr-badge { background:var(--blue); color:#fff; font-size:0.6875rem; font-weight:700; padding:2px 8px; border-radius:20px; }
+  .spr-cta { flex-shrink:0; font-size:0.875rem; font-weight:700; color:var(--blue); align-self:center; white-space:nowrap; }
+
+  .embreve-grid { display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem; }
+  .embreve-card { display:flex; align-items:center; gap:0.875rem; padding:0.75rem 1.25rem; border-bottom:1px solid var(--border); }
+  .embreve-card:last-child { border-bottom:none; }
+  .embreve-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; }
+  .embreve-title { flex:1; font-size:0.875rem; color:var(--text-muted); line-height:1.4; }
+  .embreve-badge { flex-shrink:0; font-size:0.6875rem; font-weight:600; color:var(--text-muted); background:var(--surface-alt,#f5f5f5); border:1px solid var(--border); padding:2px 8px; border-radius:20px; }
+
+  .serie-follow-cta { background:linear-gradient(135deg,#0f1f3d,#1a3a6b); border-radius:14px; padding:1.75rem; margin-bottom:1.5rem; text-align:center; }
+  .serie-follow-inner p { color:rgba(255,255,255,0.85); margin-bottom:1rem; font-size:0.9375rem; }
+  .btn-linkedin { display:inline-block; background:var(--blue); color:#fff; font-weight:700; padding:0.625rem 1.5rem; border-radius:8px; font-size:0.875rem; transition:opacity 0.15s; }
+  .btn-linkedin:hover { opacity:0.9; }
+
+  .serie-footer { display:flex; gap:1rem; margin-top:1rem; }
+  .btn-outline-blue { padding:0.625rem 1.25rem; border:1.5px solid var(--blue); color:var(--blue); border-radius:8px; font-weight:600; font-size:0.875rem; transition:all 0.15s; }
+  .btn-outline-blue:hover { background:var(--blue); color:#fff; }
+
+  @media(max-width:600px) {
+    .serie-post-row { flex-wrap:wrap; gap:0.75rem; }
+    .spr-cta { display:none; }
+    .embreve-badge { display:none; }
+  }
+</style>

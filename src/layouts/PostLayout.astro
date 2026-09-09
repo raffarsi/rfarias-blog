@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Newsletter from '../components/Newsletter.astro';
+import Comments from '../components/Comments.astro';
 
 interface Props {
   frontmatter: {
@@ -101,6 +102,8 @@ const tocHeadings = headings.filter(h => h.depth === 2);
         </a>
       </div>
     )}
+
+    <Comments title={frontmatter.title} />
   </article>
 </BaseLayout>
 

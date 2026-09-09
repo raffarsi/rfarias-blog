@@ -10,8 +10,9 @@ date: "4 Set 2026"
 readTime: "10 min"
 description: "Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado — e derrubar todo o tráfego de saída. Guia completo com a pegadinha que ninguém vê chegando."
 prev:
-  title: "ExpressRoute 400G: vale a pena migrar?"
-  slug: "expressroute-400g-vale-a-pena-migrar"
+  title: "Azure Networking [5] — VNets privadas por padrão a partir de março de 2026"
+  slug: "vnets-privadas-por-padrao-marco-2026"
+
 ---
 
 Trocar UDR por Explicit Proxy no Azure Firewall parece uma mudança simples. Você lê a documentação, habilita o proxy na Firewall Policy, aponta a variável `HTTPS_PROXY` nas aplicações e pronto. Até você esquecer do certificado — e derrubar todo o tráfego de saída dos containers de produção.

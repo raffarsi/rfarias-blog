@@ -9,6 +9,10 @@ serieSlug: "serie-azure-networking-ia"
 date: "8 Set 2026"
 readTime: "9 min"
 description: "A Microsoft agora oferece portas ExpressRoute Direct de 400 Gbps. Mas a pergunta certa não é 'dá pra ter' — é 'eu preciso disso ou só quero o número maior'."
+next:
+  title: "Azure Networking [4] — Latência de rede em pipelines RAG"
+  slug: "latencia-rede-pipelines-rag-azure"
+
 ---
 
 A Microsoft passou a oferecer portas ExpressRoute Direct de 400 Gbps em locais selecionados. A notícia circulou, os slides apareceram nas apresentações e inevitavelmente alguém no seu comitê de arquitetura vai perguntar: *"precisamos migrar para 400G?"*
