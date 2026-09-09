@@ -4,16 +4,18 @@ title: "DP-900 na prática [4] — Analytics, Synapse e Power BI"
 category: "Azure"
 tag: "azure"
 serie: "DP-900 na prática"
+serieSlug: "dp900"
 serieNum: 4
 date: "9 Mai 2026"
 readTime: "10 min"
 description: "Azure Synapse Analytics, Data Lake, Azure Databricks e Power BI para analytics moderno."
 prev:
-  title: "DP-900 na prática [3] — Dados não relacionais"
+  title: "DP-900 [3] — Dados Não Relacionais"
   slug: "dp900-03-dados-nao-relacionais"
 next:
-  title: "DP-900 na prática [5] — Pipelines e governança de dados"
+  title: "DP-900 [5] — Pipelines e Governança"
   slug: "dp900-05-pipelines-governanca"
+
 ---
 
 Analytics é o processo de transformar dados brutos em insights acionáveis. O DP-900 cobre toda a stack de analytics moderna do Azure.

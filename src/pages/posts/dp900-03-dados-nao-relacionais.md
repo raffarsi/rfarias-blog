@@ -4,16 +4,18 @@ title: "DP-900 na prática [3] — Dados não relacionais e Cosmos DB"
 category: "Azure"
 tag: "azure"
 serie: "DP-900 na prática"
+serieSlug: "dp900"
 serieNum: 3
 date: "5 Mai 2026"
 readTime: "9 min"
 description: "Azure Cosmos DB, tipos de NoSQL e Azure Storage para dados não relacionais."
 prev:
-  title: "DP-900 na prática [2] — Dados relacionais"
+  title: "DP-900 [2] — Dados Relacionais"
   slug: "dp900-02-dados-relacionais"
 next:
-  title: "DP-900 na prática [4] — Analytics e Power BI"
+  title: "DP-900 [4] — Analytics e Power BI"
   slug: "dp900-04-analytics-powerbi"
+
 ---
 
 Bancos de dados NoSQL oferecem flexibilidade de esquema e escala horizontal que bancos relacionais não conseguem facilmente. O DP-900 cobre os principais tipos e o Azure Cosmos DB.

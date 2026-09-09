@@ -4,13 +4,15 @@ title: "SC-900 na prática [1] — Zero Trust e defesa em profundidade"
 category: "Azure"
 tag: "azure"
 serie: "SC-900 na prática"
+serieSlug: "sc900"
 serieNum: 1
 date: "11 Abr 2026"
 readTime: "9 min"
 description: "Fundamentos de segurança: modelo Zero Trust, defesa em profundidade e responsabilidade compartilhada."
 next:
-  title: "SC-900 na prática [2] — Identidade e acesso com Entra ID"
+  title: "SC-900 [2] — Identidade e Acesso"
   slug: "sc900-02-identidade-entra"
+
 ---
 
 O SC-900 testa conceitos de segurança, conformidade e identidade na nuvem Microsoft. Este artigo cobre os fundamentos que embasam todo o exame.

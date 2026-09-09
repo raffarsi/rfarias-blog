@@ -4,16 +4,18 @@ title: "AZ-104 na prática [15] — Backup e Azure Site Recovery"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 15
 date: "22 Ago 2026"
 readTime: "9 min"
 description: "Protegendo dados com Azure Backup e implementando DR com Azure Site Recovery."
 prev:
-  title: "AZ-104 na prática [14] — Azure Monitor"
+  title: "AZ-104 [14] — Azure Monitor"
   slug: "az104-14-azure-monitor"
 next:
-  title: "AZ-104 na prática [16] — Gerenciamento de custos"
+  title: "AZ-104 [16] — Custos"
   slug: "az104-16-custos"
+
 ---
 
 Proteção de dados e recuperação de desastres são requisitos de qualquer ambiente de produção. O Azure oferece Azure Backup e Azure Site Recovery como soluções integradas.

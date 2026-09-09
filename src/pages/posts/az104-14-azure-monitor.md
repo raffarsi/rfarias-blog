@@ -4,16 +4,18 @@ title: "AZ-104 na prática [14] — Azure Monitor e Log Analytics"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 14
 date: "15 Ago 2026"
 readTime: "9 min"
 description: "Monitoramento de recursos Azure com Azure Monitor, Log Analytics e alertas."
 prev:
-  title: "AZ-104 na prática [13] — VPN e ExpressRoute"
+  title: "AZ-104 [13] — VPN e ExpressRoute"
   slug: "az104-13-vpn-expressroute"
 next:
-  title: "AZ-104 na prática [15] — Backup e Site Recovery"
+  title: "AZ-104 [15] — Backup e ASR"
   slug: "az104-15-backup"
+
 ---
 
 Monitorar o ambiente Azure é fundamental para garantir disponibilidade, performance e segurança. O Azure Monitor é a plataforma central para coleta e análise de dados de telemetria.

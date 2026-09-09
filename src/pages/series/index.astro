@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const series = [
+  {
+    nome: 'AZ-104 na prática', cert: 'AZ-104', color: '#1A56DB', colorBg: '#EBF3FF',
+    desc: 'Série técnica completa para o Azure Administrator — a certificação mais procurada do Azure.',
+    artigos: 16, tempo: '~155 min', slug: 'az104', treinamento: null,
+    posts: [
+      { num:1,  slug:'az104-01-entra-id-na-pratica', title:'Gerenciando identidades com Microsoft Entra ID', date:'16 Mai 2026', readTime:'10 min' },
+      { num:2,  slug:'az104-02-rbac-escopos', title:'RBAC: controle de acesso baseado em funções', date:'23 Mai 2026', readTime:'9 min' },
+      { num:3,  slug:'az104-03-azure-policy', title:'Azure Policy e governança', date:'30 Mai 2026', readTime:'8 min' },
+      { num:4,  slug:'az104-04-storage-accounts', title:'Storage Accounts: tudo que você precisa saber', date:'6 Jun 2026', readTime:'11 min' },
+      { num:5,  slug:'az104-05-azure-files', title:'Azure Files e Azure File Sync', date:'13 Jun 2026', readTime:'8 min' },
+      { num:6,  slug:'az104-06-virtual-machines', title:'VMs: criação, tamanhos e discos', date:'20 Jun 2026', readTime:'12 min' },
+      { num:7,  slug:'az104-07-vm-disponibilidade', title:'VMs: alta disponibilidade e Scale Sets', date:'27 Jun 2026', readTime:'10 min' },
+      { num:8,  slug:'az104-08-app-service', title:'Azure App Service', date:'4 Jul 2026', readTime:'9 min' },
+      { num:9,  slug:'az104-09-containers-aks', title:'Containers: ACI e AKS', date:'11 Jul 2026', readTime:'10 min' },
+      { num:10, slug:'az104-10-vnets-subnets', title:'VNets, subnets e peering', date:'18 Jul 2026', readTime:'11 min' },
+      { num:11, slug:'az104-11-nsg-roteamento', title:'NSG, UDR e roteamento', date:'25 Jul 2026', readTime:'10 min' },
+      { num:12, slug:'az104-12-load-balancer', title:'Load Balancer e Application Gateway', date:'1 Ago 2026', readTime:'10 min' },
+      { num:13, slug:'az104-13-vpn-expressroute', title:'VPN Gateway e ExpressRoute', date:'8 Ago 2026', readTime:'9 min' },
+      { num:14, slug:'az104-14-azure-monitor', title:'Azure Monitor e Log Analytics', date:'15 Ago 2026', readTime:'9 min' },
+      { num:15, slug:'az104-15-backup', title:'Backup e Azure Site Recovery', date:'22 Ago 2026', readTime:'9 min' },
+      { num:16, slug:'az104-16-custos', title:'Gerenciamento de custos no Azure', date:'29 Ago 2026', readTime:'8 min' },
+    ]
+  },
+  {
+    nome: 'AZ-900 na prática', cert: 'AZ-900', color: '#0078D4', colorBg: '#E6F2FF',
+    desc: 'Do zero ao exame Azure Fundamentals. Cloud, serviços, segurança e custos com exemplos reais.',
+    artigos: 6, tempo: '~54 min', slug: 'az900', treinamento: '/treinamentos/az-900',
+    posts: [
+      { num:1, slug:'az900-01-conceitos-nuvem', title:'Conceitos fundamentais de Cloud Computing', date:'3 Mar 2026', readTime:'8 min' },
+      { num:2, slug:'az900-02-arquitetura-azure', title:'Arquitetura e componentes do Azure', date:'7 Mar 2026', readTime:'9 min' },
+      { num:3, slug:'az900-03-computacao-redes', title:'Computação e redes no Azure', date:'10 Mar 2026', readTime:'10 min' },
+      { num:4, slug:'az900-04-storage-database', title:'Storage e banco de dados no Azure', date:'14 Mar 2026', readTime:'9 min' },
+      { num:5, slug:'az900-05-identidade-seguranca', title:'Identidade, segurança e governança', date:'17 Mar 2026', readTime:'10 min' },
+      { num:6, slug:'az900-06-custos-sla', title:'Custos, SLA e ciclo de vida de serviços', date:'21 Mar 2026', readTime:'8 min' },
+    ]
+  },
+  {
+    nome: 'AI-901 na prática', cert: 'AI-901', color: '#7B2D8B', colorBg: '#F3E8FF',
+    desc: 'IA, Machine Learning, Azure AI Services e IA Generativa para a certificação AI Fundamentals.',
+    artigos: 5, tempo: '~45 min', slug: 'ai901', treinamento: '/treinamentos/ai901',
+    posts: [
+      { num:1, slug:'ai901-01-fundamentos-ia', title:'Fundamentos de IA e Machine Learning', date:'24 Mar 2026', readTime:'9 min' },
+      { num:2, slug:'ai901-02-azure-ai-services', title:'Azure AI Services: visão e fala', date:'28 Mar 2026', readTime:'9 min' },
+      { num:3, slug:'ai901-03-linguagem-ia-generativa', title:'Linguagem natural e IA Generativa', date:'31 Mar 2026', readTime:'10 min' },
+      { num:4, slug:'ai901-04-ia-conversacional', title:'IA conversacional e agentes', date:'4 Abr 2026', readTime:'8 min' },
+      { num:5, slug:'ai901-05-ia-responsavel-foundry', title:'IA Responsável e Azure AI Foundry', date:'7 Abr 2026', readTime:'9 min' },
+    ]
+  },
+  {
+    nome: 'SC-900 na prática', cert: 'SC-900', color: '#C0392B', colorBg: '#FDEDEC',
+    desc: 'Segurança, conformidade e identidade Microsoft para a certificação Security Fundamentals.',
+    artigos: 5, tempo: '~46 min', slug: 'sc900', treinamento: '/treinamentos/sc900',
+    posts: [
+      { num:1, slug:'sc900-01-zero-trust-defesa', title:'Zero Trust e defesa em profundidade', date:'11 Abr 2026', readTime:'9 min' },
+      { num:2, slug:'sc900-02-identidade-entra', title:'Identidade e acesso com Microsoft Entra ID', date:'14 Abr 2026', readTime:'10 min' },
+      { num:3, slug:'sc900-03-solucoes-seguranca', title:'Soluções de segurança Microsoft', date:'18 Abr 2026', readTime:'10 min' },
+      { num:4, slug:'sc900-04-conformidade-purview', title:'Conformidade e Microsoft Purview', date:'21 Abr 2026', readTime:'9 min' },
+      { num:5, slug:'sc900-05-governanca-trust', title:'Governança e Service Trust Portal', date:'25 Abr 2026', readTime:'8 min' },
+    ]
+  },
+  {
+    nome: 'DP-900 na prática', cert: 'DP-900', color: '#0E7A0D', colorBg: '#EAFAEA',
+    desc: 'Dados relacionais, NoSQL, analytics e pipelines no Azure para a certificação Data Fundamentals.',
+    artigos: 5, tempo: '~46 min', slug: 'dp900', treinamento: '/treinamentos/dp900',
+    posts: [
+      { num:1, slug:'dp900-01-conceitos-dados', title:'Conceitos fundamentais de dados', date:'28 Abr 2026', readTime:'9 min' },
+      { num:2, slug:'dp900-02-dados-relacionais', title:'Dados relacionais no Azure', date:'2 Mai 2026', readTime:'9 min' },
+      { num:3, slug:'dp900-03-dados-nao-relacionais', title:'Dados não relacionais e Cosmos DB', date:'5 Mai 2026', readTime:'9 min' },
+      { num:4, slug:'dp900-04-analytics-powerbi', title:'Analytics, Synapse e Power BI', date:'9 Mai 2026', readTime:'10 min' },
+      { num:5, slug:'dp900-05-pipelines-governanca', title:'Pipelines e governança de dados', date:'12 Mai 2026', readTime:'9 min' },
+    ]
+  },
+];
+---
+
+<BaseLayout title="Séries — rfarias" description="Séries de artigos técnicos para certificações Azure.">
+  <div class="container series-hub">
+    <div class="series-hub-header">
+      <h1>Séries de artigos</h1>
+      <p>Conteúdo organizado em séries progressivas. Leia do primeiro ao último para uma preparação completa.</p>
+    </div>
+    <div class="series-grid">
+      {series.map(s => (
+        <div class="serie-card">
+          <div class="serie-card-header" style={`border-left: 4px solid ${s.color}`}>
+            <div class="serie-cert-badge" style={`background:${s.colorBg};color:${s.color}`}>{s.cert}</div>
+            <h2 class="serie-card-title"><a href={`/series/${s.slug}`}>{s.nome}</a></h2>
+            <p class="serie-card-desc">{s.desc}</p>
+            <div class="serie-card-meta">
+              <span>📄 {s.artigos} artigos</span>
+              <span>⏱ {s.tempo}</span>
+              {s.treinamento && <a href={s.treinamento} class="serie-treina-link">🎮 Simulado →</a>}
+            </div>
+          </div>
+          <ol class="serie-posts-list">
+            {s.posts.slice(0, 4).map(p => (
+              <li class="serie-post-item">
+                <span class="serie-num">{p.num}</span>
+                <div class="serie-post-body">
+                  <a href={`/posts/${p.slug}`} class="serie-post-title">{p.title}</a>
+                  <span class="serie-post-meta">{p.date} · {p.readTime}</span>
+                </div>
+              </li>
+            ))}
+            {s.posts.length > 4 && (
+              <li class="serie-more-item">
+                <a href={`/series/${s.slug}`}>+ {s.posts.length - 4} artigos mais →</a>
+              </li>
+            )}
+          </ol>
+          <a href={`/series/${s.slug}`} class="serie-ver-tudo">Ver série completa →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .series-hub { padding: 2rem 0 3rem; }
+  .series-hub-header { margin-bottom: 2rem; }
+  .series-hub-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .series-hub-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; }
+  .series-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+  .serie-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .serie-card-header { padding: 1.25rem 1.5rem 1rem; }
+  .serie-cert-badge { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 3px 12px; border-radius: 20px; margin-bottom: 0.625rem; letter-spacing: 0.06em; }
+  .serie-card-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.375rem; }
+  .serie-card-title a { color: var(--text); }
+  .serie-card-title a:hover { color: var(--blue); }
+  .serie-card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem; }
+  .serie-card-meta { display: flex; gap: 1rem; align-items: center; font-size: 0.8125rem; color: var(--text-muted); flex-wrap: wrap; }
+  .serie-treina-link { color: var(--blue); font-weight: 600; }
+  .serie-posts-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--border); }
+  .serie-post-item { display: flex; gap: 1rem; align-items: center; padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .serie-post-item:hover { background: var(--surface-alt, #f8f9fa); }
+  .serie-more-item { padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .serie-more-item a { font-size: 0.875rem; font-weight: 600; color: var(--blue); }
+  .serie-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
+  .serie-post-body { flex: 1; min-width: 0; }
+  .serie-post-title { font-size: 0.9rem; font-weight: 600; color: var(--text); line-height: 1.4; display: block; }
+  .serie-post-title:hover { color: var(--blue); }
+  .serie-post-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; display: block; }
+  .serie-ver-tudo { display: block; padding: 0.875rem 1.5rem; text-align: center; font-size: 0.875rem; font-weight: 600; color: var(--blue); border-top: 1px solid var(--border); background: var(--surface-alt, #f8f9fa); transition: background 0.15s; }
+  .serie-ver-tudo:hover { background: var(--blue-light, #EBF3FF); }
+</style>

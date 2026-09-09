@@ -4,16 +4,18 @@ title: "AZ-900 na prática [4] — Storage e banco de dados no Azure"
 category: "Azure"
 tag: "azure"
 serie: "AZ-900 na prática"
+serieSlug: "az900"
 serieNum: 4
 date: "14 Mar 2026"
 readTime: "9 min"
 description: "Azure Storage, Azure SQL, Cosmos DB e os principais serviços de dados para o AZ-900."
 prev:
-  title: "AZ-900 na prática [3] — Computação e redes"
+  title: "AZ-900 [3] — Computação e Redes"
   slug: "az900-03-computacao-redes"
 next:
-  title: "AZ-900 na prática [5] — Identidade, segurança e governança"
+  title: "AZ-900 [5] — Identidade e Segurança"
   slug: "az900-05-identidade-seguranca"
+
 ---
 
 Armazenamento e banco de dados são temas recorrentes no AZ-900. O exame testa principalmente sua capacidade de escolher o serviço certo para cada cenário.

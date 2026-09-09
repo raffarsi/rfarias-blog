@@ -4,16 +4,18 @@ title: "AZ-104 na prática [12] — Load Balancer e Application Gateway"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 12
 date: "1 Ago 2026"
 readTime: "10 min"
 description: "Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7)."
 prev:
-  title: "AZ-104 na prática [11] — NSG e roteamento"
+  title: "AZ-104 [11] — NSG e Roteamento"
   slug: "az104-11-nsg-roteamento"
 next:
-  title: "AZ-104 na prática [13] — VPN Gateway e ExpressRoute"
+  title: "AZ-104 [13] — VPN e ExpressRoute"
   slug: "az104-13-vpn-expressroute"
+
 ---
 
 O Azure oferece múltiplas opções de balanceamento de carga. Escolher a certa depende da camada de rede e dos requisitos da aplicação.

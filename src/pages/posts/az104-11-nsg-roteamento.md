@@ -4,16 +4,18 @@ title: "AZ-104 na prática [11] — NSG, UDR e roteamento"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 11
 date: "25 Jul 2026"
 readTime: "10 min"
 description: "Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure."
 prev:
-  title: "AZ-104 na prática [10] — VNets e subnets"
+  title: "AZ-104 [10] — VNets e Subnets"
   slug: "az104-10-vnets-subnets"
 next:
-  title: "AZ-104 na prática [12] — Load Balancer e Application Gateway"
+  title: "AZ-104 [12] — Load Balancer"
   slug: "az104-12-load-balancer"
+
 ---
 
 Controlar o fluxo de tráfego na rede Azure requer entender como NSGs filtram pacotes e como UDRs direcionam o roteamento.

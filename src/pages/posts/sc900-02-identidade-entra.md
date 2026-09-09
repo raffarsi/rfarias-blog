@@ -4,16 +4,18 @@ title: "SC-900 na prática [2] — Identidade e acesso com Microsoft Entra ID"
 category: "Azure"
 tag: "azure"
 serie: "SC-900 na prática"
+serieSlug: "sc900"
 serieNum: 2
 date: "14 Abr 2026"
 readTime: "10 min"
 description: "Microsoft Entra ID, MFA, RBAC, PIM e controle de acesso para o SC-900."
 prev:
-  title: "SC-900 na prática [1] — Zero Trust"
+  title: "SC-900 [1] — Zero Trust"
   slug: "sc900-01-zero-trust-defesa"
 next:
-  title: "SC-900 na prática [3] — Soluções de segurança Microsoft"
+  title: "SC-900 [3] — Soluções de Segurança"
   slug: "sc900-03-solucoes-seguranca"
+
 ---
 
 Identidade é o novo perímetro de segurança. O SC-900 dedica um domínio inteiro a serviços de identidade e acesso da Microsoft.

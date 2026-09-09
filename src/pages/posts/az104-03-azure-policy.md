@@ -4,16 +4,18 @@ title: "AZ-104 na prática [3] — Azure Policy e governança"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 3
 date: "30 Mai 2026"
 readTime: "8 min"
 description: "Como usar Azure Policy para enforçar padrões, auditar conformidade e governar seu ambiente Azure."
 prev:
-  title: "AZ-104 na prática [2] — RBAC"
+  title: "AZ-104 [2] — RBAC"
   slug: "az104-02-rbac-escopos"
 next:
-  title: "AZ-104 na prática [4] — Storage Accounts"
+  title: "AZ-104 [4] — Storage Accounts"
   slug: "az104-04-storage-accounts"
+
 ---
 
 Azure Policy é a ferramenta de governança do Azure. Permite enforçar padrões organizacionais, auditar conformidade e automaticamente remediar configurações incorretas.

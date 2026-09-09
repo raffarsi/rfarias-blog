@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="SC-900 na prática — rfarias" description="Segurança, conformidade e identidade Microsoft para a certificação Security Fundamentals.">
+  <div class="container serie-page">
+
+    <nav class="serie-breadcrumb">
+      <a href="/artigos">Artigos</a>
+      <span>›</span>
+      <a href="/series">Séries</a>
+      <span>›</span>
+      <span>SC-900 na prática</span>
+    </nav>
+
+    <div class="serie-hero" style="border-left: 5px solid #C0392B">
+      <div class="serie-hero-cert" style="background:#FDEDEC;color:#C0392B">SC-900</div>
+      <h1 class="serie-hero-title">SC-900 na prática</h1>
+      <p class="serie-hero-desc">Segurança, conformidade e identidade Microsoft para a certificação Security Fundamentals.</p>
+      <div class="serie-hero-meta">
+        <span>📄 5 artigos</span>
+        <span>⏱ ~46 min de leitura</span>
+        <a href="/treinamentos/sc900" class="serie-hero-treina">🎮 Acessar simulado →</a>
+      </div>
+    </div>
+
+    <div class="serie-progress-hint">
+      <span>💡 Leia em ordem — cada artigo constrói sobre o anterior.</span>
+      <a href="/posts/sc900-01-zero-trust-defesa" class="btn-start-serie">Começar do início →</a>
+    </div>
+
+    <ol class="serie-posts-full">
+      
+              <li class="serie-post-row" id="post-1">
+                <div class="spr-num" style="background:#FDEDEC;color:#C0392B">1</div>
+                <div class="spr-body">
+                  <a href="/posts/sc900-01-zero-trust-defesa" class="spr-title">Zero Trust e defesa em profundidade</a>
+                  <p class="spr-excerpt">Fundamentos de segurança: modelo Zero Trust, defesa em profundidade e responsabilidade compartilhada.</p>
+                  <div class="spr-meta">
+                    <span>11 Abr 2026</span>
+                    <span>⏱ 9 min</span>
+                    <span class="spr-badge">Comece aqui</span>
+                  </div>
+                </div>
+                <a href="/posts/sc900-01-zero-trust-defesa" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-2">
+                <div class="spr-num" style="background:#FDEDEC;color:#C0392B">2</div>
+                <div class="spr-body">
+                  <a href="/posts/sc900-02-identidade-entra" class="spr-title">Identidade e acesso com Microsoft Entra ID</a>
+                  <p class="spr-excerpt">Microsoft Entra ID, MFA, RBAC, PIM e controle de acesso para o SC-900.</p>
+                  <div class="spr-meta">
+                    <span>14 Abr 2026</span>
+                    <span>⏱ 10 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/sc900-02-identidade-entra" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-3">
+                <div class="spr-num" style="background:#FDEDEC;color:#C0392B">3</div>
+                <div class="spr-body">
+                  <a href="/posts/sc900-03-solucoes-seguranca" class="spr-title">Soluções de segurança Microsoft</a>
+                  <p class="spr-excerpt">Microsoft Defender XDR, Sentinel, Defender for Cloud e as principais soluções de segurança.</p>
+                  <div class="spr-meta">
+                    <span>18 Abr 2026</span>
+                    <span>⏱ 10 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/sc900-03-solucoes-seguranca" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-4">
+                <div class="spr-num" style="background:#FDEDEC;color:#C0392B">4</div>
+                <div class="spr-body">
+                  <a href="/posts/sc900-04-conformidade-purview" class="spr-title">Conformidade e Microsoft Purview</a>
+                  <p class="spr-excerpt">GDPR, Compliance Manager, Microsoft Purview e ferramentas de conformidade.</p>
+                  <div class="spr-meta">
+                    <span>21 Abr 2026</span>
+                    <span>⏱ 9 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/sc900-04-conformidade-purview" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-5">
+                <div class="spr-num" style="background:#FDEDEC;color:#C0392B">5</div>
+                <div class="spr-body">
+                  <a href="/posts/sc900-05-governanca-trust" class="spr-title">Governança e Service Trust Portal</a>
+                  <p class="spr-excerpt">Service Trust Portal, Microsoft Privacy, Secure Score e ferramentas de governança.</p>
+                  <div class="spr-meta">
+                    <span>25 Abr 2026</span>
+                    <span>⏱ 8 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/sc900-05-governanca-trust" class="spr-cta">Ler →</a>
+              </li>
+    </ol>
+
+    <div class="serie-footer">
+      <a href="/series" class="btn-outline-blue">← Ver todas as séries</a>
+      <a href="/treinamentos/sc900" class="btn-primary-blue">🎮 Acessar simulado SC-900</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .serie-page { padding: 1.5rem 0 3rem; max-width: 780px; }
+  .serie-breadcrumb { display: flex; gap: 0.5rem; align-items: center; font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .serie-breadcrumb a { color: var(--blue); }
+  .serie-breadcrumb span { color: var(--text-muted); }
+
+  .serie-hero { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .serie-hero-cert { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 3px 14px; border-radius: 20px; margin-bottom: 0.75rem; letter-spacing: 0.06em; }
+  .serie-hero-title { font-size: 1.625rem; font-weight: 800; margin-bottom: 0.625rem; }
+  .serie-hero-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+  .serie-hero-meta { display: flex; gap: 1.25rem; align-items: center; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+  .serie-hero-treina { color: var(--blue); font-weight: 700; }
+
+  .serie-progress-hint { display: flex; justify-content: space-between; align-items: center; background: var(--surface-alt, #f8f9fa); border: 1px solid var(--border); border-radius: 10px; padding: 0.875rem 1.25rem; margin-bottom: 1.25rem; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--text-muted); }
+  .btn-start-serie { font-size: 0.875rem; font-weight: 700; color: var(--blue); white-space: nowrap; }
+
+  .serie-posts-full { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .serie-post-row { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .serie-post-row:last-child { border-bottom: none; }
+  .serie-post-row:hover { background: var(--surface-alt, #f8f9fa); }
+  .spr-num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800; margin-top: 2px; }
+  .spr-body { flex: 1; min-width: 0; }
+  .spr-title { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.4; display: block; margin-bottom: 0.375rem; }
+  .spr-title:hover { color: var(--blue); }
+  .spr-excerpt { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+  .spr-meta { display: flex; gap: 0.875rem; align-items: center; font-size: 0.75rem; color: var(--text-muted); flex-wrap: wrap; }
+  .spr-badge { background: var(--blue); color: #fff; font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .spr-cta { flex-shrink: 0; font-size: 0.875rem; font-weight: 700; color: var(--blue); align-self: center; white-space: nowrap; }
+  .spr-cta:hover { opacity: 0.8; }
+
+  .serie-footer { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  .btn-outline-blue { padding: 0.625rem 1.25rem; border: 1.5px solid var(--blue); color: var(--blue); border-radius: 8px; font-weight: 600; font-size: 0.875rem; transition: all 0.15s; }
+  .btn-outline-blue:hover { background: var(--blue); color: #fff; }
+  .btn-primary-blue { padding: 0.625rem 1.25rem; background: var(--blue); color: #fff; border-radius: 8px; font-weight: 600; font-size: 0.875rem; transition: opacity 0.15s; }
+  .btn-primary-blue:hover { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    .serie-post-row { flex-wrap: wrap; gap: 0.75rem; }
+    .spr-cta { display: none; }
+    .spr-title { font-size: 0.9375rem; }
+  }
+</style>

@@ -4,16 +4,18 @@ title: "AZ-104 na prática [10] — VNets, subnets e peering"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 10
 date: "18 Jul 2026"
 readTime: "11 min"
 description: "Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering."
 prev:
-  title: "AZ-104 na prática [9] — Containers"
+  title: "AZ-104 [9] — Containers e AKS"
   slug: "az104-09-containers-aks"
 next:
-  title: "AZ-104 na prática [11] — NSG e roteamento"
+  title: "AZ-104 [11] — NSG e Roteamento"
   slug: "az104-11-nsg-roteamento"
+
 ---
 
 Redes virtuais são a base da infraestrutura Azure. Planejar o espaço de endereçamento corretamente desde o início evita retrabalho custoso no futuro.

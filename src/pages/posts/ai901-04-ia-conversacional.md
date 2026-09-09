@@ -4,16 +4,18 @@ title: "AI-901 na prática [4] — IA conversacional e agentes"
 category: "IA"
 tag: "ia"
 serie: "AI-901 na prática"
+serieSlug: "ai901"
 serieNum: 4
 date: "4 Abr 2026"
 readTime: "8 min"
 description: "Azure Bot Service, Copilot Studio e como criar assistentes virtuais inteligentes."
 prev:
-  title: "AI-901 na prática [3] — Linguagem natural e IA Generativa"
+  title: "AI-901 [3] — Linguagem e IA Generativa"
   slug: "ai901-03-linguagem-ia-generativa"
 next:
-  title: "AI-901 na prática [5] — IA Responsável e Azure AI Foundry"
+  title: "AI-901 [5] — IA Responsável"
   slug: "ai901-05-ia-responsavel-foundry"
+
 ---
 
 IA conversacional engloba chatbots, assistentes virtuais e agentes de IA. O AI-901 cobre tanto os conceitos quanto as ferramentas Microsoft para construir essas soluções.

@@ -4,16 +4,18 @@ title: "AZ-104 na prática [9] — Containers: ACI e AKS"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 9
 date: "11 Jul 2026"
 readTime: "10 min"
 description: "Azure Container Instances para containers simples e Azure Kubernetes Service para orquestração."
 prev:
-  title: "AZ-104 na prática [8] — App Service"
+  title: "AZ-104 [8] — App Service"
   slug: "az104-08-app-service"
 next:
-  title: "AZ-104 na prática [10] — VNets e subnets"
+  title: "AZ-104 [10] — VNets e Subnets"
   slug: "az104-10-vnets-subnets"
+
 ---
 
 Containers são cada vez mais presentes nos ambientes Azure. O AZ-104 cobre dois serviços principais: Azure Container Instances (ACI) para casos simples e Azure Kubernetes Service (AKS) para orquestração em escala.

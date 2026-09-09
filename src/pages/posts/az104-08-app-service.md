@@ -4,16 +4,18 @@ title: "AZ-104 na prática [8] — Azure App Service"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 8
 date: "4 Jul 2026"
 readTime: "9 min"
 description: "Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações."
 prev:
-  title: "AZ-104 na prática [7] — VMs: disponibilidade"
+  title: "AZ-104 [7] — VMs: Disponibilidade"
   slug: "az104-07-vm-disponibilidade"
 next:
-  title: "AZ-104 na prática [9] — Containers e AKS"
+  title: "AZ-104 [9] — Containers e AKS"
   slug: "az104-09-containers-aks"
+
 ---
 
 Azure App Service é a plataforma PaaS para hospedar aplicações web, APIs REST e backends móveis. Sem gerenciar infraestrutura, você foca no código.

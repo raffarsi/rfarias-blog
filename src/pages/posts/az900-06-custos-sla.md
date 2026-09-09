@@ -4,13 +4,15 @@ title: "AZ-900 na prática [6] — Custos, SLA e ciclo de vida de serviços"
 category: "Azure"
 tag: "azure"
 serie: "AZ-900 na prática"
+serieSlug: "az900"
 serieNum: 6
 date: "21 Mar 2026"
 readTime: "8 min"
 description: "Como calcular custos no Azure, entender SLAs e o ciclo de vida de serviços — tópicos obrigatórios do AZ-900."
 prev:
-  title: "AZ-900 na prática [5] — Identidade e segurança"
+  title: "AZ-900 [5] — Identidade e Segurança"
   slug: "az900-05-identidade-seguranca"
+
 ---
 
 Os domínios de custos e SLA são altamente cobrados no AZ-900. Entender como o Azure cobra e como SLAs funcionam é essencial para o exame e para evitar surpresas na fatura.

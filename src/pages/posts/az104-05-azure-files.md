@@ -4,16 +4,18 @@ title: "AZ-104 na prática [5] — Azure Files e Azure File Sync"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 5
 date: "13 Jun 2026"
 readTime: "8 min"
 description: "Compartilhamentos SMB na nuvem com Azure Files e sincronização com servidores on-premises."
 prev:
-  title: "AZ-104 na prática [4] — Storage Accounts"
+  title: "AZ-104 [4] — Storage Accounts"
   slug: "az104-04-storage-accounts"
 next:
-  title: "AZ-104 na prática [6] — VMs: criação e configuração"
+  title: "AZ-104 [6] — VMs: Criação"
   slug: "az104-06-virtual-machines"
+
 ---
 
 Azure Files oferece compartilhamentos de arquivos gerenciados na nuvem, acessíveis via SMB 3.0 e NFS 4.1. É ideal para substituir servidores de arquivos on-premises ou compartilhar dados entre VMs.

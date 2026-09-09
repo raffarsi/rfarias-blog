@@ -4,13 +4,15 @@ title: "AZ-104 na prática [16] — Gerenciamento de custos no Azure"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 16
 date: "29 Ago 2026"
 readTime: "8 min"
 description: "Como monitorar, analisar e otimizar custos no Azure com Cost Management e estratégias de reserva."
 prev:
-  title: "AZ-104 na prática [15] — Backup e Site Recovery"
+  title: "AZ-104 [15] — Backup e ASR"
   slug: "az104-15-backup"
+
 ---
 
 Gerenciar custos é parte do AZ-104 e uma habilidade essencial para qualquer administrador Azure. Custo não controlado é um dos principais problemas em ambientes cloud.

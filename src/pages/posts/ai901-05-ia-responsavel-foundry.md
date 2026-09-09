@@ -4,13 +4,15 @@ title: "AI-901 na prática [5] — IA Responsável e Azure AI Foundry"
 category: "IA"
 tag: "ia"
 serie: "AI-901 na prática"
+serieSlug: "ai901"
 serieNum: 5
 date: "7 Abr 2026"
 readTime: "9 min"
 description: "Princípios de IA Responsável, Content Safety e o Azure AI Foundry como plataforma unificada."
 prev:
-  title: "AI-901 na prática [4] — IA conversacional"
+  title: "AI-901 [4] — IA Conversacional"
   slug: "ai901-04-ia-conversacional"
+
 ---
 
 IA Responsável é um dos tópicos com maior peso no AI-901. A Microsoft tem uma abordagem estruturada para desenvolvimento ético de IA que precisa ser conhecida a fundo.

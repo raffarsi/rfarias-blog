@@ -4,16 +4,18 @@ title: "AZ-104 na prática [6] — VMs: criação, tamanhos e discos"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 6
 date: "20 Jun 2026"
 readTime: "12 min"
 description: "Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos."
 prev:
-  title: "AZ-104 na prática [5] — Azure Files"
+  title: "AZ-104 [5] — Azure Files"
   slug: "az104-05-azure-files"
 next:
-  title: "AZ-104 na prática [7] — VMs: disponibilidade e Scale Sets"
+  title: "AZ-104 [7] — VMs: Disponibilidade"
   slug: "az104-07-vm-disponibilidade"
+
 ---
 
 Máquinas Virtuais são a base da infraestrutura IaaS no Azure. No AZ-104, você precisa saber criar, configurar, dimensionar e gerenciar VMs com eficiência.

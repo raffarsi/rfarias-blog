@@ -4,16 +4,18 @@ title: "AZ-104 na prática [2] — RBAC: controle de acesso baseado em funções
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 2
 date: "23 Mai 2026"
 readTime: "9 min"
 description: "Como o RBAC funciona no Azure, como atribuir funções e entender escopos de forma prática."
 prev:
-  title: "AZ-104 na prática [1] — Entra ID"
+  title: "AZ-104 [1] — Entra ID"
   slug: "az104-01-entra-id-na-pratica"
 next:
-  title: "AZ-104 na prática [3] — Azure Policy"
+  title: "AZ-104 [3] — Azure Policy"
   slug: "az104-03-azure-policy"
+
 ---
 
 RBAC (Role-Based Access Control) é o mecanismo central de autorização no Azure. Entender como escopos e funções se combinam é fundamental tanto para o AZ-104 quanto para o dia a dia de administração.

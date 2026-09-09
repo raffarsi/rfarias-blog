@@ -70,8 +70,24 @@ const filters = [
 <BaseLayout title="Artigos — rfarias" description="Artigos sobre Azure, Cloud, IA Generativa, docência e carreira em tecnologia.">
   <div class="container artigos">
     <div class="artigos-header">
-      <h1>Artigos</h1>
-      <p>Tecnologia, Cloud, IA e os bastidores de equilibrar carreira corporativa com docência.</p>
+      <div class="artigos-header-top">
+        <div>
+          <h1>Artigos</h1>
+          <p>Tecnologia, Cloud, IA e os bastidores de equilibrar carreira corporativa com docência.</p>
+        </div>
+        <a href="/series" class="series-hub-btn">📚 Ver séries →</a>
+      </div>
+      <div class="search-wrap">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Buscar artigos... (ex: Storage, RBAC, Cosmos DB)"
+          class="search-input"
+          autocomplete="off"
+        />
+        <span class="search-icon">🔍</span>
+        <span class="search-count" id="search-count"></span>
+      </div>
     </div>
 
     <div class="filters" id="filters">
@@ -85,7 +101,7 @@ const filters = [
 
     <section class="post-grid" id="post-grid">
       {posts.map(post => (
-        <div class="post-item" data-tag={post.tag}>
+        <div class="post-item" data-tag={post.tag} data-search={`${post.title} ${post.excerpt} ${post.category}`.toLowerCase()}>
           <PostCard {...post} />
         </div>
       ))}
@@ -93,24 +109,63 @@ const filters = [
   </div>
 
   <script is:inline>
+    let activeFilter = 'todos';
+    let searchQuery = '';
+
+    function applyFilters() {
+      const items = document.querySelectorAll('.post-item');
+      let visible = 0;
+      items.forEach(item => {
+        const tagMatch = activeFilter === 'todos' || item.dataset.tag === activeFilter;
+        const searchMatch = !searchQuery || (item.dataset.search || '').includes(searchQuery);
+        const show = tagMatch && searchMatch;
+        item.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      const countEl = document.getElementById('search-count');
+      if (countEl) {
+        countEl.textContent = searchQuery ? `${visible} resultado${visible !== 1 ? 's' : ''}` : '';
+      }
+    }
+
     document.getElementById('filters').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-filter]');
       if (!btn) return;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.post-item').forEach(item => {
-        item.style.display = (filter === 'todos' || item.dataset.tag === filter) ? '' : 'none';
-      });
+      activeFilter = btn.dataset.filter;
+      applyFilters();
     });
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        // Reset filter when searching
+        if (searchQuery) {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('[data-filter="todos"]')?.classList.add('active');
+          activeFilter = 'todos';
+        }
+        applyFilters();
+      });
+    }
   </script>
 </BaseLayout>
 
 <style>
   .artigos { padding-top: 2rem; padding-bottom: 2rem; }
-  .artigos-header { margin-bottom: 2rem; }
-  .artigos-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .artigos-header { margin-bottom: 1.5rem; }
+  .artigos-header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .artigos-header h1 { font-size: 1.75rem; margin-bottom: 0.375rem; }
   .artigos-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; }
+  .series-hub-btn { flex-shrink: 0; font-size: 0.875rem; font-weight: 700; color: var(--blue); background: var(--blue-light, #EBF3FF); border: 1px solid var(--blue); padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.15s; white-space: nowrap; }
+  .series-hub-btn:hover { background: var(--blue); color: #fff; }
+  .search-wrap { position: relative; max-width: 520px; }
+  .search-input { width: 100%; padding: 0.75rem 2.5rem 0.75rem 2.75rem; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.9375rem; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
+  .search-input:focus { border-color: var(--blue); }
+  .search-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
+  .search-count { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
 
   .filters { display: flex; gap: 0.375rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
   .filter-btn {

@@ -4,16 +4,18 @@ title: "SC-900 na prática [3] — Soluções de segurança Microsoft"
 category: "Azure"
 tag: "azure"
 serie: "SC-900 na prática"
+serieSlug: "sc900"
 serieNum: 3
 date: "18 Abr 2026"
 readTime: "10 min"
 description: "Microsoft Defender XDR, Sentinel, Defender for Cloud e as principais soluções de segurança."
 prev:
-  title: "SC-900 na prática [2] — Identidade e Entra ID"
+  title: "SC-900 [2] — Identidade e Acesso"
   slug: "sc900-02-identidade-entra"
 next:
-  title: "SC-900 na prática [4] — Conformidade e Microsoft Purview"
+  title: "SC-900 [4] — Conformidade"
   slug: "sc900-04-conformidade-purview"
+
 ---
 
 O ecossistema de segurança da Microsoft é amplo. Este artigo cobre os produtos mais cobrados no SC-900.

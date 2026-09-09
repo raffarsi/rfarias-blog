@@ -4,16 +4,18 @@ title: "SC-900 na prática [4] — Conformidade e Microsoft Purview"
 category: "Azure"
 tag: "azure"
 serie: "SC-900 na prática"
+serieSlug: "sc900"
 serieNum: 4
 date: "21 Abr 2026"
 readTime: "9 min"
 description: "GDPR, Compliance Manager, Microsoft Purview e as ferramentas de conformidade da Microsoft."
 prev:
-  title: "SC-900 na prática [3] — Soluções de segurança"
+  title: "SC-900 [3] — Soluções de Segurança"
   slug: "sc900-03-solucoes-seguranca"
 next:
-  title: "SC-900 na prática [5] — Governança e Service Trust Portal"
+  title: "SC-900 [5] — Governança"
   slug: "sc900-05-governanca-trust"
+
 ---
 
 Conformidade regulatória é obrigatória em setores como financeiro, saúde e governo. O SC-900 cobre as ferramentas Microsoft para gerenciar esses requisitos.

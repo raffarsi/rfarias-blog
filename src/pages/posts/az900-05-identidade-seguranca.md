@@ -4,16 +4,18 @@ title: "AZ-900 na prática [5] — Identidade, segurança e governança"
 category: "Azure"
 tag: "azure"
 serie: "AZ-900 na prática"
+serieSlug: "az900"
 serieNum: 5
 date: "17 Mar 2026"
 readTime: "10 min"
 description: "Microsoft Entra ID, MFA, RBAC, Azure Policy e as ferramentas de segurança e governança do Azure."
 prev:
-  title: "AZ-900 na prática [4] — Storage e banco de dados"
+  title: "AZ-900 [4] — Storage e Banco de Dados"
   slug: "az900-04-storage-database"
 next:
-  title: "AZ-900 na prática [6] — Custos, SLA e ciclo de vida"
+  title: "AZ-900 [6] — Custos e SLA"
   slug: "az900-06-custos-sla"
+
 ---
 
 Identidade é o novo perímetro de segurança. O AZ-900 dedica uma boa parte ao ecossistema de segurança e governança do Azure — e são conceitos que se aplicam diretamente ao dia a dia.

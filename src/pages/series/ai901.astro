@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="AI-901 na prática — rfarias" description="IA, Machine Learning e Azure AI Services para a certificação Microsoft AI Fundamentals.">
+  <div class="container serie-page">
+
+    <nav class="serie-breadcrumb">
+      <a href="/artigos">Artigos</a>
+      <span>›</span>
+      <a href="/series">Séries</a>
+      <span>›</span>
+      <span>AI-901 na prática</span>
+    </nav>
+
+    <div class="serie-hero" style="border-left: 5px solid #7B2D8B">
+      <div class="serie-hero-cert" style="background:#F3E8FF;color:#7B2D8B">AI-901</div>
+      <h1 class="serie-hero-title">AI-901 na prática</h1>
+      <p class="serie-hero-desc">IA, Machine Learning e Azure AI Services para a certificação Microsoft AI Fundamentals.</p>
+      <div class="serie-hero-meta">
+        <span>📄 5 artigos</span>
+        <span>⏱ ~45 min de leitura</span>
+        <a href="/treinamentos/ai901" class="serie-hero-treina">🎮 Acessar simulado →</a>
+      </div>
+    </div>
+
+    <div class="serie-progress-hint">
+      <span>💡 Leia em ordem — cada artigo constrói sobre o anterior.</span>
+      <a href="/posts/ai901-01-fundamentos-ia" class="btn-start-serie">Começar do início →</a>
+    </div>
+
+    <ol class="serie-posts-full">
+      
+              <li class="serie-post-row" id="post-1">
+                <div class="spr-num" style="background:#F3E8FF;color:#7B2D8B">1</div>
+                <div class="spr-body">
+                  <a href="/posts/ai901-01-fundamentos-ia" class="spr-title">Fundamentos de IA e Machine Learning</a>
+                  <p class="spr-excerpt">Conceitos de IA, ML, Deep Learning e os tipos de problemas que cada abordagem resolve.</p>
+                  <div class="spr-meta">
+                    <span>24 Mar 2026</span>
+                    <span>⏱ 9 min</span>
+                    <span class="spr-badge">Comece aqui</span>
+                  </div>
+                </div>
+                <a href="/posts/ai901-01-fundamentos-ia" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-2">
+                <div class="spr-num" style="background:#F3E8FF;color:#7B2D8B">2</div>
+                <div class="spr-body">
+                  <a href="/posts/ai901-02-azure-ai-services" class="spr-title">Azure AI Services: visão e fala</a>
+                  <p class="spr-excerpt">Azure Computer Vision, Custom Vision, Face API e Azure Speech Services na prática.</p>
+                  <div class="spr-meta">
+                    <span>28 Mar 2026</span>
+                    <span>⏱ 9 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/ai901-02-azure-ai-services" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-3">
+                <div class="spr-num" style="background:#F3E8FF;color:#7B2D8B">3</div>
+                <div class="spr-body">
+                  <a href="/posts/ai901-03-linguagem-ia-generativa" class="spr-title">Linguagem natural e IA Generativa</a>
+                  <p class="spr-excerpt">NLP, Azure Language Service, Azure OpenAI e os fundamentos de IA Generativa.</p>
+                  <div class="spr-meta">
+                    <span>31 Mar 2026</span>
+                    <span>⏱ 10 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/ai901-03-linguagem-ia-generativa" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-4">
+                <div class="spr-num" style="background:#F3E8FF;color:#7B2D8B">4</div>
+                <div class="spr-body">
+                  <a href="/posts/ai901-04-ia-conversacional" class="spr-title">IA conversacional e agentes</a>
+                  <p class="spr-excerpt">Azure Bot Service, Copilot Studio e como criar assistentes virtuais inteligentes.</p>
+                  <div class="spr-meta">
+                    <span>4 Abr 2026</span>
+                    <span>⏱ 8 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/ai901-04-ia-conversacional" class="spr-cta">Ler →</a>
+              </li>
+              <li class="serie-post-row" id="post-5">
+                <div class="spr-num" style="background:#F3E8FF;color:#7B2D8B">5</div>
+                <div class="spr-body">
+                  <a href="/posts/ai901-05-ia-responsavel-foundry" class="spr-title">IA Responsável e Azure AI Foundry</a>
+                  <p class="spr-excerpt">Princípios de IA Responsável, Content Safety e o Azure AI Foundry.</p>
+                  <div class="spr-meta">
+                    <span>7 Abr 2026</span>
+                    <span>⏱ 9 min</span>
+                    
+                  </div>
+                </div>
+                <a href="/posts/ai901-05-ia-responsavel-foundry" class="spr-cta">Ler →</a>
+              </li>
+    </ol>
+
+    <div class="serie-footer">
+      <a href="/series" class="btn-outline-blue">← Ver todas as séries</a>
+      <a href="/treinamentos/ai901" class="btn-primary-blue">🎮 Acessar simulado AI-901</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .serie-page { padding: 1.5rem 0 3rem; max-width: 780px; }
+  .serie-breadcrumb { display: flex; gap: 0.5rem; align-items: center; font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .serie-breadcrumb a { color: var(--blue); }
+  .serie-breadcrumb span { color: var(--text-muted); }
+
+  .serie-hero { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1.25rem; }
+  .serie-hero-cert { display: inline-block; font-size: 0.75rem; font-weight: 800; padding: 3px 14px; border-radius: 20px; margin-bottom: 0.75rem; letter-spacing: 0.06em; }
+  .serie-hero-title { font-size: 1.625rem; font-weight: 800; margin-bottom: 0.625rem; }
+  .serie-hero-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; }
+  .serie-hero-meta { display: flex; gap: 1.25rem; align-items: center; font-size: 0.875rem; color: var(--text-muted); flex-wrap: wrap; }
+  .serie-hero-treina { color: var(--blue); font-weight: 700; }
+
+  .serie-progress-hint { display: flex; justify-content: space-between; align-items: center; background: var(--surface-alt, #f8f9fa); border: 1px solid var(--border); border-radius: 10px; padding: 0.875rem 1.25rem; margin-bottom: 1.25rem; gap: 1rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--text-muted); }
+  .btn-start-serie { font-size: 0.875rem; font-weight: 700; color: var(--blue); white-space: nowrap; }
+
+  .serie-posts-full { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .serie-post-row { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .serie-post-row:last-child { border-bottom: none; }
+  .serie-post-row:hover { background: var(--surface-alt, #f8f9fa); }
+  .spr-num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 800; margin-top: 2px; }
+  .spr-body { flex: 1; min-width: 0; }
+  .spr-title { font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.4; display: block; margin-bottom: 0.375rem; }
+  .spr-title:hover { color: var(--blue); }
+  .spr-excerpt { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+  .spr-meta { display: flex; gap: 0.875rem; align-items: center; font-size: 0.75rem; color: var(--text-muted); flex-wrap: wrap; }
+  .spr-badge { background: var(--blue); color: #fff; font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .spr-cta { flex-shrink: 0; font-size: 0.875rem; font-weight: 700; color: var(--blue); align-self: center; white-space: nowrap; }
+  .spr-cta:hover { opacity: 0.8; }
+
+  .serie-footer { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  .btn-outline-blue { padding: 0.625rem 1.25rem; border: 1.5px solid var(--blue); color: var(--blue); border-radius: 8px; font-weight: 600; font-size: 0.875rem; transition: all 0.15s; }
+  .btn-outline-blue:hover { background: var(--blue); color: #fff; }
+  .btn-primary-blue { padding: 0.625rem 1.25rem; background: var(--blue); color: #fff; border-radius: 8px; font-weight: 600; font-size: 0.875rem; transition: opacity 0.15s; }
+  .btn-primary-blue:hover { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    .serie-post-row { flex-wrap: wrap; gap: 0.75rem; }
+    .spr-cta { display: none; }
+    .spr-title { font-size: 0.9375rem; }
+  }
+</style>

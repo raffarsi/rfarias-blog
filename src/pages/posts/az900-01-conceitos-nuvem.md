@@ -4,13 +4,15 @@ title: "AZ-900 na prática [1] — Conceitos fundamentais de Cloud Computing"
 category: "Azure"
 tag: "azure"
 serie: "AZ-900 na prática"
+serieSlug: "az900"
 serieNum: 1
 date: "3 Mar 2026"
 readTime: "8 min"
 description: "IaaS, PaaS e SaaS explicados com exemplos reais. O ponto de partida para qualquer certificação Azure."
 next:
-  title: "AZ-900 na prática [2] — Arquitetura e serviços Azure"
+  title: "AZ-900 [2] — Arquitetura Azure"
   slug: "az900-02-arquitetura-azure"
+
 ---
 
 Cloud Computing transformou a forma como empresas consomem tecnologia. Para o AZ-900 — e para qualquer conversa séria sobre Azure — entender os modelos de serviço e implantação é o ponto de partida.

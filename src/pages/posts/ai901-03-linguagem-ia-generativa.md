@@ -4,16 +4,18 @@ title: "AI-901 na prática [3] — Linguagem natural e IA Generativa"
 category: "IA"
 tag: "ia"
 serie: "AI-901 na prática"
+serieSlug: "ai901"
 serieNum: 3
 date: "31 Mar 2026"
 readTime: "10 min"
 description: "NLP, Azure Language Service, Azure OpenAI e os fundamentos de IA Generativa para o AI-901."
 prev:
-  title: "AI-901 na prática [2] — Visão e fala"
+  title: "AI-901 [2] — Visão e Fala"
   slug: "ai901-02-azure-ai-services"
 next:
-  title: "AI-901 na prática [4] — IA conversacional e bots"
+  title: "AI-901 [4] — IA Conversacional"
   slug: "ai901-04-ia-conversacional"
+
 ---
 
 Processamento de Linguagem Natural (NLP) e IA Generativa são os tópicos de maior crescimento no AI-901. Este artigo cobre desde análise de sentimento até LLMs.

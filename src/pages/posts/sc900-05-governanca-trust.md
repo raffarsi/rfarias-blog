@@ -4,13 +4,15 @@ title: "SC-900 na prática [5] — Governança e Service Trust Portal"
 category: "Azure"
 tag: "azure"
 serie: "SC-900 na prática"
+serieSlug: "sc900"
 serieNum: 5
 date: "25 Abr 2026"
 readTime: "8 min"
 description: "Service Trust Portal, Microsoft Privacy, Secure Score e as ferramentas de governança para o SC-900."
 prev:
-  title: "SC-900 na prática [4] — Conformidade e Purview"
+  title: "SC-900 [4] — Conformidade"
   slug: "sc900-04-conformidade-purview"
+
 ---
 
 Governança e transparência são diferenciais competitivos da Microsoft no mercado corporativo. Este artigo cobre as ferramentas que demonstram e gerenciam a postura de segurança.

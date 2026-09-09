@@ -4,16 +4,18 @@ title: "AZ-104 na prática [13] — VPN Gateway e ExpressRoute"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 13
 date: "8 Ago 2026"
 readTime: "9 min"
 description: "Conectando redes on-premises ao Azure com VPN Gateway e ExpressRoute."
 prev:
-  title: "AZ-104 na prática [12] — Load Balancer"
+  title: "AZ-104 [12] — Load Balancer"
   slug: "az104-12-load-balancer"
 next:
-  title: "AZ-104 na prática [14] — Azure Monitor"
+  title: "AZ-104 [14] — Azure Monitor"
   slug: "az104-14-azure-monitor"
+
 ---
 
 Conectar ambientes on-premises ao Azure é um requisito comum. O Azure oferece duas opções principais: VPN Gateway (pela internet) e ExpressRoute (conexão privada dedicada).

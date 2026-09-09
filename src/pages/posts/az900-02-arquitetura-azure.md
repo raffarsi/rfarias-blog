@@ -4,16 +4,18 @@ title: "AZ-900 na prática [2] — Arquitetura e componentes do Azure"
 category: "Azure"
 tag: "azure"
 serie: "AZ-900 na prática"
+serieSlug: "az900"
 serieNum: 2
 date: "7 Mar 2026"
 readTime: "9 min"
 description: "Regiões, Zonas de Disponibilidade, Resource Groups e a hierarquia de organização do Azure."
 prev:
-  title: "AZ-900 na prática [1] — Conceitos de Cloud"
+  title: "AZ-900 [1] — Conceitos de Cloud"
   slug: "az900-01-conceitos-nuvem"
 next:
-  title: "AZ-900 na prática [3] — Computação e redes"
+  title: "AZ-900 [3] — Computação e Redes"
   slug: "az900-03-computacao-redes"
+
 ---
 
 Entender como o Azure está organizado geograficamente e como você estrutura seus recursos é fundamental — tanto para o exame quanto para projetar soluções reais.

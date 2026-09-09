@@ -4,13 +4,15 @@ title: "DP-900 na prática [5] — Pipelines e governança de dados"
 category: "Azure"
 tag: "azure"
 serie: "DP-900 na prática"
+serieSlug: "dp900"
 serieNum: 5
 date: "12 Mai 2026"
 readTime: "9 min"
 description: "Azure Data Factory, Event Hubs, Stream Analytics e governança de dados com Microsoft Purview."
 prev:
-  title: "DP-900 na prática [4] — Analytics e Power BI"
+  title: "DP-900 [4] — Analytics e Power BI"
   slug: "dp900-04-analytics-powerbi"
+
 ---
 
 Pipelines movem e transformam dados entre sistemas. Governança garante que dados sejam confiáveis, seguros e rastreáveis. Ambos são temas do DP-900.

@@ -4,13 +4,15 @@ title: "DP-900 na prática [1] — Conceitos fundamentais de dados"
 category: "Azure"
 tag: "azure"
 serie: "DP-900 na prática"
+serieSlug: "dp900"
 serieNum: 1
 date: "28 Abr 2026"
 readTime: "9 min"
 description: "Dados estruturados, semiestruturados e não estruturados. Processamento batch vs streaming para o DP-900."
 next:
-  title: "DP-900 na prática [2] — Dados relacionais no Azure"
+  title: "DP-900 [2] — Dados Relacionais"
   slug: "dp900-02-dados-relacionais"
+
 ---
 
 O DP-900 cobre os fundamentos de dados em nuvem — desde os conceitos básicos até os serviços Azure de dados. Este artigo começa pelo essencial.

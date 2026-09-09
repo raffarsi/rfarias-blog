@@ -4,13 +4,15 @@ title: "AI-901 na prática [1] — Fundamentos de IA e Machine Learning"
 category: "IA"
 tag: "ia"
 serie: "AI-901 na prática"
+serieSlug: "ai901"
 serieNum: 1
 date: "24 Mar 2026"
 readTime: "9 min"
 description: "Conceitos essenciais de IA, ML, Deep Learning e os tipos de problemas que cada abordagem resolve."
 next:
-  title: "AI-901 na prática [2] — Azure AI Services"
+  title: "AI-901 [2] — Visão e Fala"
   slug: "ai901-02-azure-ai-services"
+
 ---
 
 O AI-901 testa seu entendimento dos conceitos de IA e como os serviços cognitivos da Microsoft os implementam. Este artigo cobre os fundamentos que sustentam todo o exame.

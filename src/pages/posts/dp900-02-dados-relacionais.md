@@ -4,16 +4,18 @@ title: "DP-900 na prática [2] — Dados relacionais no Azure"
 category: "Azure"
 tag: "azure"
 serie: "DP-900 na prática"
+serieSlug: "dp900"
 serieNum: 2
 date: "2 Mai 2026"
 readTime: "9 min"
 description: "Azure SQL Database, SQL Managed Instance, PostgreSQL e os serviços de banco de dados relacional."
 prev:
-  title: "DP-900 na prática [1] — Conceitos de dados"
+  title: "DP-900 [1] — Conceitos de Dados"
   slug: "dp900-01-conceitos-dados"
 next:
-  title: "DP-900 na prática [3] — Dados não relacionais"
+  title: "DP-900 [3] — Dados Não Relacionais"
   slug: "dp900-03-dados-nao-relacionais"
+
 ---
 
 Bancos de dados relacionais são a base da maioria das aplicações. O DP-900 cobre os serviços Azure para dados relacionais em profundidade.

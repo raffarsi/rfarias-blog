@@ -25,10 +25,24 @@ const tocHeadings = headings.filter(h => h.depth === 2);
 
 <BaseLayout title={`${frontmatter.title} — rfarias`} description={frontmatter.description}>
   <article class="container post-page">
+    {frontmatter.serie && (
+      <div class="serie-banner">
+        <div class="serie-banner-left">
+          <span class="serie-banner-icon">📚</span>
+          <div>
+            <div class="serie-banner-name">{frontmatter.serie}</div>
+            <div class="serie-banner-num">Artigo {frontmatter.serieNum}</div>
+          </div>
+        </div>
+        {frontmatter.serieSlug && (
+          <a href={`/series/${frontmatter.serieSlug}`} class="serie-banner-link">
+            Ver série completa →
+          </a>
+        )}
+      </div>
+    )}
+
     <div class="post-header">
-      {frontmatter.serie && (
-        <span class="serie-label">📚 {frontmatter.serie} · #{frontmatter.serieNum}</span>
-      )}
       <span class:list={['badge', badgeClass]}>{frontmatter.category}</span>
       <span class="post-date">{frontmatter.date} · {frontmatter.readTime} de leitura</span>
     </div>
@@ -55,16 +69,26 @@ const tocHeadings = headings.filter(h => h.depth === 2);
     {(frontmatter.prev || frontmatter.next) && (
       <nav class="post-nav">
         {frontmatter.prev ? (
-          <a href={`/posts/${frontmatter.prev.slug}`} class="post-nav-link">
-            ← {frontmatter.prev.title}
+          <a href={`/posts/${frontmatter.prev.slug}`} class="post-nav-card prev-card">
+            <span class="nav-direction">← Anterior</span>
+            <span class="nav-title">{frontmatter.prev.title}</span>
           </a>
         ) : <span />}
         {frontmatter.next ? (
-          <a href={`/posts/${frontmatter.next.slug}`} class="post-nav-link">
-            {frontmatter.next.title} →
+          <a href={`/posts/${frontmatter.next.slug}`} class="post-nav-card next-card">
+            <span class="nav-direction">Próximo →</span>
+            <span class="nav-title">{frontmatter.next.title}</span>
           </a>
         ) : <span />}
       </nav>
+    )}
+
+    {frontmatter.serieSlug && (
+      <div class="serie-bottom-cta">
+        <a href={`/series/${frontmatter.serieSlug}`}>
+          📚 Ver todos os artigos da série {frontmatter.serie} →
+        </a>
+      </div>
     )}
   </article>
 </BaseLayout>
@@ -146,26 +170,94 @@ const tocHeadings = headings.filter(h => h.depth === 2);
     font-weight: 600;
   }
 
-  .post-nav {
+  /* Serie banner */
+  .serie-banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #ede9fe;
+    border: 1px solid #c4b5fd;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    max-width: 680px;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .serie-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .serie-banner-icon { font-size: 1.125rem; }
+  .serie-banner-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #6d28d9;
+  }
+  .serie-banner-num {
+    font-size: 0.75rem;
+    color: #7c3aed;
+  }
+  .serie-banner-link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #6d28d9;
+    white-space: nowrap;
+  }
+  .serie-banner-link:hover { text-decoration: underline; }
+
+  /* Post nav */
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
     border-top: 1px solid var(--border);
     padding-top: 1.5rem;
     margin-top: 2.5rem;
     max-width: 680px;
   }
 
-  .post-nav-link {
-    font-size: 0.8125rem;
+  .post-nav-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .post-nav-card:hover {
+    border-color: var(--blue);
+    background: var(--blue-light, #EBF3FF);
+  }
+  .next-card { text-align: right; }
+  .nav-direction {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .nav-title {
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--blue);
-    transition: opacity 0.15s;
+    line-height: 1.4;
   }
 
-  .post-nav-link:hover {
-    opacity: 0.8;
+  .serie-bottom-cta {
+    margin-top: 1rem;
+    max-width: 680px;
+    text-align: center;
   }
+  .serie-bottom-cta a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--blue);
+  }
+  .serie-bottom-cta a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
     .post-body.with-toc {

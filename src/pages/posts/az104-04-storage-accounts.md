@@ -4,16 +4,18 @@ title: "AZ-104 na prática [4] — Storage Accounts: tudo que você precisa sabe
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 4
 date: "6 Jun 2026"
 readTime: "11 min"
 description: "Tipos de storage, redundância, acesso e lifecycle management no Azure Storage."
 prev:
-  title: "AZ-104 na prática [3] — Azure Policy"
+  title: "AZ-104 [3] — Azure Policy"
   slug: "az104-03-azure-policy"
 next:
-  title: "AZ-104 na prática [5] — Azure Files e File Sync"
+  title: "AZ-104 [5] — Azure Files"
   slug: "az104-05-azure-files"
+
 ---
 
 Storage Account é um dos recursos mais versáteis do Azure e um dos mais cobrados no AZ-104. Entender os tipos, redundância e opções de acesso é obrigatório.

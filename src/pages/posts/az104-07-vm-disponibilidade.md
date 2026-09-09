@@ -4,16 +4,18 @@ title: "AZ-104 na prática [7] — VMs: alta disponibilidade e Scale Sets"
 category: "Azure"
 tag: "azure"
 serie: "AZ-104 na prática"
+serieSlug: "az104"
 serieNum: 7
 date: "27 Jun 2026"
 readTime: "10 min"
 description: "Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade."
 prev:
-  title: "AZ-104 na prática [6] — VMs: criação"
+  title: "AZ-104 [6] — VMs: Criação"
   slug: "az104-06-virtual-machines"
 next:
-  title: "AZ-104 na prática [8] — App Service"
+  title: "AZ-104 [8] — App Service"
   slug: "az104-08-app-service"
+
 ---
 
 Alta disponibilidade não é opcional em produção. O Azure oferece três mecanismos principais: Availability Sets, Availability Zones e Virtual Machine Scale Sets.
