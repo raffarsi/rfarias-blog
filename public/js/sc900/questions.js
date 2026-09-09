@@ -988,3 +988,25 @@ const QUESTION_BANK_EXTRA2 = [
 
 QUESTION_BANK.push(...QUESTION_BANK_EXTRA2);
 PLATFORM_CONFIG.totalQuestions = QUESTION_BANK.length;
+
+// ─── Normalizar schema para o formato esperado pelo app.js ───────────────────
+// SC-900 usa {question, options, explanation, tip, difficulty}
+// app.js espera {q, opts, exp, dica, nivel, concept, domain}
+(function normalizeQuestionBank() {
+  for (let i = 0; i < QUESTION_BANK.length; i++) {
+    const q = QUESTION_BANK[i];
+    if (q.question && !q.q) {
+      q.q       = q.question;
+      q.opts    = q.options || [];
+      q.dica    = q.tip || '';
+      q.nivel   = q.difficulty || 'basico';
+      q.concept = q.explanation || '';
+      // exp: uma explicação por opção (só temos a geral, repetimos para todas)
+      q.exp     = (q.opts || []).map((_, idx) =>
+        idx === q.correct
+          ? (q.explanation || 'Esta é a resposta correta.')
+          : 'Esta alternativa está incorreta. ' + (q.explanation || '')
+      );
+    }
+  }
+})();
