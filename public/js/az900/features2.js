@@ -43,28 +43,29 @@ RENDERERS.oficial = function renderOficial() {
         <li>Pontuação calculada proporcionalmente (acertos × ${Math.round(cfg.total/cfg.qty)})</li>
       </ul>
     </div>
-    <button class="btn btn-primary btn-lg" id="start-oficial-btn">🚀 Iniciar Simulado Oficial</button>
+    <button class="btn btn-primary btn-lg" onclick="startOficialSimulado()">🚀 Iniciar Simulado Oficial</button>
   `;
+};
 
-  document.getElementById('start-oficial-btn').addEventListener('click', () => {
-    const qty = Math.min(cfg.qty, QUESTION_BANK.length);
-    const pool = shuffleArr([...QUESTION_BANK]).slice(0, qty);
-    simulado = {
-      playerName: STATE.currentStudent,
-      mode: 'oficial',
-      oficial: true,
-      examConfig: cfg,
-      questions: pool.map(prepareQuestion),
-      currentIndex: 0,
-      timeLimitSeconds: cfg.time,
-      remainingSeconds: cfg.time,
-      elapsedSeconds: 0,
-      startedAt: Date.now(),
-      timerInterval: null,
-      finished: false,
-    };
-    renderOficialExam();
-  });
+window.startOficialSimulado = function() {
+  const cfg = EXAM_CONFIG;
+  const qty = Math.min(cfg.qty, QUESTION_BANK.length);
+  const pool = shuffleArr([...QUESTION_BANK]).slice(0, qty);
+  simulado = {
+    playerName: STATE.currentStudent,
+    mode: 'oficial',
+    oficial: true,
+    examConfig: cfg,
+    questions: pool.map(prepareQuestion),
+    currentIndex: 0,
+    timeLimitSeconds: cfg.time,
+    remainingSeconds: cfg.time,
+    elapsedSeconds: 0,
+    startedAt: Date.now(),
+    timerInterval: null,
+    finished: false,
+  };
+  renderOficialExam();
 };
 
 function renderOficialExam() {
