@@ -68,38 +68,43 @@ const trilhas = [
 
     <div class="trilhas-grid">
       {trilhas.map(trilha => (
-        <a
-          href={`/treinamentos/${trilha.slug}`}
-          class:list={['trilha-card', { disabled: trilha.status !== 'disponivel' }]}
-        >
-          <div class="trilha-top">
-            <span class="trilha-icon">{trilha.icon}</span>
-            {trilha.status === 'disponivel' && <span class="badge-disponivel">Disponível</span>}
-            {trilha.status === 'breve' && <span class="badge-breve">Em breve</span>}
-          </div>
-          <h2 class="trilha-title">{trilha.title}</h2>
-          <p class="trilha-subtitle">{trilha.subtitle}</p>
-          <p class="trilha-desc">{trilha.description}</p>
-          {trilha.stats && (
-            <div class="trilha-stats">
-              <div class="stat">
-                <span class="stat-value">{trilha.stats.questoes}</span>
-                <span class="stat-label">questões</span>
-              </div>
-              <div class="stat">
-                <span class="stat-value">{trilha.stats.dominios}</span>
-                <span class="stat-label">domínios</span>
-              </div>
-              <div class="stat">
-                <span class="stat-value">{trilha.stats.labs}</span>
-                <span class="stat-label">labs</span>
-              </div>
+        trilha.status === 'disponivel' ? (
+          <a href={`/treinamentos/${trilha.slug}`} class="trilha-card">
+            <div class="trilha-top">
+              <span class="trilha-icon">{trilha.icon}</span>
+              <span class="badge-disponivel">Disponível</span>
             </div>
-          )}
-          {trilha.status === 'disponivel' && (
+            <h2 class="trilha-title">{trilha.title}</h2>
+            <p class="trilha-subtitle">{trilha.subtitle}</p>
+            <p class="trilha-desc">{trilha.description}</p>
+            {trilha.stats && (
+              <div class="trilha-stats">
+                <div class="stat"><span class="stat-value">{trilha.stats.questoes}</span><span class="stat-label">questões</span></div>
+                <div class="stat"><span class="stat-value">{trilha.stats.dominios}</span><span class="stat-label">domínios</span></div>
+                <div class="stat"><span class="stat-value">{trilha.stats.labs}</span><span class="stat-label">labs</span></div>
+              </div>
+            )}
             <span class="trilha-cta">Acessar trilha →</span>
-          )}
-        </a>
+          </a>
+        ) : (
+          <div class="trilha-card trilha-card-breve">
+            <div class="trilha-top">
+              <span class="trilha-icon">{trilha.icon}</span>
+              <span class="badge-breve">Em breve</span>
+            </div>
+            <h2 class="trilha-title">{trilha.title}</h2>
+            <p class="trilha-subtitle">{trilha.subtitle}</p>
+            <p class="trilha-desc">{trilha.description}</p>
+            {trilha.stats && (
+              <div class="trilha-stats">
+                <div class="stat"><span class="stat-value">{trilha.stats.questoes}</span><span class="stat-label">questões</span></div>
+                <div class="stat"><span class="stat-value">{trilha.stats.dominios}</span><span class="stat-label">domínios</span></div>
+                <div class="stat"><span class="stat-value">{trilha.stats.labs}</span><span class="stat-label">labs</span></div>
+              </div>
+            )}
+            <span class="trilha-cta-breve">Em breve</span>
+          </div>
+        )
       ))}
     </div>
   </div>
@@ -133,6 +138,9 @@ const trilhas = [
   }
 
   .trilha-card.disabled { opacity: 0.65; cursor: default; }
+  .trilha-card-breve { opacity: 0.55; cursor: not-allowed; filter: grayscale(0.3); }
+  .trilha-card-breve:hover { border-color: var(--border) !important; box-shadow: none !important; transform: none !important; }
+  .trilha-cta-breve { display: inline-block; margin-top: auto; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); }
 
   .trilha-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
   .trilha-icon { font-size: 2rem; }
