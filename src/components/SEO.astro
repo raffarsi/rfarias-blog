@@ -21,11 +21,48 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
+
+// JSON-LD structured data
+const jsonLd = type === 'article' ? {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  image: imageURL,
+  author: {
+    '@type': 'Person',
+    name: 'Rafael Farias da Silva',
+    url: 'https://rfarias.com/sobre',
+    sameAs: [
+      'https://linkedin.com/in/rafael-farias-da-silva',
+      'https://instagram.com/rafael.farias.s',
+    ],
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Rafael Farias da Silva',
+    url: 'https://rfarias.com',
+  },
+  datePublished: articleDate,
+  url: canonicalURL,
+} : {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'rfarias',
+  url: 'https://rfarias.com',
+  description,
+  author: {
+    '@type': 'Person',
+    name: 'Rafael Farias da Silva',
+    url: 'https://rfarias.com/sobre',
+  },
+};
 ---
 
 <link rel="canonical" href={canonicalURL} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
 
-<!-- Open Graph base -->
+<!-- Open Graph -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
@@ -36,7 +73,7 @@ const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
 <meta property="og:site_name" content="rfarias" />
 <meta property="og:locale" content="pt_BR" />
 
-<!-- Article-specific OG -->
+<!-- Article OG -->
 {type === 'article' && articleDate && (
   <meta property="article:published_time" content={articleDate} />
 )}
@@ -47,7 +84,7 @@ const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
   <meta property="article:section" content={articleSection} />
 )}
 
-<!-- Twitter / X Card -->
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={title} />
@@ -57,3 +94,6 @@ const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
 
 <!-- Author -->
 <meta name="author" content="Rafael Farias da Silva" />
+
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
