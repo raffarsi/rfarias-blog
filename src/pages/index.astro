@@ -125,11 +125,15 @@ const grid = allPosts.slice(1, 7); // mostra 6 posts mais recentes no grid
 
 // Contadores para filtros
 const counts = {
-  todos: allPosts.length,
-  azure: allPosts.filter(p => p.tag === 'azure').length,
-  ia: allPosts.filter(p => p.tag === 'ia').length,
-  docencia: allPosts.filter(p => p.tag === 'docencia').length,
-  carreira: allPosts.filter(p => p.tag === 'carreira').length,
+  todos:          allPosts.length,
+  'ia-generativa':allPosts.filter(p => p.tag === 'ia-generativa').length,
+  networking:     allPosts.filter(p => p.tag === 'networking').length,
+  iam:            allPosts.filter(p => p.tag === 'iam').length,
+  seguranca:      allPosts.filter(p => p.tag === 'seguranca').length,
+  infra:          allPosts.filter(p => p.tag === 'infra').length,
+  finops:         allPosts.filter(p => p.tag === 'finops').length,
+  docencia:       allPosts.filter(p => p.tag === 'docencia').length,
+  carreira:       allPosts.filter(p => p.tag === 'carreira').length,
 };
 ---
 
@@ -199,10 +203,14 @@ const counts = {
 
     <div class="filters">
       <a href="/artigos" class="filter-btn active">Todos <span class="filter-count">{counts.todos}</span></a>
-      <a href="/artigos" class="filter-btn">Azure <span class="filter-count">{counts.azure}</span></a>
-      <a href="/artigos" class="filter-btn">IA <span class="filter-count">{counts.ia}</span></a>
-      <a href="/artigos" class="filter-btn">Docência <span class="filter-count">{counts.docencia}</span></a>
-      <a href="/artigos" class="filter-btn">Carreira <span class="filter-count">{counts.carreira}</span></a>
+      <a href="/artigos?cat=ia-generativa" class="filter-btn">IA Generativa <span class="filter-count">{counts['ia-generativa']}</span></a>
+      <a href="/artigos?cat=networking" class="filter-btn">Networking <span class="filter-count">{counts.networking}</span></a>
+      <a href="/artigos?cat=iam" class="filter-btn">IAM <span class="filter-count">{counts.iam}</span></a>
+      <a href="/artigos?cat=seguranca" class="filter-btn">Segurança <span class="filter-count">{counts.seguranca}</span></a>
+      <a href="/artigos?cat=infra" class="filter-btn">Infra <span class="filter-count">{counts.infra}</span></a>
+      <a href="/artigos?cat=finops" class="filter-btn">FinOps <span class="filter-count">{counts.finops}</span></a>
+      <a href="/artigos?cat=docencia" class="filter-btn">Docência <span class="filter-count">{counts.docencia}</span></a>
+      <a href="/artigos?cat=carreira" class="filter-btn">Carreira <span class="filter-count">{counts.carreira}</span></a>
     </div>
 
     <!-- Carrossel -->
