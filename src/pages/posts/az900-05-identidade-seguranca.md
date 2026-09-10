@@ -18,7 +18,7 @@ next:
 
 ---
 
-Identidade é o novo perímetro de segurança. O AZ-900 dedica uma boa parte ao ecossistema de segurança e governança do Azure — e são conceitos que se aplicam diretamente ao dia a dia.
+Identidade é o novo perímetro de segurança. O AZ-900 dedica uma boa parte ao ecossistema de segurança e governança do Azure, e são conceitos que se aplicam diretamente ao dia a dia.
 
 ## Microsoft Entra ID
 
@@ -45,13 +45,13 @@ az ad user create \
 
 MFA adiciona uma segunda camada: algo que você sabe (senha) + algo que você tem (telefone/token) + algo que você é (biometria).
 
-O Microsoft Authenticator é o método recomendado — suporta notificações push, códigos TOTP e autenticação passwordless.
+O Microsoft Authenticator é o método recomendado, suporta notificações push, códigos TOTP e autenticação passwordless.
 
 <div class="callout">
 <strong>Dado importante:</strong> Habilitar MFA bloqueia mais de 99,9% dos ataques de comprometimento de conta. É a medida de segurança com melhor custo-benefício disponível.
 </div>
 
-## RBAC — Controle de acesso baseado em funções
+## RBAC, Controle de acesso baseado em funções
 
 ```bash
 # Principais funções internas

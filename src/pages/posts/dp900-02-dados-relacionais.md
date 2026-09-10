@@ -49,10 +49,10 @@ ORDER BY p.Data DESC;
 ```
 
 **Propriedades ACID:**
-- **Atomicidade** — transação é tudo ou nada
-- **Consistência** — dados sempre em estado válido
-- **Isolamento** — transações concorrentes não interferem
-- **Durabilidade** — dados comprometidos são permanentes
+- **Atomicidade**, transação é tudo ou nada
+- **Consistência**, dados sempre em estado válido
+- **Isolamento**, transações concorrentes não interferem
+- **Durabilidade**, dados comprometidos são permanentes
 
 ## Azure SQL Database
 
@@ -86,8 +86,8 @@ az sql server firewall-rule create \
 ```
 
 **Modelos de compra:**
-- **DTU** — unidades combinadas de CPU, memória e I/O. Simples, mas menos flexível.
-- **vCore** — escolha independente de CPU, memória e storage. Mais controle, suporta Hybrid Benefit.
+- **DTU**, unidades combinadas de CPU, memória e I/O. Simples, mas menos flexível.
+- **vCore**, escolha independente de CPU, memória e storage. Mais controle, suporta Hybrid Benefit.
 
 **Backups automáticos:**
 - Full: semanal
@@ -97,7 +97,7 @@ az sql server firewall-rule create \
 
 ## Azure SQL Managed Instance
 
-SQL Server completo como serviço — 100% compatível com SQL Server on-premises.
+SQL Server completo como serviço, 100% compatível com SQL Server on-premises.
 
 ```bash
 # Criar Managed Instance (leva ~3-4 horas)
@@ -147,7 +147,7 @@ az postgres flexible-server execute \
 <strong>Dica para o exame:</strong> Azure SQL Managed Instance é a resposta quando o enunciado menciona "migração de SQL Server on-premises" ou "máxima compatibilidade com SQL Server". SQL Database é para novas aplicações ou quando você precisa de escala sem gerenciar instâncias.
 </div>
 
-## Índices — performance de consultas
+## Índices, performance de consultas
 
 ```sql
 -- Índice clustered (determina a ordem física dos dados)

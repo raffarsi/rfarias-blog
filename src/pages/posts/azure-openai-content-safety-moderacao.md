@@ -7,7 +7,7 @@ date: "04 Nov 2025"
 readTime: "8 min"
 description: "Como integrar o Azure Content Safety para detectar conteúdo prejudicial em inputs e outputs de agentes de IA corporativos."
 ---
-Em aplicações de IA generativa corporativas, moderação de conteúdo não é opcional — é um requisito de compliance e proteção de marca. O Azure Content Safety oferece APIs específicas para detectar conteúdo prejudicial em texto e imagens, além de verificar se as respostas do modelo estão fundamentadas no contexto fornecido.
+Em aplicações de IA generativa corporativas, moderação de conteúdo não é opcional, é um requisito de compliance e proteção de marca. O Azure Content Safety oferece APIs específicas para detectar conteúdo prejudicial em texto e imagens, além de verificar se as respostas do modelo estão fundamentadas no contexto fornecido.
 
 ## Criando o recurso
 
@@ -17,7 +17,7 @@ az cognitiveservices account create   --name content-safety-prod   --resource-gr
 
 ## Analisando texto: input e output
 
-A estratégia de moderação em duas camadas — verificar o que o usuário envia e o que o modelo responde:
+A estratégia de moderação em duas camadas, verificar o que o usuário envia e o que o modelo responde:
 
 ```python
 from azure.ai.contentsafety import ContentSafetyClient
@@ -76,7 +76,7 @@ def processar_com_moderacao(user_input: str) -> str:
 
 ## Groundedness Detection: verificando alucinações
 
-O Content Safety tem um endpoint para verificar se a resposta está fundamentada no contexto fornecido — útil para detectar alucinações em pipelines RAG:
+O Content Safety tem um endpoint para verificar se a resposta está fundamentada no contexto fornecido, útil para detectar alucinações em pipelines RAG:
 
 ```python
 from azure.ai.contentsafety.models import AnalyzeGroundednessOptions
@@ -111,10 +111,10 @@ resource deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-10-01
 ```
 
 Categorias configuráveis nos filtros nativos:
-- **Hate** — conteúdo de ódio por grupos
-- **Sexual** — conteúdo sexualmente explícito
-- **Violence** — conteúdo violento
-- **Self-harm** — conteúdo sobre auto-lesão
+- **Hate**, conteúdo de ódio por grupos
+- **Sexual**, conteúdo sexualmente explícito
+- **Violence**, conteúdo violento
+- **Self-harm**, conteúdo sobre auto-lesão
 
 Cada categoria tem threshold ajustável (low/medium/high) e ação configurável (block/annotate).
 
@@ -143,9 +143,9 @@ def verificar_imagem(image_path: str) -> dict:
 ```
 
 <div class="callout">
-<strong>Moderação em camadas:</strong> Combine os filtros nativos do Azure OpenAI (baixa latência, primeira camada) com o Azure Content Safety separado (mais configurável, segunda camada). A dupla camada captura o que escapa de cada sistema individualmente — especialmente útil para casos de uso com requisitos regulatórios.
+<strong>Moderação em camadas:</strong> Combine os filtros nativos do Azure OpenAI (baixa latência, primeira camada) com o Azure Content Safety separado (mais configurável, segunda camada). A dupla camada captura o que escapa de cada sistema individualmente, especialmente útil para casos de uso com requisitos regulatórios.
 </div>
 
 ## Conclusão
 
-Moderação de conteúdo é uma das poucas áreas onde a abordagem "habilitar e esquecer" funciona razoavelmente bem para proteger contra os casos mais grosseiros. O diferencial está nos casos intermediários — alucinações que parecem factuais, conteúdo borderline, respostas tecnicamente corretas mas inadequadas para o contexto corporativo. Para esses, a verificação de groundedness e políticas customizadas de filtro são o que separa uma implementação básica de uma produção-ready.
+Moderação de conteúdo é uma das poucas áreas onde a abordagem "habilitar e esquecer" funciona razoavelmente bem para proteger contra os casos mais grosseiros. O diferencial está nos casos intermediários, alucinações que parecem factuais, conteúdo borderline, respostas tecnicamente corretas mas inadequadas para o contexto corporativo. Para esses, a verificação de groundedness e políticas customizadas de filtro são o que separa uma implementação básica de uma produção-ready.

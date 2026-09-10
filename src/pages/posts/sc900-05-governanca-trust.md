@@ -39,15 +39,15 @@ az rest --method GET \
 
 ## Microsoft Trust Center
 
-trust.microsoft.com — hub de informações sobre segurança, privacidade e conformidade da Microsoft. Explica como produtos Microsoft protegem dados de clientes.
+trust.microsoft.com, hub de informações sobre segurança, privacidade e conformidade da Microsoft. Explica como produtos Microsoft protegem dados de clientes.
 
 ## Privacy Dashboard
 
-privacy.microsoft.com — permite que usuários visualizem e controlem dados coletados pela Microsoft:
+privacy.microsoft.com, permite que usuários visualizem e controlem dados coletados pela Microsoft:
 - Histórico de pesquisa e atividade
 - Dados de localização
 - Preferências de privacidade
-- Exportação de dados (direito de portabilidade — GDPR)
+- Exportação de dados (direito de portabilidade, GDPR)
 
 ## Microsoft Secure Score
 

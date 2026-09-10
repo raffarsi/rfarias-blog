@@ -35,10 +35,10 @@ az bot create \
 ```
 
 Um bot típico tem:
-- **Dialog** — fluxo de conversa
-- **Intents** — o que o usuário quer fazer
-- **Entities** — dados extraídos da mensagem
-- **State** — memória da conversa (usuário, diálogo, conversa)
+- **Dialog**, fluxo de conversa
+- **Intents**, o que o usuário quer fazer
+- **Entities**, dados extraídos da mensagem
+- **State**, memória da conversa (usuário, diálogo, conversa)
 
 ```python
 from botbuilder.core import ActivityHandler, TurnContext
@@ -69,7 +69,7 @@ Plataforma low-code para criar agentes de IA sem código:
 - Copilot Studio: low-code, rápido, ideal para casos de uso de negócio
 - Bot Service: pro-code, flexível, para cenários complexos e personalizados
 
-## Q&A Pairs — Perguntas e Respostas
+## Q&A Pairs, Perguntas e Respostas
 
 O Azure Language Service inclui Question Answering para criar bases de conhecimento:
 
@@ -92,19 +92,19 @@ print(f"Resposta: {output.answers[0].answer}")
 print(f"Confiança: {output.answers[0].confidence:.2f}")
 ```
 
-## Copilot — IA integrada ao Microsoft 365
+## Copilot, IA integrada ao Microsoft 365
 
-**Microsoft 365 Copilot** — IA generativa integrada ao Word, Excel, PowerPoint, Teams e Outlook. Gera documentos, resume reuniões, responde emails.
+**Microsoft 365 Copilot**, IA generativa integrada ao Word, Excel, PowerPoint, Teams e Outlook. Gera documentos, resume reuniões, responde emails.
 
-**GitHub Copilot** — assistente de código que sugere, completa e explica código em tempo real no VS Code e outros IDEs.
+**GitHub Copilot**, assistente de código que sugere, completa e explica código em tempo real no VS Code e outros IDEs.
 
 <div class="callout">
-<strong>Dica para o exame:</strong> O AI-901 distingue entre Copilot (produto integrado ao Microsoft 365/GitHub) e Copilot Studio (plataforma para criar seus próprios agentes). São coisas diferentes — não confunda.
+<strong>Dica para o exame:</strong> O AI-901 distingue entre Copilot (produto integrado ao Microsoft 365/GitHub) e Copilot Studio (plataforma para criar seus próprios agentes). São coisas diferentes, não confunda.
 </div>
 
 ## Agentes de IA
 
-Agentes vão além de chatbots — eles tomam ações autônomas:
+Agentes vão além de chatbots, eles tomam ações autônomas:
 
 1. **Percebem** o ambiente (leem emails, monitoram dados)
 2. **Raciocinam** sobre o que fazer

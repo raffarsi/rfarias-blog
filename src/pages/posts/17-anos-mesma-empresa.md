@@ -44,8 +44,8 @@ A terceira foi poder **conciliar com a docência**. A empresa sempre respeitou m
 
 ## O que aprendi sobre longevidade
 
-Ficar muito tempo em um lugar não é mérito nem defeito — é uma escolha que precisa ser reavaliada periodicamente. O perigo real não é ficar, é ficar no piloto automático.
+Ficar muito tempo em um lugar não é mérito nem defeito, é uma escolha que precisa ser reavaliada periodicamente. O perigo real não é ficar, é ficar no piloto automático.
 
-Minha regra pessoal: todo ano, me pergunto se estou crescendo. Se a resposta for "não" por dois anos seguidos, é hora de mudar — de projeto, de área ou de empresa.
+Minha regra pessoal: todo ano, me pergunto se estou crescendo. Se a resposta for "não" por dois anos seguidos, é hora de mudar, de projeto, de área ou de empresa.
 
 Até agora, sempre encontrei a mudança por dentro. Mas estou em paz com a possibilidade de um dia encontrá-la por fora.

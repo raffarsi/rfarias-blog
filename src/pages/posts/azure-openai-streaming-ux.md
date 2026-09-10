@@ -8,7 +8,7 @@ readTime: "8 min"
 description: "Como implementar streaming para uma experiência de usuário fluida em aplicações web com Azure OpenAI."
 ---
 
-Sem streaming, o usuário vê uma tela em branco por vários segundos e então recebe toda a resposta de uma vez. Com streaming, o texto aparece progressivamente — exatamente como no ChatGPT. A diferença na percepção de velocidade é enorme, mesmo que o tempo total de geração seja idêntico.
+Sem streaming, o usuário vê uma tela em branco por vários segundos e então recebe toda a resposta de uma vez. Com streaming, o texto aparece progressivamente, exatamente como no ChatGPT. A diferença na percepção de velocidade é enorme, mesmo que o tempo total de geração seja idêntico.
 
 ## Streaming básico com o SDK
 

@@ -106,7 +106,7 @@ az backup restore restore-disks \
 ```
 
 <div class="callout">
-<strong>Soft Delete:</strong> O Azure Backup habilita Soft Delete por padrão — dados de backup excluídos são retidos por 14 dias adicionais antes da exclusão permanente. Isso protege contra exclusão acidental ou ransomware que tente deletar backups.
+<strong>Soft Delete:</strong> O Azure Backup habilita Soft Delete por padrão, dados de backup excluídos são retidos por 14 dias adicionais antes da exclusão permanente. Isso protege contra exclusão acidental ou ransomware que tente deletar backups.
 </div>
 
 ## Azure Site Recovery (ASR)
@@ -120,16 +120,16 @@ az backup vault create \
   --name vault-dr \
   --location eastus
 
-# Habilitar replicação (via portal ou PowerShell — CLI tem suporte limitado para ASR)
+# Habilitar replicação (via portal ou PowerShell, CLI tem suporte limitado para ASR)
 # O ASR replica continuamente e permite failover planejado ou não-planejado
 ```
 
 **Conceitos chave do ASR:**
-- **RPO** (Recovery Point Objective) — quanto de dado pode ser perdido. ASR oferece RPO de ~60 segundos
-- **RTO** (Recovery Time Objective) — quanto tempo para recuperar. Depende do tamanho da VM
-- **Failover de teste** — testa DR sem impactar produção
-- **Failover** — move produção para a região de DR
-- **Failback** — retorna produção para a região original após resolução do incidente
+- **RPO** (Recovery Point Objective), quanto de dado pode ser perdido. ASR oferece RPO de ~60 segundos
+- **RTO** (Recovery Time Objective), quanto tempo para recuperar. Depende do tamanho da VM
+- **Failover de teste**, testa DR sem impactar produção
+- **Failover**, move produção para a região de DR
+- **Failback**, retorna produção para a região original após resolução do incidente
 
 ## Azure Backup para SQL Server em VMs
 

@@ -8,16 +8,16 @@ readTime: "10 min"
 description: "PIM é o que separa um ambiente Azure maduro de um ambiente com Owner permanente para todo mundo. Como configurar e usar no dia a dia."
 ---
 
-Privileged Identity Management (PIM) é a solução do Microsoft Entra ID para acesso privilegiado just-in-time (JIT). Em vez de ter administradores com roles permanentes e poderosas, o PIM permite que os usuários ativem temporariamente papéis privilegiados quando precisam — com aprovação, justificativa e duração limitada.
+Privileged Identity Management (PIM) é a solução do Microsoft Entra ID para acesso privilegiado just-in-time (JIT). Em vez de ter administradores com roles permanentes e poderosas, o PIM permite que os usuários ativem temporariamente papéis privilegiados quando precisam, com aprovação, justificativa e duração limitada.
 
 ## O problema do acesso permanente
 
 Quando um admin tem Owner permanente em uma subscription:
-- A conta fica com privilégios elevados 24/7 — se comprometida, o atacante tem acesso total
+- A conta fica com privilégios elevados 24/7, se comprometida, o atacante tem acesso total
 - Não há rastreabilidade de quando e por que o acesso foi usado
 - É difícil saber quem tem acesso a quê em um dado momento
 
-Com PIM, o admin tem o role de forma **elegível** — ele pode ativar quando precisar, por no máximo X horas, com justificativa registrada.
+Com PIM, o admin tem o role de forma **elegível**, ele pode ativar quando precisar, por no máximo X horas, com justificativa registrada.
 
 ## Habilitando PIM para Azure Resources
 
@@ -66,11 +66,11 @@ New-AzRoleEligibilityScheduleRequest -Scope "/subscriptions/{sub-id}" `
 ## Configurações de ativação
 
 Para cada role, você pode configurar:
-- **Duração máxima de ativação** — ex: 4 horas (não pode ficar ativo indefinidamente)
-- **Aprovação necessária** — ativação requer aprovação de um aprovador designado
-- **MFA obrigatório na ativação** — mesmo que o usuário já tenha passado pelo MFA no login
-- **Justificativa obrigatória** — usuário deve informar o motivo da ativação
-- **Ticket number** — integração com sistema de chamados
+- **Duração máxima de ativação**, ex: 4 horas (não pode ficar ativo indefinidamente)
+- **Aprovação necessária**, ativação requer aprovação de um aprovador designado
+- **MFA obrigatório na ativação**, mesmo que o usuário já tenha passado pelo MFA no login
+- **Justificativa obrigatória**, usuário deve informar o motivo da ativação
+- **Ticket number**, integração com sistema de chamados
 
 ## Auditoria
 
@@ -94,7 +94,7 @@ AuditLogs
 
 ## Access Reviews: revisão periódica
 
-O PIM suporta Access Reviews — revisões periódicas onde os próprios usuários ou aprovadores confirmam se ainda precisam do acesso:
+O PIM suporta Access Reviews, revisões periódicas onde os próprios usuários ou aprovadores confirmam se ainda precisam do acesso:
 
 ```
 Configura: revisão trimestral de todos os Owners
@@ -104,4 +104,4 @@ Configura: revisão trimestral de todos os Owners
 
 ## Conclusão
 
-PIM transforma acesso privilegiado de "sempre ligado e invisível" para "ativado quando necessário, com rastreabilidade completa". Para ambientes Azure em empresas reguladas (financeiro, saúde, governo), PIM é praticamente um requisito — não uma opção.
+PIM transforma acesso privilegiado de "sempre ligado e invisível" para "ativado quando necessário, com rastreabilidade completa". Para ambientes Azure em empresas reguladas (financeiro, saúde, governo), PIM é praticamente um requisito, não uma opção.

@@ -8,7 +8,7 @@ readTime: "10 min"
 description: "Como centralizar logs, criar alertas úteis (não ruidosos) e usar KQL para investigar incidentes no Azure Monitor."
 ---
 
-Azure Monitor é a plataforma central de observabilidade do Azure. Ele coleta métricas, logs e traces de todos os recursos Azure — e deixa tudo disponível para consulta, alerta e visualização. O problema não é falta de dados; é transformar o volume de dados em insights acionáveis.
+Azure Monitor é a plataforma central de observabilidade do Azure. Ele coleta métricas, logs e traces de todos os recursos Azure, e deixa tudo disponível para consulta, alerta e visualização. O problema não é falta de dados; é transformar o volume de dados em insights acionáveis.
 
 ## Log Analytics Workspace: o centro de tudo
 
@@ -59,10 +59,10 @@ AzureActivity
 
 ## Alertas que não geram ruído
 
-O erro mais comum é criar alertas que disparam com muita frequência — a equipe para de prestar atenção.
+O erro mais comum é criar alertas que disparam com muita frequência, a equipe para de prestar atenção.
 
 ```bash
-# Alerta de CPU alta — com threshold inteligente
+# Alerta de CPU alta, com threshold inteligente
 az monitor metrics alert create \
   --name alert-cpu-alta \
   --resource-group rg-monitoring \

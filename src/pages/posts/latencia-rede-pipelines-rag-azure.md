@@ -18,7 +18,7 @@ prev:
 
 ---
 
-Sua consulta RAG parece lenta. Você olha para o tempo de resposta do GPT-4o e assume que é o modelo o culpado — afinal, geração de texto leva segundos. Mas quando você começa a medir cada componente separadamente, descobre que a rede está contribuindo com uma fatia relevante da latência total, e essa fatia pode ser otimizada.
+Sua consulta RAG parece lenta. Você olha para o tempo de resposta do GPT-4o e assume que é o modelo o culpado, afinal, geração de texto leva segundos. Mas quando você começa a medir cada componente separadamente, descobre que a rede está contribuindo com uma fatia relevante da latência total, e essa fatia pode ser otimizada.
 
 Este é o artigo 4 de 20 da série **Azure Networking + IA Generativa**. Aqui decomponho os quatro saltos de rede escondidos dentro de uma única consulta RAG e explico os três fatores de rede que mais impactam a latência do pipeline.
 
@@ -26,9 +26,9 @@ Este é o artigo 4 de 20 da série **Azure Networking + IA Generativa**. Aqui de
 
 Um pipeline RAG típico soma a latência de várias etapas em sequência: geração de embedding da pergunta, busca híbrida no índice, reordenação semântica e geração da resposta pelo modelo.
 
-É tentador assumir que a geração do modelo domina o tempo total — afinal, GPT-4o pode levar segundos dependendo do tamanho da resposta — e ignorar a rede como fator secundário. Na prática, quando a arquitetura está mal desenhada em termos de região e conectividade, a rede pode adicionar centenas de milissegundos em saltos que deveriam ser negligíveis.
+É tentador assumir que a geração do modelo domina o tempo total, afinal, GPT-4o pode levar segundos dependendo do tamanho da resposta, e ignorar a rede como fator secundário. Na prática, quando a arquitetura está mal desenhada em termos de região e conectividade, a rede pode adicionar centenas de milissegundos em saltos que deveriam ser negligíveis.
 
-O problema não é que a rede vai dominar o tempo total — provavelmente não vai. O problema é que latência de rede é **variável e imprevisível**, enquanto latência de modelo é mais consistente. Picos de latência de rede transformam um P99 aceitável num P99 inaceitável para usuários.
+O problema não é que a rede vai dominar o tempo total, provavelmente não vai. O problema é que latência de rede é **variável e imprevisível**, enquanto latência de modelo é mais consistente. Picos de latência de rede transformam um P99 aceitável num P99 inaceitável para usuários.
 
 ## Os quatro saltos de rede de uma consulta RAG
 
@@ -50,13 +50,13 @@ Cada seta é um salto de rede com seu próprio custo de latência:
 
 **Salto 4:** Resposta → Usuário. Streaming da resposta de volta ao usuário.
 
-Os dois saltos internos — Agente ↔ Search e Agente ↔ OpenAI — são os que a arquitetura de rede pode e deve otimizar. Os saltos externos dependem da localização do usuário.
+Os dois saltos internos, Agente ↔ Search e Agente ↔ OpenAI, são os que a arquitetura de rede pode e deve otimizar. Os saltos externos dependem da localização do usuário.
 
 ## Fator 1: região dos recursos
 
 O erro mais comum e mais caro: Azure AI Foundry em uma região, Azure AI Search em outra, Azure OpenAI em uma terceira.
 
-Cada chamada entre serviços em regiões diferentes atravessa a backbone da Microsoft — o que é mais rápido que internet pública, mas ainda adiciona latência proporcional à distância geográfica.
+Cada chamada entre serviços em regiões diferentes atravessa a backbone da Microsoft, o que é mais rápido que internet pública, mas ainda adiciona latência proporcional à distância geográfica.
 
 A regra é simples: **todos os componentes do pipeline RAG devem estar na mesma região**.
 
@@ -69,13 +69,13 @@ az resource list \
 
 Se os resultados mostrarem regiões diferentes, você tem um problema de latência arquitetural que nenhuma otimização de código vai resolver completamente.
 
-**Para o Brasil:** Brazil South tem disponibilidade limitada de modelos Azure OpenAI — GPT-4o pode não estar disponível ou ter capacidade limitada. O padrão atual para muitas organizações brasileiras é East US para OpenAI, com Search e o agente na mesma região East US, e o frontend em Brazil South com o menor hop possível para East US via Azure Front Door ou Traffic Manager.
+**Para o Brasil:** Brazil South tem disponibilidade limitada de modelos Azure OpenAI, GPT-4o pode não estar disponível ou ter capacidade limitada. O padrão atual para muitas organizações brasileiras é East US para OpenAI, com Search e o agente na mesma região East US, e o frontend em Brazil South com o menor hop possível para East US via Azure Front Door ou Traffic Manager.
 
 ## Fator 2: Private Link vs. endpoint público
 
 Aqui está o ponto contraintuitivo que mais gera debate: **tráfego via Private Link não é automaticamente mais rápido que via endpoint público**.
 
-A rota interna da Microsoft entre um Private Endpoint e o serviço de destino dentro da mesma região é essencialmente a mesma — a latência de backbone intra-região é muito baixa em ambos os casos.
+A rota interna da Microsoft entre um Private Endpoint e o serviço de destino dentro da mesma região é essencialmente a mesma, a latência de backbone intra-região é muito baixa em ambos os casos.
 
 O ganho do Private Link está em **previsibilidade e ausência de saltos por proxies/firewalls de saída para internet**, que sim adicionam latência variável. Se seu agente faz chamadas para Azure AI Search via endpoint público e o tráfego passa por um Azure Firewall ou NAT Gateway, você está adicionando um salto desnecessário com latência variável.
 
@@ -103,11 +103,11 @@ az network private-endpoint create \
   --connection-name pec-openai
 ```
 
-O benefício real do Private Link no contexto de latência não é velocidade bruta — é **eliminação de variabilidade** causada por saltos de firewall e consistência de rota.
+O benefício real do Private Link no contexto de latência não é velocidade bruta, é **eliminação de variabilidade** causada por saltos de firewall e consistência de rota.
 
 ## Fator 3: Semantic Ranker adiciona uma chamada, não elimina
 
-O Semantic Ranker do Azure AI Search melhora a relevância dos resultados — ele reordena os documentos candidatos usando um modelo de linguagem para entender o significado semântico, não só palavras-chave.
+O Semantic Ranker do Azure AI Search melhora a relevância dos resultados, ele reordena os documentos candidatos usando um modelo de linguagem para entender o significado semântico, não só palavras-chave.
 
 O que pouca documentação deixa claro: **o Semantic Ranker é uma etapa de processamento adicional dentro do próprio serviço de Search**, não um substituto para a busca vetorial ou híbrida. Ele adiciona latência à chamada de Search, não reduz.
 
@@ -146,7 +146,7 @@ print(f"Semantic Ranker: {t_semantic*1000:.0f}ms")
 print(f"Overhead do Semantic Ranker: {(t_semantic-t_bm25)*1000:.0f}ms")
 ```
 
-Execute esse benchmark em horários diferentes — o Semantic Ranker usa capacidade compartilhada e a latência pode variar conforme a carga do serviço.
+Execute esse benchmark em horários diferentes, o Semantic Ranker usa capacidade compartilhada e a latência pode variar conforme a carga do serviço.
 
 ## Como medir os saltos separadamente
 
@@ -183,18 +183,18 @@ async def rag_query_with_tracing(query: str) -> dict:
     return {"response": response, "timings": timings}
 ```
 
-Envie esses dados para o Application Insights e monitore o P50, P90 e P99 de cada componente separadamente. A distribuição vai mostrar onde está a variabilidade — e variabilidade é geralmente rede, não modelo.
+Envie esses dados para o Application Insights e monitore o P50, P90 e P99 de cada componente separadamente. A distribuição vai mostrar onde está a variabilidade, e variabilidade é geralmente rede, não modelo.
 
 <div class="callout">
-<strong>Regra de ouro:</strong> Latência em pipelines RAG costuma ser tratada como problema exclusivo de modelo ("o GPT está lento"), quando parte relevante do problema é rede. Medir os dois componentes separadamente é o primeiro passo antes de qualquer otimização — porque a solução para problema de rede (colocalização de recursos, Private Endpoints) é completamente diferente da solução para problema de modelo (streaming, caching de respostas, modelos menores para casos simples).
+<strong>Regra de ouro:</strong> Latência em pipelines RAG costuma ser tratada como problema exclusivo de modelo ("o GPT está lento"), quando parte relevante do problema é rede. Medir os dois componentes separadamente é o primeiro passo antes de qualquer otimização, porque a solução para problema de rede (colocalização de recursos, Private Endpoints) é completamente diferente da solução para problema de modelo (streaming, caching de respostas, modelos menores para casos simples).
 </div>
 
 ## Conclusão
 
-Os três fatores de rede que mais impactam latência em pipelines RAG — região dos recursos, Private Link vs. endpoint público com firewall no caminho, e o overhead do Semantic Ranker — têm soluções diretas. Mas só depois de medir.
+Os três fatores de rede que mais impactam latência em pipelines RAG, região dos recursos, Private Link vs. endpoint público com firewall no caminho, e o overhead do Semantic Ranker, têm soluções diretas. Mas só depois de medir.
 
 Se você não sabe quanto tempo cada salto leva no seu pipeline atual, comece instrumentando. A distribuição P99 de cada componente vai apontar onde está o problema real antes de você gastar tempo otimizando a coisa errada.
 
 ---
 
-*Série **Azure Networking + IA Generativa** — arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*

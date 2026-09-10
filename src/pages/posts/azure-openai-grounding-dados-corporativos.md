@@ -7,13 +7,13 @@ date: "02 Dez 2025"
 readTime: "10 min"
 description: "O que é grounding, por que elimina alucinações e como implementar com Azure AI Search e Azure AI Foundry."
 ---
-Grounding é o processo de fornecer ao modelo informações factuais específicas como contexto antes de gerar uma resposta. Sem grounding, o modelo usa apenas o conhecimento do treinamento — que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
+Grounding é o processo de fornecer ao modelo informações factuais específicas como contexto antes de gerar uma resposta. Sem grounding, o modelo usa apenas o conhecimento do treinamento, que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
 
 ## Por que grounding elimina alucinações
 
-Um modelo de linguagem sem contexto externo responde com base no que "aprendeu" durante o treinamento. Para perguntas sobre a sua empresa, seus processos, seus produtos — ele vai ou dizer que não sabe, ou inventar algo plausível. O segundo caso é o problema: respostas inventadas apresentadas com confiança.
+Um modelo de linguagem sem contexto externo responde com base no que "aprendeu" durante o treinamento. Para perguntas sobre a sua empresa, seus processos, seus produtos, ele vai ou dizer que não sabe, ou inventar algo plausível. O segundo caso é o problema: respostas inventadas apresentadas com confiança.
 
-O grounding resolve isso porque você fornece os fatos relevantes diretamente no prompt. O modelo não precisa "lembrar" — ele lê o contexto e responde com base nele.
+O grounding resolve isso porque você fornece os fatos relevantes diretamente no prompt. O modelo não precisa "lembrar", ele lê o contexto e responde com base nele.
 
 ## Implementação com Azure AI Search + Azure OpenAI
 
@@ -65,7 +65,7 @@ def resposta_com_grounding(pergunta: str) -> dict:
     contexto = "
 
 ".join([
-        f"[Fonte: {r['source']} — {r['titulo']}]
+        f"[Fonte: {r['source']}, {r['titulo']}]
 {r['content']}"
         for r in resultados
     ])
@@ -177,9 +177,9 @@ def detectar_falta_de_contexto(resposta: str) -> str | None:
 ```
 
 <div class="callout">
-<strong>Temperature baixa para grounding:</strong> Use temperature entre 0.0 e 0.2 em pipelines RAG. O objetivo é fidelidade ao contexto — não criatividade. Temperature alta aumenta o risco de o modelo combinar o contexto fornecido com conhecimento do treinamento de forma indevida.
+<strong>Temperature baixa para grounding:</strong> Use temperature entre 0.0 e 0.2 em pipelines RAG. O objetivo é fidelidade ao contexto, não criatividade. Temperature alta aumenta o risco de o modelo combinar o contexto fornecido com conhecimento do treinamento de forma indevida.
 </div>
 
 ## Conclusão
 
-Grounding é o que transforma um chatbot genérico em um assistente corporativo confiável. A combinação de busca híbrida para recuperação, instrução explícita de fidelidade no System Prompt e verificação de groundedness fecha o ciclo — garantindo que o modelo responde com base nos seus dados, não nos dados de treinamento da OpenAI.
+Grounding é o que transforma um chatbot genérico em um assistente corporativo confiável. A combinação de busca híbrida para recuperação, instrução explícita de fidelidade no System Prompt e verificação de groundedness fecha o ciclo, garantindo que o modelo responde com base nos seus dados, não nos dados de treinamento da OpenAI.

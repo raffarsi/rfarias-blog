@@ -40,7 +40,7 @@ Power BI
 
 ## Azure Data Lake Storage Gen2
 
-Storage otimizado para analytics — combina escalabilidade do Blob Storage com hierarquia de sistema de arquivos:
+Storage otimizado para analytics, combina escalabilidade do Blob Storage com hierarquia de sistema de arquivos:
 
 ```bash
 # Criar ADLS Gen2
@@ -59,9 +59,9 @@ az storage fs create --name analytics --account-name meudatalake2026 # Gold
 ```
 
 **Medalion Architecture (Bronze/Silver/Gold):**
-- **Bronze (Raw)** — dados brutos como chegam, sem transformação
-- **Silver (Curated)** — dados limpos, validados e integrados
-- **Gold (Analytics)** — dados agregados e modelados para consumo
+- **Bronze (Raw)**, dados brutos como chegam, sem transformação
+- **Silver (Curated)**, dados limpos, validados e integrados
+- **Gold (Analytics)**, dados agregados e modelados para consumo
 
 ## Azure Synapse Analytics
 
@@ -79,7 +79,7 @@ az synapse workspace create \
   --location brazilsouth
 ```
 
-**Serverless SQL Pool** — consulta dados no Data Lake sem provisionar recursos:
+**Serverless SQL Pool**, consulta dados no Data Lake sem provisionar recursos:
 
 ```sql
 -- Consultar parquet diretamente no Data Lake
@@ -96,13 +96,13 @@ GROUP BY ano, mes
 ORDER BY ano DESC, mes DESC;
 ```
 
-**Dedicated SQL Pool** — data warehouse com recursos dedicados para performance máxima:
+**Dedicated SQL Pool**, data warehouse com recursos dedicados para performance máxima:
 - Distribuição de dados: hash, round-robin ou replicada
 - Índices columnstore para compressão e performance analítica
 
 ## Azure Databricks
 
-Plataforma de analytics baseada em Apache Spark — processamento distribuído:
+Plataforma de analytics baseada em Apache Spark, processamento distribuído:
 
 ```python
 # Exemplo de pipeline ETL com PySpark
@@ -134,10 +134,10 @@ df_curated.write.mode("overwrite").parquet(
 Ferramenta de Business Intelligence para visualização e relatórios:
 
 **Componentes:**
-- **Power BI Desktop** — criação de relatórios (gratuito)
-- **Power BI Service** — publicação e compartilhamento na nuvem
-- **Power BI Mobile** — visualização em dispositivos móveis
-- **Power BI Embedded** — incorporar relatórios em aplicações
+- **Power BI Desktop**, criação de relatórios (gratuito)
+- **Power BI Service**, publicação e compartilhamento na nuvem
+- **Power BI Mobile**, visualização em dispositivos móveis
+- **Power BI Embedded**, incorporar relatórios em aplicações
 
 ```bash
 # Conectar Power BI ao Azure Synapse
@@ -147,7 +147,7 @@ Ferramenta de Business Intelligence para visualização e relatórios:
 # Autenticação: conta Microsoft ou SQL
 ```
 
-**DAX (Data Analysis Expressions)** — linguagem de fórmulas do Power BI:
+**DAX (Data Analysis Expressions)**, linguagem de fórmulas do Power BI:
 
 ```dax
 // Medida: receita do mês atual

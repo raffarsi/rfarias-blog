@@ -22,9 +22,9 @@ Monitorar o ambiente Azure é fundamental para garantir disponibilidade, perform
 
 ## Tipos de dados no Azure Monitor
 
-**Métricas** — valores numéricos coletados em intervalos regulares (CPU %, bytes de rede, IOPS). Retidos por 93 dias por padrão.
+**Métricas**, valores numéricos coletados em intervalos regulares (CPU %, bytes de rede, IOPS). Retidos por 93 dias por padrão.
 
-**Logs** — registros estruturados de eventos e operações. Armazenados no Log Analytics Workspace, retidos por 30 dias por padrão (configurável até 2 anos).
+**Logs**, registros estruturados de eventos e operações. Armazenados no Log Analytics Workspace, retidos por 30 dias por padrão (configurável até 2 anos).
 
 ## Log Analytics Workspace
 

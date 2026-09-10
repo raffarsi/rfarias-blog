@@ -22,21 +22,21 @@ Conformidade regulatória é obrigatória em setores como financeiro, saúde e g
 
 ## Conceitos de conformidade
 
-**GDPR** — Regulamento europeu de proteção de dados pessoais. Princípios: consentimento, minimização, transparência, direito ao esquecimento.
+**GDPR**, Regulamento europeu de proteção de dados pessoais. Princípios: consentimento, minimização, transparência, direito ao esquecimento.
 
-**ISO 27001** — Padrão internacional para gestão de segurança da informação.
+**ISO 27001**, Padrão internacional para gestão de segurança da informação.
 
-**SOC 2** — Relatório de auditoria para provedores de serviço sobre segurança, disponibilidade e privacidade.
+**SOC 2**, Relatório de auditoria para provedores de serviço sobre segurança, disponibilidade e privacidade.
 
-**PCI DSS** — Padrão para organizações que processam cartões de pagamento.
+**PCI DSS**, Padrão para organizações que processam cartões de pagamento.
 
-**HIPAA** — Lei americana de proteção de dados de saúde.
+**HIPAA**, Lei americana de proteção de dados de saúde.
 
 ## Microsoft Purview
 
 Suite unificada de governança, conformidade e segurança de dados:
 
-### Information Protection — Rótulos de Sensibilidade
+### Information Protection, Rótulos de Sensibilidade
 
 ```powershell
 # Criar rótulo de sensibilidade (via PowerShell)
@@ -55,7 +55,7 @@ New-LabelPolicy -Name "Politica-Rotulos" `
   -ExchangeLocation "All"
 ```
 
-### DLP — Prevenção de Perda de Dados
+### DLP, Prevenção de Perda de Dados
 
 ```powershell
 # Criar política DLP para detectar CPF em emails
@@ -72,7 +72,7 @@ New-DlpComplianceRule -Name "Regra-CPF" `
 
 ### eDiscovery
 
-Para investigações legais — preserva e exporta conteúdo de email, Teams, SharePoint:
+Para investigações legais, preserva e exporta conteúdo de email, Teams, SharePoint:
 
 ```powershell
 # Criar caso de eDiscovery
@@ -112,10 +112,10 @@ Dashboard de conformidade que mede progresso e sugere ações:
 # - Ações do cliente (sua responsabilidade)
 ```
 
-**Pontuação de conformidade** — quanto maior, mais controles implementados. Mapeada para regulamentos específicos: GDPR, ISO 27001, NIST, SOC 2.
+**Pontuação de conformidade**, quanto maior, mais controles implementados. Mapeada para regulamentos específicos: GDPR, ISO 27001, NIST, SOC 2.
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Rótulos de sensibilidade (Information Protection) controlam quem acessa os dados. Rótulos de retenção (Records Management) controlam por quanto tempo os dados existem. São complementares — um documento pode ter ambos.
+<strong>Dica para o exame:</strong> Rótulos de sensibilidade (Information Protection) controlam quem acessa os dados. Rótulos de retenção (Records Management) controlam por quanto tempo os dados existem. São complementares, um documento pode ter ambos.
 </div>
 
 ## Azure Policy para conformidade

@@ -41,12 +41,12 @@ az vm create \
 
 | Série | Uso |
 |-------|-----|
-| B | Burstable — workloads com picos ocasionais |
-| D/Ds | Propósito geral — aplicações web, bancos de dados |
-| E/Es | Memória otimizada — bancos de dados em memória |
-| F/Fs | Computação otimizada — processamento batch |
-| N | GPU — ML, renderização, processamento gráfico |
-| L | Storage otimizado — bancos de dados NoSQL |
+| B | Burstable, workloads com picos ocasionais |
+| D/Ds | Propósito geral, aplicações web, bancos de dados |
+| E/Es | Memória otimizada, bancos de dados em memória |
+| F/Fs | Computação otimizada, processamento batch |
+| N | GPU, ML, renderização, processamento gráfico |
+| L | Storage otimizado, bancos de dados NoSQL |
 | H | Alta performance (HPC) |
 
 O sufixo **s** indica suporte a Premium SSD. O sufixo **v3**, **v4** indica a geração.
@@ -101,10 +101,10 @@ az image create \
 ```
 
 <div class="callout">
-<strong>Armadilha do exame:</strong> "Stop" para a VM mas continua cobrando pelo compute (a alocação é mantida). "Deallocate" libera os recursos e para a cobrança de compute — mas você perde o IP público dinâmico e pode mudar o host. Use IP estático se precisar manter o endereço.
+<strong>Armadilha do exame:</strong> "Stop" para a VM mas continua cobrando pelo compute (a alocação é mantida). "Deallocate" libera os recursos e para a cobrança de compute, mas você perde o IP público dinâmico e pode mudar o host. Use IP estático se precisar manter o endereço.
 </div>
 
-## Azure Bastion — acesso seguro sem IP público
+## Azure Bastion, acesso seguro sem IP público
 
 ```bash
 az network bastion create \

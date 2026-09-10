@@ -8,15 +8,15 @@ readTime: "11 min"
 description: "Como aplicar os princípios de Zero Trust em toda a stack de uma aplicação com Azure OpenAI — rede, identidade e dados. Guia prático com Bicep e Python."
 ---
 
-Zero Trust não é um produto — é uma postura. Para aplicações de IA generativa com Azure OpenAI, aplicar Zero Trust significa questionar cada chamada, cada identidade e cada caminho de rede, independente de onde a requisição vem. Este artigo mapeia como esse modelo se traduz em configuração concreta.
+Zero Trust não é um produto, é uma postura. Para aplicações de IA generativa com Azure OpenAI, aplicar Zero Trust significa questionar cada chamada, cada identidade e cada caminho de rede, independente de onde a requisição vem. Este artigo mapeia como esse modelo se traduz em configuração concreta.
 
 ## Os três pilares aplicados ao Azure OpenAI
 
 A Microsoft define Zero Trust em três princípios: **verificar explicitamente**, **usar acesso com menor privilégio** e **assumir violação**. Para uma aplicação com Azure OpenAI, cada princípio tem implicações específicas:
 
-**Verificar explicitamente:** toda chamada ao Azure OpenAI deve ser autenticada via Microsoft Entra ID — não via API key. API keys são credenciais compartilhadas sem rastreabilidade por identidade.
+**Verificar explicitamente:** toda chamada ao Azure OpenAI deve ser autenticada via Microsoft Entra ID, não via API key. API keys são credenciais compartilhadas sem rastreabilidade por identidade.
 
-**Menor privilégio:** o agente de IA recebe apenas a role `Cognitive Services OpenAI User` — não `Contributor`, não `Owner`. Isso limita o que um token comprometido pode fazer.
+**Menor privilégio:** o agente de IA recebe apenas a role `Cognitive Services OpenAI User`, não `Contributor`, não `Owner`. Isso limita o que um token comprometido pode fazer.
 
 **Assumir violação:** o Azure OpenAI fica atrás de um Private Endpoint com `publicNetworkAccess: Disabled`. Mesmo que um token vaze, não há endpoint público para explorar.
 
@@ -37,7 +37,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   }
 }
 
-// Private Endpoint — único ponto de acesso
+// Private Endpoint, único ponto de acesso
 resource peOpenAI 'Microsoft.Network/privateEndpoints@2023-09-01' = {
   name: 'pe-openai'
   location: location
@@ -60,7 +60,7 @@ resource dnsZoneOpenAI 'Microsoft.Network/privateDnsZones@2020-06-01' = {
 }
 ```
 
-Com `publicNetworkAccess: Disabled`, qualquer chamada de fora da VNet recebe `403 Forbidden` — mesmo com uma API key válida.
+Com `publicNetworkAccess: Disabled`, qualquer chamada de fora da VNet recebe `403 Forbidden`, mesmo com uma API key válida.
 
 ## Camada de identidade: Managed Identity + RBAC
 
@@ -102,9 +102,9 @@ client = AzureOpenAI(
 )
 ```
 
-`DefaultAzureCredential` usa Managed Identity em produção e Azure CLI localmente — o mesmo código funciona nos dois ambientes sem modificação.
+`DefaultAzureCredential` usa Managed Identity em produção e Azure CLI localmente, o mesmo código funciona nos dois ambientes sem modificação.
 
-## Diferença de roles — escolha a mínima
+## Diferença de roles, escolha a mínima
 
 | Role | Pode fazer | Quando usar |
 |------|-----------|-------------|
@@ -202,14 +202,14 @@ az cognitiveservices account update \
   --api-properties disableLocalAuth=true
 ```
 
-Com `disableLocalAuth=true`, API keys deixam de funcionar mesmo que alguém tente usá-las — só Entra ID é aceito.
+Com `disableLocalAuth=true`, API keys deixam de funcionar mesmo que alguém tente usá-las, só Entra ID é aceito.
 </div>
 
 ## Checklist Zero Trust para Azure OpenAI
 
 - [ ] `publicNetworkAccess: Disabled` no recurso
 - [ ] Private Endpoint provisionado e DNS privado configurado
-- [ ] `disableLocalAuth: true` — API keys desabilitadas
+- [ ] `disableLocalAuth: true`, API keys desabilitadas
 - [ ] Managed Identity com role `Cognitive Services OpenAI User` (não Contributor)
 - [ ] Content Safety verificando input e output
 - [ ] Diagnósticos enviando para Log Analytics com retenção ≥ 90 dias
@@ -217,4 +217,4 @@ Com `disableLocalAuth=true`, API keys deixam de funcionar mesmo que alguém tent
 
 ## Conclusão
 
-Zero Trust para Azure OpenAI é a combinação de três camadas independentes: rede (Private Endpoint + sem acesso público), identidade (Managed Identity + role mínima + sem API keys) e dados (Content Safety + auditoria). Cada camada falha de formas diferentes — a segurança real vem da sobreposição das três, não de qualquer uma delas isoladamente.
+Zero Trust para Azure OpenAI é a combinação de três camadas independentes: rede (Private Endpoint + sem acesso público), identidade (Managed Identity + role mínima + sem API keys) e dados (Content Safety + auditoria). Cada camada falha de formas diferentes, a segurança real vem da sobreposição das três, não de qualquer uma delas isoladamente.

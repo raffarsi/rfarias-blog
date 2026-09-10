@@ -16,7 +16,7 @@ next:
 
 O Azure AI Foundry é a plataforma unificada da Microsoft para construir aplicações de IA Generativa em ambiente corporativo. Ele substituiu o Azure AI Studio e centralizou catálogo de modelos, playgrounds, orquestração com Prompt Flow e ferramentas de avaliação em um único hub.
 
-Neste guia, mostro como criar um projeto do zero — do setup do hub até um chatbot com RAG funcional.
+Neste guia, mostro como criar um projeto do zero, do setup do hub até um chatbot com RAG funcional.
 
 ## Por que o AI Foundry importa para o corporativo
 
@@ -26,11 +26,11 @@ O AI Foundry unifica isso. Tudo roda dentro da sua assinatura Azure, com control
 
 ## Conceitos fundamentais
 
-**AI Hub** — O contêiner organizacional. Ele gerencia as conexões com modelos, compute e storage.
+**AI Hub**, O contêiner organizacional. Ele gerencia as conexões com modelos, compute e storage.
 
-**Projeto** — Dentro do hub, cada projeto é um workspace isolado. Cada PoC ou aplicação vive em seu próprio projeto, com seus dados, deployments e avaliações.
+**Projeto**, Dentro do hub, cada projeto é um workspace isolado. Cada PoC ou aplicação vive em seu próprio projeto, com seus dados, deployments e avaliações.
 
-**Catálogo de modelos** — O AI Foundry oferece modelos da OpenAI (GPT-4o, GPT-4o-mini), Meta (Llama), Mistral, Cohere e outros.
+**Catálogo de modelos**, O AI Foundry oferece modelos da OpenAI (GPT-4o, GPT-4o-mini), Meta (Llama), Mistral, Cohere e outros.
 
 ## Setup: Hub e Projeto
 
@@ -66,11 +66,11 @@ RAG é o padrão mais comum em aplicações corporativas. A ideia: antes de envi
 
 O Prompt Flow do AI Foundry facilita essa orquestração com componentes visuais:
 
-1. **Input** — pergunta do usuário
-2. **Embedding** — converte a pergunta em vetor
-3. **Index Lookup** — busca trechos similares no Azure AI Search
-4. **LLM** — envia contexto + pergunta para o GPT-4o
-5. **Output** — resposta formatada
+1. **Input**, pergunta do usuário
+2. **Embedding**, converte a pergunta em vetor
+3. **Index Lookup**, busca trechos similares no Azure AI Search
+4. **LLM**, envia contexto + pergunta para o GPT-4o
+5. **Output**, resposta formatada
 
 **System prompt funcional:**
 
@@ -87,7 +87,7 @@ Responda em português brasileiro, de forma clara e objetiva.
 O AI Foundry tem métricas integradas: **Groundedness** (evita alucinações), **Relevance**, **Coherence** e **Fluency**. Cada uma recebe nota de 1 a 5. Para produção, busque scores acima de 4.0 em todas as dimensões.
 
 <div class="callout">
-<strong>Dica:</strong> Avalie com perguntas reais dos usuários, não com exemplos fabricados. A diferença nos resultados é significativa — perguntas reais incluem ambiguidades e referências implícitas que exemplos inventados não capturam.
+<strong>Dica:</strong> Avalie com perguntas reais dos usuários, não com exemplos fabricados. A diferença nos resultados é significativa, perguntas reais incluem ambiguidades e referências implícitas que exemplos inventados não capturam.
 </div>
 
 ## Próximos passos

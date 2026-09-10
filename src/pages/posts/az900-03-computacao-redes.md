@@ -57,7 +57,7 @@ az webapp create \
 
 ### Azure Container Instances (ACI)
 
-Containers sem servidor — não gerencia clusters. Ideal para tarefas isoladas e batch.
+Containers sem servidor, não gerencia clusters. Ideal para tarefas isoladas e batch.
 
 ```bash
 az container create \
@@ -73,7 +73,7 @@ Orquestração de containers em escala. Control plane gerenciado pela Microsoft.
 
 ### Azure Functions
 
-Serverless — execute código sem gerenciar infraestrutura. Paga por execução.
+Serverless, execute código sem gerenciar infraestrutura. Paga por execução.
 
 ```bash
 # Criar Function App
@@ -118,8 +118,8 @@ az network vnet create \
 
 ### Azure Load Balancer vs Application Gateway
 
-- **Load Balancer (L4)** — distribui tráfego TCP/UDP por IP e porta
-- **Application Gateway (L7)** — distribui tráfego HTTP/HTTPS com roteamento por URL, com WAF
+- **Load Balancer (L4)**, distribui tráfego TCP/UDP por IP e porta
+- **Application Gateway (L7)**, distribui tráfego HTTP/HTTPS com roteamento por URL, com WAF
 
 ### Azure VPN Gateway
 

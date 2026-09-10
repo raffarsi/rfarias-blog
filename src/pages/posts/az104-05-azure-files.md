@@ -73,10 +73,10 @@ sudo mount -t cifs //filestorage2026.file.core.windows.net/meu-compartilhamento 
 O Azure File Sync transforma o Azure Files em um cache de servidor de arquivos local. Sincroniza servidores Windows com um compartilhamento Azure Files, com Cloud Tiering que move arquivos pouco usados para a nuvem automaticamente.
 
 **Componentes:**
-1. **Storage Sync Service** — recurso no Azure
-2. **Sync Group** — define a topologia de sincronização
-3. **Cloud Endpoint** — o Azure file share
-4. **Server Endpoint** — pasta em um servidor Windows registrado
+1. **Storage Sync Service**, recurso no Azure
+2. **Sync Group**, define a topologia de sincronização
+3. **Cloud Endpoint**, o Azure file share
+4. **Server Endpoint**, pasta em um servidor Windows registrado
 
 ```bash
 # Criar Storage Sync Service

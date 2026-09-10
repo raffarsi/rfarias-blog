@@ -12,7 +12,7 @@ O Azure OpenAI Service é a versão corporativa dos modelos da OpenAI (GPT-4o, G
 
 ## Provisionamento
 
-O Azure OpenAI requer aprovação de acesso — você submete uma solicitação no portal Microsoft. Depois de aprovado, o recurso é criado como qualquer outro serviço Azure:
+O Azure OpenAI requer aprovação de acesso, você submete uma solicitação no portal Microsoft. Depois de aprovado, o recurso é criado como qualquer outro serviço Azure:
 
 ```bash
 az cognitiveservices account create \
@@ -24,7 +24,7 @@ az cognitiveservices account create \
   --custom-domain oai-producao
 ```
 
-Depois de criar o recurso, você provisiona **deployments** — instâncias específicas de modelos com suas próprias quotas:
+Depois de criar o recurso, você provisiona **deployments**, instâncias específicas de modelos com suas próprias quotas:
 
 ```bash
 az cognitiveservices account deployment create \
@@ -44,7 +44,7 @@ A capacidade (`--sku-capacity`) é medida em **RPM** (requests por minuto) ou **
 
 O Azure OpenAI suporta dois métodos de autenticação:
 
-**API Key** — mais simples, mas menos seguro:
+**API Key**, mais simples, mas menos seguro:
 ```python
 from openai import AzureOpenAI
 
@@ -55,7 +55,7 @@ client = AzureOpenAI(
 )
 ```
 
-**Managed Identity** — padrão recomendado em produção:
+**Managed Identity**, padrão recomendado em produção:
 ```python
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from openai import AzureOpenAI
@@ -137,4 +137,4 @@ As métricas mais importantes: `TokensUsed`, `TotalRequests`, `SuccessfulRequest
 
 ## Conclusão
 
-O Azure OpenAI combina o poder dos modelos da OpenAI com os controles de governança do Azure — residência de dados, Managed Identity, Private Endpoints e integração com Azure Monitor. A configuração inicial leva menos de uma hora; a parte que exige atenção é a estratégia de rede e autenticação, que deve ser definida antes do primeiro deploy em produção.
+O Azure OpenAI combina o poder dos modelos da OpenAI com os controles de governança do Azure, residência de dados, Managed Identity, Private Endpoints e integração com Azure Monitor. A configuração inicial leva menos de uma hora; a parte que exige atenção é a estratégia de rede e autenticação, que deve ser definida antes do primeiro deploy em produção.

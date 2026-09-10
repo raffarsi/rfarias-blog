@@ -111,13 +111,13 @@ Recomendações comuns:
 - Usar Hybrid Benefit para Windows VMs
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Recursos em estado "Stopped" (via portal) ainda cobram pelo compute. Apenas recursos "Deallocated" param a cobrança de compute — mas ainda cobram por discos gerenciados anexados. Para zero cobrança, delete o recurso ou use Spot VMs.
+<strong>Dica para o exame:</strong> Recursos em estado "Stopped" (via portal) ainda cobram pelo compute. Apenas recursos "Deallocated" param a cobrança de compute, mas ainda cobram por discos gerenciados anexados. Para zero cobrança, delete o recurso ou use Spot VMs.
 </div>
 
 ## Azure Pricing Calculator vs TCO Calculator
 
-**Pricing Calculator** — estima custo de recursos Azure específicos antes de criar.
-**TCO Calculator** — calcula o custo total de propriedade comparando on-premises vs Azure para justificar migração.
+**Pricing Calculator**, estima custo de recursos Azure específicos antes de criar.
+**TCO Calculator**, calcula o custo total de propriedade comparando on-premises vs Azure para justificar migração.
 
 ## Alertas de orçamento
 

@@ -129,10 +129,10 @@ for invoice in result.documents:
 
 ## Azure Speech Services
 
-**Speech-to-Text** — transcreve áudio para texto em tempo real ou batch.
-**Text-to-Speech** — converte texto em voz natural (Neural TTS).
-**Speaker Recognition** — identifica ou verifica quem está falando.
-**Speech Translation** — traduz fala em tempo real.
+**Speech-to-Text**, transcreve áudio para texto em tempo real ou batch.
+**Text-to-Speech**, converte texto em voz natural (Neural TTS).
+**Speaker Recognition**, identifica ou verifica quem está falando.
+**Speech Translation**, traduz fala em tempo real.
 
 ```python
 import azure.cognitiveservices.speech as speechsdk
@@ -154,4 +154,4 @@ print(f"Texto reconhecido: {result.text}")
 - Face API e suas restrições éticas
 - Document Intelligence para formulários e documentos
 - Speech Services: STT, TTS, tradução de fala
-- Que AI Services são APIs pré-construídas — você não treina modelos do zero
+- Que AI Services são APIs pré-construídas, você não treina modelos do zero

@@ -31,17 +31,17 @@ A segurança na nuvem é dividida entre Microsoft e cliente. A divisão muda con
 
 **Regra geral:** a Microsoft é sempre responsável pela segurança **da** nuvem; o cliente é responsável pela segurança **na** nuvem.
 
-## Zero Trust — Nunca confie, sempre verifique
+## Zero Trust, Nunca confie, sempre verifique
 
 Zero Trust abandona o modelo de perímetro (firewall externo protege tudo dentro). Em vez disso, **toda requisição é tratada como potencialmente hostil**, independente de origem.
 
 **Três princípios:**
 
-**1. Verificar explicitamente** — sempre autenticar e autorizar com base em todos os dados disponíveis: identidade, localização, dispositivo, serviço, carga de trabalho, classificação de dados.
+**1. Verificar explicitamente**, sempre autenticar e autorizar com base em todos os dados disponíveis: identidade, localização, dispositivo, serviço, carga de trabalho, classificação de dados.
 
-**2. Usar menor privilégio** — limitar acesso ao mínimo necessário. JIT (Just-in-Time) e JEA (Just-Enough-Access). Acesso privilegiado só quando necessário e pelo tempo mínimo.
+**2. Usar menor privilégio**, limitar acesso ao mínimo necessário. JIT (Just-in-Time) e JEA (Just-Enough-Access). Acesso privilegiado só quando necessário e pelo tempo mínimo.
 
-**3. Assumir violação** — minimizar o raio de explosão. Segmentar redes e usuários. Criptografar tudo. Monitorar continuamente para detectar e responder a anomalias.
+**3. Assumir violação**, minimizar o raio de explosão. Segmentar redes e usuários. Criptografar tudo. Monitorar continuamente para detectar e responder a anomalias.
 
 ```bash
 # Implementar Zero Trust com Acesso Condicional
@@ -66,7 +66,7 @@ az rest --method POST \
 
 ## Defesa em Profundidade
 
-Múltiplas camadas de segurança — se uma falha, as outras ainda protegem:
+Múltiplas camadas de segurança, se uma falha, as outras ainda protegem:
 
 ```
 Camada 7: Dados (criptografia, classificação)
@@ -84,18 +84,18 @@ Camada 1: Segurança física (datacenter Microsoft)
 
 ## Ameaças comuns
 
-**Phishing** — emails falsos que imitam entidades confiáveis para roubar credenciais.
-**Ransomware** — malware que criptografa dados e exige pagamento.
-**DDoS** — sobrecarregar serviços com tráfego para torná-los indisponíveis.
-**Man-in-the-Middle** — interceptar comunicação entre duas partes.
-**SQL Injection** — inserir comandos SQL maliciosos em campos de entrada.
-**XSS** — injetar scripts maliciosos em páginas web.
+**Phishing**, emails falsos que imitam entidades confiáveis para roubar credenciais.
+**Ransomware**, malware que criptografa dados e exige pagamento.
+**DDoS**, sobrecarregar serviços com tráfego para torná-los indisponíveis.
+**Man-in-the-Middle**, interceptar comunicação entre duas partes.
+**SQL Injection**, inserir comandos SQL maliciosos em campos de entrada.
+**XSS**, injetar scripts maliciosos em páginas web.
 
 ## Microsoft Security Response Center (MSRC)
 
-Equipe responsável por receber e responder a vulnerabilidades em produtos Microsoft. Opera o programa Bug Bounty — pesquisadores recebem recompensas por vulnerabilidades reportadas responsavelmente.
+Equipe responsável por receber e responder a vulnerabilidades em produtos Microsoft. Opera o programa Bug Bounty, pesquisadores recebem recompensas por vulnerabilidades reportadas responsavelmente.
 
-**Patch Tuesday** — segunda terça-feira de cada mês, Microsoft lança atualizações de segurança regulares.
+**Patch Tuesday**, segunda terça-feira de cada mês, Microsoft lança atualizações de segurança regulares.
 
 ## O que cai no exame
 

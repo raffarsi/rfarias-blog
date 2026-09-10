@@ -59,7 +59,7 @@ az ad group member add \
 
 **Grupos dinâmicos** são uma feature poderosa: adicionam membros automaticamente baseado em atributos. Para usar, você precisa de licença Entra ID P1.
 
-Regra de exemplo — todos do departamento de TI:
+Regra de exemplo, todos do departamento de TI:
 
 ```
 (user.department -eq "Tecnologia")
@@ -76,7 +76,7 @@ az rest --method POST \
   --body '{"displayName": "Filial-SP", "description": "Usuários da filial São Paulo"}'
 ```
 
-## Identidades externas — B2B
+## Identidades externas, B2B
 
 Para colaboração com parceiros externos, use o convite B2B:
 

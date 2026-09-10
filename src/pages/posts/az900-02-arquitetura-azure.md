@@ -18,17 +18,17 @@ next:
 
 ---
 
-Entender como o Azure está organizado geograficamente e como você estrutura seus recursos é fundamental — tanto para o exame quanto para projetar soluções reais.
+Entender como o Azure está organizado geograficamente e como você estrutura seus recursos é fundamental, tanto para o exame quanto para projetar soluções reais.
 
 ## Infraestrutura global
 
-**Datacenters** — instalações físicas com servidores, rede e energia redundante. A Microsoft não divulga a localização exata por segurança.
+**Datacenters**, instalações físicas com servidores, rede e energia redundante. A Microsoft não divulga a localização exata por segurança.
 
-**Regiões** — agrupamento geográfico de datacenters conectados por rede de baixa latência. O Azure tem 60+ regiões em todo o mundo. Exemplos: Brazil South, East US, West Europe.
+**Regiões**, agrupamento geográfico de datacenters conectados por rede de baixa latência. O Azure tem 60+ regiões em todo o mundo. Exemplos: Brazil South, East US, West Europe.
 
-**Pares de Regiões** — cada região tem um par para replicação de dados e failover. Brazil South está pareada com South Central US. Dados replicados entre pares não saem da mesma fronteira geopolítica (exceto Brazil South).
+**Pares de Regiões**, cada região tem um par para replicação de dados e failover. Brazil South está pareada com South Central US. Dados replicados entre pares não saem da mesma fronteira geopolítica (exceto Brazil South).
 
-**Regiões Soberanas** — instâncias isoladas para requisitos governamentais: Azure Government (EUA), Azure China (operada pela 21Vianet).
+**Regiões Soberanas**, instâncias isoladas para requisitos governamentais: Azure Government (EUA), Azure China (operada pela 21Vianet).
 
 ```bash
 # Listar regiões disponíveis
@@ -71,13 +71,13 @@ Management Groups (opcional)
               └── Resources
 ```
 
-**Management Groups** — container para múltiplas subscriptions. Permite aplicar políticas e RBAC em escala. Máximo de 6 níveis de hierarquia.
+**Management Groups**, container para múltiplas subscriptions. Permite aplicar políticas e RBAC em escala. Máximo de 6 níveis de hierarquia.
 
-**Subscriptions** — unidade de billing e limite de recursos. Uma organização pode ter múltiplas subscriptions por ambiente (dev, produção), departamento ou projeto.
+**Subscriptions**, unidade de billing e limite de recursos. Uma organização pode ter múltiplas subscriptions por ambiente (dev, produção), departamento ou projeto.
 
-**Resource Groups** — container lógico para recursos relacionados. Todo recurso deve pertencer a exatamente um RG. Recursos de um RG podem estar em regiões diferentes.
+**Resource Groups**, container lógico para recursos relacionados. Todo recurso deve pertencer a exatamente um RG. Recursos de um RG podem estar em regiões diferentes.
 
-**Resources** — os serviços individuais (VMs, Storage Accounts, bancos de dados, etc.).
+**Resources**, os serviços individuais (VMs, Storage Accounts, bancos de dados, etc.).
 
 ```bash
 # Criar Resource Group
@@ -99,10 +99,10 @@ az resource move \
 
 ## Azure Resource Manager (ARM)
 
-O ARM é a camada de gerenciamento do Azure. Toda operação — portal, CLI, PowerShell, SDK, API REST — passa pelo ARM.
+O ARM é a camada de gerenciamento do Azure. Toda operação, portal, CLI, PowerShell, SDK, API REST, passa pelo ARM.
 
 ```bash
-# ARM Templates — infraestrutura como código
+# ARM Templates, infraestrutura como código
 az deployment group create \
   --resource-group meu-rg \
   --template-file main.bicep \
@@ -129,6 +129,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
 - Diferença entre Região, Par de Regiões e Zona de Disponibilidade
 - Hierarquia: Management Group → Subscription → Resource Group → Resource
-- Que Resource Groups são lógicos — recursos podem estar em regiões diferentes
+- Que Resource Groups são lógicos, recursos podem estar em regiões diferentes
 - ARM como camada de gerenciamento unificada
 - Regiões soberanas e quando usá-las

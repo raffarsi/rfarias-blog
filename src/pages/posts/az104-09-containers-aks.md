@@ -22,7 +22,7 @@ Containers são cada vez mais presentes nos ambientes Azure. O AZ-104 cobre dois
 
 ## Azure Container Instances (ACI)
 
-ACI é a forma mais simples de executar containers no Azure — sem gerenciar VMs ou clusters:
+ACI é a forma mais simples de executar containers no Azure, sem gerenciar VMs ou clusters:
 
 ```bash
 # Executar container simples
@@ -79,7 +79,7 @@ az acr update \
 
 ## Azure Kubernetes Service (AKS)
 
-AKS gerencia a complexidade do Kubernetes — control plane é gerenciado pela Microsoft:
+AKS gerencia a complexidade do Kubernetes, control plane é gerenciado pela Microsoft:
 
 ```bash
 # Criar cluster AKS
@@ -124,7 +124,7 @@ az aks update \
 ```
 
 <div class="callout">
-<strong>Dica para o exame:</strong> ACI cobra por segundo de execução — ideal para workloads batch ou tarefas intermitentes. AKS é para aplicações de longa duração que precisam de orquestração, auto-scaling e service discovery. Para o AZ-104, o foco é nos conceitos básicos de AKS, não em Kubernetes avançado.
+<strong>Dica para o exame:</strong> ACI cobra por segundo de execução, ideal para workloads batch ou tarefas intermitentes. AKS é para aplicações de longa duração que precisam de orquestração, auto-scaling e service discovery. Para o AZ-104, o foco é nos conceitos básicos de AKS, não em Kubernetes avançado.
 </div>
 
 ## Node Pools
@@ -144,7 +144,7 @@ az aks nodepool add \
 ## O que cai no exame
 
 - Diferença entre ACI (simples, serverless) e AKS (orquestrado)
-- Que AKS gerencia o control plane — você gerencia apenas os worker nodes
+- Que AKS gerencia o control plane, você gerencia apenas os worker nodes
 - Como integrar ACR com AKS via Managed Identity
 - Node pools system vs user
 - Como fazer upgrades de versão do Kubernetes no AKS

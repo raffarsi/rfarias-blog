@@ -7,13 +7,13 @@ date: "03 Fev 2026"
 readTime: "10 min"
 description: "Como instrumentar pipelines RAG com Application Insights, OpenTelemetry e Azure Monitor para visibilidade real em produção."
 ---
-Quando um pipeline RAG falha em produção, a primeira pergunta é: onde? No embedding? Na busca? Na geração? Sem observabilidade adequada, a resposta é sempre "não sei" — você faz uma pergunta lenta e não consegue dizer qual dos quatro saltos está causando o problema.
+Quando um pipeline RAG falha em produção, a primeira pergunta é: onde? No embedding? Na busca? Na geração? Sem observabilidade adequada, a resposta é sempre "não sei", você faz uma pergunta lenta e não consegue dizer qual dos quatro saltos está causando o problema.
 
 ## Os três pilares de observabilidade para IA
 
 **Métricas:** latência por componente (P50/P90/P99), taxa de sucesso, tokens consumidos, custo.
 
-**Traces:** rastreamento de ponta a ponta de cada requisição — do input do usuário à resposta final, com cada chamada intermediária.
+**Traces:** rastreamento de ponta a ponta de cada requisição, do input do usuário à resposta final, com cada chamada intermediária.
 
 **Logs:** detalhes de erros, informações de debug, eventos relevantes do sistema.
 
@@ -154,9 +154,9 @@ az monitor scheduled-query create   --name alerta-latencia-rag   --resource-grou
 ```
 
 <div class="callout">
-<strong>Não logue o conteúdo das mensagens em produção.</strong> Por LGPD e privacidade, evite logar o texto das perguntas dos usuários e as respostas do modelo em sistemas de observabilidade. Logue métricas (tamanho em tokens, latência, sucesso/falha) — não o conteúdo. Se precisar de conteúdo para debug, use um ambiente separado com dados sintéticos.
+<strong>Não logue o conteúdo das mensagens em produção.</strong> Por LGPD e privacidade, evite logar o texto das perguntas dos usuários e as respostas do modelo em sistemas de observabilidade. Logue métricas (tamanho em tokens, latência, sucesso/falha), não o conteúdo. Se precisar de conteúdo para debug, use um ambiente separado com dados sintéticos.
 </div>
 
 ## Conclusão
 
-Observabilidade em pipelines de IA é mais complexa do que em APIs tradicionais porque você tem múltiplos componentes com perfis de latência muito diferentes — embeddings são rápidos (50-200ms), busca é média (100-500ms), geração é lenta (1-10s). Instrumentar cada componente separadamente e medir P90/P99 por componente é o que permite otimizar o pipeline certo em vez de tentar melhorar o tempo total sem saber onde está o gargalo.
+Observabilidade em pipelines de IA é mais complexa do que em APIs tradicionais porque você tem múltiplos componentes com perfis de latência muito diferentes, embeddings são rápidos (50-200ms), busca é média (100-500ms), geração é lenta (1-10s). Instrumentar cada componente separadamente e medir P90/P99 por componente é o que permite otimizar o pipeline certo em vez de tentar melhorar o tempo total sem saber onde está o gargalo.

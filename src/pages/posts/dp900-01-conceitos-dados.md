@@ -15,16 +15,16 @@ next:
 
 ---
 
-O DP-900 cobre os fundamentos de dados em nuvem — desde os conceitos básicos até os serviços Azure de dados. Este artigo começa pelo essencial.
+O DP-900 cobre os fundamentos de dados em nuvem, desde os conceitos básicos até os serviços Azure de dados. Este artigo começa pelo essencial.
 
 ## Tipos de dados
 
-**Dados estruturados** — formato definido, esquema fixo. Armazenados em tabelas com linhas e colunas.
+**Dados estruturados**, formato definido, esquema fixo. Armazenados em tabelas com linhas e colunas.
 - Exemplos: tabelas de banco de dados SQL, planilhas Excel
 - Consulta: SQL
 - Quando usar: transações, relatórios, dados com relacionamentos bem definidos
 
-**Dados semiestruturados** — têm alguma organização mas esquema flexível. Formato: JSON, XML, YAML.
+**Dados semiestruturados**, têm alguma organização mas esquema flexível. Formato: JSON, XML, YAML.
 ```json
 {
   "cliente_id": 123,
@@ -37,22 +37,22 @@ O DP-900 cobre os fundamentos de dados em nuvem — desde os conceitos básicos 
 }
 ```
 
-**Dados não estruturados** — sem esquema definido.
+**Dados não estruturados**, sem esquema definido.
 - Exemplos: imagens, vídeos, áudio, documentos PDF, emails
 - Armazenamento: Blob Storage, data lakes
 - Processamento: IA/ML para extrair insights
 
 ## Armazenamento de dados
 
-**Transacional (OLTP)** — Online Transaction Processing. Otimizado para operações de leitura/escrita frequentes. Baixa latência, alta disponibilidade. Normalizado para evitar redundância.
+**Transacional (OLTP)**, Online Transaction Processing. Otimizado para operações de leitura/escrita frequentes. Baixa latência, alta disponibilidade. Normalizado para evitar redundância.
 - Azure SQL Database, Azure Database for PostgreSQL/MySQL
 
-**Analítico (OLAP)** — Online Analytical Processing. Otimizado para consultas complexas sobre grandes volumes de dados. Desnormalizado para performance de leitura.
+**Analítico (OLAP)**, Online Analytical Processing. Otimizado para consultas complexas sobre grandes volumes de dados. Desnormalizado para performance de leitura.
 - Azure Synapse Analytics, Azure Analysis Services
 
 ## Processamento de dados
 
-**Batch** — processa grandes volumes de dados acumulados em intervalos regulares.
+**Batch**, processa grandes volumes de dados acumulados em intervalos regulares.
 ```bash
 # Exemplo: processar logs do dia anterior via Azure Data Factory
 az datafactory pipeline create-run \
@@ -65,7 +65,7 @@ az datafactory pipeline create-run \
 - Alto throughput
 - Economicamente eficiente
 
-**Streaming** — processa dados em tempo real conforme chegam.
+**Streaming**, processa dados em tempo real conforme chegam.
 ```bash
 # Criar Azure Event Hubs para ingestão de streaming
 az eventhubs namespace create \
@@ -84,7 +84,7 @@ az eventhubs eventhub create \
 - Dados em movimento
 - Casos de uso: IoT, detecção de fraude em tempo real, trading
 
-**Lambda Architecture** — combina batch e streaming para ter o melhor dos dois mundos: resultados históricos precisos + atualizações em tempo real.
+**Lambda Architecture**, combina batch e streaming para ter o melhor dos dois mundos: resultados históricos precisos + atualizações em tempo real.
 
 ## Papéis em engenharia de dados
 
@@ -97,8 +97,8 @@ az eventhubs eventhub create \
 
 ## ETL vs ELT
 
-**ETL** (Extract, Transform, Load) — transforma dados antes de carregar no destino.
-**ELT** (Extract, Load, Transform) — carrega dados brutos primeiro, transforma no destino (comum em data lakes modernos).
+**ETL** (Extract, Transform, Load), transforma dados antes de carregar no destino.
+**ELT** (Extract, Load, Transform), carrega dados brutos primeiro, transforma no destino (comum em data lakes modernos).
 
 <div class="callout">
 <strong>Dica para o exame:</strong> O DP-900 frequentemente pergunta qual serviço Azure é mais adequado para cada tipo de workload. OLTP = transacional (SQL Database); OLAP = analítico (Synapse); Streaming = Event Hubs + Stream Analytics; Data Lake = Azure Data Lake Storage Gen2.

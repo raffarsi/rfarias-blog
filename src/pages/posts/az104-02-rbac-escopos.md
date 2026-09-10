@@ -28,7 +28,7 @@ O modelo é simples: você atribui uma **função** (role) a um **principal de s
 Atribuição de função = Principal + Função + Escopo
 ```
 
-O acesso é **aditivo** — não existe deny explícito nas atribuições de função padrão (exceção: deny assignments). Se um usuário tem Leitor em uma subscription e Contribuidor em um resource group específico, ele tem Contribuidor naquele RG.
+O acesso é **aditivo**, não existe deny explícito nas atribuições de função padrão (exceção: deny assignments). Se um usuário tem Leitor em uma subscription e Contribuidor em um resource group específico, ele tem Contribuidor naquele RG.
 
 ## Hierarquia de escopos
 
@@ -108,7 +108,7 @@ az role assignment list \
 
 ## Deny Assignments
 
-Deny Assignments bloqueiam ações específicas mesmo que o usuário tenha uma role que as permita. Criadas automaticamente por Azure Blueprints e Managed Applications — você não pode criar manualmente via ARM.
+Deny Assignments bloqueiam ações específicas mesmo que o usuário tenha uma role que as permita. Criadas automaticamente por Azure Blueprints e Managed Applications, você não pode criar manualmente via ARM.
 
 ## O que cai no exame
 

@@ -32,10 +32,10 @@ Storage Account é um dos recursos mais versáteis do Azure e um dos mais cobrad
 
 ## Camadas de acesso (Blob)
 
-- **Hot** — acesso frequente, maior custo de armazenamento, menor custo de operação
-- **Cool** — acesso infrequente (mín. 30 dias), menor custo de armazenamento
-- **Cold** — acesso raro (mín. 90 dias), custo ainda menor
-- **Archive** — acesso muito raro (mín. 180 dias), menor custo de armazenamento, reidratação necessária para acesso
+- **Hot**, acesso frequente, maior custo de armazenamento, menor custo de operação
+- **Cool**, acesso infrequente (mín. 30 dias), menor custo de armazenamento
+- **Cold**, acesso raro (mín. 90 dias), custo ainda menor
+- **Archive**, acesso muito raro (mín. 180 dias), menor custo de armazenamento, reidratação necessária para acesso
 
 ## Opções de redundância
 
@@ -61,7 +61,7 @@ az storage account create \
 
 ## Controle de acesso
 
-**Shared Access Signature (SAS)** — token com permissões e validade específicas, sem expor a account key:
+**Shared Access Signature (SAS)**, token com permissões e validade específicas, sem expor a account key:
 
 ```bash
 # Gerar SAS token para um container
@@ -73,7 +73,7 @@ az storage container generate-sas \
   --output tsv
 ```
 
-**Stored Access Policy** — política reutilizável que pode ser revogada sem re-gerar SAS tokens:
+**Stored Access Policy**, política reutilizável que pode ser revogada sem re-gerar SAS tokens:
 
 ```bash
 az storage container policy create \
@@ -126,7 +126,7 @@ az storage account blob-service-properties update \
 ```
 
 <div class="callout">
-<strong>Armadilha do exame:</strong> Archive não é uma camada de acesso da conta — é uma camada de blob individual. Você não muda a conta para Archive; move blobs específicos para Archive. A reidratação de Archive para Hot/Cool pode levar horas.
+<strong>Armadilha do exame:</strong> Archive não é uma camada de acesso da conta, é uma camada de blob individual. Você não muda a conta para Archive; move blobs específicos para Archive. A reidratação de Archive para Hot/Cool pode levar horas.
 </div>
 
 ## Azure Storage Explorer

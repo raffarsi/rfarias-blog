@@ -135,7 +135,7 @@ Detecta riscos de identidade usando ML:
 - Spray de senha
 
 <div class="callout">
-<strong>Dica para o exame:</strong> PIM resolve o problema de administradores com acesso privilegiado permanente — risco enorme se a conta for comprometida. Com PIM, o acesso privilegiado é ativado sob demanda, com aprovação e por tempo limitado.
+<strong>Dica para o exame:</strong> PIM resolve o problema de administradores com acesso privilegiado permanente, risco enorme se a conta for comprometida. Com PIM, o acesso privilegiado é ativado sob demanda, com aprovação e por tempo limitado.
 </div>
 
 ## Self-Service Password Reset (SSPR)

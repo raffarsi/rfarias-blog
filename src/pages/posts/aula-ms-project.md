@@ -18,7 +18,7 @@ Lecionar MS Project parece simples na teoria: abra a ferramenta, mostre os menus
 
 ## O erro que quase cometi
 
-Meu primeiro plano de aula era organizado pela ferramenta: aula 1 sobre a interface, aula 2 sobre criação de tarefas, aula 3 sobre dependências. Parecia lógico — progressão técnica linear.
+Meu primeiro plano de aula era organizado pela ferramenta: aula 1 sobre a interface, aula 2 sobre criação de tarefas, aula 3 sobre dependências. Parecia lógico, progressão técnica linear.
 
 O problema é que essa abordagem assume que o aluno entende por que está fazendo cada coisa. Criar tarefas é trivial. Entender por que você precisa decompor o escopo antes de criar tarefas é o que faz a diferença entre apertar botões e gerenciar um projeto.
 
@@ -26,7 +26,7 @@ O problema é que essa abordagem assume que o aluno entende por que está fazend
 
 Ao invés de começar pela ferramenta, comecei pelo problema. A primeira aula inteira responde uma pergunta: por que projetos dão errado?
 
-Peço para cada aluno contar uma situação onde algo saiu do controle — uma mudança, uma reforma da casa, organizar um evento de família. A partir dessas histórias reais, introduzo os conceitos de escopo, prazo e custo sem nenhuma terminologia técnica.
+Peço para cada aluno contar uma situação onde algo saiu do controle, uma mudança, uma reforma da casa, organizar um evento de família. A partir dessas histórias reais, introduzo os conceitos de escopo, prazo e custo sem nenhuma terminologia técnica.
 
 Só na segunda aula o MS Project entra em cena. E quando abro a ferramenta, os alunos já sabem o porquê de cada campo que estão preenchendo.
 
@@ -36,7 +36,7 @@ Só na segunda aula o MS Project entra em cena. E quando abro a ferramenta, os a
 
 **Projeto fictício contínuo.** A turma trabalha no mesmo projeto do início ao fim do curso. Cada aula avança o projeto, aplicando os conceitos novos. No final, cada aluno tem um cronograma completo que construiu do zero.
 
-**Errar na ferramenta é parte do processo.** Deixo os alunos cometerem erros clássicos — como criar dependências circulares ou esquecer de atribuir recursos — e uso o erro como momento de ensino. O MS Project avisa quando algo está errado; ensinar a ler esses avisos é tão importante quanto ensinar a usar os menus.
+**Errar na ferramenta é parte do processo.** Deixo os alunos cometerem erros clássicos, como criar dependências circulares ou esquecer de atribuir recursos, e uso o erro como momento de ensino. O MS Project avisa quando algo está errado; ensinar a ler esses avisos é tão importante quanto ensinar a usar os menus.
 
 ## O que isso me ensinou sobre ensinar
 

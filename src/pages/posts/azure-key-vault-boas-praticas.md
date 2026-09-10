@@ -8,7 +8,7 @@ readTime: "8 min"
 description: "Rotação automática, acesso via Managed Identity, soft-delete e purge protection — o que configurar antes de guardar o primeiro secret."
 ---
 
-O Azure Key Vault é o serviço de gestão de secrets, chaves criptográficas e certificados do Azure. Antes de guardar qualquer secret de produção, há configurações críticas que devem ser feitas — ignorá-las pode resultar em exclusões acidentais irreversíveis.
+O Azure Key Vault é o serviço de gestão de secrets, chaves criptográficas e certificados do Azure. Antes de guardar qualquer secret de produção, há configurações críticas que devem ser feitas, ignorá-las pode resultar em exclusões acidentais irreversíveis.
 
 ## Configurações que você deve habilitar antes de tudo
 
@@ -54,7 +54,7 @@ az role assignment create \
 ```
 
 ```python
-# No código da aplicação — sem nenhuma API key
+# No código da aplicação, sem nenhuma API key
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 
@@ -87,4 +87,4 @@ az eventgrid event-subscription create \
 
 ## Conclusão
 
-Key Vault bem configurado — com soft-delete, purge protection, RBAC e Private Endpoint — é o fundamento da gestão segura de credenciais no Azure. Configure tudo antes de criar o primeiro secret de produção.
+Key Vault bem configurado, com soft-delete, purge protection, RBAC e Private Endpoint, é o fundamento da gestão segura de credenciais no Azure. Configure tudo antes de criar o primeiro secret de produção.

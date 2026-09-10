@@ -8,7 +8,7 @@ readTime: "9 min"
 description: "Como conectar LangChain ao Azure OpenAI Service respeitando as configurações de rede e autenticação corporativas."
 ---
 
-LangChain é o framework mais popular para construir aplicações com LLMs. Ele abstrai chamadas aos modelos, gerencia contexto de conversação, orquestra chains de processamento e integra com ferramentas externas. Neste artigo, a integração específica com Azure OpenAI — não a API da OpenAI diretamente.
+LangChain é o framework mais popular para construir aplicações com LLMs. Ele abstrai chamadas aos modelos, gerencia contexto de conversação, orquestra chains de processamento e integra com ferramentas externas. Neste artigo, a integração específica com Azure OpenAI, não a API da OpenAI diretamente.
 
 ## Instalação
 
@@ -129,7 +129,7 @@ conversational_chain = ConversationalRetrievalChain.from_llm(
 # Primeira pergunta
 r1 = conversational_chain.invoke({"question": "O que é VNet Peering?"})
 
-# Segunda pergunta — o contexto da primeira é mantido
+# Segunda pergunta, o contexto da primeira é mantido
 r2 = conversational_chain.invoke({"question": "Quais são as limitações disso?"})
 ```
 
@@ -151,4 +151,4 @@ asyncio.run(stream_resposta("Explique hub-and-spoke em Azure"))
 
 ## Conclusão
 
-LangChain com Azure OpenAI combina a flexibilidade do framework com os controles de segurança do Azure — Managed Identity, Private Endpoints e integração com AI Search. Para projetos corporativos, sempre prefira autenticação via Managed Identity e configure o Azure OpenAI com `publicNetworkAccess: Disabled`.
+LangChain com Azure OpenAI combina a flexibilidade do framework com os controles de segurança do Azure, Managed Identity, Private Endpoints e integração com AI Search. Para projetos corporativos, sempre prefira autenticação via Managed Identity e configure o Azure OpenAI com `publicNetworkAccess: Disabled`.

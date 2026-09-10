@@ -27,14 +27,14 @@ Bancos relacionais enfrentam limitações em escala horizontal e esquemas flexí
 - **Alta disponibilidade** distribuída
 - **Esquema flexível** (evolução sem migrações)
 
-**Teorema CAP** — sistemas distribuídos só podem garantir dois de três:
-- **C**onsistency — todos veem os mesmos dados
-- **A**vailability — sistema sempre responde
-- **P**artition tolerance — funciona mesmo com falhas de rede
+**Teorema CAP**, sistemas distribuídos só podem garantir dois de três:
+- **C**onsistency, todos veem os mesmos dados
+- **A**vailability, sistema sempre responde
+- **P**artition tolerance, funciona mesmo com falhas de rede
 
 ## Tipos de NoSQL
 
-**Chave-valor** — pares simples chave:valor. Ultra-rápido para leitura/escrita.
+**Chave-valor**, pares simples chave:valor. Ultra-rápido para leitura/escrita.
 ```python
 # Redis (via Azure Cache for Redis)
 import redis
@@ -45,17 +45,17 @@ r.set('sessao:abc123', '{"userId": 1, "role": "admin"}', ex=3600)
 session = r.get('sessao:abc123')
 ```
 
-**Documento** — armazena documentos JSON/BSON. Esquema flexível por documento.
+**Documento**, armazena documentos JSON/BSON. Esquema flexível por documento.
 ```json
-// Dois "clientes" com campos diferentes — válido em NoSQL
+// Dois "clientes" com campos diferentes, válido em NoSQL
 {"id": 1, "nome": "Rafael", "email": "rafael@ex.com"}
 {"id": 2, "nome": "Ana", "email": "ana@ex.com", "empresa": "TechCorp", "cargo": "CTO"}
 ```
 
-**Colunar** — dados agrupados por coluna em vez de linha. Ótimo para analytics.
+**Colunar**, dados agrupados por coluna em vez de linha. Ótimo para analytics.
 - Apache Cassandra (disponível via Cosmos DB API for Cassandra)
 
-**Grafo** — nós e arestas para representar relacionamentos complexos.
+**Grafo**, nós e arestas para representar relacionamentos complexos.
 - Casos de uso: redes sociais, detecção de fraude, recomendações
 - Disponível via Cosmos DB API for Gremlin
 
@@ -112,9 +112,9 @@ query = "SELECT * FROM c WHERE c.categoria = 'eletronicos' AND c.preco < 5000"
 items = list(container.query_items(query=query, enable_cross_partition_query=True))
 ```
 
-**Partition Key** — critério de distribuição dos dados. Escolha ruim = hotspot (uma partição com todo o tráfego). Escolha boa = distribuição uniforme.
+**Partition Key**, critério de distribuição dos dados. Escolha ruim = hotspot (uma partição com todo o tráfego). Escolha boa = distribuição uniforme.
 
-**Request Units (RU/s)** — unidade de throughput do Cosmos DB. 1 RU = 1 leitura de documento de 1KB. Escritas custam ~5 RUs.
+**Request Units (RU/s)**, unidade de throughput do Cosmos DB. 1 RU = 1 leitura de documento de 1KB. Escritas custam ~5 RUs.
 
 ## Níveis de consistência do Cosmos DB
 
@@ -128,7 +128,7 @@ items = list(container.query_items(query=query, enable_cross_partition_query=Tru
 
 ## Azure Storage para dados não relacionais
 
-**Azure Table Storage** — chave-valor em formato tabular, sem schema fixo, baixo custo.
+**Azure Table Storage**, chave-valor em formato tabular, sem schema fixo, baixo custo.
 
 ```bash
 # Criar tabela

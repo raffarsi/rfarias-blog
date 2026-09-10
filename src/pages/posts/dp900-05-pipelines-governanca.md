@@ -42,13 +42,13 @@ az datafactory linked-service create \
 ```
 
 **Componentes principais:**
-- **Linked Services** — conexões com fontes/destinos (SQL, Storage, APIs)
-- **Datasets** — representação dos dados em cada linked service
-- **Activities** — operações (Copy, Lookup, ForEach, If, Execute Pipeline)
-- **Pipelines** — orquestração de activities
-- **Triggers** — agendamento (schedule, event-based, tumbling window)
+- **Linked Services**, conexões com fontes/destinos (SQL, Storage, APIs)
+- **Datasets**, representação dos dados em cada linked service
+- **Activities**, operações (Copy, Lookup, ForEach, If, Execute Pipeline)
+- **Pipelines**, orquestração de activities
+- **Triggers**, agendamento (schedule, event-based, tumbling window)
 
-**Copy Activity** — o mais usado, copia dados entre 90+ fontes e destinos:
+**Copy Activity**, o mais usado, copia dados entre 90+ fontes e destinos:
 
 ```json
 {
@@ -65,7 +65,7 @@ az datafactory linked-service create \
 
 ## Azure Event Hubs
 
-Plataforma de streaming de eventos de alta capacidade — milhões de eventos por segundo:
+Plataforma de streaming de eventos de alta capacidade, milhões de eventos por segundo:
 
 ```bash
 az eventhubs namespace create \
@@ -133,10 +133,10 @@ HAVING AVG(temperatura) > 30  -- Alerta: temperatura acima do normal
 ```
 
 **Tipos de janela (window):**
-- **Tumbling** — janelas fixas sem sobreposição (0-5min, 5-10min...)
-- **Hopping** — janelas com sobreposição (0-5min, 2-7min, 4-9min...)
-- **Sliding** — janela se move com cada evento
-- **Session** — agrupa eventos próximos no tempo
+- **Tumbling**, janelas fixas sem sobreposição (0-5min, 5-10min...)
+- **Hopping**, janelas com sobreposição (0-5min, 2-7min, 4-9min...)
+- **Sliding**, janela se move com cada evento
+- **Session**, agrupa eventos próximos no tempo
 
 ## Microsoft Purview para governança de dados
 
@@ -157,12 +157,12 @@ az purview scan \
 ```
 
 **Funcionalidades:**
-- **Data Map** — inventário automático de todos os ativos de dados
-- **Data Catalog** — busca e descoberta de dados com metadados
-- **Data Lineage** — rastreamento de origem e transformações dos dados
-- **Classifications** — identificação automática de dados sensíveis (CPF, cartão de crédito)
+- **Data Map**, inventário automático de todos os ativos de dados
+- **Data Catalog**, busca e descoberta de dados com metadados
+- **Data Lineage**, rastreamento de origem e transformações dos dados
+- **Classifications**, identificação automática de dados sensíveis (CPF, cartão de crédito)
 
-**Linhagem de dados** — rastrea a jornada dos dados:
+**Linhagem de dados**, rastrea a jornada dos dados:
 ```
 SQL Database → ADF Pipeline → Data Lake (Raw) → Databricks → Data Lake (Curated) → Synapse → Power BI
 ```
@@ -173,8 +173,8 @@ SQL Database → ADF Pipeline → Data Lake (Raw) → Databricks → Data Lake (
 
 ## Azure Purview vs Azure Policy
 
-- **Azure Purview** — governança de *dados* (descoberta, classificação, linhagem)
-- **Azure Policy** — governança de *recursos Azure* (conformidade de configuração)
+- **Azure Purview**, governança de *dados* (descoberta, classificação, linhagem)
+- **Azure Policy**, governança de *recursos Azure* (conformidade de configuração)
 
 ## O que cai no exame
 

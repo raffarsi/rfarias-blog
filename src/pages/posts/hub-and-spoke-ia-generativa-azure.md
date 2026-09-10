@@ -19,7 +19,7 @@ next:
 
 Quantas VNets isoladas de IA já existem na sua empresa? Se a resposta for "mais de uma", este artigo é para você.
 
-Quando um time começa a desenhar a rede para uma plataforma de agentes de IA, a tendência natural é criar uma VNet isolada só para IA e conectá-la ao resto da empresa via peering direto. Funciona no piloto. Mas quebra a governança assim que a segunda, terceira e quarta squad de IA aparecem — cada uma criando sua própria VNet, seu próprio firewall, suas próprias regras de saída para a internet.
+Quando um time começa a desenhar a rede para uma plataforma de agentes de IA, a tendência natural é criar uma VNet isolada só para IA e conectá-la ao resto da empresa via peering direto. Funciona no piloto. Mas quebra a governança assim que a segunda, terceira e quarta squad de IA aparecem, cada uma criando sua própria VNet, seu próprio firewall, suas próprias regras de saída para a internet.
 
 Este é o artigo 2 de 20 da série **Azure Networking + IA Generativa**. Aqui mostro onde cada peça entra na topologia hub-and-spoke e o erro de segmentação que trava a governança assim que o segundo time de IA aparece.
 
@@ -39,11 +39,11 @@ VNet-IA-Juridico ──┤── peering direto ──── VNet-Corporativa
 VNet-IA-Finance  ──┘
 ```
 
-Cada VNet tem seu próprio Azure Firewall (ou não tem), suas próprias regras de NSG, seus próprios Private Endpoints para os mesmos serviços (Azure OpenAI, AI Search), sua própria saída para internet — necessária para chamadas a modelos do Model Catalog, por exemplo. O custo de infraestrutura multiplica, a governança fragmenta, e auditar quem acessa o quê vira um pesadelo.
+Cada VNet tem seu próprio Azure Firewall (ou não tem), suas próprias regras de NSG, seus próprios Private Endpoints para os mesmos serviços (Azure OpenAI, AI Search), sua própria saída para internet, necessária para chamadas a modelos do Model Catalog, por exemplo. O custo de infraestrutura multiplica, a governança fragmenta, e auditar quem acessa o quê vira um pesadelo.
 
 ## Onde cada componente entra na topologia hub-and-spoke
 
-O padrão correto é tratar workloads de IA generativa como qualquer outro spoke — conectado a um hub central que concentra os recursos compartilhados:
+O padrão correto é tratar workloads de IA generativa como qualquer outro spoke, conectado a um hub central que concentra os recursos compartilhados:
 
 ```
                     VNet HUB
@@ -69,16 +69,16 @@ O padrão correto é tratar workloads de IA generativa como qualquer outro spoke
 
 **O hub concentra o que é compartilhado:** o Azure Firewall (ou NVA de terceiros) para inspeção de saída, o gateway de conectividade híbrida (VPN ou ExpressRoute), o DNS Resolver privado e o Azure Bastion para acesso administrativo seguro.
 
-**Cada spoke de IA concentra o que é específico do domínio:** os agentes no Azure AI Foundry ou App Service, os Private Endpoints para os serviços PaaS do domínio (cada spoke tem seus próprios PEs — não compartilhados entre domínios por questão de isolamento de dados), e os NSGs específicos do workload.
+**Cada spoke de IA concentra o que é específico do domínio:** os agentes no Azure AI Foundry ou App Service, os Private Endpoints para os serviços PaaS do domínio (cada spoke tem seus próprios PEs, não compartilhados entre domínios por questão de isolamento de dados), e os NSGs específicos do workload.
 
 ## Regras de saída que a maioria esquece
 
 Diferente de uma carga de trabalho tradicional, um spoke de IA generativa frequentemente precisa de saída controlada para:
 
-- **Azure OpenAI endpoints** — se o recurso está no próprio spoke, o tráfego é interno. Se está em outro spoke ou hub, passa pelo firewall
-- **Model Catalog** — para modelos gerenciados da Microsoft e de parceiros, o tráfego precisa de saída para internet via firewall
-- **Repositórios de pacotes** — durante build e atualização de containers (PyPI, npm, MCR)
-- **GitHub Copilot / APIs externas** — quando agentes chamam ferramentas externas
+- **Azure OpenAI endpoints**, se o recurso está no próprio spoke, o tráfego é interno. Se está em outro spoke ou hub, passa pelo firewall
+- **Model Catalog**, para modelos gerenciados da Microsoft e de parceiros, o tráfego precisa de saída para internet via firewall
+- **Repositórios de pacotes**, durante build e atualização de containers (PyPI, npm, MCR)
+- **GitHub Copilot / APIs externas**, quando agentes chamam ferramentas externas
 
 No Azure Firewall do hub, você precisa de regras de aplicação explícitas para cada destino:
 
@@ -126,20 +126,20 @@ VNet Spoke IA (10.1.0.0/16)
 └── snet-data           (10.1.3.0/24)  ← Storage, integração com dados do domínio
 ```
 
-O motivo não é burocracia — é controle de NSG. Um NSG na `snet-private-endpoints` pode bloquear qualquer tráfego que não venha da `snet-agents`, garantindo que só os agentes do domínio acessem os Private Endpoints daquele spoke. Sem essa separação, qualquer recurso dentro da VNet pode chamar o Azure OpenAI ou o AI Search diretamente.
+O motivo não é burocracia, é controle de NSG. Um NSG na `snet-private-endpoints` pode bloquear qualquer tráfego que não venha da `snet-agents`, garantindo que só os agentes do domínio acessem os Private Endpoints daquele spoke. Sem essa separação, qualquer recurso dentro da VNet pode chamar o Azure OpenAI ou o AI Search diretamente.
 
 ## Escala: um hub, múltiplos spokes de IA por domínio de negócio
 
 Conforme a adoção cresce, o padrão recomendado é um spoke de IA por domínio de negócio (RH, Jurídico, Financeiro), cada um com seu próprio Azure AI Search indexando os dados do domínio e seu próprio conjunto de agentes:
 
-A separação de rede vira, na prática, um controle de segurança de dados — não só de infraestrutura. Um agente do domínio de RH fisicamente não consegue acessar o índice de busca do domínio Jurídico, porque estão em VNets diferentes com Private Endpoints separados.
+A separação de rede vira, na prática, um controle de segurança de dados, não só de infraestrutura. Um agente do domínio de RH fisicamente não consegue acessar o índice de busca do domínio Jurídico, porque estão em VNets diferentes com Private Endpoints separados.
 
 ## Conclusão
 
-Tratar a carga de IA generativa como "só mais um spoke" em vez de uma ilha separada é o que permite aplicar as mesmas políticas de governança, segurança e auditoria que o restante da infraestrutura Azure já tem. O hub central não é overhead — é o que torna possível escalar de um piloto para N squads de IA sem multiplicar o custo operacional e perder o controle de quem acessa o quê.
+Tratar a carga de IA generativa como "só mais um spoke" em vez de uma ilha separada é o que permite aplicar as mesmas políticas de governança, segurança e auditoria que o restante da infraestrutura Azure já tem. O hub central não é overhead, é o que torna possível escalar de um piloto para N squads de IA sem multiplicar o custo operacional e perder o controle de quem acessa o quê.
 
 O próximo artigo cobre o componente que mais falha silenciosamente nessa topologia: o DNS privado.
 
 ---
 
-*Série **Azure Networking + IA Generativa** — arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*

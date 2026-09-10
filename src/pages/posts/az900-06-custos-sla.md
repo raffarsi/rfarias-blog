@@ -19,15 +19,15 @@ Os domínios de custos e SLA são altamente cobrados no AZ-900. Entender como o 
 
 ## Fatores que afetam o custo
 
-**Tipo de recurso** — cada serviço tem sua própria estrutura de preço. VMs cobram por hora de alocação, Storage cobra por GB armazenado, Functions cobram por execução.
+**Tipo de recurso**, cada serviço tem sua própria estrutura de preço. VMs cobram por hora de alocação, Storage cobra por GB armazenado, Functions cobram por execução.
 
-**Consumo** — paga pelo que usa. Uma VM desalocada não cobra compute (mas ainda cobra pelo disco).
+**Consumo**, paga pelo que usa. Uma VM desalocada não cobra compute (mas ainda cobra pelo disco).
 
-**Região** — preços variam por região. Brazil South geralmente é mais caro que East US pelo custo de infraestrutura local.
+**Região**, preços variam por região. Brazil South geralmente é mais caro que East US pelo custo de infraestrutura local.
 
-**Largura de banda** — entrada de dados (inbound) é gratuita. Saída de dados (outbound) tem custo crescente por GB.
+**Largura de banda**, entrada de dados (inbound) é gratuita. Saída de dados (outbound) tem custo crescente por GB.
 
-**Instâncias reservadas** — compromisso de 1 ou 3 anos em troca de desconto de até 72% sobre o preço sob demanda.
+**Instâncias reservadas**, compromisso de 1 ou 3 anos em troca de desconto de até 72% sobre o preço sob demanda.
 
 ```bash
 # Verificar custo do mês atual
@@ -48,9 +48,9 @@ az consumption budget create \
 
 ## Azure Pricing Calculator vs TCO Calculator
 
-**Pricing Calculator** (azure.microsoft.com/pricing/calculator) — estima o custo de recursos Azure que você planeja criar. Selecione serviço, região, configuração e veja o custo mensal estimado.
+**Pricing Calculator** (azure.microsoft.com/pricing/calculator), estima o custo de recursos Azure que você planeja criar. Selecione serviço, região, configuração e veja o custo mensal estimado.
 
-**TCO Calculator** (azure.microsoft.com/pricing/tco) — calcula o retorno sobre investimento da migração para o Azure comparando com on-premises. Inclui custos de hardware, energia, mão de obra e espaço físico.
+**TCO Calculator** (azure.microsoft.com/pricing/tco), calcula o retorno sobre investimento da migração para o Azure comparando com on-premises. Inclui custos de hardware, energia, mão de obra e espaço físico.
 
 ## Azure Cost Management
 
@@ -64,7 +64,7 @@ az advisor recommendation list \
   --output table
 ```
 
-## SLA — Service Level Agreement
+## SLA, Service Level Agreement
 
 SLA define o compromisso da Microsoft com disponibilidade. Calculado mensalmente.
 
@@ -88,13 +88,13 @@ SLA define o compromisso da Microsoft com disponibilidade. Calculado mensalmente
 
 ## Ciclo de vida de serviços
 
-**Preview** — serviço em fase de testes, sem SLA garantido, pode mudar ou ser descontinuado.
+**Preview**, serviço em fase de testes, sem SLA garantido, pode mudar ou ser descontinuado.
 - Public Preview: disponível para todos
 - Private Preview: acesso restrito mediante solicitação
 
-**General Availability (GA)** — serviço estável, com SLA garantido e suporte completo.
+**General Availability (GA)**, serviço estável, com SLA garantido e suporte completo.
 
-**Descontinuação** — Microsoft avisa com antecedência mínima de 12 meses antes de descontinuar serviços GA.
+**Descontinuação**, Microsoft avisa com antecedência mínima de 12 meses antes de descontinuar serviços GA.
 
 ## Azure Marketplace
 

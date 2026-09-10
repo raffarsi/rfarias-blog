@@ -19,21 +19,21 @@ IA Responsável é um dos tópicos com maior peso no AI-901. A Microsoft tem uma
 
 ## Os 6 princípios de IA Responsável da Microsoft
 
-**1. Equidade (Fairness)** — sistemas de IA não devem discriminar grupos com base em características protegidas (raça, gênero, idade). Bias nos dados de treinamento leva a sistemas injustos.
+**1. Equidade (Fairness)**, sistemas de IA não devem discriminar grupos com base em características protegidas (raça, gênero, idade). Bias nos dados de treinamento leva a sistemas injustos.
 
-**2. Confiabilidade e Segurança (Reliability & Safety)** — IA deve funcionar de forma confiável e segura. Um carro autônomo com comportamento imprevisível é perigoso; um sistema médico com falhas pode causar danos.
+**2. Confiabilidade e Segurança (Reliability & Safety)**, IA deve funcionar de forma confiável e segura. Um carro autônomo com comportamento imprevisível é perigoso; um sistema médico com falhas pode causar danos.
 
-**3. Privacidade e Segurança (Privacy & Security)** — dados usados para treinar e operar IA devem ser protegidos. Minimize a coleta de dados pessoais.
+**3. Privacidade e Segurança (Privacy & Security)**, dados usados para treinar e operar IA devem ser protegidos. Minimize a coleta de dados pessoais.
 
-**4. Inclusão (Inclusiveness)** — IA deve ser acessível e útil para todos, incluindo pessoas com deficiências. Soluções como legendas automáticas e leitores de tela são exemplos.
+**4. Inclusão (Inclusiveness)**, IA deve ser acessível e útil para todos, incluindo pessoas com deficiências. Soluções como legendas automáticas e leitores de tela são exemplos.
 
-**5. Transparência (Transparency)** — usuários devem entender como decisões de IA são tomadas. Modelos explicáveis (XAI) ajudam a justificar decisões.
+**5. Transparência (Transparency)**, usuários devem entender como decisões de IA são tomadas. Modelos explicáveis (XAI) ajudam a justificar decisões.
 
-**6. Responsabilização (Accountability)** — pessoas e organizações são responsáveis pelos sistemas de IA que criam e implantam. Não existe "o algoritmo decidiu" como escudo de responsabilidade.
+**6. Responsabilização (Accountability)**, pessoas e organizações são responsáveis pelos sistemas de IA que criam e implantam. Não existe "o algoritmo decidiu" como escudo de responsabilidade.
 
 ## Ferramentas de IA Responsável
 
-**Azure AI Content Safety** — detecta e filtra conteúdo prejudicial em texto e imagens:
+**Azure AI Content Safety**, detecta e filtra conteúdo prejudicial em texto e imagens:
 
 ```python
 from azure.ai.contentsafety import ContentSafetyClient
@@ -53,7 +53,7 @@ for category in response.categories_analysis:
     # Categorias: Hate, Violence, Sexual, SelfHarm
 ```
 
-**Fairlearn** — biblioteca Python para avaliar e mitigar bias em modelos de ML:
+**Fairlearn**, biblioteca Python para avaliar e mitigar bias em modelos de ML:
 
 ```python
 from fairlearn.metrics import demographic_parity_difference, equalized_odds_difference
@@ -68,7 +68,7 @@ print(f"Diferença de paridade demográfica: {dp_diff:.4f}")
 # Próximo de 0 indica maior equidade
 ```
 
-**Azure ML Explainability** — explica quais features mais influenciam as previsões do modelo:
+**Azure ML Explainability**, explica quais features mais influenciam as previsões do modelo:
 
 ```python
 from interpret.ext.blackbox import TabularExplainer
@@ -102,23 +102,23 @@ az ml workspace create \
 ```
 
 **Componentes do AI Foundry:**
-- **Catálogo de modelos** — GPT-4o, Llama, Mistral, Phi e outros
-- **Playground** — teste modelos interativamente
-- **Prompt Flow** — orquestradores de RAG e fluxos de IA
-- **Evaluation** — métricas de qualidade (groundedness, relevance, coherence)
-- **Content Filters** — filtros de segurança configuráveis
+- **Catálogo de modelos**, GPT-4o, Llama, Mistral, Phi e outros
+- **Playground**, teste modelos interativamente
+- **Prompt Flow**, orquestradores de RAG e fluxos de IA
+- **Evaluation**, métricas de qualidade (groundedness, relevance, coherence)
+- **Content Filters**, filtros de segurança configuráveis
 
 <div class="callout">
-<strong>Dica para o exame:</strong> O AI-901 testa especificamente os 6 princípios de IA Responsável — memorize os nomes e um exemplo prático de cada. Equidade (fairness) e Responsabilização (accountability) são os que mais aparecem com cenários de caso.
+<strong>Dica para o exame:</strong> O AI-901 testa especificamente os 6 princípios de IA Responsável, memorize os nomes e um exemplo prático de cada. Equidade (fairness) e Responsabilização (accountability) são os que mais aparecem com cenários de caso.
 </div>
 
 ## Avaliação de modelos generativos
 
-**Groundedness** — a resposta é baseada no contexto fornecido? (Evita alucinações)
-**Relevance** — a resposta é relevante para a pergunta?
-**Coherence** — a resposta é coerente e bem estruturada?
-**Fluency** — a linguagem é natural e fluente?
-**Similarity** — quão próxima a resposta está da resposta esperada?
+**Groundedness**, a resposta é baseada no contexto fornecido? (Evita alucinações)
+**Relevance**, a resposta é relevante para a pergunta?
+**Coherence**, a resposta é coerente e bem estruturada?
+**Fluency**, a linguagem é natural e fluente?
+**Similarity**, quão próxima a resposta está da resposta esperada?
 
 ## O que cai no exame
 

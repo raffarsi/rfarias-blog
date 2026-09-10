@@ -24,13 +24,13 @@ Armazenamento e banco de dados são temas recorrentes no AZ-900. O exame testa p
 
 Uma Storage Account pode hospedar quatro tipos de storage:
 
-**Blob Storage** — objetos não estruturados: imagens, vídeos, backups, logs. Três tipos de blob: Block (arquivos em geral), Append (logs), Page (discos de VMs).
+**Blob Storage**, objetos não estruturados: imagens, vídeos, backups, logs. Três tipos de blob: Block (arquivos em geral), Append (logs), Page (discos de VMs).
 
-**Azure Files** — compartilhamentos SMB e NFS acessíveis de Windows, Linux e macOS.
+**Azure Files**, compartilhamentos SMB e NFS acessíveis de Windows, Linux e macOS.
 
-**Queue Storage** — filas de mensagens para comunicação assíncrona entre serviços.
+**Queue Storage**, filas de mensagens para comunicação assíncrona entre serviços.
 
-**Table Storage** — dados NoSQL semi-estruturados em formato chave-valor.
+**Table Storage**, dados NoSQL semi-estruturados em formato chave-valor.
 
 ```bash
 # Criar Storage Account
@@ -94,7 +94,7 @@ Bancos relacionais open-source como serviço gerenciado.
 
 ### Azure SQL Managed Instance
 
-SQL Server completo como serviço — compatibilidade total com SQL Server on-premises. Ideal para migração lift-and-shift de workloads SQL complexos.
+SQL Server completo como serviço, compatibilidade total com SQL Server on-premises. Ideal para migração lift-and-shift de workloads SQL complexos.
 
 ## Banco de dados NoSQL
 
@@ -127,11 +127,11 @@ az cosmosdb mongodb collection create \
 
 ## Serviços de Analytics
 
-**Azure Synapse Analytics** — plataforma unificada para data warehouse e big data analytics.
+**Azure Synapse Analytics**, plataforma unificada para data warehouse e big data analytics.
 
-**Azure HDInsight** — clusters gerenciados de Hadoop, Spark, Kafka, HBase.
+**Azure HDInsight**, clusters gerenciados de Hadoop, Spark, Kafka, HBase.
 
-**Azure Databricks** — plataforma de analytics baseada em Apache Spark.
+**Azure Databricks**, plataforma de analytics baseada em Apache Spark.
 
 <div class="callout">
 <strong>Dica para o exame:</strong> Cosmos DB é a resposta certa quando o enunciado menciona: escala global, latência baixa garantida, múltiplas APIs NoSQL, ou dados não estruturados que precisam de distribuição geográfica. Azure SQL Database é para dados relacionais estruturados com transações ACID.

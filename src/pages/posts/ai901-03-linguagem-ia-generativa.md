@@ -34,7 +34,7 @@ az cognitiveservices account create \
   --location brazilsouth
 ```
 
-**Análise de sentimento** — classifica texto como positivo, negativo ou neutro com pontuação de confiança.
+**Análise de sentimento**, classifica texto como positivo, negativo ou neutro com pontuação de confiança.
 
 ```python
 from azure.ai.textanalytics import TextAnalyticsClient
@@ -55,13 +55,13 @@ for doc in result:
     print(f"Sentimento: {doc.sentiment} | Positivo: {doc.confidence_scores.positive:.2f}")
 ```
 
-**Extração de entidades** — identifica pessoas, organizações, locais, datas em texto.
+**Extração de entidades**, identifica pessoas, organizações, locais, datas em texto.
 
-**Reconhecimento de PII** — detecta informações pessoais identificáveis (CPF, email, telefone) para redação ou compliance.
+**Reconhecimento de PII**, detecta informações pessoais identificáveis (CPF, email, telefone) para redação ou compliance.
 
-**Detecção de idioma** — identifica o idioma de um texto.
+**Detecção de idioma**, identifica o idioma de um texto.
 
-**Sumarização** — resume documentos longos automaticamente.
+**Sumarização**, resume documentos longos automaticamente.
 
 ## Language Understanding (CLU)
 
@@ -116,26 +116,26 @@ print(response.choices[0].message.content)
 
 ## Fundamentos de IA Generativa
 
-**Modelos de Linguagem de Grande Escala (LLMs)** — treinados em enormes volumes de texto para gerar, resumir, traduzir e conversar em linguagem natural.
+**Modelos de Linguagem de Grande Escala (LLMs)**, treinados em enormes volumes de texto para gerar, resumir, traduzir e conversar em linguagem natural.
 
-**Tokens** — unidades de texto que os LLMs processam. Aproximadamente 4 caracteres = 1 token em inglês.
+**Tokens**, unidades de texto que os LLMs processam. Aproximadamente 4 caracteres = 1 token em inglês.
 
-**Temperatura** — controla a criatividade/aleatoriedade. 0 = determinístico, 1 = criativo.
+**Temperatura**, controla a criatividade/aleatoriedade. 0 = determinístico, 1 = criativo.
 
-**Prompt Engineering** — técnica de elaborar instruções para obter melhores respostas dos LLMs:
+**Prompt Engineering**, técnica de elaborar instruções para obter melhores respostas dos LLMs:
 - Zero-shot: apenas a instrução
 - Few-shot: instrução + exemplos
 - Chain-of-thought: peça para o modelo pensar passo a passo
 
-**RAG (Retrieval-Augmented Generation)** — combina busca em base de dados com geração de texto, permitindo que o LLM responda com base em documentos específicos.
+**RAG (Retrieval-Augmented Generation)**, combina busca em base de dados com geração de texto, permitindo que o LLM responda com base em documentos específicos.
 
-**Grounding** — conectar o modelo a fontes de dados confiáveis para reduzir alucinações.
+**Grounding**, conectar o modelo a fontes de dados confiáveis para reduzir alucinações.
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Alucinação é quando um LLM gera informações falsas com confiança. A principal mitigação é o RAG — fornecer contexto real ao modelo em vez de depender apenas do seu treinamento.
+<strong>Dica para o exame:</strong> Alucinação é quando um LLM gera informações falsas com confiança. A principal mitigação é o RAG, fornecer contexto real ao modelo em vez de depender apenas do seu treinamento.
 </div>
 
-## DALL-E — Geração de imagens
+## DALL-E, Geração de imagens
 
 ```python
 response = client.images.generate(

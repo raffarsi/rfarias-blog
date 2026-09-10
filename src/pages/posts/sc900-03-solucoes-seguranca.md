@@ -24,10 +24,10 @@ O ecossistema de segurança da Microsoft é amplo. Este artigo cobre os produtos
 
 Solução de detecção e resposta estendida que correlaciona alertas de múltiplos produtos:
 
-- **Defender for Endpoint** — protege dispositivos (Windows, Mac, Linux, iOS, Android)
-- **Defender for Office 365** — protege email, Teams e SharePoint
-- **Defender for Identity** — monitora Active Directory on-premises
-- **Defender for Cloud Apps** — CASB para aplicações SaaS
+- **Defender for Endpoint**, protege dispositivos (Windows, Mac, Linux, iOS, Android)
+- **Defender for Office 365**, protege email, Teams e SharePoint
+- **Defender for Identity**, monitora Active Directory on-premises
+- **Defender for Cloud Apps**, CASB para aplicações SaaS
 
 ```bash
 # Verificar dispositivos no Defender for Endpoint (via API)
@@ -73,7 +73,7 @@ SecurityEvent
 | project Account, Computer, FailedAttempts, SuccessTime
 ```
 
-**Playbooks SOAR** — automatizam resposta a incidentes usando Azure Logic Apps. Exemplo: quando phishing detectado → bloquear usuário + revogar tokens + notificar SOC.
+**Playbooks SOAR**, automatizam resposta a incidentes usando Azure Logic Apps. Exemplo: quando phishing detectado → bloquear usuário + revogar tokens + notificar SOC.
 
 ## Microsoft Defender for Cloud
 

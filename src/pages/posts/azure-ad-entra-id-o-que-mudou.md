@@ -10,20 +10,20 @@ description: "O Azure Active Directory virou Microsoft Entra ID. Mais do que ren
 
 Em julho de 2023, a Microsoft renomeou o Azure Active Directory para **Microsoft Entra ID**. Para quem usa no dia a dia, a pergunta imediata é: mudou alguma coisa além do nome?
 
-A resposta curta: sim — e a mudança vai além de marketing.
+A resposta curta: sim, e a mudança vai além de marketing.
 
 ## Por que a renomeação importa
 
-O Azure AD foi criado como o serviço de identidade para a nuvem Microsoft — autenticação para Microsoft 365, Azure e aplicações empresariais. Com o tempo, ele cresceu muito além disso: passou a suportar identidades externas (B2B e B2C), Privileged Identity Management, Conditional Access, Workload Identities e muito mais.
+O Azure AD foi criado como o serviço de identidade para a nuvem Microsoft, autenticação para Microsoft 365, Azure e aplicações empresariais. Com o tempo, ele cresceu muito além disso: passou a suportar identidades externas (B2B e B2C), Privileged Identity Management, Conditional Access, Workload Identities e muito mais.
 
-O problema: o nome "Azure Active Directory" sugeria que era apenas "o AD, mas no Azure" — uma extensão do Active Directory on-premises. Na prática, o serviço evoluiu para uma plataforma de identidade completa e independente.
+O problema: o nome "Azure Active Directory" sugeria que era apenas "o AD, mas no Azure", uma extensão do Active Directory on-premises. Na prática, o serviço evoluiu para uma plataforma de identidade completa e independente.
 
 **Microsoft Entra** é agora a família de produtos de identidade e acesso da Microsoft, que inclui:
-- **Microsoft Entra ID** — o antigo Azure AD (identidade para workforce e aplicações)
-- **Microsoft Entra External ID** — o antigo Azure AD B2B e B2C
-- **Microsoft Entra ID Governance** — ciclo de vida de identidades e entitlement management
-- **Microsoft Entra Permissions Management** — gerenciamento de permissões multi-cloud (CIEM)
-- **Microsoft Entra Verified ID** — credenciais verificáveis descentralizadas
+- **Microsoft Entra ID**, o antigo Azure AD (identidade para workforce e aplicações)
+- **Microsoft Entra External ID**, o antigo Azure AD B2B e B2C
+- **Microsoft Entra ID Governance**, ciclo de vida de identidades e entitlement management
+- **Microsoft Entra Permissions Management**, gerenciamento de permissões multi-cloud (CIEM)
+- **Microsoft Entra Verified ID**, credenciais verificáveis descentralizadas
 
 ## O que continua igual
 
@@ -33,7 +33,7 @@ Para a maioria dos administradores e desenvolvedores, o dia a dia não mudou:
 - PowerShell e CLI continuam funcionando
 - SDKs e bibliotecas MSAL não mudaram
 
-Os IDs de tenant, App Registrations, grupos, usuários — tudo continua no lugar.
+Os IDs de tenant, App Registrations, grupos, usuários, tudo continua no lugar.
 
 ## O que mudou de verdade
 
@@ -62,12 +62,12 @@ Se você gerencia identidades no Azure, o impacto imediato é pequeno. Mas vale 
 
 - Documentação e scripts que referenciam "Azure AD" precisarão ser atualizados ao longo do tempo
 - O portal principal de administração agora é **entra.microsoft.com** (o antigo aad.portal.azure.com redireciona)
-- Treinamentos e certificações já estão sendo atualizados — o AZ-104 e SC-900 já refletem a nova nomenclatura
+- Treinamentos e certificações já estão sendo atualizados, o AZ-104 e SC-900 já refletem a nova nomenclatura
 
 <div class="callout">
-<strong>Para candidatos a certificações:</strong> Nos exames Microsoft atuais, você vai encontrar "Microsoft Entra ID" como o nome oficial. Se o seu material de estudo ainda diz "Azure AD", verifique se está atualizado — o conteúdo técnico é o mesmo, mas a nomenclatura nos exames já mudou.
+<strong>Para candidatos a certificações:</strong> Nos exames Microsoft atuais, você vai encontrar "Microsoft Entra ID" como o nome oficial. Se o seu material de estudo ainda diz "Azure AD", verifique se está atualizado, o conteúdo técnico é o mesmo, mas a nomenclatura nos exames já mudou.
 </div>
 
 ## Conclusão
 
-A mudança de nome para Microsoft Entra ID reflete uma evolução real do produto — de serviço de identidade Azure para plataforma de identidade multi-cloud. Para o dia a dia operacional, o impacto é mínimo. Para o posicionamento estratégico e roadmap de funcionalidades, a direção ficou mais clara: identidade como plataforma independente de qual cloud você usa.
+A mudança de nome para Microsoft Entra ID reflete uma evolução real do produto, de serviço de identidade Azure para plataforma de identidade multi-cloud. Para o dia a dia operacional, o impacto é mínimo. Para o posicionamento estratégico e roadmap de funcionalidades, a direção ficou mais clara: identidade como plataforma independente de qual cloud você usa.

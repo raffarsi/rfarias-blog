@@ -7,22 +7,22 @@ date: "06 Jan 2026"
 readTime: "10 min"
 description: "Como servir múltiplos clientes ou departamentos com isolamento de dados, quotas separadas e auditoria individual usando Azure OpenAI."
 ---
-Quando uma plataforma de IA precisa atender múltiplos departamentos (RH, Jurídico, Financeiro) ou múltiplos clientes externos, a questão de isolamento se torna crítica. Cada tenant precisa de garantias de que seus dados não se misturam com os de outros — seja em armazenamento, em cache de respostas ou em logs de auditoria.
+Quando uma plataforma de IA precisa atender múltiplos departamentos (RH, Jurídico, Financeiro) ou múltiplos clientes externos, a questão de isolamento se torna crítica. Cada tenant precisa de garantias de que seus dados não se misturam com os de outros, seja em armazenamento, em cache de respostas ou em logs de auditoria.
 
 ## Os níveis de isolamento possíveis
 
-**Nível 1 — Isolamento lógico (mais simples):** um único recurso Azure OpenAI, múltiplos deployments, separação por `tenant_id` no código. Sem isolamento real de rede ou billing.
+**Nível 1, Isolamento lógico (mais simples):** um único recurso Azure OpenAI, múltiplos deployments, separação por `tenant_id` no código. Sem isolamento real de rede ou billing.
 
-**Nível 2 — Isolamento por deployment:** cada tenant tem seu próprio deployment com quota dedicada. Mesmo recurso, mas quotas e métricas separadas.
+**Nível 2, Isolamento por deployment:** cada tenant tem seu próprio deployment com quota dedicada. Mesmo recurso, mas quotas e métricas separadas.
 
-**Nível 3 — Isolamento por recurso (mais forte):** cada tenant tem seu próprio recurso Azure OpenAI, em resource groups separados, com Private Endpoints e billing independente.
+**Nível 3, Isolamento por recurso (mais forte):** cada tenant tem seu próprio recurso Azure OpenAI, em resource groups separados, com Private Endpoints e billing independente.
 
 Para plataformas SaaS com requisitos de compliance, o Nível 3 é o correto. Para departamentos internos onde os dados são todos da mesma empresa, o Nível 2 frequentemente é suficiente.
 
 ## Arquitetura de referência: Nível 2 (departamentos internos)
 
 ```python
-# Camada de roteamento — cada request vai para o deployment do tenant certo
+# Camada de roteamento, cada request vai para o deployment do tenant certo
 TENANT_CONFIG = {
     "rh": {
         "deployment": "gpt4o-rh",
@@ -117,7 +117,7 @@ def get_search_client(tenant_id: str) -> SearchClient:
     )
 ```
 
-Para dados sensíveis ou requisitos de compliance rígidos (LGPD, dados financeiros), índices separados são o caminho correto — um vazamento de filtro não expõe dados de outros tenants.
+Para dados sensíveis ou requisitos de compliance rígidos (LGPD, dados financeiros), índices separados são o caminho correto, um vazamento de filtro não expõe dados de outros tenants.
 
 ## Auditoria por tenant
 
@@ -142,4 +142,4 @@ customEvents
 
 ## Conclusão
 
-Multi-tenant com Azure OpenAI é um espectro de isolamento — você escolhe o nível de acordo com os requisitos reais. Departamentos internos da mesma empresa raramente precisam de Nível 3; plataformas SaaS atendendo múltiplos clientes externos quase sempre precisam. O erro mais comum é começar com Nível 1 (só código) e descobrir tarde que é necessário Nível 3 — a migração exige refatoração significativa de infraestrutura.
+Multi-tenant com Azure OpenAI é um espectro de isolamento, você escolhe o nível de acordo com os requisitos reais. Departamentos internos da mesma empresa raramente precisam de Nível 3; plataformas SaaS atendendo múltiplos clientes externos quase sempre precisam. O erro mais comum é começar com Nível 1 (só código) e descobrir tarde que é necessário Nível 3, a migração exige refatoração significativa de infraestrutura.

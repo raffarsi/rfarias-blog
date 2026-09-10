@@ -66,7 +66,7 @@ az vm create \
 **SLA:** 99,99% com 2+ VMs em zonas diferentes.
 
 <div class="callout">
-<strong>Importante:</strong> Não é possível usar Availability Set e Availability Zone na mesma VM — são mutuamente exclusivos. Availability Zones oferecem SLA maior e são a abordagem recomendada para novos deployments.
+<strong>Importante:</strong> Não é possível usar Availability Set e Availability Zone na mesma VM, são mutuamente exclusivos. Availability Zones oferecem SLA maior e são a abordagem recomendada para novos deployments.
 </div>
 
 ## Virtual Machine Scale Sets (VMSS)

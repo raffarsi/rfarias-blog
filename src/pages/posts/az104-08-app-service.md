@@ -76,7 +76,7 @@ az webapp deployment slot swap \
 ```
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Slots têm suas próprias configurações de app settings. Algumas configurações são "slot-sticky" — não mudam com o swap. Marque as configurações como "Deployment slot setting" para que não sejam trocadas durante o swap.
+<strong>Dica para o exame:</strong> Slots têm suas próprias configurações de app settings. Algumas configurações são "slot-sticky", não mudam com o swap. Marque as configurações como "Deployment slot setting" para que não sejam trocadas durante o swap.
 </div>
 
 ## Auto-scaling

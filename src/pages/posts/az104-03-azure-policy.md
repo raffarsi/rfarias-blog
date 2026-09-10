@@ -22,10 +22,10 @@ Azure Policy é a ferramenta de governança do Azure. Permite enforçar padrões
 
 ## Conceitos fundamentais
 
-**Policy Definition** — a regra em si (ex: "todas as VMs devem usar discos gerenciados")
-**Policy Assignment** — aplicar a política a um escopo
-**Policy Initiative (Set)** — grupo de políticas relacionadas
-**Compliance** — percentual de recursos em conformidade
+**Policy Definition**, a regra em si (ex: "todas as VMs devem usar discos gerenciados")
+**Policy Assignment**, aplicar a política a um escopo
+**Policy Initiative (Set)**, grupo de políticas relacionadas
+**Compliance**, percentual de recursos em conformidade
 
 ## Efeitos das políticas
 
@@ -105,7 +105,7 @@ az policy assignment create \
 ```
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Azure Policy avalia recursos durante criação, atualização e periodicamente (a cada 24h). Recursos criados antes da política ser atribuída aparecem como não conformes mas não são bloqueados retroativamente — exceto com remediation tasks.
+<strong>Dica para o exame:</strong> Azure Policy avalia recursos durante criação, atualização e periodicamente (a cada 24h). Recursos criados antes da política ser atribuída aparecem como não conformes mas não são bloqueados retroativamente, exceto com remediation tasks.
 </div>
 
 ## Management Groups
@@ -127,6 +127,6 @@ az account management-group subscription add \
 ## O que cai no exame
 
 - Os efeitos de política e quando usar cada um (Deny vs Audit vs DeployIfNotExists)
-- Que Policy é diferente de RBAC — Policy governa o quê pode ser criado; RBAC governa quem pode criar
+- Que Policy é diferente de RBAC, Policy governa o quê pode ser criado; RBAC governa quem pode criar
 - Como remediation tasks funcionam
 - A hierarquia: Management Group → Subscription → Resource Group → Resource

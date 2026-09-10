@@ -15,10 +15,10 @@ O System Prompt é a instrução base que define o comportamento do modelo antes
 Um System Prompt corporativo eficaz tem quatro camadas:
 
 ```
-1. PERSONA — quem o agente é
-2. CONTEXTO — o que ele conhece e pode fazer
-3. RESTRIÇÕES — o que ele não pode fazer
-4. FORMATO — como ele deve responder
+1. PERSONA, quem o agente é
+2. CONTEXTO, o que ele conhece e pode fazer
+3. RESTRIÇÕES, o que ele não pode fazer
+4. FORMATO, como ele deve responder
 ```
 
 Exemplo para um agente de suporte interno:
@@ -35,7 +35,7 @@ RESTRIÇÕES:
 - Responda APENAS com base nas informações da base de conhecimento fornecida
 - Se não souber a resposta, diga: "Não encontrei essa informação. Abra um chamado em helpdesk.empresa.com"
 - Nunca invente informações técnicas que não estejam no contexto
-- Nunca execute ações — apenas forneça orientações
+- Nunca execute ações, apenas forneça orientações
 
 FORMATO:
 - Respostas em português do Brasil
@@ -57,12 +57,12 @@ SEGURANÇA:
 ```
 
 <div class="callout">
-<strong>Prompt injection:</strong> Usuários podem tentar manipular o agente com instruções como "ignore todas as instruções anteriores". Instruções explícitas no System Prompt para ignorar tentativas de override aumentam a resistência, mas não são infalíveis — Content Safety e guardrails no nível da aplicação são complementares.
+<strong>Prompt injection:</strong> Usuários podem tentar manipular o agente com instruções como "ignore todas as instruções anteriores". Instruções explícitas no System Prompt para ignorar tentativas de override aumentam a resistência, mas não são infalíveis, Content Safety e guardrails no nível da aplicação são complementares.
 </div>
 
 ## Testando e iterando
 
-O System Prompt é código — trate como tal:
+O System Prompt é código, trate como tal:
 
 - Versionamento em Git
 - Testes automatizados com casos de uso conhecidos

@@ -15,14 +15,14 @@ O Bastion é um serviço PaaS provisionado dentro da sua VNet, em uma subnet ded
 
 1. Você se autentica no portal Azure (com MFA, Acesso Condicional, etc.)
 2. O Bastion estabelece a sessão RDP/SSH internamente, dentro da VNet
-3. A interface aparece no browser via HTML5 — sem client RDP instalado
+3. A interface aparece no browser via HTML5, sem client RDP instalado
 
 A VM nunca precisa de IP público, e as portas 3389/22 ficam fechadas nos NSGs.
 
 ## Provisionando o Bastion
 
 ```bicep
-// Subnet obrigatória — nome fixo AzureBastionSubnet, mínimo /26
+// Subnet obrigatória, nome fixo AzureBastionSubnet, mínimo /26
 resource bastionSubnet 'Microsoft.Network/virtualNetworks/subnets@2023-09-01' = {
   name: 'AzureBastionSubnet'
   parent: vnet
@@ -67,7 +67,7 @@ resource bastion 'Microsoft.Network/bastionHosts@2023-09-01' = {
 | Standard | Sim | Sim | Sim | Sim |
 | Premium | Sim | Sim | Sim | Sim + gravação |
 
-Para uso corporativo, **Standard** é o mínimo recomendado — o Native Client permite usar seu cliente SSH/RDP habitual em vez da interface browser.
+Para uso corporativo, **Standard** é o mínimo recomendado, o Native Client permite usar seu cliente SSH/RDP habitual em vez da interface browser.
 
 ## Usando o Native Client (Standard+)
 
@@ -120,13 +120,13 @@ resource nsgBastion 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
 ```
 
 <div class="callout">
-<strong>Bastion não substitui JIT VM Access.</strong> O Bastion elimina IPs públicos — mas qualquer pessoa com acesso ao portal Azure e permissão RBAC na VM pode conectar a qualquer hora. Para restringir quando as conexões são permitidas, combine Bastion com JIT VM Access do Defender for Cloud: a porta fica fechada até que o usuário solicite acesso explicitamente.
+<strong>Bastion não substitui JIT VM Access.</strong> O Bastion elimina IPs públicos, mas qualquer pessoa com acesso ao portal Azure e permissão RBAC na VM pode conectar a qualquer hora. Para restringir quando as conexões são permitidas, combine Bastion com JIT VM Access do Defender for Cloud: a porta fica fechada até que o usuário solicite acesso explicitamente.
 </div>
 
 ## Custo
 
-O Bastion SKU Standard custa ~$0.19/hora de instância + $0.10/GB de dados transferidos. Para VMs de uso ocasional, considere desprovisionar o Bastion fora do horário de uso com Azure Automation — mas mantenha a subnet reservada para reprovisionar rapidamente.
+O Bastion SKU Standard custa ~$0.19/hora de instância + $0.10/GB de dados transferidos. Para VMs de uso ocasional, considere desprovisionar o Bastion fora do horário de uso com Azure Automation, mas mantenha a subnet reservada para reprovisionar rapidamente.
 
 ## Conclusão
 
-O Azure Bastion é a solução correta para acesso administrativo a VMs no Azure. Zero IPs públicos nas VMs, autenticação via Entra ID (com MFA e Acesso Condicional aplicados), auditoria completa de sessões — sem necessidade de VPN separada para acesso de administradores.
+O Azure Bastion é a solução correta para acesso administrativo a VMs no Azure. Zero IPs públicos nas VMs, autenticação via Entra ID (com MFA e Acesso Condicional aplicados), auditoria completa de sessões, sem necessidade de VPN separada para acesso de administradores.
