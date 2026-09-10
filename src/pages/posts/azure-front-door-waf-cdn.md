@@ -5,33 +5,153 @@ category: "Azure"
 tag: "azure"
 date: "08 Jan 2026"
 readTime: "9 min"
-description: "Artigo tecnico sobre azure front door: waf, cdn e balanceamento global explicados — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Como o Azure Front Door combina WAF, CDN e roteamento global -- e quando usa-lo em vez do Application Gateway."
 ---
 
-Este artigo e parte da serie de conteudo tecnico sobre Azure publicado no blog rfarias.com — cobrindo Azure Networking, IA Generativa e Identity & Access Management.
+O Azure Front Door e frequentemente descrito como "CDN com WAF" -- mas essa descricao subestima o que ele faz. E uma plataforma de entrega de aplicacoes globais que combina roteamento inteligente, protecao contra ataques, aceleracao de conteudo e failover automatico em um unico servico.
 
-## Introducao
+## O que o Front Door faz
 
-O tema abordado neste artigo e fundamental para profissionais que trabalham com o ecossistema Microsoft Azure em ambientes corporativos. O conteudo e baseado em experiencia pratica com ambientes de grande porte, incluindo o ambiente do Bradesco onde atuo como Software Engineer e IT Auditor.
+**Anycast global:** o Front Door tem pontos de presenca (PoPs) em dezenas de regioes. Quando um usuario acessa seu dominio, o DNS resolve para o PoP mais proximo. O trafego chega rapido ao PoP e viaja pelo backbone da Microsoft ate o backend -- mais rapido que pela internet publica.
 
-## Conceitos e configuracao pratica
+**WAF:** protecao contra ataques na camada de aplicacao (OWASP Top 10, DDoS L7, bots maliciosos) aplicada globalmente em todos os PoPs.
 
-Este artigo cobre os principais aspectos tecnicos do tema, com foco em:
+**CDN:** cache de conteudo estatico e dinamico nos PoPs -- reduz a carga nos backends e melhora a latencia para usuarios distantes.
 
-- Contexto e motivacao para usar este recurso ou pratica
-- Configuracao passo a passo com exemplos de codigo (Bicep, CLI, Python)
-- Erros comuns e como evita-los
-- Quando usar e quando nao usar
-- Integracao com outros servicos Azure
+**Roteamento inteligente:** distribui trafego entre multiplos backends por latencia, peso, prioridade ou regras customizadas.
 
-## Exemplos de codigo
+## Criando um perfil Front Door
 
-Os exemplos sao baseados em cenarios reais de ambiente corporativo, seguindo as boas praticas do Azure Cloud Adoption Framework e os principios de Zero Trust.
+```bicep
+resource frontDoor 'Microsoft.Cdn/profiles@2023-05-01' = {
+  name: 'fd-meuapp'
+  location: 'global'
+  sku: { name: 'Premium_AzureFrontDoor' }  // Premium para WAF gerenciado
+}
+
+// Endpoint publico
+resource fdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2023-05-01' = {
+  name: 'endpoint-producao'
+  parent: frontDoor
+  location: 'global'
+  properties: { enabledState: 'Enabled' }
+}
+
+// Grupo de origens (backends)
+resource originGroup 'Microsoft.Cdn/profiles/originGroups@2023-05-01' = {
+  name: 'og-backends'
+  parent: frontDoor
+  properties: {
+    loadBalancingSettings: {
+      sampleSize: 4
+      successfulSamplesRequired: 3
+      additionalLatencyInMilliseconds: 50
+    }
+    healthProbeSettings: {
+      probePath: '/health'
+      probeRequestType: 'GET'
+      probeProtocol: 'Https'
+      probeIntervalInSeconds: 30
+    }
+  }
+}
+
+// Backend primario (Brazil South)
+resource originPrimary 'Microsoft.Cdn/profiles/originGroups/origins@2023-05-01' = {
+  name: 'origin-br'
+  parent: originGroup
+  properties: {
+    hostName: 'meuapp-br.azurewebsites.net'
+    httpPort: 80
+    httpsPort: 443
+    originHostHeader: 'meuapp-br.azurewebsites.net'
+    priority: 1
+    weight: 1000
+  }
+}
+
+// Backend secundario (East US - DR)
+resource originSecondary 'Microsoft.Cdn/profiles/originGroups/origins@2023-05-01' = {
+  name: 'origin-us'
+  parent: originGroup
+  properties: {
+    hostName: 'meuapp-us.azurewebsites.net'
+    httpPort: 80
+    httpsPort: 443
+    originHostHeader: 'meuapp-us.azurewebsites.net'
+    priority: 2      // ativado so se o primario falhar
+    weight: 1000
+  }
+}
+```
+
+## WAF: protecao aplicada globalmente
+
+```bicep
+resource wafPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2022-05-01' = {
+  name: 'waf-fd-producao'
+  location: 'global'
+  sku: { name: 'Premium_AzureFrontDoor' }
+  properties: {
+    policySettings: {
+      mode: 'Prevention'   // bloqueia, nao so loga
+      enabledState: 'Enabled'
+    }
+    managedRules: {
+      managedRuleSets: [
+        { ruleSetType: 'Microsoft_DefaultRuleSet', ruleSetVersion: '2.1' }
+        { ruleSetType: 'Microsoft_BotManagerRuleSet', ruleSetVersion: '1.1' }
+      ]
+    }
+    customRules: {
+      rules: [
+        {
+          name: 'RateLimit'
+          priority: 10
+          ruleType: 'RateLimitRule'
+          rateLimitDurationInMinutes: 1
+          rateLimitThreshold: 100   // max 100 req/min por IP
+          action: 'Block'
+          matchConditions: [
+            {
+              matchVariable: 'RemoteAddr'
+              operator: 'IPMatch'
+              matchValue: ['0.0.0.0/0']
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+## Front Door vs Application Gateway
+
+| | Front Door | Application Gateway |
+|---|---|---|
+| Escopo | Global (multi-regiao) | Regional (uma regiao) |
+| Anycast | Sim | Nao |
+| CDN | Sim | Nao |
+| WAF | Sim (global) | Sim (regional) |
+| SSL Offload | Sim | Sim |
+| Private Link para backend | Sim (Premium) | Nao |
+| Custo base | Maior | Menor |
+
+**Use Front Door quando:**
+- Aplicacao com usuarios em multiplas regioes
+- Precisa de CDN + WAF + balanceamento global em um servico
+- Failover automatico entre regioes
+
+**Use Application Gateway quando:**
+- Aplicacao em uma unica regiao
+- Precisao de roteamento por URL path para microservicos
+- Integracao direta com AKS Ingress
+
+<div class="callout">
+<strong>Private Link para backends:</strong> No SKU Premium, o Front Door pode se conectar aos seus backends via Private Link -- o trafego do PoP ao backend nao passa pela internet publica. Util quando o backend precisa estar sem IP publico mas com acesso via Front Door.
+</div>
 
 ## Conclusao
 
-O conteudo completo esta disponivel no blog rfarias.com. Acompanhe as publicacoes de tercas e quintas para novos artigos sobre Azure Networking, IA Generativa e Identity & Access Management.
-
----
-
-*Rafael Farias da Silva | Software Engineer/IT Auditor no Bradesco | Professor Senac Osasco | Mestrando em IA na AGTU Orlando*
+O Azure Front Door e a escolha certa para aplicacoes com requisitos globais de latencia, protecao contra ataques e alta disponibilidade multi-regiao. Para aplicacoes regionais sem necessidade de CDN, o Application Gateway e mais simples e economico.

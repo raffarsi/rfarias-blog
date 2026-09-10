@@ -5,33 +5,92 @@ category: "IAM"
 tag: "iam"
 date: "20 Nov 2025"
 readTime: "8 min"
-description: "Artigo tecnico sobre external identities no entra id: colaboracao b2b segura — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Como convidar usuarios externos, configurar politicas de acesso B2B e evitar erros que deixam parceiros com acesso alem do necessario."
 ---
 
-Este artigo e parte da serie de conteudo tecnico sobre Azure publicado no blog rfarias.com — cobrindo Azure Networking, IA Generativa e Identity & Access Management.
+O Microsoft Entra External ID permite colaborar com parceiros, fornecedores e clientes externos sem criar contas internas para eles. O usuario externo se autentica com sua propria identidade e acessa apenas o que voce autoriza.
 
-## Introducao
+## O modelo B2B
 
-O tema abordado neste artigo e fundamental para profissionais que trabalham com o ecossistema Microsoft Azure em ambientes corporativos. O conteudo e baseado em experiencia pratica com ambientes de grande porte, incluindo o ambiente do Bradesco onde atuo como Software Engineer e IT Auditor.
+Quando voce convida um usuario externo:
+1. O usuario recebe um email de convite
+2. Aceita o convite e se autentica com sua propria conta (Microsoft, Google, etc.)
+3. Um Guest user e criado no seu tenant Entra ID
+4. Voce atribui permissoes a esse Guest user como qualquer usuario interno
 
-## Conceitos e configuracao pratica
+O usuario externo nunca tem senha no seu tenant -- sempre autentica no tenant de origem.
 
-Este artigo cobre os principais aspectos tecnicos do tema, com foco em:
+## Convidando usuarios externos
 
-- Contexto e motivacao para usar este recurso ou pratica
-- Configuracao passo a passo com exemplos de codigo (Bicep, CLI, Python)
-- Erros comuns e como evita-los
-- Quando usar e quando nao usar
-- Integracao com outros servicos Azure
+```bash
+# Convidar via CLI
+az ad invitation create   --invited-user-email-address "parceiro@empresa-parceira.com"   --invite-redirect-url "https://myapp.empresa.com"   --invited-user-display-name "Joao Silva (Empresa Parceira)"
 
-## Exemplos de codigo
+# Em massa via PowerShell
+Import-Csv "convidados.csv" | ForEach-Object {
+    New-AzureADMSInvitation         -InvitedUserEmailAddress $_.Email         -SendInvitationMessage $True         -InviteRedirectUrl "https://myapp.empresa.com"
+}
+```
 
-Os exemplos sao baseados em cenarios reais de ambiente corporativo, seguindo as boas praticas do Azure Cloud Adoption Framework e os principios de Zero Trust.
+## Acesso Condicional para usuarios externos
+
+Guests devem ter politicas mais restritivas:
+
+```json
+{
+  "displayName": "Exigir MFA para todos os guests",
+  "conditions": {
+    "users": {
+      "includeGuestOrExternalUsers": {
+        "guestOrExternalUserTypes": "b2bCollaborationGuest"
+      }
+    },
+    "applications": { "includeApplications": ["All"] }
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": ["mfa"]
+  }
+}
+```
+
+## Cross-Tenant Access Settings
+
+Controla quais tenants externos podem acessar seus recursos:
+
+```
+Inbound settings para tenant parceiro.com:
+  - Permitir autenticacao direta (sem convite individual)
+  - Confiar MFA do tenant parceiro
+  - Confiar dispositivos compliant do parceiro
+
+Outbound settings:
+  - Bloquear usuarios internos de acessar apps no tenant concorrente.com
+```
+
+## Access Packages para B2B governado
+
+Em vez de gerenciar acesso de cada parceiro manualmente:
+
+1. Crie um Access Package "Acesso Parceiro XYZ" com os recursos necessarios
+2. Configure aprovacao e expiracao (ex: 6 meses renovavel)
+3. Compartilhe o link do package com o parceiro
+4. O parceiro solicita acesso, aprovador interno aprova
+5. Revisao periodica automatica -- se nao renovar, acesso expira
+
+Quando o contrato expira, o acesso expira junto.
+
+## Erros comuns a evitar
+
+- Adicionar guests ao grupo "Todos" ou grupos com acesso amplo
+- Nao configurar expiracao automatica para contas de parceiros
+- Nao fazer revisoes periodicas de quem ainda precisa do acesso
+- Dar acesso de Contributor quando Reader seria suficiente
+
+<div class="callout">
+<strong>Auditoria de guests:</strong> Periodicamente revise quem sao os Guest users no seu tenant. Muitas empresas acumulam guests de ex-parceiros ou projetos encerrados. Uma Access Review trimestral em todos os grupos que contem guests resolve isso automaticamente.
+</div>
 
 ## Conclusao
 
-O conteudo completo esta disponivel no blog rfarias.com. Acompanhe as publicacoes de tercas e quintas para novos artigos sobre Azure Networking, IA Generativa e Identity & Access Management.
-
----
-
-*Rafael Farias da Silva | Software Engineer/IT Auditor no Bradesco | Professor Senac Osasco | Mestrando em IA na AGTU Orlando*
+B2B no Entra ID e a forma correta de colaborar com externos no ecossistema Microsoft -- sem contas nao gerenciadas, com controle de acesso que expira automaticamente e auditoria completa. Access Packages com aprovacao e revisao periodica e o padrao para ambientes com compliance como requisito.

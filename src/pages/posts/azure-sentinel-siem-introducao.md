@@ -5,33 +5,98 @@ category: "Segurança"
 tag: "seguranca"
 date: "16 Out 2025"
 readTime: "10 min"
-description: "Artigo tecnico sobre microsoft sentinel: siem nativo do azure para deteccao de ameacas — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Como o Sentinel coleta logs, detecta ameacas com analytics rules e automatiza respostas com playbooks."
 ---
 
-Este artigo e parte da serie de conteudo tecnico sobre Azure publicado no blog rfarias.com — cobrindo Azure Networking, IA Generativa e Identity & Access Management.
+O Microsoft Sentinel e o SIEM (Security Information and Event Management) e SOAR (Security Orchestration, Automation and Response) nativo do Azure. Ele coleta dados de seguranca, detecta ameacas com machine learning e analytics rules, e automatiza respostas a incidentes.
 
-## Introducao
+## Habilitando o Sentinel
 
-O tema abordado neste artigo e fundamental para profissionais que trabalham com o ecossistema Microsoft Azure em ambientes corporativos. O conteudo e baseado em experiencia pratica com ambientes de grande porte, incluindo o ambiente do Bradesco onde atuo como Software Engineer e IT Auditor.
+```bash
+az sentinel onboarding-state create \
+  --workspace-name law-security \
+  --resource-group rg-security \
+  --name default
+```
 
-## Conceitos e configuracao pratica
+## Data Connectors: fontes de dados
 
-Este artigo cobre os principais aspectos tecnicos do tema, com foco em:
+```bash
+# Conector para Azure Active Directory / Entra ID
+az sentinel data-connector create \
+  --workspace-name law-security \
+  --resource-group rg-security \
+  --data-connector-kind AzureActiveDirectory \
+  --name entra-id-connector
 
-- Contexto e motivacao para usar este recurso ou pratica
-- Configuracao passo a passo com exemplos de codigo (Bicep, CLI, Python)
-- Erros comuns e como evita-los
-- Quando usar e quando nao usar
-- Integracao com outros servicos Azure
+# Azure Activity (audit log da subscription)
+az sentinel data-connector create \
+  --workspace-name law-security \
+  --resource-group rg-security \
+  --data-connector-kind AzureActivity \
+  --name azure-activity-connector
+```
 
-## Exemplos de codigo
+Conectores mais usados: Entra ID Sign-in logs, Azure Activity, Microsoft 365, Defender for Cloud, Windows Security Events.
 
-Os exemplos sao baseados em cenarios reais de ambiente corporativo, seguindo as boas praticas do Azure Cloud Adoption Framework e os principios de Zero Trust.
+## Analytics Rules: deteccao de ameacas
+
+```kql
+// Regra: muitas falhas de login seguidas de sucesso (password spray)
+let failed_threshold = 10;
+SigninLogs
+| where TimeGenerated > ago(1d)
+| where ResultType != "0"
+| summarize FailedCount = count() by UserPrincipalName, bin(TimeGenerated, 1h)
+| where FailedCount >= failed_threshold
+| join kind=inner (
+    SigninLogs
+    | where TimeGenerated > ago(1d)
+    | where ResultType == "0"
+    | project SuccessTime = TimeGenerated, UserPrincipalName
+) on UserPrincipalName
+| where SuccessTime > TimeGenerated and SuccessTime < TimeGenerated + 30m
+| project UserPrincipalName, FailedCount, SuccessTime
+```
+
+## Playbooks: automacao de resposta
+
+Playbooks sao Logic Apps que executam automaticamente quando um incidente e criado:
+
+```json
+{
+  "trigger": "When a Sentinel incident is created",
+  "actions": [
+    {
+      "type": "EntraID_DisableUser",
+      "userPrincipalName": "@{triggerBody()?['object']?['properties']?['relatedEntities']?[0]?['properties']?['userPrincipalName']}"
+    },
+    {
+      "type": "Teams_PostMessage",
+      "channel": "SOC-Alertas",
+      "message": "Incidente criado: @{triggerBody()?['object']?['properties']?['title']}"
+    }
+  ]
+}
+```
+
+## Custo: monitorar de perto
+
+```kql
+// Volume de dados ingeridos por conector nas ultimas 24h
+Usage
+| where TimeGenerated > ago(24h)
+| where DataType != "Heartbeat"
+| summarize GB = sum(Quantity) / 1024 by DataType, Solution
+| order by GB desc
+```
+
+O Sentinel cobra por GB de dados ingeridos (~$2.46/GB). Habilite conectores seletivamente -- nem todos os logs de todos os servicos precisam ir para o Sentinel.
+
+<div class="callout">
+<strong>Regras de Analytics built-in:</strong> O Sentinel tem centenas de regras pre-configuradas que voce pode habilitar com um clique. Comece habilitando as regras para os conectores que voce ja tem ativos -- e um ponto de partida rapido sem precisar escrever KQL do zero.
+</div>
 
 ## Conclusao
 
-O conteudo completo esta disponivel no blog rfarias.com. Acompanhe as publicacoes de tercas e quintas para novos artigos sobre Azure Networking, IA Generativa e Identity & Access Management.
-
----
-
-*Rafael Farias da Silva | Software Engineer/IT Auditor no Bradesco | Professor Senac Osasco | Mestrando em IA na AGTU Orlando*
+O Sentinel centraliza a visibilidade de seguranca que antes exigia correlacionar manualmente logs de multiplas fontes. Analytics rules para deteccao, incidents para triagem e playbooks para resposta automatica formam o loop completo de um SOC moderno. Para ambientes Azure, e a plataforma central de operacoes de seguranca.

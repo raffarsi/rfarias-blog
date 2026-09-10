@@ -5,33 +5,79 @@ category: "Infra"
 tag: "infra"
 date: "12 Fev 2026"
 readTime: "9 min"
-description: "Artigo tecnico sobre azure arc para kubernetes: gitops e governanca de clusters — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Como usar Azure Arc para gerenciar clusters Kubernetes on-premises e em outras clouds com GitOps, politicas e monitoramento centralizados."
 ---
 
-Este artigo e parte da serie de conteudo tecnico sobre Azure publicado no blog rfarias.com — cobrindo Azure Networking, IA Generativa e Identity & Access Management.
+O Azure Arc estende o plano de gerenciamento do Azure para clusters Kubernetes que estao fora do Azure -- on-premises, AWS EKS, Google GKE, OpenShift. Com ele, voce aplica as mesmas politicas, monitora com o mesmo Log Analytics e usa GitOps para sincronizar configuracoes.
 
-## Introducao
+## Conectando um cluster externo
 
-O tema abordado neste artigo e fundamental para profissionais que trabalham com o ecossistema Microsoft Azure em ambientes corporativos. O conteudo e baseado em experiencia pratica com ambientes de grande porte, incluindo o ambiente do Bradesco onde atuo como Software Engineer e IT Auditor.
+```bash
+az connectedk8s connect \
+  --name cluster-datacenter-sp \
+  --resource-group rg-arc-kubernetes \
+  --location brazilsouth
+```
 
-## Conceitos e configuracao pratica
+Isso instala um agente no cluster que estabelece conexao de saida com o Azure -- sem precisar abrir portas de entrada no datacenter.
 
-Este artigo cobre os principais aspectos tecnicos do tema, com foco em:
+## GitOps com Flux CD
 
-- Contexto e motivacao para usar este recurso ou pratica
-- Configuracao passo a passo com exemplos de codigo (Bicep, CLI, Python)
-- Erros comuns e como evita-los
-- Quando usar e quando nao usar
-- Integracao com outros servicos Azure
+```bash
+az k8s-configuration create \
+  --name config-producao \
+  --cluster-name cluster-datacenter-sp \
+  --cluster-type connectedClusters \
+  --resource-group rg-arc-kubernetes \
+  --scope cluster \
+  --source-kind GitRepository \
+  --url "https://github.com/empresa/k8s-configs" \
+  --branch main \
+  --sync-interval 5m
+```
 
-## Exemplos de codigo
+O Flux CD e instalado automaticamente e sincroniza as configuracoes do repositorio Git com o cluster a cada 5 minutos. Mudancas no Git sao aplicadas automaticamente -- incluindo em clusters on-premises.
 
-Os exemplos sao baseados em cenarios reais de ambiente corporativo, seguindo as boas praticas do Azure Cloud Adoption Framework e os principios de Zero Trust.
+## Azure Policy para clusters Arc
+
+```bash
+# Exigir resource limits em todos os containers
+az policy assignment create \
+  --name "require-resource-limits" \
+  --policy "/providers/Microsoft.Authorization/policyDefinitions/..." \
+  --scope "/subscriptions/{sub}/resourceGroups/rg-arc-kubernetes"
+```
+
+A politica e avaliada em todos os clusters Arc conectados -- nao apenas nos clusters AKS gerenciados.
+
+## Azure Monitor para clusters externos
+
+```bash
+az k8s-extension create \
+  --name azuremonitor-containers \
+  --cluster-name cluster-datacenter-sp \
+  --resource-group rg-arc-kubernetes \
+  --cluster-type connectedClusters \
+  --extension-type Microsoft.AzureMonitor.Containers \
+  --configuration-settings logAnalyticsWorkspaceResourceID=$(az monitor log-analytics workspace show \
+    --workspace-name law-producao --resource-group rg-monitoring --query id -o tsv)
+```
+
+Metricas e logs do cluster on-premises aparecem no mesmo workspace que os clusters AKS do Azure.
+
+## Consultando todos os clusters em uma query
+
+```kql
+// CPU usage de todos os clusters (AKS + Arc) ao mesmo tempo
+KubeNodeInventory
+| summarize avg_cpu = avg(CPUCapacityNanoCores) by ClusterName, bin(TimeGenerated, 5m)
+| order by TimeGenerated desc
+```
+
+<div class="callout">
+<strong>GitOps nao e apenas para Arc:</strong> A mesma abordagem GitOps (repositorio Git como fonte unica da verdade para configuracoes do cluster) funciona em clusters AKS nativos via Azure GitOps ou Flux CD direto. Arc facilita a aplicacao em clusters externos sem configuracao adicional por cluster.
+</div>
 
 ## Conclusao
 
-O conteudo completo esta disponivel no blog rfarias.com. Acompanhe as publicacoes de tercas e quintas para novos artigos sobre Azure Networking, IA Generativa e Identity & Access Management.
-
----
-
-*Rafael Farias da Silva | Software Engineer/IT Auditor no Bradesco | Professor Senac Osasco | Mestrando em IA na AGTU Orlando*
+Azure Arc para Kubernetes unifica o gerenciamento de clusters independente de onde estao. GitOps via Flux CD garante que todos os clusters -- Azure ou on-premises -- aplicam as mesmas configuracoes do repositorio Git. Para organizacoes com clusters em multiplos ambientes, e o que permite tratar toda a frota de clusters como um unico sistema gerenciado.

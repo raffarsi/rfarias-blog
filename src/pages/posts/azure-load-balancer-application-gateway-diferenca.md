@@ -5,33 +5,126 @@ category: "Networking"
 tag: "networking"
 date: "29 Jan 2026"
 readTime: "9 min"
-description: "Artigo tecnico sobre load balancer vs application gateway: qual usar em cada cenario — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Camada 4 vs camada 7, quando cada um resolve e quando voce precisa dos dois."
 ---
 
-Este artigo e parte da serie de conteudo tecnico sobre Azure publicado no blog rfarias.com — cobrindo Azure Networking, IA Generativa e Identity & Access Management.
+Uma das perguntas mais frequentes em projetos Azure: preciso de Load Balancer ou Application Gateway? A resposta depende de qual camada voce precisa de balanceamento e quais features sao necessarias.
 
-## Introducao
+## A diferenca fundamental: camada 4 vs camada 7
 
-O tema abordado neste artigo e fundamental para profissionais que trabalham com o ecossistema Microsoft Azure em ambientes corporativos. O conteudo e baseado em experiencia pratica com ambientes de grande porte, incluindo o ambiente do Bradesco onde atuo como Software Engineer e IT Auditor.
+**Azure Load Balancer (Camada 4 -- TCP/UDP):** distribui conexoes com base em IP e porta. Rapido, baixa latencia, sem inspecao de conteudo HTTP.
 
-## Conceitos e configuracao pratica
+**Azure Application Gateway (Camada 7 -- HTTP/HTTPS):** distribui requisicoes com base em URL, headers, cookies, host. Mais lento, mais caro, mas muito mais flexivel.
 
-Este artigo cobre os principais aspectos tecnicos do tema, com foco em:
+## Azure Load Balancer
 
-- Contexto e motivacao para usar este recurso ou pratica
-- Configuracao passo a passo com exemplos de codigo (Bicep, CLI, Python)
-- Erros comuns e como evita-los
-- Quando usar e quando nao usar
-- Integracao com outros servicos Azure
+```bash
+# Load Balancer interno (private frontend)
+az network lb create \
+  --name lb-interno \
+  --resource-group rg-app \
+  --sku Standard \
+  --frontend-ip-name fe-interno \
+  --private-ip-address 10.0.1.100 \
+  --vnet-name vnet-app \
+  --subnet snet-app \
+  --backend-pool-name pool-vms
 
-## Exemplos de codigo
+# Health probe
+az network lb probe create \
+  --lb-name lb-interno \
+  --resource-group rg-app \
+  --name probe-http \
+  --protocol Http \
+  --port 80 \
+  --path /health
 
-Os exemplos sao baseados em cenarios reais de ambiente corporativo, seguindo as boas praticas do Azure Cloud Adoption Framework e os principios de Zero Trust.
+# Regra de balanceamento
+az network lb rule create \
+  --lb-name lb-interno \
+  --resource-group rg-app \
+  --name rule-http \
+  --protocol Tcp \
+  --frontend-port 80 \
+  --backend-port 80 \
+  --frontend-ip-name fe-interno \
+  --backend-pool-name pool-vms \
+  --probe-name probe-http
+```
+
+Quando usar Load Balancer:
+- Balanceamento de trafego nao-HTTP (SQL, SMTP, protocolos proprios)
+- Baixa latencia e alta performance sao criticos
+- Nao precisa de WAF, SSL offload ou roteamento por URL
+
+## Application Gateway
+
+```bicep
+resource appGw 'Microsoft.Network/applicationGateways@2023-09-01' = {
+  name: 'agw-producao'
+  properties: {
+    sku: { name: 'WAF_v2', tier: 'WAF_v2', capacity: 2 }
+    // Routing por URL path
+    urlPathMaps: [{
+      name: 'url-routing'
+      properties: {
+        pathRules: [
+          {
+            name: 'rule-api'
+            properties: {
+              paths: ['/api/*']
+              backendAddressPool: { id: poolApi.id }
+            }
+          }
+          {
+            name: 'rule-frontend'
+            properties: {
+              paths: ['/app/*']
+              backendAddressPool: { id: poolFrontend.id }
+            }
+          }
+        ]
+      }
+    }]
+  }
+}
+```
+
+Quando usar Application Gateway:
+- WAF necessario (OWASP ruleset, custom rules)
+- Roteamento por URL path (microservicos)
+- SSL offload centralizado
+- Session affinity por cookie
+- Integracao com AKS como Ingress Controller (AGIC)
+
+## Comparacao lado a lado
+
+| Feature | Load Balancer | App Gateway |
+|---------|--------------|-------------|
+| Camada OSI | 4 | 7 |
+| Protocolos | TCP/UDP | HTTP/HTTPS |
+| WAF | Nao | Sim |
+| URL routing | Nao | Sim |
+| SSL offload | Nao | Sim |
+| Latencia | Menor | Maior |
+| Custo | Menor | Maior |
+| Autoscale | Nao | Sim (v2) |
+
+## Usando os dois juntos
+
+Para aplicacoes complexas, voce usa ambos em camadas:
+
+```
+Internet
+  -> Application Gateway (WAF + SSL + URL routing)
+       -> Load Balancer interno (balanceia VMs de cada tier)
+            -> VMs Backend
+```
+
+<div class="callout">
+<strong>Application Gateway Ingress Controller (AGIC):</strong> Para workloads AKS, o AGIC integra o Application Gateway como Ingress do cluster -- regras de Ingress do Kubernetes sao automaticamente traduzidas para regras do App Gateway. Elimina a necessidade de um Load Balancer separado na frente do cluster.
+</div>
 
 ## Conclusao
 
-O conteudo completo esta disponivel no blog rfarias.com. Acompanhe as publicacoes de tercas e quintas para novos artigos sobre Azure Networking, IA Generativa e Identity & Access Management.
-
----
-
-*Rafael Farias da Silva | Software Engineer/IT Auditor no Bradesco | Professor Senac Osasco | Mestrando em IA na AGTU Orlando*
+Load Balancer para trafego nao-HTTP ou quando performance e prioridade. Application Gateway quando precisar de WAF, roteamento por URL ou SSL offload. Para a maioria das aplicacoes web em producao, o Application Gateway com WAF e o correto -- o custo adicional paga o nivel de protecao e flexibilidade.
