@@ -14,69 +14,52 @@ next:
   slug: "17-anos-mesma-empresa"
 ---
 
-NSG e ASG são dois recursos de segurança de rede no Azure que aparecem juntos em quase toda arquitetura, mas que muita gente confunde ou usa de forma incompleta.
+NSG e ASG aparecem juntos em toda documentacao de seguranca de rede Azure. A diferenca entre eles e simples, mas a confusao sobre quando usar cada um aparece com frequencia.
 
-## NSG: o filtro de pacotes do Azure
+NSG define regras. ASG e uma forma de referenciar grupos de VMs nessas regras sem usar IPs fixos.
 
-Um Network Security Group é uma lista ordenada de regras de entrada e saída que filtram tráfego com base em IP de origem, IP de destino, porta e protocolo. Você associa um NSG a uma **subnet** ou a uma **NIC**.
+## O problema que ASG resolve
 
-```bash
-az network nsg create \
-  --resource-group rg-networking \
-  --name nsg-subnet-web
+Imagine uma regra de NSG: "permitir trafego da porta 80 dos servidores web para os servidores de aplicacao". Sem ASG, voce escreve isso com IPs ou ranges:
 
-az network nsg rule create \
-  --resource-group rg-networking \
-  --nsg-name nsg-subnet-web \
-  --name AllowHTTPS \
-  --priority 100 \
-  --direction Inbound \
-  --access Allow \
-  --protocol Tcp \
-  --source-address-prefixes '*' \
-  --destination-port-ranges 443
+```
+Origem: 10.0.1.4, 10.0.1.5, 10.0.1.6
+Destino: 10.0.2.4, 10.0.2.5
+Porta: 80
 ```
 
-O NSG funciona bem quando suas regras são baseadas em ranges de IP fixos. Mas em ambientes com auto-scaling, múltiplas VMs na mesma subnet servindo funções diferentes, gerenciar IPs se torna um pesadelo.
+Quando adiciona uma nova VM web, atualiza a regra. Quando remove, atualiza de novo. Em ambientes que crescem, isso vira manutencao constante.
 
-## ASG: agrupamento lógico de interfaces de rede
+Com ASG, voce cria grupos logicos e as regras referenciam os grupos:
 
-O Application Security Group permite agrupar NICs por função (web servers, app servers, database servers) e usar esses grupos como origem ou destino nas regras do NSG.
-
-```bash
-az network asg create --resource-group rg-networking --name asg-webservers
-az network asg create --resource-group rg-networking --name asg-appservers
-az network asg create --resource-group rg-networking --name asg-dbservers
-
-az network nsg rule create \
-  --resource-group rg-networking \
-  --nsg-name nsg-subnet-app \
-  --name Web-to-App \
-  --priority 200 \
-  --direction Inbound \
-  --access Allow \
-  --protocol Tcp \
-  --source-asgs asg-webservers \
-  --destination-asgs asg-appservers \
-  --destination-port-ranges 8080
+```
+Origem: asg-servidores-web
+Destino: asg-servidores-app
+Porta: 80
 ```
 
-A grande vantagem: quando uma nova VM é criada, basta associar a NIC ao ASG. Todas as regras se aplicam automaticamente, sem editar nenhum NSG.
+Adicionar uma VM ao grupo web e so associar o ASG a NIC dela. A regra continua valendo automaticamente.
 
-## Quando usar o quê
+## Criando ASGs e usando nas regras
 
-**NSG sozinho** funciona quando as regras são baseadas em CIDRs fixos ou Service Tags (`AzureLoadBalancer`, `Internet`, `VirtualNetwork`).
+```bash
+# Criar ASGs
+az network asg create --name asg-web --resource-group rg-app --location brazilsouth
+az network asg create --name asg-app --resource-group rg-app --location brazilsouth
 
-**NSG + ASG** é necessário quando a mesma subnet tem VMs com funções diferentes, você usa auto-scaling, ou quer microsegmentação.
+# Associar a NIC de uma VM
+az network nic ip-config update   --nic-name vm-web-01-nic   --resource-group rg-app   --name ipconfig1   --application-security-groups asg-web
 
-<div class="callout">
-<strong>Limitação importante:</strong> ASGs só funcionam dentro da mesma VNet. Para regras entre VNets via peering, use IPs ou Service Tags no NSG.
-</div>
+# Regra de NSG referenciando ASGs
+az network nsg rule create   --nsg-name nsg-app   --resource-group rg-app   --name allow-web-to-app   --priority 100   --protocol Tcp   --source-asgs asg-web   --destination-asgs asg-app   --destination-port-ranges 80 443   --access Allow
+```
 
-## Padrão recomendado para ambientes corporativos
+## Quando NSG sem ASG ainda faz sentido
 
-1. **NSG na subnet** com regras gerais (bloquear tudo por padrão, permitir tráfego do Load Balancer)
-2. **ASGs por camada** (web, app, data) associados às NICs
-3. **Regras de microsegmentação** no NSG usando ASGs como origem/destino
+ASGs adicionam uma camada de gerenciamento. Para ambientes pequenos com poucas VMs e sem crescimento previsto, manter IPs nas regras pode ser mais simples.
 
-Essa abordagem mantém as regras legíveis, escaláveis e auditáveis, três requisitos que em ambiente corporativo não são opcionais.
+Use ASG quando: o numero de VMs num grupo muda com frequencia, ou quando voce quer que as regras de seguranca sejam independentes dos IPs especificos das maquinas.
+
+Use IP direto quando: o ambiente e pequeno e estaevel, ou quando a regra e para ranges amplos (Internet, VirtualNetwork) onde ASG nao faz diferenca.
+
+NSG e ASG nao competem, trabalham juntos. O NSG tem as regras, o ASG organiza os alvos dessas regras.

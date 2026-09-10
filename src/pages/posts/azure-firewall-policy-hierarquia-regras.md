@@ -8,36 +8,33 @@ readTime: "10 min"
 description: "Firewall Policies podem ser herdadas, a política base define regras globais, políticas filhas adicionam regras específicas por ambiente. Como estruturar para escalar sem duplicar configuração."
 ---
 
-O Azure Firewall Policy permite criar uma hierarquia de políticas onde uma política pai define regras globais e políticas filhas herdam essas regras e adicionam as específicas do ambiente. Isso evita duplicar configuração entre dezenas de firewalls em diferentes ambientes.
+Se voce tem Azure Firewall em mais de um ambiente, em producao, homologacao e desenvolvimento, provavelmente esta mantendo as mesmas regras base duplicadas em cada politica. Toda vez que precisa adicionar um novo endpoint de monitoramento ou atualizar um range de IP, atualiza em tres lugares. E inevitavel que um fique defasado.
 
-## O problema sem hierarquia
+Hierarquia de Firewall Policies resolve esse problema.
 
-Sem hierarquia de políticas, cada ambiente (produção, homologação, desenvolvimento) tem sua própria política com as mesmas regras base copiadas manualmente. Quando uma regra global precisa mudar, um novo endpoint de monitoramento, uma atualização de IP, você atualiza em N lugares.
+## A estrutura que funciona
 
-## Estrutura de hierarquia recomendada
+Uma politica pai define regras globais. Politicas filhas herdam essas regras e adicionam as especificas do ambiente:
 
 ```
-Política Base (global)
-├── Regras de DNS (sempre permitidas)
-├── Regras de monitoramento (Azure Monitor, Log Analytics)
-├── Regras de atualização (Windows Update, pacotes Linux)
-└── Regras de segurança globais (bloquear países, categorias)
-    │
-    ├── Política Produção (herda da base)
-    │   ├── Regras específicas de produção
-    │   └── Restrições mais rígidas
-    │
-    ├── Política Homologação (herda da base)
-    │   └── Regras menos restritivas para testes
-    │
-    └── Política Desenvolvimento (herda da base)
-        └── Regras permissivas para desenvolvimento
-```
+Politica Base (regras globais)
+  Monitoramento (Azure Monitor, Log Analytics)
+  Atualizacoes (Windows Update, pacotes Linux)
+  Seguranca global (bloquear categorias)
 
-## Configurando em Bicep
+  Politica Producao (herda da base)
+    Regras especificas de producao
+    Restricoes mais rigidas
+
+  Politica Homologacao (herda da base)
+    Regras menos restritivas para testes
+
+  Politica Desenvolvimento (herda da base)
+    Mais permissiva para desenvolvimento
+```
 
 ```bicep
-// Política base, regras globais
+// Politica base
 resource policyBase 'Microsoft.Network/firewallPolicies@2023-09-01' = {
   name: 'fwpolicy-base'
   location: location
@@ -66,7 +63,6 @@ resource baseRules 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023
               '*.monitor.azure.com'
               '*.oms.opinsights.azure.com'
               '*.ods.opinsights.azure.com'
-              'dc.services.visualstudio.com'
             ]
             protocols: [{ protocolType: 'Https', port: 443 }]
             sourceAddresses: ['*']
@@ -77,57 +73,30 @@ resource baseRules 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023
   }
 }
 
-// Política filha, herda da base
+// Politica filha herda da base
 resource policyProd 'Microsoft.Network/firewallPolicies@2023-09-01' = {
   name: 'fwpolicy-prod'
   location: location
   properties: {
     sku: { tier: 'Premium' }
-    basePolicy: { id: policyBase.id }   // herança
-  }
-}
-
-resource prodRules 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023-09-01' = {
-  name: 'rcg-prod-especifico'
-  parent: policyProd
-  properties: {
-    priority: 200  // prioridade maior que as regras da base
-    ruleCollections: [
-      {
-        ruleCollectionType: 'FirewallPolicyFilterRuleCollection'
-        name: 'rc-ia-producao'
-        priority: 100
-        action: { type: 'Allow' }
-        rules: [
-          {
-            ruleType: 'ApplicationRule'
-            name: 'allow-model-catalog-prod'
-            targetFqdns: ['*.models.ai.azure.com']
-            protocols: [{ protocolType: 'Https', port: 443 }]
-            sourceAddresses: ['10.1.0.0/16']
-          }
-        ]
-      }
-    ]
+    basePolicy: { id: policyBase.id }
   }
 }
 ```
 
-## Precedência de regras
+## Como a precedencia funciona
 
-A precedência funciona por prioridade numérica dentro de cada política, **menor número = maior prioridade**. Regras da política filha não sobrescrevem regras da política pai; ambas são avaliadas. Se a política base tem um Allow com prioridade 100 e a filha tem um Deny com prioridade 200, o Allow da base vai ganhar.
-
-Para que a filha sobrescreva a base, use prioridade menor:
+Regras da politica base e da politica filha sao avaliadas juntas por prioridade numerica. Para que a regra da filha sobrescreva a da base, ela precisa ter prioridade MENOR:
 
 ```
 Base:  Allow *.microsoft.com  (prioridade 200)
-Filha: Deny  *.microsoft.com  (prioridade 100) ← esta ganha
+Filha: Deny  *.microsoft.com  (prioridade 100) <- esta ganha
 ```
 
+Se a filha tiver prioridade maior que a base, a regra da base vence. Esse e o ponto que mais confunde em implementacoes novas.
+
 <div class="callout">
-<strong>Limitação importante:</strong> Uma política filha só pode ter uma política pai. Você não pode herdar de múltiplas políticas base. Planeje a hierarquia antes de criar, reorganizar depois exige recriar as políticas e reassociar firewalls.
+<strong>Limitacao importante:</strong> Uma politica filha so pode ter uma politica pai. Voce nao herda de multiplas bases. Planeje a hierarquia antes de criar, reorganizar depois exige recriar as politicas e reassociar os firewalls.
 </div>
 
-## Conclusão
-
-Hierarquia de Firewall Policies é o que torna o gerenciamento de firewall escalável em ambientes com múltiplos firewalls e ambientes. Regras globais na base, regras específicas nas filhas, e mudanças globais propagam automaticamente para todos os ambientes sem tocar em cada política individualmente.
+Mudanca de regra global agora e: editar a politica base, propagar automaticamente para todos os firewalls de todos os ambientes. Sem precisar lembrar de qual ambiente ainda nao foi atualizado.

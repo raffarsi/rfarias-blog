@@ -8,30 +8,34 @@ readTime: "10 min"
 description: "WAF no Application Gateway vai além de habilitar o OWASP ruleset. Regras customizadas, exclusões e integração com o Azure Monitor para uma proteção que não quebra aplicações legítimas."
 ---
 
-O Azure Application Gateway com WAF (Web Application Firewall) é frequentemente habilitado e esquecido, o OWASP ruleset vai para produção com as configurações padrão e fica lá até começar a bloquear requisições legítimas. Configuração adequada exige entender como as regras se aplicam, como criar exclusões cirúrgicas e como monitorar o que está sendo bloqueado.
+WAF no Application Gateway e aquele recurso que a maioria habilita, marca "configurado" no checklist de segurança e esquece. Ate o primeiro falso positivo em producao, quando o WAF começa a bloquear requisicoes legitimas e o time de aplicacao abre incidente achando que e bug deles.
 
-## Modos de operação: Detection vs Prevention
+A configuracao correta evita esse ciclo.
 
-O WAF opera em dois modos:
+## Modos de operacao: Detection antes de Prevention
 
-**Detection:** inspeciona o tráfego, loga o que violaria as regras, mas não bloqueia. Use para entender o impacto antes de ativar.
-
-**Prevention:** bloqueia ativamente. Ative só depois de analisar os logs do modo Detection por pelo menos 48h em tráfego real.
+Nunca habilite o WAF direto em modo Prevention sem passar pelo Detection antes. Em Detection, o WAF loga o que bloquearia mas nao bloqueia. Voce tem visibilidade do impacto sem derrubar producao.
 
 ```bash
-# Ativar modo Prevention
-az network application-gateway waf-config set \
-  --gateway-name agw-producao \
-  --resource-group rg-app \
-  --enabled true \
-  --firewall-mode Prevention \
-  --rule-set-type OWASP \
-  --rule-set-version 3.2
+az network application-gateway waf-config set   --gateway-name agw-producao   --resource-group rg-app   --enabled true   --firewall-mode Detection   --rule-set-type OWASP   --rule-set-version 3.2
 ```
 
-## Exclusões: o que fazer quando o WAF bloqueia tráfego legítimo
+Analise os logs por pelo menos 48 horas em trafego real antes de mudar para Prevention.
 
-O cenário mais comum: uma aplicação envia dados no body de um POST que o WAF interpreta como SQL injection. Em vez de desabilitar a regra inteira, crie uma exclusão cirúrgica:
+## Identificando o que esta sendo bloqueado
+
+```kql
+AzureDiagnostics
+| where ResourceType == "APPLICATIONGATEWAYS"
+| where OperationName == "ApplicationGatewayFirewall"
+| where action_s == "Blocked"
+| project TimeGenerated, clientIp_s, requestUri_s, ruleId_s, ruleGroup_s, message_s
+| order by TimeGenerated desc
+```
+
+Para cada regra que aparece com frequencia, decida: e um ataque real ou falso positivo? Se for falso positivo, crie uma exclusao cirurgica, nao desabilite a regra inteira.
+
+## Exclusoes cirurgicas (nao desabilitar a regra inteira)
 
 ```bicep
 resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies@2023-09-01' = {
@@ -40,16 +44,13 @@ resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPo
   properties: {
     managedRules: {
       managedRuleSets: [
-        {
-          ruleSetType: 'OWASP'
-          ruleSetVersion: '3.2'
-        }
+        { ruleSetType: 'OWASP', ruleSetVersion: '3.2' }
       ]
       exclusions: [
         {
           matchVariable: 'RequestBodyPostArgNames'
           selectorMatchOperator: 'Equals'
-          selector: 'descricao_produto'   // campo específico que dispara falso positivo
+          selector: 'descricao_produto'
           exclusionManagedRuleSets: [
             {
               ruleSetType: 'OWASP'
@@ -57,7 +58,7 @@ resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPo
               ruleGroups: [
                 {
                   ruleGroupName: 'REQUEST-942-APPLICATION-ATTACK-SQLI'
-                  rules: [{ ruleId: '942440' }]  // só a regra específica
+                  rules: [{ ruleId: '942440' }]
                 }
               ]
             }
@@ -69,27 +70,14 @@ resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPo
 }
 ```
 
-## Identificando o que está sendo bloqueado
+Exclusao por campo especifico e por regra especifica. Nao por toda a categoria, nao por todo o request.
 
-```kql
-AzureDiagnostics
-| where ResourceType == "APPLICATIONGATEWAYS"
-| where OperationName == "ApplicationGatewayFirewall"
-| where action_s == "Blocked"
-| project TimeGenerated, clientIp_s, requestUri_s, ruleId_s, ruleGroup_s, message_s
-| order by TimeGenerated desc
-```
-
-Antes de criar exclusões, confirme que o tráfego bloqueado é legítimo, o log inclui o IP de origem e a URI completa.
-
-## Regras customizadas
-
-Além das regras OWASP, você pode criar regras próprias com prioridade mais alta:
+## Regras customizadas para controle fino
 
 ```bicep
 customRules: [
   {
-    name: 'bloquear-paises-nao-operamos'
+    name: 'bloquear-paises-sem-operacao'
     priority: 10
     ruleType: 'MatchRule'
     action: 'Block'
@@ -98,7 +86,7 @@ customRules: [
         matchVariables: [{ variableName: 'RemoteAddr' }]
         operator: 'GeoMatch'
         negationCondition: true
-        matchValues: ['BR', 'US', 'PT']  // só permitir Brasil, EUA e Portugal
+        matchValues: ['BR', 'US', 'PT']
       }
     ]
   }
@@ -106,9 +94,7 @@ customRules: [
 ```
 
 <div class="callout">
-<strong>WAF Policy vs WAF Config:</strong> O modelo antigo usa WAF Config diretamente no Application Gateway. O modelo atual usa WAF Policy (recurso separado) que pode ser associada a múltiplos gateways e listeners individualmente. Prefira WAF Policy, é mais flexível e permite políticas diferentes por URI path.
+<strong>WAF Policy em vez de WAF Config:</strong> O modelo antigo configura WAF diretamente no Application Gateway. O modelo atual usa WAF Policy como recurso separado, que pode ser associada a multiplos gateways e listeners individualmente. Se voce tem um ambiente existente com WAF Config, vale avaliar a migracao para WAF Policy antes de adicionar mais regras customizadas.
 </div>
 
-## Conclusão
-
-WAF no Application Gateway bem configurado exige um ciclo: Detection → análise de logs → exclusões cirúrgicas → Prevention. Desabilitar regras inteiras para resolver falsos positivos troca segurança por conveniência. Exclusões por campo e por regra específica resolvem o problema sem abrir brechas desnecessárias.
+O ciclo correto: Detection por 48h, analisar os top alertas, criar exclusoes para falsos positivos confirmados, mudar para Prevention, monitorar. Pular essa etapa e a receita para um incidente de producao desnecessario.

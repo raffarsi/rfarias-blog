@@ -8,104 +8,58 @@ readTime: "10 min"
 description: "FastPath elimina o gateway do caminho de dados para alto throughput. Global Reach conecta circuitos ExpressRoute diferentes. Quando cada um se justifica e o impacto real na latência."
 ---
 
-O ExpressRoute tem dois componentes de latência que frequentemente são ignorados: o gateway de rede virtual e o overhead de throughput. FastPath e Global Reach resolvem problemas distintos, entender qual você tem antes de pagar pelo upgrade é essencial.
+ExpressRoute tem dois numeros que as pessoas olham: bandwidth e latencia. Mas ha um terceiro gargalo que raramente aparece na conversa inicial: o VNet Gateway no caminho de dados. Para trafego de alto throughput entre VMs on-premises e recursos Azure, o gateway pode ser o limitador real, nao o circuito.
 
-## O problema que FastPath resolve
+FastPath bypassa esse problema.
 
-O fluxo padrão de tráfego ExpressRoute:
+## O que o FastPath faz (e o que nao faz)
 
+O fluxo padrao:
 ```
-On-premises → Edge da Microsoft → VNet Gateway → VMs/recursos na VNet
-```
-
-O VNet Gateway é um gargalo de throughput e latência, especialmente para tráfego de alta frequência entre VMs e sistemas on-premises. O FastPath bypassa o gateway para tráfego de dados:
-
-```
-On-premises → Edge da Microsoft → VMs/recursos diretamente
-             (gateway só para plano de controle/BGP)
+On-premises -> Edge da Microsoft -> VNet Gateway -> VMs/recursos
 ```
 
-## Quando FastPath faz diferença real
+Com FastPath:
+```
+On-premises -> Edge da Microsoft -> VMs diretamente
+             (gateway so para plano de controle BGP)
+```
 
-FastPath reduz latência e aumenta throughput. O impacto é mais significativo quando:
-
-- Comunicação de alta frequência entre VMs Azure e sistemas on-premises (ex: bancos de dados distribuídos, replicação)
-- Tráfego de alto throughput (>1 Gbps consistente)
-- Aplicações sensíveis a latência (trading, tempo real)
-
-Para tráfego ocasional, burst ou aplicações web, o impacto do FastPath é geralmente irrelevante.
+O gateway sai do caminho de dados. Latencia reduz, throughput aumenta. Mas ha uma limitacao critica: **FastPath nao funciona para trafego destinado a Private Endpoints**. Esse trafego sempre passa pelo gateway, independente de FastPath estar habilitado. Se o seu caso de uso principal e acessar servicos PaaS (Storage, OpenAI, SQL) via Private Endpoints a partir do on-premises, FastPath nao vai ajudar.
 
 ## Habilitando FastPath
 
-FastPath requer circuito ExpressRoute com bandwidth de 1 Gbps+ e gateway UltraPerformance ou ErGw3AZ:
+Requer circuito com bandwidth de 1 Gbps+ e gateway UltraPerformance ou ErGw3AZ:
 
 ```bash
-# Atualizar gateway para suportar FastPath
-az network vnet-gateway update \
-  --name er-gateway-hub \
-  --resource-group rg-networking \
-  --gateway-type ExpressRoute \
-  --sku ErGw3AZ  # UltraPerformance ou ErGw3AZ são obrigatórios
+az network vnet-gateway update   --name er-gateway-hub   --resource-group rg-networking   --gateway-type ExpressRoute   --sku ErGw3AZ
 
-# Habilitar FastPath na conexão
-az network vpn-connection update \
-  --name connection-er-prod \
-  --resource-group rg-networking \
-  --express-route-gateway-bypass true
+az network vpn-connection update   --name connection-er-prod   --resource-group rg-networking   --express-route-gateway-bypass true
 ```
 
-## Global Reach: conectando circuitos ExpressRoute
+## Global Reach: outro problema, outra solucao
 
-O Global Reach resolve um problema diferente: conectar dois ambientes on-premises através da rede backbone da Microsoft, sem tráfego passando pela internet pública.
+FastPath e latencia entre on-premises e Azure. Global Reach e conectividade entre dois ambientes on-premises via backbone da Microsoft.
 
-Cenário típico: você tem um datacenter em São Paulo (circuito ER para Brazil South) e um escritório em Lisboa (circuito ER para West Europe). Sem Global Reach, o tráfego entre os dois vai pela internet. Com Global Reach, vai pelo backbone Microsoft.
+Se voce tem datacenter em Sao Paulo (circuito ER para Brazil South) e escritorio em Lisboa (circuito ER para West Europe), sem Global Reach o trafego entre eles vai pela internet. Com Global Reach, vai pelo backbone Microsoft.
 
 ```bash
-# Habilitar Global Reach entre dois circuitos
-az network express-route peering connection create \
-  --name connection-sp-lisboa \
-  --circuit-name er-circuit-saopaulo \
-  --peering-name AzurePrivatePeering \
-  --resource-group rg-networking \
-  --peer-circuit $(az network express-route show \
-    --name er-circuit-lisboa --resource-group rg-networking --query id -o tsv) \
-  --address-prefix 192.168.100.0/29  # range /29 para o link Global Reach
+az network express-route peering connection create   --name connection-sp-lisboa   --circuit-name er-circuit-saopaulo   --peering-name AzurePrivatePeering   --resource-group rg-networking   --peer-circuit $(az network express-route show     --name er-circuit-lisboa --resource-group rg-networking --query id -o tsv)   --address-prefix 192.168.100.0/29
 ```
 
-## Megaport: conectando múltiplos provedores no mesmo ponto
+## Megaport: simplificando multiplos circuitos
 
-Para ambientes com múltiplos circuitos ExpressRoute (alta disponibilidade ou múltiplos provedores), o Megaport oferece uma fabric de interconexão que simplifica o gerenciamento:
+Para ambientes com varios circuitos ExpressRoute (HA ou multiplos provedores), o Megaport oferece uma fabric de interconexao. Em vez de contratar um circuito fisico dedicado para cada destino, voce tem uma porta no Megaport e cria Virtual Cross Connects para os peering points da Microsoft.
 
-Em vez de contratar um circuito dedicado de São Paulo para o peering da Microsoft em cada provedor, você contrata uma porta no Megaport e cria Virtual Cross Connects para os peering points da Microsoft. Mais flexível e geralmente mais barato para múltiplos destinos.
+A latencia adicional do Megaport e tipicamente menos de 1ms, irrelevante para a maioria dos casos.
 
-A latência adicional do Megaport (fabric de interconexão) é tipicamente < 1ms, irrelevante para a maioria dos casos de uso.
+## Quando cada um resolve
 
-## Monitorando a latência real
-
-```kql
-// Monitorar latência do ExpressRoute com Connection Monitor
-NetworkMonitoring
-| where TimeGenerated > ago(24h)
-| where SubType == "ConnectivityDiagnosticsSnapshot"
-| where SourceName contains "on-premises"
-| summarize avg(AvgLatencyInMs), max(MaxLatencyInMs), min(MinLatencyInMs) 
-    by SourceName, DestinationName, bin(TimeGenerated, 1h)
-| order by TimeGenerated desc
-```
-
-<div class="callout">
-<strong>FastPath e Private Endpoints:</strong> O FastPath não funciona para tráfego destinado a Private Endpoints, esse tráfego sempre passa pelo gateway. Se o seu caso de uso é principalmente acessar serviços PaaS (Storage, SQL, OpenAI) via Private Endpoints de on-premises, FastPath não vai ajudar.
-</div>
-
-## Quando investir em cada um
-
-| Problema | Solução |
+| Problema | Solucao |
 |----------|---------|
-| Alta latência entre VMs Azure e sistemas on-premises | FastPath |
-| Baixo throughput (< capacidade do circuito) | FastPath + gateway de maior SKU |
-| Conectar dois datacenters on-premises via Microsoft backbone | Global Reach |
-| Múltiplos provedores/circuitos, gerenciamento complexo | Megaport como fabric |
+| Latencia alta entre VMs on-premises e VMs Azure | FastPath |
+| Throughput limitado pelo gateway | FastPath + gateway maior SKU |
+| Conectar dois datacenters via backbone Microsoft | Global Reach |
+| Multiplos provedores ou circuitos, complexidade operacional | Megaport |
 
-## Conclusão
-
-FastPath e Global Reach são investimentos adicionais sobre o ExpressRoute base. Meça a latência atual com Connection Monitor antes de decidir, o problema pode estar no roteamento on-premises, não no gateway Azure.
+Meca o circuito atual com Connection Monitor por 30 dias antes de decidir qualquer upgrade. O problema pode estar no roteamento on-premises, nao no lado Azure.

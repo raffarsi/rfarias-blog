@@ -8,51 +8,37 @@ readTime: "9 min"
 description: "Como conectar VNets com peering, quando usar hub-and-spoke e as limitações que você só descobre em produção."
 ---
 
-VNet Peering é o mecanismo para conectar duas VNets Azure de forma que os recursos em cada uma se comuniquem usando IPs privados, sem passar pela internet pública. O tráfego trafega pela rede backbone da Microsoft, baixa latência e alta confiabilidade.
+Hub-and-spoke e uma das topologias mais faladas em Azure. Mas a maioria das implementacoes que vejo tem o mesmo problema: peering configurado sem entender a nao-transitividade, e ai surgem os incidentes de "por que o spoke A nao alcanca o spoke B?".
 
-## Como funciona o peering
+## Como o peering funciona de verdade
 
-O peering é não-transitivo por padrão. Se a VNet A tem peering com B, e B tem peering com C, A não consegue alcançar C automaticamente. Você precisa de peering direto entre A e C, ou configurar um hub intermediário.
+O peering conecta duas VNets pelo backbone da Microsoft. Sem internet publica, com baixa latencia e alta confiabilidade. O que importa entender: **o peering nao e transitivo por padrao**.
+
+Se A tem peering com B, e B tem peering com C, A nao alcanca C automaticamente. Voce precisa de peering direto entre A e C, ou de um hub intermediario com roteamento configurado.
 
 ```bash
-# Criar peering bidirecional entre Hub e Spoke
-az network vnet peering create \
-  --name hub-to-spoke-ia \
-  --resource-group rg-networking \
-  --vnet-name vnet-hub \
-  --remote-vnet vnet-spoke-ia \
-  --allow-vnet-access \
-  --allow-forwarded-traffic \
-  --allow-gateway-transit  # hub expõe o gateway para o spoke
+# Peering bidirecional entre Hub e Spoke
+az network vnet peering create   --name hub-to-spoke-ia   --resource-group rg-networking   --vnet-name vnet-hub   --remote-vnet vnet-spoke-ia   --allow-vnet-access   --allow-forwarded-traffic   --allow-gateway-transit
 
-az network vnet peering create \
-  --name spoke-ia-to-hub \
-  --resource-group rg-ia \
-  --vnet-name vnet-spoke-ia \
-  --remote-vnet vnet-hub \
-  --allow-vnet-access \
-  --allow-forwarded-traffic \
-  --use-remote-gateways  # spoke usa o gateway do hub
+az network vnet peering create   --name spoke-ia-to-hub   --resource-group rg-ia   --vnet-name vnet-spoke-ia   --remote-vnet vnet-hub   --allow-vnet-access   --allow-forwarded-traffic   --use-remote-gateways
 ```
 
-## Topologia hub-and-spoke
+## Por que hub-and-spoke resolve a nao-transitividade
 
-O padrão hub-and-spoke resolve a limitação de não-transitividade:
+O hub centraliza recursos compartilhados: Azure Firewall, VPN/ER Gateway, DNS Resolver. Os spokes se conectam ao hub via peering. Trafego entre spokes passa pelo hub, onde o Firewall pode inspecionar e controlar.
 
 ```
-on-premises ─── VPN/ER Gateway ─── VNet HUB ─── Azure Firewall
-                                        │
-                    ┌───────────────────┼───────────────────┐
-                    │                   │                   │
-              Spoke Web           Spoke App           Spoke IA
-           (10.1.0.0/16)      (10.2.0.0/16)      (10.3.0.0/16)
+on-premises -- VPN/ER Gateway -- VNet HUB -- Azure Firewall
+                                     |
+              +----------------------+---------------------+
+              |                      |                     |
+        Spoke Web              Spoke App              Spoke IA
+     (10.1.0.0/16)         (10.2.0.0/16)         (10.3.0.0/16)
 ```
 
-O hub centraliza recursos compartilhados. Os spokes se conectam ao hub via peering. O tráfego entre spokes passa pelo hub, via Azure Firewall para inspeção e controle.
+## Forcando o trafego pelo Firewall do hub
 
-## Configurando UDR para rotear tráfego pelo Firewall
-
-Por padrão, tráfego entre spokes vai direto via backbone, sem passar pelo Firewall do hub. Para forçar a inspeção:
+Por padrao, trafego entre spokes vai direto via backbone, sem passar pelo Firewall. Para forccar inspeção, voce precisa de UDR em cada spoke:
 
 ```bicep
 resource routeTable 'Microsoft.Network/routeTables@2023-09-01' = {
@@ -73,18 +59,14 @@ resource routeTable 'Microsoft.Network/routeTables@2023-09-01' = {
 }
 ```
 
-## Peering global: entre regiões diferentes
+Sem essa UDR, o trafego entre spokes nunca passa pelo Firewall, independente de como voce configurou as regras dele.
 
-O VNet Peering funciona entre regiões (Global VNet Peering). O tráfego usa a rede backbone da Microsoft, mas há considerações:
+## Peering global: o que muda entre regioes
 
-- **Latência:** maior que peering na mesma região
-- **Custo:** tráfego cross-region tem custo de transferência de dados
-- **Gateway transit:** não suportado em peering global (limitação)
+O peering funciona entre regioes diferentes. O trafego usa o backbone da Microsoft, mas ha consideracoes importantes: latencia maior que peering na mesma regiao, custo de transferencia de dados cross-region, e gateway transit nao suportado em peering global.
 
 <div class="callout">
-<strong>Limitação importante:</strong> VNets com ranges de IP sobrepostos não podem ter peering. Planeje seus ranges de IP antes de criar as VNets, mudar depois é destrutivo.
+<strong>Limitacao critica:</strong> VNets com ranges de IP sobrepostos nao podem ter peering. Se voce esta planejando a topologia agora, defina os ranges com cuidado. Mudar o range de uma VNet em producao e destrutivo.
 </div>
 
-## Conclusão
-
-VNet Peering com topologia hub-and-spoke é a base de qualquer arquitetura Azure corporativa bem desenhada. Centralizar recursos compartilhados no hub (Firewall, VPN Gateway, DNS Resolver) e conectar spokes de workload via peering oferece escala, controle e visibilidade que VNets isoladas não conseguem.
+Hub-and-spoke com peering bem configurado e a base de qualquer arquitetura Azure corporativa. O detalhe que mais causa problema na pratica e esse: peering e comunicacao, nao roteamento. Voce precisa das UDRs para controlar para onde o trafego vai depois que chega ao hub.

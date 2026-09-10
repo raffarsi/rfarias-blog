@@ -7,6 +7,7 @@ date: "06 Jan 2026"
 readTime: "10 min"
 description: "Como servir múltiplos clientes ou departamentos com isolamento de dados, quotas separadas e auditoria individual usando Azure OpenAI."
 ---
+
 Quando uma plataforma de IA precisa atender múltiplos departamentos (RH, Jurídico, Financeiro) ou múltiplos clientes externos, a questão de isolamento se torna crítica. Cada tenant precisa de garantias de que seus dados não se misturam com os de outros, seja em armazenamento, em cache de respostas ou em logs de auditoria.
 
 ## Os níveis de isolamento possíveis

@@ -18,123 +18,56 @@ next:
 
 ---
 
-Redes virtuais são a base da infraestrutura Azure. Planejar o espaço de endereçamento corretamente desde o início evita retrabalho custoso no futuro.
+VNet e subnet sao os primeiros recursos que voce precisa entender para o AZ-104, e tambem os que mais aparecem em questoes de prova porque estao na base de quase tudo que vem depois.
 
-## Planejamento de endereçamento
+Vou focar no que realmente cai na prova e no que faz diferenca na pratica.
 
-Antes de criar qualquer VNet, defina o espaço de endereçamento. Considerações:
-- Evite sobreposição com redes on-premises
-- Reserve espaço para crescimento
-- Planeje subnets por função (web, app, data, gateway)
+## VNet: o que cai na prova
 
-```bash
-# Criar VNet com múltiplas subnets
-az network vnet create \
-  --resource-group meu-rg \
-  --name vnet-producao \
-  --address-prefix 10.0.0.0/16 \
-  --subnet-name snet-web \
-  --subnet-prefix 10.0.1.0/24
+VNet e regional. Voce nao pode esticar uma VNet entre duas regioes. Para conectar regioes diferentes, voce usa peering global ou Virtual WAN.
 
-# Adicionar subnets
-az network vnet subnet create \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name snet-app \
-  --address-prefix 10.0.2.0/24
+O espaco de endereçamento usa ranges RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16. Qualquer range dentro desses e valido para VNet.
 
-az network vnet subnet create \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name snet-data \
-  --address-prefix 10.0.3.0/24
-
-az network vnet subnet create \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name GatewaySubnet \
-  --address-prefix 10.0.255.0/27
-```
-
-<div class="callout">
-<strong>Importante:</strong> A subnet GatewaySubnet é obrigatória e reservada para VPN Gateway e ExpressRoute Gateway. O nome deve ser exatamente "GatewaySubnet". O /27 (ou maior) é o mínimo recomendado.
-</div>
-
-## Endereços reservados pelo Azure
-
-Em cada subnet, o Azure reserva 5 endereços:
-- x.x.x.0, endereço de rede
-- x.x.x.1, gateway padrão
-- x.x.x.2 e x.x.x.3, DNS do Azure
-- x.x.x.255, broadcast
-
-Uma /28 (16 endereços) deixa apenas 11 utilizáveis.
-
-## VNet Peering
-
-Conecta VNets (mesma região ou cross-region) sem VPN, com latência de rede Azure:
+Uma VNet pode ter multiplos address spaces. Isso e util quando voce precisa adicionar ranges a uma VNet existente sem recriar tudo.
 
 ```bash
-# Peering entre duas VNets
-az network vnet peering create \
-  --resource-group meu-rg \
-  --name vnet-producao-to-vnet-dev \
-  --vnet-name vnet-producao \
-  --remote-vnet vnet-dev \
-  --allow-vnet-access \
-  --allow-forwarded-traffic
+az network vnet create   --name vnet-producao   --resource-group rg-app   --location brazilsouth   --address-prefix 10.0.0.0/16
 
-# O peering é bidirecional mas requer criação em ambas as direções
-az network vnet peering create \
-  --resource-group rg-dev \
-  --name vnet-dev-to-vnet-producao \
-  --vnet-name vnet-dev \
-  --remote-vnet /subscriptions/{sub-id}/resourceGroups/meu-rg/providers/Microsoft.Network/virtualNetworks/vnet-producao \
-  --allow-vnet-access
+# Adicionar segundo range
+az network vnet update   --name vnet-producao   --resource-group rg-app   --add addressSpace.addressPrefixes 10.1.0.0/16
 ```
 
-## Global VNet Peering
+## Subnets: o que cai na prova
 
-Para conectar VNets em regiões diferentes, use o mesmo comando, o Azure detecta automaticamente se é regional ou global:
+O Azure reserva 5 enderecos em cada subnet: .0 (rede), .1 (gateway), .2 e .3 (DNS interno), .255 (broadcast). Esse numero cai muito em questoes sobre capacidade.
+
+Subnets especiais tem nomes obrigatorios: `GatewaySubnet` para VPN/ER Gateway, `AzureBastionSubnet` para Bastion, `AzureFirewallSubnet` para Azure Firewall. Se o nome estiver errado, o recurso nao consegue ser criado na subnet.
 
 ```bash
-az network vnet peering create \
-  --resource-group meu-rg \
-  --name producao-to-eua \
-  --vnet-name vnet-producao \
-  --remote-vnet /subscriptions/{sub-id}/resourceGroups/rg-eua/providers/Microsoft.Network/virtualNetworks/vnet-eua \
-  --allow-vnet-access
+az network vnet subnet create   --name GatewaySubnet   --vnet-name vnet-producao   --resource-group rg-app   --address-prefix 10.0.255.0/27  # /27 minimo para GatewaySubnet
+
+az network vnet subnet create   --name AzureBastionSubnet   --vnet-name vnet-producao   --resource-group rg-app   --address-prefix 10.0.254.0/26  # /26 minimo para BastionSubnet
 ```
 
-## Service Endpoints vs Private Endpoints
+## Peering: o que mais engana
 
-**Service Endpoint**, estende a identidade da VNet para serviços Azure (ex: SQL, Storage). O tráfego ainda vai pela rede da Microsoft mas pode vir de qualquer lugar.
+Peering nao e transitivo. A -> B e B -> C nao implica A -> C. Para que A alcance C, voce precisa de peering direto entre A e C.
 
-**Private Endpoint**, cria uma NIC com IP privado dentro da VNet apontando para o serviço. O tráfego é completamente privado.
+Peering requer que os ranges de IP das VNets nao se sobreponham. Esse e o erro mais comum ao planejar a topologia.
 
-```bash
-# Habilitar Service Endpoint para Storage em uma subnet
-az network vnet subnet update \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name snet-app \
-  --service-endpoints Microsoft.Storage
+Para peering funcionar corretamente em hub-and-spoke:
+- Hub ativa `allow-gateway-transit`
+- Spoke ativa `use-remote-gateways`
+- Hub ativa `allow-forwarded-traffic` (para trafego que vem de outros spokes)
 
-# Criar Private Endpoint para SQL Database
-az network private-endpoint create \
-  --resource-group meu-rg \
-  --name pe-sql \
-  --vnet-name vnet-producao \
-  --subnet snet-data \
-  --private-connection-resource-id /subscriptions/{sub-id}/resourceGroups/meu-rg/providers/Microsoft.Sql/servers/meu-sql \
-  --group-id sqlServer \
-  --connection-name pec-sql
-```
+## Questoes tipicas do AZ-104
 
-## O que cai no exame
+"Uma VM na Subnet A nao consegue se comunicar com uma VM na Subnet B da mesma VNet. O que pode estar causando isso?"
 
-- Endereços reservados por subnet (5 primeiros + último)
-- Que peering não é transitivo, A→B e B→C não significa A→C
-- Diferença entre Service Endpoint e Private Endpoint
-- Que GatewaySubnet é reservada e não pode ter NSG
-- Como calcular hosts disponíveis por CIDR
+Resposta: NSG com regra de Deny entre as subnets, ou UDR redirecionando o trafego para um next-hop que esta bloqueando.
+
+"Voce precisa conectar duas VNets que tem o range 10.0.0.0/16 cada uma. O que voce faz?"
+
+Resposta: nao da para usar peering com ranges sobrepostos. Voce precisaria recriar uma das VNets com range diferente.
+
+VNets e subnets sao fundacao, nao opcao. O investimento em entender bem essa parte retorna em todas as outras areas do exame.

@@ -18,121 +18,48 @@ next:
 
 ---
 
-O Azure oferece múltiplas opções de balanceamento de carga. Escolher a certa depende da camada de rede e dos requisitos da aplicação.
+O AZ-104 testa Load Balancer e Application Gateway como recursos distintos com casos de uso diferentes. Confundir os dois na prova e responder errado para perguntas que parecem ambiguas.
 
-## Azure Load Balancer (Camada 4)
+A diferenca fundamental: Load Balancer opera na camada 4 (TCP/UDP), Application Gateway na camada 7 (HTTP/HTTPS).
 
-Opera em L4 (TCP/UDP). Distribui tráfego baseado em IP e porta, sem inspecionar conteúdo HTTP.
+## Azure Load Balancer: o que o AZ-104 cobre
 
-```bash
-# Criar IP público para o LB
-az network public-ip create \
-  --resource-group meu-rg \
-  --name lb-pip \
-  --sku Standard \
-  --allocation-method Static \
-  --zone 1 2 3
+Load Balancer tem dois SKUs importantes: Basic e Standard. O Standard suporta zonas de disponibilidade, tem SLA de 99.99% e e o que voce deve usar em producao. Basic nao tem SLA garantido e vai ser descontinuado.
 
-# Criar Load Balancer Standard
-az network lb create \
-  --resource-group meu-rg \
-  --name meu-lb \
-  --sku Standard \
-  --public-ip-address lb-pip \
-  --frontend-ip-name frontend \
-  --backend-pool-name backend-pool
-
-# Health probe
-az network lb probe create \
-  --resource-group meu-rg \
-  --lb-name meu-lb \
-  --name health-probe \
-  --protocol Http \
-  --port 80 \
-  --path /health
-
-# Regra de balanceamento
-az network lb rule create \
-  --resource-group meu-rg \
-  --lb-name meu-lb \
-  --name http-rule \
-  --protocol Tcp \
-  --frontend-port 80 \
-  --backend-port 80 \
-  --frontend-ip-name frontend \
-  --backend-pool-name backend-pool \
-  --probe-name health-probe
-```
-
-## Internal vs Public Load Balancer
-
-- **Public LB**, IP público, distribui tráfego da internet
-- **Internal LB**, IP privado, distribui tráfego dentro da VNet (ex: entre camada web e app)
+Load Balancer pode ser publico (IP publico no frontend) ou interno (IP privado). O tipo nao muda a configuracao, muda o tipo de IP do frontend.
 
 ```bash
-# Internal Load Balancer
-az network lb create \
-  --resource-group meu-rg \
-  --name lb-interno \
-  --sku Standard \
-  --vnet-name vnet-producao \
-  --subnet snet-app \
-  --frontend-ip-name frontend-interno \
-  --private-ip-address 10.0.2.100 \
-  --backend-pool-name backend-app
+# Load Balancer publico
+az network lb create   --name lb-publico   --resource-group rg-app   --sku Standard   --public-ip-address pip-lb
+
+# Load Balancer interno
+az network lb create   --name lb-interno   --resource-group rg-app   --sku Standard   --frontend-ip-name fe-interno   --private-ip-address 10.0.1.100   --vnet-name vnet-app   --subnet snet-app
 ```
 
-## Application Gateway (Camada 7)
+Health probes verificam se os backends estao respondendo. Se um backend para de responder, o Load Balancer para de enviar trafego para ele. Tipos de probe: HTTP, HTTPS, TCP.
 
-Opera em L7 (HTTP/HTTPS). Permite roteamento baseado em URL, path e headers, terminação SSL e WAF integrado.
+## Application Gateway: o que muda
+
+Application Gateway entende HTTP. Isso permite: roteamento por URL path (`/api/*` vai para um backend, `/app/*` vai para outro), SSL offload (o gateway termina o SSL, backends recebem HTTP), afinidade de sessao por cookie, WAF integrado.
+
+SKU WAF_v2 e o atual e o que o AZ-104 foca. Tem autoscaling automatico, zonas de disponibilidade e WAF como opcao.
 
 ```bash
-az network application-gateway create \
-  --resource-group meu-rg \
-  --name meu-agw \
-  --vnet-name vnet-producao \
-  --subnet snet-agw \
-  --public-ip-address agw-pip \
-  --sku WAF_v2 \
-  --capacity 2 \
-  --http-settings-port 80 \
-  --frontend-port 443 \
-  --cert-file meu-cert.pfx \
-  --cert-password {senha}
+az network application-gateway create   --name agw-producao   --resource-group rg-app   --sku WAF_v2   --capacity 2   --vnet-name vnet-app   --subnet snet-agw   --public-ip-address pip-agw
 ```
 
-## Roteamento baseado em path
+## Questoes tipicas do AZ-104
 
-```bash
-# Configurar roteamento: /api/* vai para backend-api, resto para backend-web
-az network application-gateway url-path-map create \
-  --resource-group meu-rg \
-  --gateway-name meu-agw \
-  --name url-path-map \
-  --paths /api/* \
-  --address-pool backend-api \
-  --http-settings http-settings-api \
-  --default-address-pool backend-web \
-  --default-http-settings http-settings-web
-```
+"Voce tem uma aplicacao web com dois backends. Voce quer que requisicoes para /api/* vao para um pool e /app/* para outro. Qual recurso usar?"
 
-<div class="callout">
-<strong>Dica para o exame:</strong> Azure Load Balancer Standard é zone-redundant por padrão, distribui automaticamente entre zonas. O SKU Basic não suporta Availability Zones. Para novos deployments, sempre use Standard.
-</div>
+Resposta: Application Gateway. Load Balancer nao tem roteamento por URL.
 
-## Comparativo: quando usar cada um
+"Voce precisa distribuir trafego TCP porta 1433 (SQL Server) entre tres servidores. Qual recurso usar?"
 
-| | Load Balancer | Application Gateway | Traffic Manager | Front Door |
-|-|--------------|-------------------|-----------------|------------|
-| Camada | L4 | L7 | DNS (Global) | L7 (Global) |
-| Roteamento | IP/Porta | URL, Path, Headers | Geográfico, performance | URL, latência |
-| SSL | Passthrough | Terminação/E2E | N/A | Terminação |
-| WAF | Não | Sim | Não | Sim |
+Resposta: Load Balancer. Application Gateway so entende HTTP/HTTPS.
 
-## O que cai no exame
+"Um backend do Application Gateway esta respondendo HTTP 503. O que acontece?"
 
-- Diferença entre LB L4 e Application Gateway L7
-- Basic vs Standard SKU do Load Balancer
-- Health probes e como determinam a disponibilidade dos backends
-- Roteamento baseado em path no Application Gateway
-- Que o AGW precisa de subnet dedicada (snet-agw)
+Resposta: o Application Gateway para de enviar trafego para aquele backend ate ele voltar a responder dentro dos criterios do health probe.
+
+Load Balancer e Application Gateway nao competem, resolvem problemas de camadas diferentes. Na prova, a camada do protocolo e o que determina qual recurso usar.

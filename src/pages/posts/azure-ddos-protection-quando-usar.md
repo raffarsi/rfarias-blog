@@ -8,74 +8,41 @@ readTime: "8 min"
 description: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege — análise técnica e financeira."
 ---
 
-Todo recurso Azure tem proteção DDoS básica incluída sem custo adicional. A pergunta real é: quando vale pagar pelo DDoS Protection Standard?
+Todo ambiente Azure tem protecao DDoS basica incluida sem custo. A pergunta real e: quando o DDoS Protection Standard, que custa em torno de 3 mil dolares por mes, agrega valor suficiente para justificar esse investimento?
 
-## O que a proteção básica (gratuita) cobre
+Na maioria dos casos corporativos que analiso, a resposta e nao.
 
-O Azure já mitiga automaticamente ataques volumétricos de grande escala contra a infraestrutura da Microsoft. Isso inclui:
-- Ataques UDP/TCP flood de alta escala
-- Amplification attacks (DNS, NTP, SSDP)
-- Ataques à camada de infraestrutura do Azure
+## O que a protecao basica gratuita ja faz
 
-O que a proteção básica **não** cobre: ataques direcionados especificamente aos seus IPs públicos, ataques de camada de aplicação (L7) e telemetria detalhada sobre os ataques.
+O Azure mitiga automaticamente ataques volumetricos de grande escala contra a infraestrutura da Microsoft. Isso inclui UDP/TCP flood de alta escala, amplification attacks (DNS, NTP, SSDP) e ataques a camada de infraestrutura.
 
-## O que o DDoS Protection Standard adiciona
+O que a protecao basica nao faz: mitigar ataques direcionados especificamente aos seus IPs publicos, detectar ataques de camada de aplicacao (L7) e fornecer telemetria detalhada sobre o que esta acontecendo.
 
-**1. Tuning adaptativo por IP público**
-O Standard aprende o perfil de tráfego normal de cada IP público e ajusta os limites de mitigação automaticamente. Isso reduz falsos positivos durante picos legítimos de tráfego.
+## O que o Standard adiciona
 
-**2. Telemetria em tempo real**
-Métricas no Azure Monitor durante e após um ataque: packets dropped, bytes ingested, attack vectors. Você sabe exatamente o que aconteceu.
+**Tuning adaptativo por IP:** aprende o perfil de trafego normal do seu IP e ajusta os limites automaticamente. Reduz falsos positivos durante picos legitimos.
 
-**3. Garantia de crédito de custo**
-Se um ataque causar scale-out automático dos seus recursos (VM Scale Sets, App Service), a Microsoft reembolsa o custo de computação gerado durante o ataque.
+**Telemetria em tempo real:** voce sabe o que aconteceu durante um ataque, quais vetores, quantos pacotes descartados.
 
-**4. Acesso ao DDoS Rapid Response team**
-Durante um ataque, você pode abrir um ticket prioritário com especialistas em DDoS da Microsoft.
+**Garantia de reembolso:** se um ataque causar scale-out automatico dos seus recursos, a Microsoft reembolsa o custo de computacao gerado.
 
-## Custo: o elefante na sala
+**Suporte prioritario:** acesso ao time de DDoS da Microsoft durante um ataque ativo.
 
-O DDoS Protection Standard custa aproximadamente **$2.944/mês** por plano (cobre até 100 IPs públicos na mesma região). Para muitas empresas, especialmente PMEs, esse custo é significativo.
+## Quando faz sentido contratar
 
-O que está incluído no custo:
-- Proteção por IP público na região do plano
-- Proteção para todos os recursos na VNet associada
-- Suporte técnico durante ataques
+Contratar quando: a aplicacao e financeira ou de comercio eletronico onde downtime tem custo direto e mensuravel, quando voce ja foi alvo de DDoS antes, ou quando o requisito de compliance exige documentacao de protecao DDoS.
 
-## Quando vale a pena contratar
-
-**Vale:**
-- Aplicações financeiras, e-commerce ou qualquer serviço onde downtime tem custo financeiro direto
-- Serviços com histórico de serem alvo de DDoS (ex: exchanges, serviços populares)
-- Ambientes regulados onde a documentação de proteção DDoS é requisito de compliance
-- Quando o custo de um downtime de 4 horas é maior que o custo mensal do serviço
-
-**Não vale:**
-- Ambientes internos sem IPs públicos (Private Endpoints resolvem a exposição)
-- Ambientes de desenvolvimento e homologação
-- Aplicações atrás do Azure Front Door ou Application Gateway com WAF (que já têm proteção L7)
-- Quando todo o acesso já passa por Azure Firewall
-
-<div class="callout">
-<strong>Alternativa para muitos casos:</strong> Se sua preocupação é ataques L7 (HTTP flood, SQL injection, XSS), o WAF do Azure Application Gateway ou Azure Front Door cobre esses vetores por uma fração do custo do DDoS Standard. Os dois não são substitutos, mas frequentemente o WAF resolve o que as empresas de médio porte realmente precisam.
-</div>
-
-## Associando o plano a uma VNet
+Nao faz sentido quando: a maioria do trafego passa por Private Endpoints (trafego privado nao e exposto), o ambiente e interno sem IPs publicos relevantes, ou quando o WAF do Front Door ou Application Gateway ja cobre os vetores L7 que sao sua preocupacao real.
 
 ```bash
-# Criar o plano de proteção DDoS
-az network ddos-protection create \
-  --name ddos-protection-plan \
-  --resource-group rg-networking \
-  --location brazilsouth
+# Criar plano e associar VNet
+az network ddos-protection create   --name ddos-plan   --resource-group rg-networking   --location brazilsouth
 
-# Associar a uma VNet
-az network vnet update \
-  --name vnet-producao \
-  --resource-group rg-networking \
-  --ddos-protection-plan ddos-protection-plan
+az network vnet update   --name vnet-producao   --resource-group rg-networking   --ddos-protection-plan ddos-plan
 ```
 
-## Conclusão
+<div class="callout">
+<strong>WAF vs DDoS Standard:</strong> Se sua preocupacao principal e ataques HTTP flood, SQL injection ou XSS, o WAF do Application Gateway ou Front Door cobre isso por uma fracao do custo do DDoS Standard. Os dois nao sao substitutos tecnicamente, mas para muitas empresas de medio porte, o WAF resolve o que preocupa de verdade.
+</div>
 
-O DDoS Protection Standard é caro e específico. Para a maioria dos workloads corporativos que usam Private Endpoints extensivamente e têm tráfego público mínimo, a proteção básica gratuita é suficiente. Avalie o custo real de downtime para seu negócio antes de decidir.
+Calcule o custo real de um downtime de 4 horas para o seu negocio. Se for menor que 3 mil dolares por mes, o DDoS Standard provavelmente nao se paga. Se for significativamente maior, vale a avaliacao.

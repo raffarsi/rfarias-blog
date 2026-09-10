@@ -18,138 +18,43 @@ next:
 
 ---
 
-Controlar o fluxo de tráfego na rede Azure requer entender como NSGs filtram pacotes e como UDRs direcionam o roteamento.
+NSG e UDR aparecem juntos no AZ-104 e juntos em producao. Entender como os dois interagem e o que separa quem resolve incidentes de rede rapido de quem fica horas tentando.
 
-## Network Security Groups (NSG)
+## NSG: o que o AZ-104 foca
 
-NSGs contêm regras de segurança que permitem ou negam tráfego baseado em IP, porta e protocolo. Podem ser associados a subnets e NICs.
+NSG tem regras com prioridade numerica de 100 a 4096. Menor numero, maior prioridade. O Azure para na primeira regra que corresponde.
 
-```bash
-# Criar NSG
-az network nsg create \
-  --resource-group meu-rg \
-  --name nsg-web
-
-# Regra: permitir HTTPS de qualquer origem
-az network nsg rule create \
-  --resource-group meu-rg \
-  --nsg-name nsg-web \
-  --name allow-https \
-  --priority 100 \
-  --direction Inbound \
-  --access Allow \
-  --protocol Tcp \
-  --source-address-prefixes '*' \
-  --destination-port-ranges 443
-
-# Regra: bloquear tráfego SSH de internet
-az network nsg rule create \
-  --resource-group meu-rg \
-  --nsg-name nsg-web \
-  --name deny-ssh-internet \
-  --priority 200 \
-  --direction Inbound \
-  --access Deny \
-  --protocol Tcp \
-  --source-address-prefixes Internet \
-  --destination-port-ranges 22
-
-# Associar NSG à subnet
-az network vnet subnet update \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name snet-web \
-  --network-security-group nsg-web
-```
-
-## Service Tags
-
-Service Tags são grupos de prefixos de IP gerenciados pela Microsoft:
-
-| Tag | Representa |
-|-----|-----------|
-| Internet | IPs públicos fora do Azure |
-| VirtualNetwork | Espaço de endereçamento da VNet |
-| AzureLoadBalancer | IPs de health probes do LB |
-| AzureCloud | Todos os IPs do Azure |
-| Storage | IPs do Azure Storage |
-| Sql | IPs do Azure SQL |
+Tres regras default existem em todo NSG e nao podem ser removidas: `AllowVNetInBound` (65000), `AllowAzureLoadBalancerInBound` (65001), `DenyAllInBound` (65500). Para entrada vinda da internet, o padrao e bloquear. Para saida, o padrao e permitir para internet.
 
 ```bash
-az network nsg rule create \
-  --resource-group meu-rg \
-  --nsg-name nsg-web \
-  --name allow-azure-lb \
-  --priority 110 \
-  --direction Inbound \
-  --access Allow \
-  --source-address-prefixes AzureLoadBalancer \
-  --destination-port-ranges '*'
+az network nsg rule create   --nsg-name nsg-app   --resource-group rg-app   --name allow-https   --priority 100   --protocol Tcp   --direction Inbound   --source-address-prefix Internet   --source-port-range '*'   --destination-address-prefix '*'   --destination-port-range 443   --access Allow
 ```
 
-## Application Security Groups (ASG)
+NSG pode ser associado a subnet (afeta todos os recursos) ou a NIC de VM (afeta so aquela VM). Quando os dois existem, entrada passa pelo NSG da subnet primeiro, depois pelo da NIC. Saida: NIC primeiro, subnet depois.
 
-ASGs permitem agrupar VMs por função e usar esses grupos nas regras de NSG:
+## UDR: quando o roteamento padrao nao basta
+
+Por padrao, Azure roteia trafego automaticamente entre subnets, para internet e para conexoes on-premises. UDR (User Defined Route) sobrescreve esse comportamento.
+
+O caso de uso mais comum: forcar todo o trafego a passar pelo Azure Firewall no hub antes de sair para internet ou ir para outro spoke.
 
 ```bash
-# Criar ASGs
-az network asg create --resource-group meu-rg --name asg-webservers
-az network asg create --resource-group meu-rg --name asg-dbservers
+az network route-table create   --name rt-spoke-app   --resource-group rg-networking   --location brazilsouth
 
-# Associar NIC ao ASG
-az network nic update \
-  --resource-group meu-rg \
-  --name vm-web-01-nic \
-  --application-security-groups asg-webservers
+az network route-table route create   --route-table-name rt-spoke-app   --resource-group rg-networking   --name route-to-firewall   --address-prefix 0.0.0.0/0   --next-hop-type VirtualAppliance   --next-hop-ip-address 10.0.0.4
 
-# Regra usando ASGs
-az network nsg rule create \
-  --resource-group meu-rg \
-  --nsg-name nsg-app \
-  --name web-to-db \
-  --priority 100 \
-  --direction Inbound \
-  --access Allow \
-  --source-asgs asg-webservers \
-  --destination-asgs asg-dbservers \
-  --destination-port-ranges 1433
+# Associar a subnet
+az network vnet subnet update   --name snet-app   --vnet-name vnet-spoke   --resource-group rg-networking   --route-table rt-spoke-app
 ```
 
-## User Defined Routes (UDR)
+## O que o AZ-104 pergunta sobre UDR
 
-UDRs sobrescrevem o roteamento padrão do Azure para direcionar tráfego por um appliance específico (NVA, Azure Firewall):
+"Voce tem um Azure Firewall no hub e quer que todo trafego de saida dos spokes passe por ele. O que voce configura?"
 
-```bash
-# Criar route table
-az network route-table create \
-  --resource-group meu-rg \
-  --name rt-producao
+Resposta: UDR em cada subnet dos spokes com rota 0.0.0.0/0 apontando para o IP privado do Firewall (next-hop-type VirtualAppliance).
 
-# Rota: todo tráfego para internet passa pelo Azure Firewall
-az network route-table route create \
-  --resource-group meu-rg \
-  --route-table-name rt-producao \
-  --name route-to-firewall \
-  --address-prefix 0.0.0.0/0 \
-  --next-hop-type VirtualAppliance \
-  --next-hop-ip-address 10.0.100.4
+"Um administrador criou uma UDR com next-hop-type None para um range especifico. O que acontece com o trafego para esse range?"
 
-# Associar route table à subnet
-az network vnet subnet update \
-  --resource-group meu-rg \
-  --vnet-name vnet-producao \
-  --name snet-app \
-  --route-table rt-producao
-```
+Resposta: o trafego e descartado (black hole). `None` significa que nao ha proximo salto valido.
 
-<div class="callout">
-<strong>Armadilha do exame:</strong> Quando NSG está associado tanto à subnet quanto à NIC, ambas as regras se aplicam, o tráfego passa pelos dois filtros. Na entrada: subnet NSG → NIC NSG. Na saída: NIC NSG → subnet NSG. O tráfego precisa ser permitido em ambos.
-</div>
-
-## O que cai no exame
-
-- Que NSGs são stateful (resposta permitida automaticamente)
-- Prioridade de regras (menor número = maior prioridade)
-- Regras padrão: AllowVNetInBound, AllowAzureLoadBalancerInBound, DenyAllInBound
-- Diferença entre NSG de subnet e NSG de NIC
-- Tipos de next-hop em UDR (VirtualAppliance, VirtualNetworkGateway, Internet, None)
+NSG e UDR resolvem problemas diferentes: NSG filtra o trafego, UDR define para onde ele vai. Em incidentes de rede, verifique os dois antes de concluir qual esta causando o problema.

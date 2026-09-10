@@ -14,96 +14,52 @@ next:
   slug: "azure-ai-foundry"
 ---
 
-Se você trabalha com Azure em ambiente corporativo, em algum momento vai precisar de Private Endpoints. Eles são a peça-chave para garantir que o tráfego entre seus recursos e suas aplicações não passe pela internet pública. Mas a configuração tem armadilhas que a documentação oficial não destaca como deveria.
+Private Endpoint e um dos recursos que parece simples de configurar e complexo de funcionar corretamente. Voce cria, o IP privado aparece, o status fica como "Approved", e mesmo assim a aplicacao nao alcança o servico. Quase sempre e DNS.
 
-Neste artigo, explico o conceito, o passo a passo e os erros mais comuns, especialmente o que envolve resolução de DNS.
+Vou mostrar a configuracao correta e os pontos onde a maioria trava.
 
-## O que é um Private Endpoint
+## O que acontece quando voce cria um Private Endpoint
 
-Um Private Endpoint é uma interface de rede (NIC) que o Azure cria dentro da sua Virtual Network, atribuindo um IP privado que aponta diretamente para um serviço PaaS: como SQL Database, Storage Account, Key Vault ou Cosmos DB.
-
-Sem Private Endpoint, quando sua aplicação acessa um Azure SQL Database, o tráfego sai pela internet pública (mesmo que o firewall do SQL esteja restrito ao IP da sua VNet). Com Private Endpoint, o tráfego fica inteiramente dentro da sua rede privada.
-
-Na prática, é a diferença entre "restringir quem pode acessar" e "garantir que o caminho é privado".
-
-## Passo a passo da configuração
-
-O processo envolve três etapas: criar o Private Endpoint, configurar a Private DNS Zone e validar a resolução.
-
-**Etapa 1, Criar o Private Endpoint:**
+O Private Endpoint recebe um IP privado na subnet que voce escolheu. Mas por padrao, o nome do servico (ex: `oai-producao.openai.azure.com`) ainda resolve para o IP publico via DNS. Para que a resolucao retorne o IP privado, voce precisa de uma zona Private DNS vinculada a VNet.
 
 ```bash
-az network private-endpoint create \
-  --name pe-sqlserver-prod \
-  --resource-group rg-networking \
-  --vnet-name vnet-producao \
-  --subnet snet-privateendpoints \
-  --private-connection-resource-id /subscriptions/{sub-id}/resourceGroups/rg-data/providers/Microsoft.Sql/servers/sql-producao \
-  --group-id sqlServer \
-  --connection-name pec-sqlserver-prod
+# Criar o Private Endpoint
+az network private-endpoint create   --name pe-openai   --resource-group rg-ia   --vnet-name vnet-spoke   --subnet snet-pe   --private-connection-resource-id $(az cognitiveservices account show     --name oai-producao --resource-group rg-ia --query id -o tsv)   --group-id account   --connection-name pe-openai-connection
+
+# Criar a zona Private DNS correspondente
+az network private-dns zone create   --resource-group rg-dns   --name "privatelink.openai.azure.com"
+
+# Vincular ao hub (nao ao spoke onde esta o PE)
+az network private-dns link vnet create   --resource-group rg-dns   --zone-name "privatelink.openai.azure.com"   --name link-hub   --virtual-network vnet-hub   --registration-enabled false
+
+# Criar o registro A na zona
+PRIVATE_IP=$(az network private-endpoint show   --name pe-openai --resource-group rg-ia   --query 'customDnsConfigs[0].ipAddresses[0]' -o tsv)
+
+az network private-dns record-set a create   --resource-group rg-dns   --zone-name "privatelink.openai.azure.com"   --name "oai-producao"
+
+az network private-dns record-set a add-record   --resource-group rg-dns   --zone-name "privatelink.openai.azure.com"   --record-set-name "oai-producao"   --ipv4-address $PRIVATE_IP
 ```
 
-O parâmetro `--group-id` define qual sub-recurso você está expondo. Para SQL Database é `sqlServer`, para Storage Blob é `blob`, para Key Vault é `vault`.
+## O erro mais comum: vincular a zona ao spoke em vez do hub
 
-**Etapa 2, Criar a Private DNS Zone:**
+A zona Private DNS precisa estar vinculada ao hub, onde o DNS Resolver esta. Se voce vincula so ao spoke, recursos em outros spokes e on-premises nao vao resolver corretamente. A regra: **zona vinculada ao hub, valida para todos que consultam o resolver do hub**.
 
-Esta é a etapa que a maioria das pessoas esquece, e onde as coisas quebram.
+## Como nao perder o acesso ao portal
+
+Quando voce desabilita o acesso publico de um servico como o Azure OpenAI, o portal Azure nao consegue mais se conectar a ele diretamente. Voce nao perde o acesso ao portal em si, mas certas funcionalidades do recurso (como testar deployments no playground) ficam indisponiveis de fora da VNet.
+
+Para manter acesso administrativo ao portal, mantenha o acesso publico habilitado durante a configuracao e so desabilite depois que o Private Endpoint estiver funcionando e verificado. Ou use Azure Bastion + VM dentro da VNet para gerenciar recursos com acesso publico desabilitado.
+
+## Verificando se esta funcionando
 
 ```bash
-az network private-dns zone create \
-  --resource-group rg-networking \
-  --name privatelink.database.windows.net
+# De uma VM dentro da VNet
+nslookup oai-producao.openai.azure.com
+# Deve retornar o IP privado (10.x.x.x)
 
-az network private-dns link vnet create \
-  --resource-group rg-networking \
-  --zone-name privatelink.database.windows.net \
-  --name link-vnet-producao \
-  --virtual-network vnet-producao \
-  --registration-enabled false
-
-az network private-endpoint dns-zone-group create \
-  --resource-group rg-networking \
-  --endpoint-name pe-sqlserver-prod \
-  --name default \
-  --private-dns-zone privatelink.database.windows.net \
-  --zone-name privatelink.database.windows.net
+# Teste de conectividade
+curl -I https://oai-producao.openai.azure.com
+# Deve retornar sem erro de certificado
 ```
 
-Cada tipo de serviço tem um nome de zona DNS diferente. Para SQL é `privatelink.database.windows.net`, para Blob Storage é `privatelink.blob.core.windows.net`, para Key Vault é `privatelink.vaultcore.azure.net`. Usar o nome errado é um erro silencioso, tudo parece funcionar, mas o tráfego continua público.
-
-## A armadilha do DNS
-
-<div class="callout">
-<strong>Armadilha:</strong> Depois de criar o Private Endpoint, o FQDN público do recurso continua resolvendo para o IP público. Se você não configurar a Private DNS Zone corretamente, sua aplicação acessa o SQL pelo IP público mesmo tendo um Private Endpoint criado.
-</div>
-
-O comportamento correto após a configuração:
-
-```bash
-# De dentro de uma VM na mesma VNet
-nslookup sql-producao.database.windows.net
-
-# Deve retornar:
-# sql-producao.privatelink.database.windows.net
-# Address: 10.0.2.5  (IP privado do Private Endpoint)
-```
-
-Se retornar um IP público (como 40.x.x.x), a DNS Zone não está configurada corretamente.
-
-## Validação em três passos
-
-Antes de considerar a configuração concluída, sempre valide:
-
-1. **nslookup** de dentro de uma VM na VNet, deve resolver para IP privado (10.x.x.x)
-2. **Testar conectividade**, `Test-NetConnection sql-producao.database.windows.net -Port 1433` deve conectar via IP privado
-3. **Desabilitar acesso público** no recurso, se tudo funcionar sem acesso público, a configuração está correta
-
-Esse terceiro passo é o teste definitivo. Se você desabilita o acesso público e a aplicação continua funcionando, o Private Endpoint está fazendo seu trabalho.
-
-## Considerações para ambientes corporativos
-
-Em empresas com múltiplas VNets e hub-spoke topology, a Private DNS Zone precisa estar vinculada a todas as VNets que precisam resolver o nome privado. Uma abordagem comum é centralizar as DNS Zones no hub e vincular via VNet links.
-
-Se você usa DNS customizado (como um Windows DNS Server ou Azure DNS Private Resolver), precisa configurar conditional forwarders para as zonas `privatelink.*` apontando para o IP do Azure DNS (168.63.129.16).
-
-Private Endpoints são essenciais para compliance em ambientes regulados. A configuração não é difícil, mas a validação de DNS é o detalhe que separa "funcionar" de "funcionar certo".
+Private Endpoint funciona quando DNS, zona Private DNS e vinculacao ao hub estao corretos. Se voce verificou os tres e ainda nao funciona, verifique o NSG da subnet onde esta o Private Endpoint. Por padrao, NSGs nao bloqueiam trafego para Private Endpoints, mas UDRs mal configuradas podem redirecionar o trafego para o lugar errado.

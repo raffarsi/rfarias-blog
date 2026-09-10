@@ -8,111 +8,61 @@ readTime: "10 min"
 description: "Por padrão, todos os pods de um cluster AKS se comunicam livremente. Como implementar Network Policies para isolar namespaces e restringir tráfego leste-oeste em ambientes de produção."
 ---
 
-Por padrão, todos os pods de um cluster AKS se comunicam livremente entre si, qualquer pod pode chamar qualquer outro, independente do namespace. Em produção, especialmente em ambientes com múltiplas equipes ou classificações de dados diferentes, isso é um risco de movimento lateral.
+Por padrao, todos os pods de um cluster AKS se comunicam livremente. O pod do frontend consegue chamar diretamente o banco de dados. O pod de um namespace consegue chamar servicos de outro. Num ambiente de desenvolvimento isso e conveniente. Em producao com dados sensiveis ou multiplas equipes, e um risco.
 
-Network Policies são o mecanismo nativo do Kubernetes para definir quais pods podem se comunicar entre si. No AKS com Azure CNI, as políticas são implementadas pelo Azure NPM (Network Policy Manager) diretamente no kernel do nó.
+Network Policies sao o mecanismo para definir exatamente quem pode falar com quem.
 
-## Pré-requisito: habilitar Network Policy na criação do cluster
+## Pre-requisito que nao da para ignorar
 
-Network Policy não pode ser habilitada em clusters existentes sem recriação:
+Network Policy nao pode ser habilitada em clusters existentes sem recriacao. Se o cluster ja existe sem Network Policy, voce vai precisar recriar para habilitar. Decida isso antes de subir o primeiro cluster.
 
 ```bash
-az aks create \
-  --name aks-producao \
-  --resource-group rg-ia \
-  --network-plugin azure \
-  --network-policy azure \    # ou 'calico'
-  --vnet-subnet-id $SUBNET_ID
+az aks create   --name aks-producao   --resource-group rg-ia   --network-plugin azure   --network-policy azure   --vnet-subnet-id $SUBNET_ID
 ```
 
-## Política de default deny, isolar tudo primeiro
+## Default deny: comece bloqueando tudo
 
-A abordagem recomendada é começar negando tudo e liberar explicitamente:
+A abordagem que funciona: começa negando tudo no namespace, depois abre explicitamente o que precisa.
 
 ```yaml
-# default-deny-all.yaml, aplicar em cada namespace
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: default-deny-all
   namespace: ia-producao
 spec:
-  podSelector: {}        # seleciona todos os pods do namespace
+  podSelector: {}
   policyTypes:
   - Ingress
   - Egress
 ```
 
-Depois de aplicar, **nenhum pod** do namespace `ia-producao` consegue receber ou enviar tráfego até você criar políticas explícitas.
-
-## Liberando tráfego específico
+## Abrindo trafego especifico
 
 ```yaml
-# Permitir que o agente de IA chame o Azure OpenAI via Private Endpoint
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-agent-to-openai
-  namespace: ia-producao
-spec:
-  podSelector:
-    matchLabels:
-      app: agente-ia          # só pods com esse label
-  policyTypes:
-  - Egress
-  egress:
-  - to:
-    - ipBlock:
-        cidr: 10.1.2.0/26    # subnet dos Private Endpoints
-    ports:
-    - protocol: TCP
-      port: 443
----
-# Permitir que o frontend chame apenas o agente, não o banco
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-frontend-to-agent
+  name: allow-agent-to-endpoints
   namespace: ia-producao
 spec:
   podSelector:
     matchLabels:
       app: agente-ia
   policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: frontend       # só o frontend pode chamar o agente
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.1.2.0/26
     ports:
     - protocol: TCP
-      port: 8080
+      port: 443
 ```
 
-## Isolamento entre namespaces
+## Nao esqueca o DNS
 
-```yaml
-# Bloquear tráfego entre namespaces de domínios diferentes
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: deny-cross-namespace
-  namespace: ia-rh
-spec:
-  podSelector: {}
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          kubernetes.io/metadata.name: ia-rh  # só do mesmo namespace
-```
-
-## Liberando DNS e monitoring
-
-Não esqueça de liberar o DNS (kube-dns) e o Azure Monitor, senão os pods ficam sem resolução de nomes e sem métricas:
+Depois de aplicar default deny, os pods param de resolver nomes. Isso quebra praticamente tudo.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -136,10 +86,11 @@ spec:
       port: 53
 ```
 
-<div class="callout">
-<strong>Testando antes de aplicar:</strong> Use <code>kubectl exec</code> para validar conectividade antes e depois de aplicar políticas. O comando <code>nc -zv ip porta</code> dentro de um pod mostra rapidamente se a conexão está aberta ou bloqueada, muito mais rápido que depurar via logs de aplicação.
-</div>
+Aplique essa politica antes ou junto com o default deny.
 
-## Conclusão
+```bash
+# Testando dentro de um pod
+kubectl exec -it pod-teste -n ia-producao -- nc -zv 10.1.2.4 443
+```
 
-Network Policies no AKS são o equivalente de NSGs para comunicação entre pods. O padrão default-deny-all seguido de liberações explícitas é o mais seguro e mais fácil de auditar, você sabe exatamente quais comunicações são permitidas porque estão documentadas em YAML versionado no Git.
+Network Policies sao o equivalente de NSGs para comunicacao entre pods. Default-deny-all seguido de liberacoes explicitas em YAML versionado no Git e o mais facil de auditar: voce sabe o que e permitido porque esta documentado em codigo.

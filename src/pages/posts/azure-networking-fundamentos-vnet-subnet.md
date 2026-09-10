@@ -8,13 +8,15 @@ readTime: "8 min"
 description: "Antes de criar uma VM, um container ou qualquer recurso no Azure, você precisa entender como as redes virtuais funcionam. Tudo começa aqui."
 ---
 
-Antes de criar qualquer recurso no Azure, uma VM, um container, um banco de dados, você precisa tomar uma decisão de rede. E a decisão errada aqui custa caro para desfazer.
+Todo mundo cria a primeira VNet sem pensar muito. Escolhe um /16 qualquer, coloca tudo em uma subnet, e funciona. O problema aparece dois anos depois, quando a empresa cresce, precisa conectar ao on-premises ou separar ambientes, e descobre que o range de IP conflita com tudo. Daí o custo de refatorar e recriar recursos numa rede nova.
 
-Uma **Virtual Network (VNet)** é a rede privada do Azure. É o isolamento fundamental que separa seus recursos dos recursos de outros clientes e da internet. Tudo que você cria no Azure fica dentro de uma VNet, ou precisa ser conectado a uma para se comunicar de forma privada com outros recursos.
+Vale 30 minutos planejando antes de criar a primeira VNet.
 
-## O que é uma VNet
+## O que e uma VNet, sem enrolacao
 
-Uma VNet no Azure é análoga a uma rede local tradicional (LAN), mas virtualizada e gerenciada pela Microsoft. Você define o espaço de endereçamento IP (ex: `10.0.0.0/16`), e dentro desse espaço cria subnets menores.
+Uma VNet e a rede privada do Azure. Isolamento fundamental que separa seus recursos dos de outros clientes e da internet. Tudo que voce cria no Azure fica dentro de uma VNet ou precisa ser conectado a uma para se comunicar de forma privada.
+
+Diferente de uma rede fisica, uma VNet e regional (existe dentro de uma regiao Azure), isolada por padrao (sem configuracao explicita, VNets diferentes nao se comunicam) e tem custo zero. O que voce paga e pelo trafego que sai.
 
 ```bicep
 resource vnet 'Microsoft.Network/virtualNetworks@2023-09-01' = {
@@ -28,61 +30,40 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-09-01' = {
 }
 ```
 
-Diferente de uma rede física, uma VNet:
-- É **regional**, existe dentro de uma região Azure específica
-- É **isolada por padrão**, sem configuração explícita, recursos de VNets diferentes não se comunicam
-- Tem **custo zero**: o que você paga é pelo tráfego que sai, não pela VNet em si
+## Subnets: o erro que parece simples
 
-## Subnets: segmentando o espaço
-
-Dentro de uma VNet, você cria subnets para organizar e segmentar recursos. Cada subnet recebe um range menor do espaço da VNet:
+Dentro de uma VNet voce cria subnets para segmentar recursos. O erro mais comum: criar tudo em uma subnet so porque e mais simples. O problema e que NSGs sao aplicados por subnet. Sem subnets separadas, voce nao consegue ter regras de firewall diferentes para a camada web e para o banco de dados.
 
 ```
 VNet: 10.0.0.0/16
-├── snet-web:     10.0.1.0/24  (servidores web)
-├── snet-app:     10.0.2.0/24  (lógica de negócio)
-├── snet-data:    10.0.3.0/24  (bancos de dados)
-└── snet-pe:      10.0.4.0/26  (Private Endpoints)
++-- snet-web:     10.0.1.0/24  (servidores web)
++-- snet-app:     10.0.2.0/24  (logica de negocio)
++-- snet-data:    10.0.3.0/24  (bancos de dados)
++-- snet-pe:      10.0.4.0/26  (Private Endpoints)
 ```
 
-A subnet é onde os recursos ficam fisicamente alocados. Uma VM na `snet-web` recebe um IP privado desse range automaticamente.
+Essa separacao parece burocracia ate o dia que voce precisa bloquear todo o acesso direto ao banco de dados sem afetar a aplicacao. Com subnets separadas, e uma regra de NSG. Sem elas, e uma semana de refatoracao.
 
-**Por que segmentar em subnets?** Porque NSGs (Network Security Groups) são aplicados por subnet. Sem subnets separadas, você não consegue ter regras de firewall diferentes para a camada web vs a camada de dados.
+## Planejamento de IP: o que nao te contam
 
-## Espaços de endereçamento: como planejar
+Use sempre ranges RFC 1918 (privados): 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16.
 
-Use sempre ranges RFC 1918 (privados):
-- `10.0.0.0/8`
-- `172.16.0.0/12`
-- `192.168.0.0/16`
+O que importa de verdade: ranges sobrepostos inviabilizam peering e conectividade com on-premises. Se a VNet A usa 10.0.0.0/16 e a VNet B tambem usa 10.0.0.0/16, voce nunca vai conseguir conectar as duas. E trocar o range de uma VNet em producao e destrutivo, voce precisa recriar tudo.
 
-O erro mais comum é criar VNets com ranges que se sobrepõem. Se você depois precisar conectar duas VNets (via peering) ou conectar ao on-premises (via VPN), ranges sobrepostos tornam isso impossível.
+Reserve mais espaco do que voce acha que vai precisar. Use /16 para VNets de producao no minimo. O espaco de IP nao custa nada, a refatoracao custa muito.
 
-<div class="callout">
-<strong>Planejamento de IP:</strong> Reserve sempre mais espaço do que você acha que vai precisar. Trocar o range de uma VNet em produção é destrutivo, você precisa recriar tudo. Use no mínimo /16 para VNets de produção, deixando headroom para crescimento.
-</div>
+## O que o Azure reserva (e voce esquece de contar)
 
-## O que o Azure reserva automaticamente
+Em cada subnet, o Azure reserva 5 enderecos para uso interno: .0 (rede), .1 (gateway), .2 e .3 (DNS), .255 (broadcast). Uma subnet /29 tem 8 IPs totais e so 3 disponiveis para seus recursos. Planeje com isso.
 
-Em cada subnet, o Azure reserva 5 endereços IP para uso interno:
-- `.0`, endereço de rede
-- `.1`, gateway padrão
-- `.2` e `.3`, DNS do Azure
-- `.255`, broadcast
+## Como os recursos se comunicam
 
-Uma subnet `/29` tem 8 IPs totais, mas só 3 disponíveis para seus recursos. Planeje com isso em mente.
+Por padrao, recursos na mesma VNet se comunicam livremente, mesmo em subnets diferentes. Para restringir, use NSGs. Para conectar VNets diferentes ou ao on-premises:
 
-## Comunicação dentro e fora da VNet
+- **VNet Peering**: conexao direta entre duas VNets, mesmo entre regioes
+- **VPN Gateway**: tunel criptografado pela internet para on-premises
+- **ExpressRoute**: conexao privada dedicada para on-premises
 
-Por padrão, recursos na mesma VNet se comunicam livremente (mesmo em subnets diferentes). Para restringir, você usa NSGs.
+Cada um tem custo e caso de uso diferente. O peering e o mais simples para conectar VNets no Azure. Para on-premises, a escolha entre VPN e ExpressRoute depende do volume de dados e dos requisitos de SLA.
 
-Para comunicação entre VNets ou com on-premises, as opções são:
-- **VNet Peering**, conexão direta entre duas VNets (mesmo ou diferentes regiões)
-- **VPN Gateway**, túnel criptografado pela internet para on-premises
-- **ExpressRoute**, conexão privada dedicada para on-premises
-
-Cada um tem casos de uso distintos, tema dos próximos artigos desta série.
-
-## Conclusão
-
-VNet e subnet são o alicerce de qualquer arquitetura Azure. Definir o espaço de endereçamento corretamente e segmentar em subnets com propósito claro desde o início poupa horas de refatoração depois. O investimento de 30 minutos planejando a topologia de rede antes de criar o primeiro recurso retorna muitas vezes ao longo da vida do ambiente.
+Planejamento de IP bem feito desde o inicio e o tipo de decisao que nao aparece em nenhum relatorio, mas evita semanas de trabalho emergencial depois.

@@ -18,111 +18,55 @@ next:
 
 ---
 
-Conectar ambientes on-premises ao Azure é um requisito comum. O Azure oferece duas opções principais: VPN Gateway (pela internet) e ExpressRoute (conexão privada dedicada).
+Conectividade hibrida e um dos topicos mais pesados do AZ-104. VPN Gateway, ExpressRoute, tipos de conexao e limitacoes especificas aparecem em varias questoes.
 
-## VPN Gateway
+Vou cobrir o que realmente cai.
 
-Cria conexões IPsec/IKE sobre a internet pública, criptografadas.
+## VPN Gateway: os tipos de conexao que o AZ-104 testa
 
-```bash
-# Criar IP público para o gateway
-az network public-ip create \
-  --resource-group meu-rg \
-  --name vpn-pip \
-  --allocation-method Static \
-  --sku Standard
+**Site-to-Site (S2S):** conecta rede on-premises ao Azure via tunel IPsec. Requer dispositivo VPN fisico ou virtual no lado on-premises. Trafego criptografado pela internet publica.
 
-# Criar VPN Gateway (leva 30-45 minutos)
-az network vnet-gateway create \
-  --resource-group meu-rg \
-  --name meu-vpn-gateway \
-  --public-ip-address vpn-pip \
-  --vnet vnet-producao \
-  --gateway-type Vpn \
-  --vpn-type RouteBased \
-  --sku VpnGw2 \
-  --no-wait
-```
+**Point-to-Site (P2S):** conecta dispositivos individuais (laptops, estacoes de trabalho) ao Azure. Sem necessidade de dispositivo VPN dedicado. Util para acesso remoto de usuarios.
 
-## Tipos de VPN
-
-**VPN Baseada em Política**, usa políticas estáticas de tráfego. Legada, suporta apenas IKEv1. Uma única conexão.
-
-**VPN Baseada em Rota**, usa tabelas de roteamento. Recomendada. Suporta IKEv2, múltiplas conexões, VNet-to-VNet e conexões ponto a site.
-
-## Site-to-Site (S2S)
-
-Conecta rede on-premises inteira ao Azure:
+**VNet-to-VNet:** conecta duas VNets Azure via VPN Gateway. Alternativa ao peering quando as VNets estao em subscriptions diferentes ou em regioes diferentes e voce precisa de criptografia no transito.
 
 ```bash
-# Representar o dispositivo VPN on-premises
-az network local-gateway create \
-  --resource-group meu-rg \
-  --name local-gw-onprem \
-  --gateway-ip-address {IP-publico-do-firewall-onprem} \
-  --address-prefixes 192.168.0.0/24
+# VPN Gateway (leva 30-45 minutos para provisionar)
+az network vnet-gateway create   --name vpn-gw-hub   --resource-group rg-networking   --vnet vnet-hub   --gateway-type Vpn   --vpn-type RouteBased   --sku VpnGw1AZ   --public-ip-address pip-vpn-gw
 
-# Criar conexão S2S
-az network vpn-connection create \
-  --resource-group meu-rg \
-  --name conexao-onprem \
-  --vnet-gateway1 meu-vpn-gateway \
-  --local-gateway2 local-gw-onprem \
-  --shared-key {chave-pre-compartilhada}
+# Local Network Gateway (representa a rede on-premises)
+az network local-gateway create   --name lng-datacenter   --resource-group rg-networking   --gateway-ip-address 203.0.113.1   --local-address-prefixes 192.168.0.0/16
+
+# Conexao S2S
+az network vpn-connection create   --name conn-datacenter   --resource-group rg-networking   --vnet-gateway1 vpn-gw-hub   --local-gateway2 lng-datacenter   --shared-key MinhaSenhaForte123
 ```
 
-## Point-to-Site (P2S)
+## SKUs do VPN Gateway que o AZ-104 diferencia
 
-Conecta computadores individuais à VNet (usuários remotos):
+VpnGw1 a VpnGw5 com variante AZ (zona de disponibilidade). A diferenca principal para a prova: SKUs maiores suportam mais throughput e mais conexoes simultaneas. Basic nao suporta BGP nem autenticacao RADIUS.
 
-```bash
-az network vnet-gateway update \
-  --resource-group meu-rg \
-  --name meu-vpn-gateway \
-  --client-protocol OpenVPN \
-  --address-prefixes 172.16.0.0/24
-```
+## ExpressRoute: o que o AZ-104 foca
 
-## ExpressRoute
+ExpressRoute e conexao privada dedicada entre on-premises e Azure via provedor. Sem internet publica, sem criptografia necessaria (o link e privado), com SLA de disponibilidade.
 
-Conexão privada dedicada via parceiros (Equinix, AT&T, etc.). Não passa pela internet.
+**Private Peering:** acessa recursos em VNets Azure (VMs, Private Endpoints). O peering que voce usa para conectar datacenter ao Azure.
 
-**Vantagens sobre VPN:**
-- Menor latência e maior confiabilidade
-- Largura de banda maior (até 100 Gbps)
-- SLA garantido
+**Microsoft Peering:** acessa servicos Microsoft publicos (Microsoft 365, Dynamics, Azure PaaS endpoints publicos) pelo backbone Microsoft em vez da internet. Menos usado que Private Peering.
 
-```bash
-# Criar circuit (depois de adquirir com o provedor)
-az network express-route create \
-  --resource-group meu-rg \
-  --name meu-er-circuit \
-  --location brazilsouth \
-  --bandwidth 200 \
-  --peering-location "Equinix-SP" \
-  --provider "Equinix" \
-  --sku-family MeteredData \
-  --sku-tier Standard
-```
+O AZ-104 testa a diferenca entre os dois e sabe que Private Peering e o mais comum para conectividade hibrida tradicional.
 
-<div class="callout">
-<strong>Dica para o exame:</strong> ExpressRoute Global Reach permite que duas redes on-premises conectadas ao Azure se comuniquem entre si através do backbone Microsoft, sem tráfego pela internet pública. Ideal para empresas multinacionais.
-</div>
+## Questoes tipicas do AZ-104
 
-## VPN Gateway SKUs
+"Voce precisa que usuarios trabalhando remotamente acessem recursos na VNet Azure sem um dispositivo VPN dedicado. Qual tipo de conexao usar?"
 
-| SKU | Throughput | Conexões S2S | P2S |
-|-----|-----------|-------------|-----|
-| Basic | 100 Mbps | 10 | 128 |
-| VpnGw1 | 650 Mbps | 30 | 250 |
-| VpnGw2 | 1 Gbps | 30 | 500 |
-| VpnGw3 | 1.25 Gbps | 30 | 1000 |
-| VpnGw4/5 | 5/10 Gbps | 30 | 5000/10000 |
+Resposta: Point-to-Site VPN.
 
-## O que cai no exame
+"Uma empresa quer garantir que o trafego entre o datacenter e o Azure nunca passe pela internet publica e tenha SLA garantido. Qual recurso usar?"
 
-- Diferença entre VPN Policy-based e Route-based
-- VPN S2S vs P2S e quando usar cada um
-- ExpressRoute vs VPN: privacidade, latência, SLA e custo
-- Que GatewaySubnet é obrigatória e não pode ter NSG
-- ExpressRoute Global Reach para conectar sites on-premises entre si
+Resposta: ExpressRoute.
+
+"Qual a diferenca entre ExpressRoute Private Peering e Microsoft Peering?"
+
+Private Peering acessa recursos em VNets (IPs privados). Microsoft Peering acessa servicos Microsoft publicos pelo backbone.
+
+VPN Gateway e ExpressRoute resolvem o mesmo problema (conectividade hibrida) com tradeoffs diferentes: VPN e mais barato e mais rapido de implementar, ExpressRoute e mais confiavel e privado, mas mais caro e demora mais para provisionar.

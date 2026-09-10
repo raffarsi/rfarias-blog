@@ -7,6 +7,7 @@ date: "02 Dez 2025"
 readTime: "10 min"
 description: "O que é grounding, por que elimina alucinações e como implementar com Azure AI Search e Azure AI Foundry."
 ---
+
 Grounding é o processo de fornecer ao modelo informações factuais específicas como contexto antes de gerar uma resposta. Sem grounding, o modelo usa apenas o conhecimento do treinamento, que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
 
 ## Por que grounding elimina alucinações
