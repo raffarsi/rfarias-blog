@@ -18,7 +18,9 @@ next:
 
 ---
 
-Storage Account é um dos recursos mais versáteis do Azure e um dos mais cobrados no AZ-104. Entender os tipos, redundância e opções de acesso é obrigatório.
+Storage Account parece simples ate voce precisar escolher entre LRS, GRS, ZRS e GZRS sem entender o que cada um significa na pratica. Ou ate perceber que escolheu o tier errado e nao pode mudar sem recriar a conta.
+
+Essas sao as decisoes que o AZ-104 testa. Nao se voce sabe o que e Storage Account, todo mundo sabe. Se voce sabe escolher a configuracao certa para cada cenario. um dos mais cobrados no AZ-104. Entender os tipos, redundância e opções de acesso é obrigatório.
 
 ## Tipos de storage
 

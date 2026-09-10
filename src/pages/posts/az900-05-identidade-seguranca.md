@@ -18,7 +18,10 @@ next:
 
 ---
 
-Identidade é o novo perímetro de segurança. O AZ-900 dedica uma boa parte ao ecossistema de segurança e governança do Azure, e são conceitos que se aplicam diretamente ao dia a dia.
+
+A maioria das brechas de seguranca em cloud nao e invasao sofisticada. E credencial comprometida, permissao excessiva, MFA desabilitado.
+
+O AZ-900 aborda identidade e seguranca por esse angulo: entender os mecanismos que a Microsoft oferece para evitar os erros mais comuns, nao teoria abstrata de segurança. E o que mais cai, e o que mais importa na pratica.
 
 ## Microsoft Entra ID
 

@@ -18,7 +18,10 @@ next:
 
 ---
 
-Conformidade regulatória é obrigatória em setores como financeiro, saúde e governo. O SC-900 cobre as ferramentas Microsoft para gerenciar esses requisitos.
+
+Conformidade regulatoria e o tipo de topico que profissionais de TI ignoram ate chegarem numa auditoria. E ai descobrem que nao tem evidencias, nao tem politicas documentadas e nao tem como provar o que o sistema faz com os dados.
+
+O SC-900 cobre conformidade porque e isso que separa um ambiente cloud profissional de um ambiente que 'parece' seguro. O Microsoft Purview e a ferramenta central nesse contexto.
 
 ## Conceitos de conformidade
 

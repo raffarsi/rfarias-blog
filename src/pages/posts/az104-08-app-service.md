@@ -18,7 +18,10 @@ next:
 
 ---
 
-Azure App Service é a plataforma PaaS para hospedar aplicações web, APIs REST e backends móveis. Sem gerenciar infraestrutura, você foca no código.
+
+App Service e a forma mais rapida de colocar uma aplicacao web em producao no Azure sem gerenciar VM. Mas 'sem gerenciar VM' nao significa sem decisoes de infraestrutura.
+
+Escolha errada de plano, aplicacao que nao consegue escalar, variaveis de ambiente no lugar errado: esses sao os erros que o AZ-104 cobra. O servico e simples de comecar e cheio de detalhe para quem vai a fundo.
 
 ## App Service Plans
 

@@ -8,7 +8,9 @@ readTime: "9 min"
 description: "Como conectar LangChain ao Azure OpenAI Service respeitando as configurações de rede e autenticação corporativas."
 ---
 
-LangChain é o framework mais popular para construir aplicações com LLMs. Ele abstrai chamadas aos modelos, gerencia contexto de conversação, orquestra chains de processamento e integra com ferramentas externas. Neste artigo, a integração específica com Azure OpenAI, não a API da OpenAI diretamente.
+LangChain resolve um problema real: orquestrar chamadas a modelos de linguagem junto com ferramentas, memoria e bases de conhecimento sem escrever toda a logica do zero. O problema e que ele tambem e o framework que mais gera codigo que parece funcionar mas e dificil de debugar em producao.
+
+Vale aprender. Vale saber quando nao usar. com LLMs. Ele abstrai chamadas aos modelos, gerencia contexto de conversação, orquestra chains de processamento e integra com ferramentas externas. Neste artigo, a integração específica com Azure OpenAI, não a API da OpenAI diretamente.
 
 ## Instalação
 

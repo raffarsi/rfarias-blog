@@ -18,7 +18,10 @@ next:
 
 ---
 
-Azure Files oferece compartilhamentos de arquivos gerenciados na nuvem, acessíveis via SMB 3.0 e NFS 4.1. É ideal para substituir servidores de arquivos on-premises ou compartilhar dados entre VMs.
+
+Azure Files resolve um problema especifico: compartilhamento de arquivos que precisa ser acessado por multiplas VMs simultaneamente, com suporte a protocolo SMB, sem gerenciar servidor de arquivos.
+
+Nao e o recurso mais glamouroso do Azure. E o que evita que voce precise manter um servidor Windows so para compartilhar arquivos entre aplicacoes. O AZ-104 testa quando usar Files versus Blob versus Disk.
 
 ## Criando um compartilhamento
 

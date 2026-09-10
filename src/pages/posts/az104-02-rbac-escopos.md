@@ -18,7 +18,10 @@ next:
 
 ---
 
-RBAC (Role-Based Access Control) é o mecanismo central de autorização no Azure. Entender como escopos e funções se combinam é fundamental tanto para o AZ-104 quanto para o dia a dia de administração.
+
+A pergunta que mais aparece em incidentes de acesso no Azure e: quem deu essa permissao, para quem, e por que ainda esta ativa?
+
+RBAC e o que deveria responder isso. Na pratica, ambientes sem governanca de RBAC acumulam permissoes durante meses, e a auditoria revela roles de Owner atribuidas para 'facilitar' e nunca removidas. O AZ-104 testa se voce sabe estruturar isso corretamente desde o inicio.
 
 ## Como o RBAC funciona
 

@@ -7,7 +7,9 @@ date: "20 Jan 2026"
 readTime: "9 min"
 description: "Como implementar os princípios de IA Responsável da Microsoft em projetos reais — content filters, auditoria e políticas de uso aceitável."
 ---
-IA Responsável não é um checklist que você marca antes de publicar um modelo, é uma série de decisões de design e operação que afetam cada camada da aplicação. A Microsoft define seis princípios: equidade, confiabilidade, privacidade, inclusão, transparência e responsabilização. Este artigo foca em como esses princípios se traduzem em configurações e práticas concretas no Azure OpenAI.
+IA Responsavel virou buzzword. Todo mundo fala, poucos implementam de forma que sobrevive ao primeiro incidente em producao.
+
+A diferenca entre discurso e pratica esta em decisoes tecnicas concretas: como voce configura os filtros de conteudo, como audita o que o modelo responde, como garante que o sistema se comporta de forma previsivel quando o usuario tenta manipula-lo. Esse artigo foca nisso., é uma série de decisões de design e operação que afetam cada camada da aplicação. A Microsoft define seis princípios: equidade, confiabilidade, privacidade, inclusão, transparência e responsabilização. Este artigo foca em como esses princípios se traduzem em configurações e práticas concretas no Azure OpenAI.
 
 ## Equidade: o modelo está sendo justo com todos os grupos?
 

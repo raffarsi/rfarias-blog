@@ -15,7 +15,9 @@ prev:
 
 ---
 
-IA Responsável é um dos tópicos com maior peso no AI-901. A Microsoft tem uma abordagem estruturada para desenvolvimento ético de IA que precisa ser conhecida a fundo.
+Esse e o topico que mais divide opinioes em aula. Metade dos alunos acha que IA Responsavel e conversa de filosofia, nao de prova tecnica. A outra metade nao entende por que a Microsoft dedica tanto peso a isso num exame de fundamentos.
+
+A resposta e simples: porque produto de IA que ignora esses principios quebra em producao de formas que codigo nao consegue prever. A Microsoft sabe disso, e o AI-901 testa se voce sabe tambem. A Microsoft tem uma abordagem estruturada para desenvolvimento ético de IA que precisa ser conhecida a fundo.
 
 ## Os 6 princípios de IA Responsável da Microsoft
 

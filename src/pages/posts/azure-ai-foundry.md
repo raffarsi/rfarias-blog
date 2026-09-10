@@ -14,7 +14,9 @@ next:
   slug: "aula-ms-project"
 ---
 
-O Azure AI Foundry é a plataforma unificada da Microsoft para construir aplicações de IA Generativa em ambiente corporativo. Ele substituiu o Azure AI Studio e centralizou catálogo de modelos, playgrounds, orquestração com Prompt Flow e ferramentas de avaliação em um único hub.
+Antes do AI Foundry, voce precisava de pelo menos tres portais diferentes para construir um agente de IA no Azure: Azure OpenAI Studio, Azure ML e Cognitive Services. Cada time tomava um caminho diferente, e integrar tudo era trabalho manual.
+
+O AI Foundry e a tentativa da Microsoft de resolver isso. Vale entender o que ele realmente unifica e onde ainda tem fragmentacao. construir aplicações de IA Generativa em ambiente corporativo. Ele substituiu o Azure AI Studio e centralizou catálogo de modelos, playgrounds, orquestração com Prompt Flow e ferramentas de avaliação em um único hub.
 
 Neste guia, mostro como criar um projeto do zero, do setup do hub até um chatbot com RAG funcional.
 

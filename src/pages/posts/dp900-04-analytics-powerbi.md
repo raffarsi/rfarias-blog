@@ -18,7 +18,10 @@ next:
 
 ---
 
-Analytics é o processo de transformar dados brutos em insights acionáveis. O DP-900 cobre toda a stack de analytics moderna do Azure.
+
+Dado armazenado que ninguem analisa nao tem valor. Essa e a premissa do DP-900 ao cobrir analytics: entender o pipeline completo desde a ingestao ate a visualizacao.
+
+Power BI aparece no final desse pipeline, mas o DP-900 testa mais do que ferramenta. Testa se voce entende a diferenca entre dados operacionais e dados analiticos, e por que voce nao deveria rodar relatorio de BI direto no banco de producao.
 
 ## Modern Data Warehouse
 

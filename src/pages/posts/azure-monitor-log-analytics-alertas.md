@@ -8,7 +8,10 @@ readTime: "10 min"
 description: "Como centralizar logs, criar alertas úteis (não ruidosos) e usar KQL para investigar incidentes no Azure Monitor."
 ---
 
-Azure Monitor é a plataforma central de observabilidade do Azure. Ele coleta métricas, logs e traces de todos os recursos Azure, e deixa tudo disponível para consulta, alerta e visualização. O problema não é falta de dados; é transformar o volume de dados em insights acionáveis.
+
+Azure Monitor e Log Analytics sao o tipo de recurso que todo mundo configura, poucos entendem de verdade e a maioria so vai estudar quando um incidente ocorre e nao tem os logs necessarios.
+
+Configurar diagnostics settings depois do incidente nao ajuda. Os dados nao existem retroativamente. Esse artigo cobre o que configurar antes de precisar, e como estruturar alertas que realmente avisam antes de o usuario reclamar.
 
 ## Log Analytics Workspace: o centro de tudo
 

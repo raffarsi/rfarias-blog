@@ -18,7 +18,10 @@ next:
 
 ---
 
-Identidade é o novo perímetro de segurança. O SC-900 dedica um domínio inteiro a serviços de identidade e acesso da Microsoft.
+
+Identidade e o topico que o SC-900 mais aprofunda, e por uma razao pratica: e onde a maioria dos ataques comeca. Phishing, credential stuffing, MFA ausente. Nao e a rede, nao e o endpoint, e a identidade.
+
+O Microsoft Entra ID e a resposta da Microsoft para esse problema. O SC-900 testa se voce entende como as pecas se encaixam.
 
 ## Microsoft Entra ID
 

@@ -8,7 +8,10 @@ readTime: "8 min"
 description: "Rotação automática, acesso via Managed Identity, soft-delete e purge protection — o que configurar antes de guardar o primeiro secret."
 ---
 
-O Azure Key Vault é o serviço de gestão de secrets, chaves criptográficas e certificados do Azure. Antes de guardar qualquer secret de produção, há configurações críticas que devem ser feitas, ignorá-las pode resultar em exclusões acidentais irreversíveis.
+
+Secret no codigo fonte. Connection string no arquivo de configuracao. API key no repositorio publico.
+
+Esses sao os tres erros de seguranca mais comuns que vejo em projetos Azure, e os tres sao resolvidos com Key Vault. O problema nao e falta de ferramenta, e que a forma errada de fazer e mais rapida no curto prazo. Esse artigo mostra como fazer certo sem ser mais lento.
 
 ## Configurações que você deve habilitar antes de tudo
 

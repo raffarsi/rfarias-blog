@@ -18,7 +18,10 @@ next:
 
 ---
 
-Bancos de dados NoSQL oferecem flexibilidade de esquema e escala horizontal que bancos relacionais não conseguem facilmente. O DP-900 cobre os principais tipos e o Azure Cosmos DB.
+
+Todo mundo entende banco relacional intuitivamente: tabelas, linhas, colunas, SQL. NoSQL confunde porque nao e um tipo de banco, e uma categoria com quatro modelos completamente diferentes, cada um resolvendo um problema especifico.
+
+O DP-900 testa se voce sabe qual modelo usar para qual caso de uso. Chave-valor nao e a mesma coisa que documento, que nao e a mesma coisa que grafo. A confusao entre eles e o erro mais comum nessa parte do exame.
 
 ## Por que NoSQL?
 
