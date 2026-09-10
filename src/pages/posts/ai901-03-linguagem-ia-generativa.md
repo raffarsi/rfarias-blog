@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AI-901 na prática [3] — Linguagem natural e IA Generativa"
 category: "IA Generativa"
-tag: "ia"
+tag: "ia-generativa"
 serie: "AI-901 na prática"
 serieSlug: "ai901"
 serieNum: 3

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "NSG na prática: como criar regras de segurança de rede que realmente protegem"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "12 Ago 2025"
 readTime: "9 min"
 description: "NSG parece simples — até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em produção."

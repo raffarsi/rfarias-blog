@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Microsoft Defender for Cloud: postura de seguranca e Secure Score"
 category: "Segurança"
-tag: "azure"
+tag: "seguranca"
 date: "30 Out 2025"
 readTime: "8 min"
 description: "Artigo tecnico sobre microsoft defender for cloud: postura de seguranca e secure score — parte da serie de conteudo Azure no blog rfarias.com."

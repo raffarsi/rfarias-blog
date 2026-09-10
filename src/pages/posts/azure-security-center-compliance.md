@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Conformidade regulatoria no Azure: LGPD, PCI-DSS e ISO 27001"
 category: "Segurança"
-tag: "azure"
+tag: "seguranca"
 date: "25 Dez 2025"
 readTime: "9 min"
 description: "Artigo tecnico sobre conformidade regulatoria no azure: lgpd, pci-dss e iso 27001 — parte da serie de conteudo Azure no blog rfarias.com."

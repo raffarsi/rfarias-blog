@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "SC-900 na prática [4] — Conformidade e Microsoft Purview"
 category: "Segurança"
-tag: "azure"
+tag: "seguranca"
 serie: "SC-900 na prática"
 serieSlug: "sc900"
 serieNum: 4

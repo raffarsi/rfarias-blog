@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure Arc para Kubernetes: GitOps e governanca de clusters"
 category: "Infra"
-tag: "azure"
+tag: "infra"
 date: "12 Fev 2026"
 readTime: "9 min"
 description: "Artigo tecnico sobre azure arc para kubernetes: gitops e governanca de clusters — parte da serie de conteudo Azure no blog rfarias.com."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "DP-900 na prática [3] — Dados não relacionais e Cosmos DB"
 category: "Docência"
-tag: "azure"
+tag: "docencia"
 serie: "DP-900 na prática"
 serieSlug: "dp900"
 serieNum: 3

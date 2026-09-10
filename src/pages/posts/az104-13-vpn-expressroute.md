@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [13] — VPN Gateway e ExpressRoute"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 13

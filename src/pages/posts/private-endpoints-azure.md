@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Como configurar Private Endpoints no Azure sem perder o acesso ao portal"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "27 Ago 2026"
 readTime: "8 min"
 description: "Passo a passo para configurar Private Endpoints no Azure com as armadilhas de DNS que a documentação não destaca."

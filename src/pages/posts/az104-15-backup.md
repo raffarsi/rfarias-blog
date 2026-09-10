@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [15] — Backup e Azure Site Recovery"
 category: "Infra"
-tag: "azure"
+tag: "infra"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 15

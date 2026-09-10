@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure Content Safety: moderacao de conteudo em aplicacoes de IA"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "04 Nov 2025"
 readTime: "8 min"
 description: "Artigo tecnico sobre azure content safety: moderacao de conteudo em aplicacoes de ia — parte da serie de conteudo Azure no blog rfarias.com."

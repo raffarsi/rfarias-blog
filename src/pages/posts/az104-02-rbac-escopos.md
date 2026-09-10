@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [2] — RBAC: controle de acesso baseado em funções"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 2

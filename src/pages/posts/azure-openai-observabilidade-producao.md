@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Observabilidade de pipelines de IA no Azure: logs, traces e metricas"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "03 Fev 2026"
 readTime: "10 min"
 description: "Artigo tecnico sobre observabilidade de pipelines de ia no azure: logs, traces e metricas — parte da serie de conteudo Azure no blog rfarias.com."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure NAT Gateway: saida de internet controlada e previsivel"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "19 Fev 2026"
 readTime: "8 min"
 description: "Artigo tecnico sobre azure nat gateway: saida de internet controlada e previsivel — parte da serie de conteudo Azure no blog rfarias.com."

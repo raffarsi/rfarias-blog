@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Landing Zones no Azure: estruturando ambientes com governanca"
 category: "Segurança"
-tag: "azure"
+tag: "seguranca"
 date: "11 Dez 2025"
 readTime: "10 min"
 description: "Artigo tecnico sobre landing zones no azure: estruturando ambientes com governanca — parte da serie de conteudo Azure no blog rfarias.com."

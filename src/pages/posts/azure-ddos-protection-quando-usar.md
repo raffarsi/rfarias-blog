@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure DDoS Protection: Standard vs Basic e quando contratar"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "25 Set 2025"
 readTime: "8 min"
 description: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege — análise técnica e financeira."

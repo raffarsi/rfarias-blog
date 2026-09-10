@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure Network Watcher: diagnostico de problemas de rede"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "13 Nov 2025"
 readTime: "9 min"
 description: "Artigo tecnico sobre azure network watcher: diagnostico de problemas de rede — parte da serie de conteudo Azure no blog rfarias.com."

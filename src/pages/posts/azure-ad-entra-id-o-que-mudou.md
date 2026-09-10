@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Microsoft Entra ID: o que mudou do Azure AD e por que importa para você"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 date: "07 Ago 2025"
 readTime: "7 min"
 description: "O Azure Active Directory virou Microsoft Entra ID. Mais do que renomeação, é uma mudança de posicionamento. Entenda o que mudou na prática."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure Arc: governanca unificada para ambientes hibridos e multi-cloud"
 category: "Infra"
-tag: "azure"
+tag: "infra"
 date: "04 Dez 2025"
 readTime: "9 min"
 description: "Artigo tecnico sobre azure arc: governanca unificada para ambientes hibridos e multi-cloud — parte da serie de conteudo Azure no blog rfarias.com."

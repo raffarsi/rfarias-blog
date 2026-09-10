@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Load Balancer vs Application Gateway: qual usar em cada cenario"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "29 Jan 2026"
 readTime: "9 min"
 description: "Artigo tecnico sobre load balancer vs application gateway: qual usar em cada cenario — parte da serie de conteudo Azure no blog rfarias.com."

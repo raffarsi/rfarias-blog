@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Seguranca Zero Trust para aplicacoes Azure OpenAI"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "24 Fev 2026"
 readTime: "10 min"
 description: "Artigo tecnico sobre seguranca zero trust para aplicacoes azure openai — parte da serie de conteudo Azure no blog rfarias.com."

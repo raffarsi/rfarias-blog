@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "SC-900 na prática [3] — Soluções de segurança Microsoft"
 category: "Segurança"
-tag: "azure"
+tag: "seguranca"
 serie: "SC-900 na prática"
 serieSlug: "sc900"
 serieNum: 3

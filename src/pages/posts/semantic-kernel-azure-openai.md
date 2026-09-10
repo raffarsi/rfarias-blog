@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Semantic Kernel com Azure OpenAI: construindo agentes de IA em .NET"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "07 Out 2025"
 readTime: "10 min"
 description: "Como usar o Semantic Kernel da Microsoft para orquestrar chamadas ao Azure OpenAI e construir agentes com plugins e memória."

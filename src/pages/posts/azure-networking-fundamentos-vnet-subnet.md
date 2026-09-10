@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure Networking: VNets e Subnets — o que você precisa saber antes de criar qualquer recurso"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "05 Ago 2025"
 readTime: "8 min"
 description: "Antes de criar uma VM, um container ou qualquer recurso no Azure, você precisa entender como as redes virtuais funcionam. Tudo começa aqui."

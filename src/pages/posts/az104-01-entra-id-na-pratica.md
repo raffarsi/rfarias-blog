@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [1] — Gerenciando identidades com Microsoft Entra ID"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 1

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Seu Azure OpenAI está exposto na internet — e você provavelmente sabe"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 1
 serieSlug: "serie-azure-networking-ia"

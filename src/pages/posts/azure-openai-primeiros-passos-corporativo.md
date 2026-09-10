@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure OpenAI Service: primeiros passos em ambiente corporativo"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "14 Ago 2025"
 readTime: "8 min"
 description: "Como provisionar, autenticar e fazer as primeiras chamadas ao Azure OpenAI dentro dos requisitos de segurança de uma empresa."

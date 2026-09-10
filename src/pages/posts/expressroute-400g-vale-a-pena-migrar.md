@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 1
 serieSlug: "serie-azure-networking-ia"

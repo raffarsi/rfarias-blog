@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Privileged Identity Management: acesso privilegiado just-in-time no Azure"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 date: "18 Set 2025"
 readTime: "10 min"
 description: "PIM é o que separa um ambiente Azure maduro de um ambiente com Owner permanente para todo mundo. Como configurar e usar no dia a dia."

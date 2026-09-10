@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [16] — Gerenciamento de custos no Azure"
 category: "FinOps"
-tag: "azure"
+tag: "finops"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 16

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "ExpressRoute na pratica: conectividade hibrida para ambientes corporativos"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "01 Jan 2026"
 readTime: "11 min"
 description: "Artigo tecnico sobre expressroute na pratica: conectividade hibrida para ambientes corporativos — parte da serie de conteudo Azure no blog rfarias.com."

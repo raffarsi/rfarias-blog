@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Grounding com dados corporativos: Azure OpenAI e base de conhecimento"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "02 Dez 2025"
 readTime: "10 min"
 description: "Artigo tecnico sobre grounding com dados corporativos: azure openai e base de conhecimento — parte da serie de conteudo Azure no blog rfarias.com."

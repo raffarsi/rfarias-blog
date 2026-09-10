@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Network Security Groups vs Application Security Groups: quando usar cada um"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 date: "13 Ago 2026"
 readTime: "10 min"
 description: "Entenda as diferenças entre NSG e ASG no Azure e em quais cenários cada um se destaca."

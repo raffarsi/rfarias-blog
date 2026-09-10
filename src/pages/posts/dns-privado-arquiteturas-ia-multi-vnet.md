@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "DNS privado e resolução de nomes em arquiteturas de IA multi-VNet: os erros mais comuns"
 category: "Networking"
-tag: "azure"
+tag: "networking"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 3
 serieSlug: "serie-azure-networking-ia"

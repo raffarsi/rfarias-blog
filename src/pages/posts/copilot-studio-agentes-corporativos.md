@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Copilot Studio: criando agentes corporativos sem codigo"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "13 Jan 2026"
 readTime: "8 min"
 description: "Artigo tecnico sobre copilot studio: criando agentes corporativos sem codigo — parte da serie de conteudo Azure no blog rfarias.com."

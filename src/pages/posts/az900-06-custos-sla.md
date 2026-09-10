@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [6] — Custos, SLA e ciclo de vida de serviços"
 category: "FinOps"
-tag: "azure"
+tag: "finops"
 serie: "AZ-900 na prática"
 serieSlug: "az900"
 serieNum: 6

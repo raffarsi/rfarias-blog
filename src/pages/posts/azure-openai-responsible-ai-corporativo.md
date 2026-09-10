@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "IA Responsavel na pratica corporativa com Azure OpenAI"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "20 Jan 2026"
 readTime: "9 min"
 description: "Artigo tecnico sobre ia responsavel na pratica corporativa com azure openai — parte da serie de conteudo Azure no blog rfarias.com."

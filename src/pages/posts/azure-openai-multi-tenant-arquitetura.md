@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Arquitetura multi-tenant com Azure OpenAI: isolamento e governanca"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "06 Jan 2026"
 readTime: "10 min"
 description: "Artigo tecnico sobre arquitetura multi-tenant com azure openai: isolamento e governanca — parte da serie de conteudo Azure no blog rfarias.com."

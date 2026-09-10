@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Grupos no Entra ID: como estruturar para escalar com governanca"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 date: "23 Out 2025"
 readTime: "9 min"
 description: "Artigo tecnico sobre grupos no entra id: como estruturar para escalar com governanca — parte da serie de conteudo Azure no blog rfarias.com."

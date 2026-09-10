@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 4
 serieSlug: "serie-azure-networking-ia"

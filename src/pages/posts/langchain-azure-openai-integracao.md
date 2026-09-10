@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "LangChain com Azure OpenAI: integração passo a passo"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "23 Set 2025"
 readTime: "9 min"
 description: "Como conectar LangChain ao Azure OpenAI Service respeitando as configurações de rede e autenticação corporativas."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Tokens e fluxos de autenticacao no Entra ID: OAuth 2.0 e OIDC na pratica"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 date: "05 Fev 2026"
 readTime: "10 min"
 description: "Artigo tecnico sobre tokens e fluxos de autenticacao no entra id: oauth 2.0 e oidc na pratica — parte da serie de conteudo Azure no blog rfarias.com."

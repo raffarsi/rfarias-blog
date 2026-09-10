@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Backup e Disaster Recovery no Azure: RPO, RTO e estrategia certa"
 category: "Infra"
-tag: "azure"
+tag: "infra"
 date: "22 Jan 2026"
 readTime: "10 min"
 description: "Artigo tecnico sobre backup e disaster recovery no azure: rpo, rto e estrategia certa — parte da serie de conteudo Azure no blog rfarias.com."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "External Identities no Entra ID: colaboracao B2B segura"
 category: "IAM"
-tag: "azure"
+tag: "iam"
 date: "20 Nov 2025"
 readTime: "8 min"
 description: "Artigo tecnico sobre external identities no entra id: colaboracao b2b segura — parte da serie de conteudo Azure no blog rfarias.com."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure AI Foundry: criando seu primeiro projeto de IA Generativa"
 category: "IA Generativa"
-tag: "ia"
+tag: "ia-generativa"
 date: "20 Ago 2026"
 readTime: "12 min"
 description: "Guia prático para criar uma PoC de chatbot com RAG usando Azure AI Foundry em ambiente corporativo."

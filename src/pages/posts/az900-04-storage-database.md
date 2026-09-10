@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [4] — Storage e banco de dados no Azure"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 serie: "AZ-900 na prática"
 serieSlug: "az900"
 serieNum: 4

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Azure AI Foundry: a plataforma unificada para agentes de IA"
 category: "IA Generativa"
-tag: "azure"
+tag: "ia-generativa"
 date: "21 Out 2025"
 readTime: "9 min"
 description: "Artigo tecnico sobre azure ai foundry: a plataforma unificada para agentes de ia — parte da serie de conteudo Azure no blog rfarias.com."

@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [1] — Conceitos fundamentais de Cloud Computing"
 category: "Docência"
-tag: "azure"
+tag: "docencia"
 serie: "AZ-900 na prática"
 serieSlug: "az900"
 serieNum: 1
