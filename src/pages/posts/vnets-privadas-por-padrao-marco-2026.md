@@ -18,21 +18,21 @@ next:
 
 ---
 
-Em março de 2026 o Azure muda o comportamento padrão de Virtual Networks: recursos implantados em VNets novas não terão mais acesso implícito à internet por padrão. Se sua automação, seus pipelines de CI/CD ou seus templates de IaC dependem do comportamento antigo, eles vão quebrar — silenciosamente, na maioria dos casos.
+Em março de 2026 o Azure muda o comportamento padrão de Virtual Networks: recursos implantados em VNets novas não terão mais acesso implícito à internet por padrão. Se sua automação, seus pipelines de CI/CD ou seus templates de IaC dependem do comportamento antigo, eles vão quebrar, silenciosamente, na maioria dos casos.
 
 Este é o artigo 5 de 20 da série **Azure Networking + IA Generativa**. Aqui explico exatamente o que muda, o que não é afetado, por que essa mudança é positiva para segurança e como migrar sem causar downtime.
 
 ## A mudança
 
-A partir de **31 de março de 2026**, o comportamento padrão para novas Virtual Networks criadas no Azure muda: recursos implantados em VNets sem configuração explícita de saída não terão mais o que a Microsoft chama de *default outbound access* — o acesso implícito à internet via IP público efêmero que o Azure atribuía automaticamente.
+A partir de **31 de março de 2026**, o comportamento padrão para novas Virtual Networks criadas no Azure muda: recursos implantados em VNets sem configuração explícita de saída não terão mais o que a Microsoft chama de *default outbound access*, o acesso implícito à internet via IP público efêmero que o Azure atribuía automaticamente.
 
-É uma mudança de postura de segurança *secure by default*, alinhada ao que o Cloud Adoption Framework (CAF) já recomendava como boa prática — mas que agora deixa de ser recomendação e passa a ser o padrão.
+É uma mudança de postura de segurança *secure by default*, alinhada ao que o Cloud Adoption Framework (CAF) já recomendava como boa prática, mas que agora deixa de ser recomendação e passa a ser o padrão.
 
 **O que exatamente muda:** antes, uma VM criada em uma subnet sem NAT Gateway, sem Azure Firewall e sem IP público ainda conseguia acessar a internet. O Azure atribuía um IP público efêmero e roteava o tráfego de saída. A partir de março, isso não acontece mais para VNets novas.
 
 ## O que quebra
 
-Qualquer recurso que dependa da saída padrão implícita para acessar a internet — sem NAT Gateway, sem Azure Firewall e sem IP público explícito — vai perder a conectividade de saída.
+Qualquer recurso que dependa da saída padrão implícita para acessar a internet, sem NAT Gateway, sem Azure Firewall e sem IP público explícito, vai perder a conectividade de saída.
 
 Isso inclui tipicamente:
 
@@ -42,28 +42,28 @@ Isso inclui tipicamente:
 - **Scripts de inicialização (cloud-init, custom script extension)** que baixam dependências da internet durante o provisionamento da VM
 - **Pipelines de CI/CD** que provisionam recursos em VNets novas e assumem conectividade de saída disponível imediatamente após a criação
 
-O cenário mais perigoso é o último: um pipeline que cria uma VNet, implanta recursos e tenta validar conectividade — tudo funcionava em testes porque os testes usavam VNets antigas. Na primeira execução após 31 de março, falha.
+O cenário mais perigoso é o último: um pipeline que cria uma VNet, implanta recursos e tenta validar conectividade, tudo funcionava em testes porque os testes usavam VNets antigas. Na primeira execução após 31 de março, falha.
 
 ## O que NÃO é afetado
 
 Importante deixar claro o que a mudança **não** afeta:
 
-**VNets já existentes** antes da data de corte mantêm o comportamento atual — a mudança vale apenas para VNets criadas após 31 de março de 2026 e não é retroativa.
+**VNets já existentes** antes da data de corte mantêm o comportamento atual, a mudança vale apenas para VNets criadas após 31 de março de 2026 e não é retroativa.
 
-**Recursos atrás de Private Endpoints** não usam saída padrão para serem acessados. O Private Endpoint é tráfego de entrada privado, não saída — não é impactado.
+**Recursos atrás de Private Endpoints** não usam saída padrão para serem acessados. O Private Endpoint é tráfego de entrada privado, não saída, não é impactado.
 
 **Ambientes que já usam Azure Firewall, NAT Gateway ou IPs públicos explícitos** para saída não são impactados, porque já não dependem do default outbound access. Quem segue o padrão hub-and-spoke com NAT Gateway ou Firewall central já está preparado.
 
-## Por que isso é bom — mesmo doendo no curto prazo
+## Por que isso é bom, mesmo doendo no curto prazo
 
-A saída padrão implícita sempre foi um ponto de confusão em auditorias de segurança. A pergunta clássica: *"esse recurso tem IP público?"* — e a resposta era tecnicamente "não tem um IP público permanente, mas tem acesso à internet via IP efêmero que você não controla e não consegue rastrear facilmente."
+A saída padrão implícita sempre foi um ponto de confusão em auditorias de segurança. A pergunta clássica: *"esse recurso tem IP público?"*, e a resposta era tecnicamente "não tem um IP público permanente, mas tem acesso à internet via IP efêmero que você não controla e não consegue rastrear facilmente."
 
-Isso tornava difícil bloquear exfiltração de dados por padrão. Um atacante com acesso a uma VM podia extrair dados para qualquer endpoint externo sem que isso fosse visível nas regras de firewall — porque não passava por firewall nenhum.
+Isso tornava difícil bloquear exfiltração de dados por padrão. Um atacante com acesso a uma VM podia extrair dados para qualquer endpoint externo sem que isso fosse visível nas regras de firewall, porque não passava por firewall nenhum.
 
-Com a mudança, **qualquer saída para internet passa a ser uma decisão explícita e auditável** — exatamente o tipo de controle que regulamentações como LGPD, PCI DSS e frameworks de segurança como NIST CSF exigem. Você sabe exatamente por onde o tráfego sai, consegue logar e consegue bloquear seletivamente.
+Com a mudança, **qualquer saída para internet passa a ser uma decisão explícita e auditável**, exatamente o tipo de controle que regulamentações como LGPD, PCI DSS e frameworks de segurança como NIST CSF exigem. Você sabe exatamente por onde o tráfego sai, consegue logar e consegue bloquear seletivamente.
 
 <div class="callout">
-<strong>Perspectiva de auditoria:</strong> Do ponto de vista de IT Audit, essa mudança simplifica enormemente a demonstração de conformidade. Em vez de precisar provar que o default outbound access estava sendo controlado por NSG (o que era frágil), você demonstra que não existe saída implícita — qualquer saída tem um recurso explícito associado com logs.
+<strong>Perspectiva de auditoria:</strong> Do ponto de vista de IT Audit, essa mudança simplifica enormemente a demonstração de conformidade. Em vez de precisar provar que o default outbound access estava sendo controlado por NSG (o que era frágil), você demonstra que não existe saída implícita, qualquer saída tem um recurso explícito associado com logs.
 </div>
 
 ## Como migrar sem quebrar nada
@@ -101,11 +101,11 @@ AzureNetworkAnalytics_CL
 | order by count_ desc
 ```
 
-Isso mostra quais VMs estão fazendo saída para internet e para quais destinos — sua lista de dependências.
+Isso mostra quais VMs estão fazendo saída para internet e para quais destinos, sua lista de dependências.
 
 **2. Escolha a estratégia de saída adequada para cada cenário.**
 
-Não existe uma resposta única — depende do workload:
+Não existe uma resposta única, depende do workload:
 
 | Cenário | Estratégia recomendada |
 |---------|----------------------|
@@ -116,7 +116,7 @@ Não existe uma resposta única — depende do workload:
 
 **3. Provisione a saída explícita antes de criar a VNet ou junto com ela.**
 
-Para NAT Gateway — a opção mais simples para a maioria dos casos:
+Para NAT Gateway, a opção mais simples para a maioria dos casos:
 
 ```bicep
 resource natGateway 'Microsoft.Network/natGateways@2023-09-01' = {
@@ -143,7 +143,7 @@ resource subnetApp 'Microsoft.Network/virtualNetworks/subnets@2023-09-01' = {
 }
 ```
 
-A ordem importa: **crie o NAT Gateway antes ou junto com a subnet** — não depois que os recursos já estão implantados sem saída.
+A ordem importa: **crie o NAT Gateway antes ou junto com a subnet**, não depois que os recursos já estão implantados sem saída.
 
 **Para AKS**, defina o outbound type na criação do cluster:
 
@@ -158,12 +158,12 @@ az aks create \
 
 ## Conclusão
 
-Essa mudança é um bom exemplo de como boas práticas de rede deixam de ser "recomendação" e passam a ser "obrigatório por padrão" — o mesmo caminho que o Azure já fez com IPs públicos em VMs (agora cobrados separadamente e não criados por padrão).
+Essa mudança é um bom exemplo de como boas práticas de rede deixam de ser "recomendação" e passam a ser "obrigatório por padrão", o mesmo caminho que o Azure já fez com IPs públicos em VMs (agora cobrados separadamente e não criados por padrão).
 
-Quem já segue o padrão hub-and-spoke com NAT Gateway ou Firewall central não sente o impacto. Quem depende do comportamento implícito — geralmente ambientes criados organicamente sem uma estratégia de rede definida — tem até março de 2026 para ajustar os templates e pipelines.
+Quem já segue o padrão hub-and-spoke com NAT Gateway ou Firewall central não sente o impacto. Quem depende do comportamento implícito, geralmente ambientes criados organicamente sem uma estratégia de rede definida, tem até março de 2026 para ajustar os templates e pipelines.
 
 A janela de 6 meses é suficiente para fazer a migração com calma, testando em ambientes de desenvolvimento e homologação antes de tocar em produção.
 
 ---
 
-*Série **Azure Networking + IA Generativa** — arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*

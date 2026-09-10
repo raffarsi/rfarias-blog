@@ -79,4 +79,4 @@ A grande vantagem: quando uma nova VM é criada, basta associar a NIC ao ASG. To
 2. **ASGs por camada** (web, app, data) associados às NICs
 3. **Regras de microsegmentação** no NSG usando ASGs como origem/destino
 
-Essa abordagem mantém as regras legíveis, escaláveis e auditáveis — três requisitos que em ambiente corporativo não são opcionais.
+Essa abordagem mantém as regras legíveis, escaláveis e auditáveis, três requisitos que em ambiente corporativo não são opcionais.

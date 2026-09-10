@@ -16,11 +16,11 @@ next:
 
 Se você trabalha com Azure em ambiente corporativo, em algum momento vai precisar de Private Endpoints. Eles são a peça-chave para garantir que o tráfego entre seus recursos e suas aplicações não passe pela internet pública. Mas a configuração tem armadilhas que a documentação oficial não destaca como deveria.
 
-Neste artigo, explico o conceito, o passo a passo e os erros mais comuns — especialmente o que envolve resolução de DNS.
+Neste artigo, explico o conceito, o passo a passo e os erros mais comuns, especialmente o que envolve resolução de DNS.
 
 ## O que é um Private Endpoint
 
-Um Private Endpoint é uma interface de rede (NIC) que o Azure cria dentro da sua Virtual Network, atribuindo um IP privado que aponta diretamente para um serviço PaaS — como SQL Database, Storage Account, Key Vault ou Cosmos DB.
+Um Private Endpoint é uma interface de rede (NIC) que o Azure cria dentro da sua Virtual Network, atribuindo um IP privado que aponta diretamente para um serviço PaaS: como SQL Database, Storage Account, Key Vault ou Cosmos DB.
 
 Sem Private Endpoint, quando sua aplicação acessa um Azure SQL Database, o tráfego sai pela internet pública (mesmo que o firewall do SQL esteja restrito ao IP da sua VNet). Com Private Endpoint, o tráfego fica inteiramente dentro da sua rede privada.
 
@@ -30,7 +30,7 @@ Na prática, é a diferença entre "restringir quem pode acessar" e "garantir qu
 
 O processo envolve três etapas: criar o Private Endpoint, configurar a Private DNS Zone e validar a resolução.
 
-**Etapa 1 — Criar o Private Endpoint:**
+**Etapa 1, Criar o Private Endpoint:**
 
 ```bash
 az network private-endpoint create \
@@ -45,9 +45,9 @@ az network private-endpoint create \
 
 O parâmetro `--group-id` define qual sub-recurso você está expondo. Para SQL Database é `sqlServer`, para Storage Blob é `blob`, para Key Vault é `vault`.
 
-**Etapa 2 — Criar a Private DNS Zone:**
+**Etapa 2, Criar a Private DNS Zone:**
 
-Esta é a etapa que a maioria das pessoas esquece — e onde as coisas quebram.
+Esta é a etapa que a maioria das pessoas esquece, e onde as coisas quebram.
 
 ```bash
 az network private-dns zone create \
@@ -69,7 +69,7 @@ az network private-endpoint dns-zone-group create \
   --zone-name privatelink.database.windows.net
 ```
 
-Cada tipo de serviço tem um nome de zona DNS diferente. Para SQL é `privatelink.database.windows.net`, para Blob Storage é `privatelink.blob.core.windows.net`, para Key Vault é `privatelink.vaultcore.azure.net`. Usar o nome errado é um erro silencioso — tudo parece funcionar, mas o tráfego continua público.
+Cada tipo de serviço tem um nome de zona DNS diferente. Para SQL é `privatelink.database.windows.net`, para Blob Storage é `privatelink.blob.core.windows.net`, para Key Vault é `privatelink.vaultcore.azure.net`. Usar o nome errado é um erro silencioso, tudo parece funcionar, mas o tráfego continua público.
 
 ## A armadilha do DNS
 
@@ -94,9 +94,9 @@ Se retornar um IP público (como 40.x.x.x), a DNS Zone não está configurada co
 
 Antes de considerar a configuração concluída, sempre valide:
 
-1. **nslookup** de dentro de uma VM na VNet — deve resolver para IP privado (10.x.x.x)
-2. **Testar conectividade** — `Test-NetConnection sql-producao.database.windows.net -Port 1433` deve conectar via IP privado
-3. **Desabilitar acesso público** no recurso — se tudo funcionar sem acesso público, a configuração está correta
+1. **nslookup** de dentro de uma VM na VNet, deve resolver para IP privado (10.x.x.x)
+2. **Testar conectividade**, `Test-NetConnection sql-producao.database.windows.net -Port 1433` deve conectar via IP privado
+3. **Desabilitar acesso público** no recurso, se tudo funcionar sem acesso público, a configuração está correta
 
 Esse terceiro passo é o teste definitivo. Se você desabilita o acesso público e a aplicação continua funcionando, o Private Endpoint está fazendo seu trabalho.
 

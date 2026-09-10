@@ -63,10 +63,10 @@ az network vnet subnet create \
 ## Endereços reservados pelo Azure
 
 Em cada subnet, o Azure reserva 5 endereços:
-- x.x.x.0 — endereço de rede
-- x.x.x.1 — gateway padrão
-- x.x.x.2 e x.x.x.3 — DNS do Azure
-- x.x.x.255 — broadcast
+- x.x.x.0, endereço de rede
+- x.x.x.1, gateway padrão
+- x.x.x.2 e x.x.x.3, DNS do Azure
+- x.x.x.255, broadcast
 
 Uma /28 (16 endereços) deixa apenas 11 utilizáveis.
 
@@ -95,7 +95,7 @@ az network vnet peering create \
 
 ## Global VNet Peering
 
-Para conectar VNets em regiões diferentes, use o mesmo comando — o Azure detecta automaticamente se é regional ou global:
+Para conectar VNets em regiões diferentes, use o mesmo comando, o Azure detecta automaticamente se é regional ou global:
 
 ```bash
 az network vnet peering create \
@@ -108,9 +108,9 @@ az network vnet peering create \
 
 ## Service Endpoints vs Private Endpoints
 
-**Service Endpoint** — estende a identidade da VNet para serviços Azure (ex: SQL, Storage). O tráfego ainda vai pela rede da Microsoft mas pode vir de qualquer lugar.
+**Service Endpoint**, estende a identidade da VNet para serviços Azure (ex: SQL, Storage). O tráfego ainda vai pela rede da Microsoft mas pode vir de qualquer lugar.
 
-**Private Endpoint** — cria uma NIC com IP privado dentro da VNet apontando para o serviço. O tráfego é completamente privado.
+**Private Endpoint**, cria uma NIC com IP privado dentro da VNet apontando para o serviço. O tráfego é completamente privado.
 
 ```bash
 # Habilitar Service Endpoint para Storage em uma subnet
@@ -134,7 +134,7 @@ az network private-endpoint create \
 ## O que cai no exame
 
 - Endereços reservados por subnet (5 primeiros + último)
-- Que peering não é transitivo — A→B e B→C não significa A→C
+- Que peering não é transitivo, A→B e B→C não significa A→C
 - Diferença entre Service Endpoint e Private Endpoint
 - Que GatewaySubnet é reservada e não pode ter NSG
 - Como calcular hosts disponíveis por CIDR

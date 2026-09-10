@@ -143,7 +143,7 @@ az network vnet subnet update \
 ```
 
 <div class="callout">
-<strong>Armadilha do exame:</strong> Quando NSG está associado tanto à subnet quanto à NIC, ambas as regras se aplicam — o tráfego passa pelos dois filtros. Na entrada: subnet NSG → NIC NSG. Na saída: NIC NSG → subnet NSG. O tráfego precisa ser permitido em ambos.
+<strong>Armadilha do exame:</strong> Quando NSG está associado tanto à subnet quanto à NIC, ambas as regras se aplicam, o tráfego passa pelos dois filtros. Na entrada: subnet NSG → NIC NSG. Na saída: NIC NSG → subnet NSG. O tráfego precisa ser permitido em ambos.
 </div>
 
 ## O que cai no exame

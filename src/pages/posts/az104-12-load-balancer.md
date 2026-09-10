@@ -66,8 +66,8 @@ az network lb rule create \
 
 ## Internal vs Public Load Balancer
 
-- **Public LB** — IP público, distribui tráfego da internet
-- **Internal LB** — IP privado, distribui tráfego dentro da VNet (ex: entre camada web e app)
+- **Public LB**, IP público, distribui tráfego da internet
+- **Internal LB**, IP privado, distribui tráfego dentro da VNet (ex: entre camada web e app)
 
 ```bash
 # Internal Load Balancer
@@ -117,7 +117,7 @@ az network application-gateway url-path-map create \
 ```
 
 <div class="callout">
-<strong>Dica para o exame:</strong> Azure Load Balancer Standard é zone-redundant por padrão — distribui automaticamente entre zonas. O SKU Basic não suporta Availability Zones. Para novos deployments, sempre use Standard.
+<strong>Dica para o exame:</strong> Azure Load Balancer Standard é zone-redundant por padrão, distribui automaticamente entre zonas. O SKU Basic não suporta Availability Zones. Para novos deployments, sempre use Standard.
 </div>
 
 ## Comparativo: quando usar cada um

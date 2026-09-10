@@ -46,9 +46,9 @@ az network vnet-gateway create \
 
 ## Tipos de VPN
 
-**VPN Baseada em Política** — usa políticas estáticas de tráfego. Legada, suporta apenas IKEv1. Uma única conexão.
+**VPN Baseada em Política**, usa políticas estáticas de tráfego. Legada, suporta apenas IKEv1. Uma única conexão.
 
-**VPN Baseada em Rota** — usa tabelas de roteamento. Recomendada. Suporta IKEv2, múltiplas conexões, VNet-to-VNet e conexões ponto a site.
+**VPN Baseada em Rota**, usa tabelas de roteamento. Recomendada. Suporta IKEv2, múltiplas conexões, VNet-to-VNet e conexões ponto a site.
 
 ## Site-to-Site (S2S)
 

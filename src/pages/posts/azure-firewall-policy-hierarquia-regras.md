@@ -5,14 +5,14 @@ category: "Networking"
 tag: "networking"
 date: "15 Nov 2025"
 readTime: "10 min"
-description: "Firewall Policies podem ser herdadas — a política base define regras globais, políticas filhas adicionam regras específicas por ambiente. Como estruturar para escalar sem duplicar configuração."
+description: "Firewall Policies podem ser herdadas, a política base define regras globais, políticas filhas adicionam regras específicas por ambiente. Como estruturar para escalar sem duplicar configuração."
 ---
 
 O Azure Firewall Policy permite criar uma hierarquia de políticas onde uma política pai define regras globais e políticas filhas herdam essas regras e adicionam as específicas do ambiente. Isso evita duplicar configuração entre dezenas de firewalls em diferentes ambientes.
 
 ## O problema sem hierarquia
 
-Sem hierarquia de políticas, cada ambiente (produção, homologação, desenvolvimento) tem sua própria política com as mesmas regras base copiadas manualmente. Quando uma regra global precisa mudar — um novo endpoint de monitoramento, uma atualização de IP — você atualiza em N lugares.
+Sem hierarquia de políticas, cada ambiente (produção, homologação, desenvolvimento) tem sua própria política com as mesmas regras base copiadas manualmente. Quando uma regra global precisa mudar, um novo endpoint de monitoramento, uma atualização de IP, você atualiza em N lugares.
 
 ## Estrutura de hierarquia recomendada
 
@@ -37,7 +37,7 @@ Política Base (global)
 ## Configurando em Bicep
 
 ```bicep
-// Política base — regras globais
+// Política base, regras globais
 resource policyBase 'Microsoft.Network/firewallPolicies@2023-09-01' = {
   name: 'fwpolicy-base'
   location: location
@@ -77,7 +77,7 @@ resource baseRules 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023
   }
 }
 
-// Política filha — herda da base
+// Política filha, herda da base
 resource policyProd 'Microsoft.Network/firewallPolicies@2023-09-01' = {
   name: 'fwpolicy-prod'
   location: location
@@ -115,7 +115,7 @@ resource prodRules 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2023
 
 ## Precedência de regras
 
-A precedência funciona por prioridade numérica dentro de cada política — **menor número = maior prioridade**. Regras da política filha não sobrescrevem regras da política pai; ambas são avaliadas. Se a política base tem um Allow com prioridade 100 e a filha tem um Deny com prioridade 200, o Allow da base vai ganhar.
+A precedência funciona por prioridade numérica dentro de cada política, **menor número = maior prioridade**. Regras da política filha não sobrescrevem regras da política pai; ambas são avaliadas. Se a política base tem um Allow com prioridade 100 e a filha tem um Deny com prioridade 200, o Allow da base vai ganhar.
 
 Para que a filha sobrescreva a base, use prioridade menor:
 
@@ -125,9 +125,9 @@ Filha: Deny  *.microsoft.com  (prioridade 100) ← esta ganha
 ```
 
 <div class="callout">
-<strong>Limitação importante:</strong> Uma política filha só pode ter uma política pai. Você não pode herdar de múltiplas políticas base. Planeje a hierarquia antes de criar — reorganizar depois exige recriar as políticas e reassociar firewalls.
+<strong>Limitação importante:</strong> Uma política filha só pode ter uma política pai. Você não pode herdar de múltiplas políticas base. Planeje a hierarquia antes de criar, reorganizar depois exige recriar as políticas e reassociar firewalls.
 </div>
 
 ## Conclusão
 
-Hierarquia de Firewall Policies é o que torna o gerenciamento de firewall escalável em ambientes com múltiplos firewalls e ambientes. Regras globais na base, regras específicas nas filhas — e mudanças globais propagam automaticamente para todos os ambientes sem tocar em cada política individualmente.
+Hierarquia de Firewall Policies é o que torna o gerenciamento de firewall escalável em ambientes com múltiplos firewalls e ambientes. Regras globais na base, regras específicas nas filhas, e mudanças globais propagam automaticamente para todos os ambientes sem tocar em cada política individualmente.

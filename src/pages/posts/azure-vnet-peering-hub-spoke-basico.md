@@ -8,7 +8,7 @@ readTime: "9 min"
 description: "Como conectar VNets com peering, quando usar hub-and-spoke e as limitações que você só descobre em produção."
 ---
 
-VNet Peering é o mecanismo para conectar duas VNets Azure de forma que os recursos em cada uma se comuniquem usando IPs privados, sem passar pela internet pública. O tráfego trafega pela rede backbone da Microsoft — baixa latência e alta confiabilidade.
+VNet Peering é o mecanismo para conectar duas VNets Azure de forma que os recursos em cada uma se comuniquem usando IPs privados, sem passar pela internet pública. O tráfego trafega pela rede backbone da Microsoft, baixa latência e alta confiabilidade.
 
 ## Como funciona o peering
 
@@ -48,7 +48,7 @@ on-premises ─── VPN/ER Gateway ─── VNet HUB ─── Azure Firewall
            (10.1.0.0/16)      (10.2.0.0/16)      (10.3.0.0/16)
 ```
 
-O hub centraliza recursos compartilhados. Os spokes se conectam ao hub via peering. O tráfego entre spokes passa pelo hub — via Azure Firewall para inspeção e controle.
+O hub centraliza recursos compartilhados. Os spokes se conectam ao hub via peering. O tráfego entre spokes passa pelo hub, via Azure Firewall para inspeção e controle.
 
 ## Configurando UDR para rotear tráfego pelo Firewall
 
@@ -82,7 +82,7 @@ O VNet Peering funciona entre regiões (Global VNet Peering). O tráfego usa a r
 - **Gateway transit:** não suportado em peering global (limitação)
 
 <div class="callout">
-<strong>Limitação importante:</strong> VNets com ranges de IP sobrepostos não podem ter peering. Planeje seus ranges de IP antes de criar as VNets — mudar depois é destrutivo.
+<strong>Limitação importante:</strong> VNets com ranges de IP sobrepostos não podem ter peering. Planeje seus ranges de IP antes de criar as VNets, mudar depois é destrutivo.
 </div>
 
 ## Conclusão

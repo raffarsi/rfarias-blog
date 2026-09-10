@@ -5,10 +5,10 @@ category: "Networking"
 tag: "networking"
 date: "24 Nov 2025"
 readTime: "10 min"
-description: "Quando um hub único não basta — como arquitetar redes Azure em múltiplas regiões com Virtual WAN, peering global e failover automático entre regiões."
+description: "Quando um hub único não basta, como arquitetar redes Azure em múltiplas regiões com Virtual WAN, peering global e failover automático entre regiões."
 ---
 
-Um único hub Azure funciona bem para a maioria das organizações. Mas conforme a operação cresce — workloads em múltiplas regiões, requisitos de latência por região, compliance de dados em países específicos — a topologia de hub único atinge seus limites.
+Um único hub Azure funciona bem para a maioria das organizações. Mas conforme a operação cresce, workloads em múltiplas regiões, requisitos de latência por região, compliance de dados em países específicos, a topologia de hub único atinge seus limites.
 
 ## Quando hub único não escala
 
@@ -36,12 +36,12 @@ Hub Brazil South                    Hub East US
                    (hub-to-hub)
 ```
 
-**Vantagem:** independência total — falha em uma região não afeta outra.
+**Vantagem:** independência total, falha em uma região não afeta outra.
 **Desvantagem:** duplicação de custo (dois Firewalls, dois Gateways).
 
 ## Topologia 2: Virtual WAN com múltiplos hubs
 
-O Virtual WAN gerencia múltiplos hubs de forma centralizada — um único plano de controle para toda a topologia:
+O Virtual WAN gerencia múltiplos hubs de forma centralizada, um único plano de controle para toda a topologia:
 
 ```bash
 # Criar VWAN global
@@ -67,7 +67,7 @@ az network vhub create \
   --address-prefix 10.1.0.0/24
 ```
 
-O Virtual WAN conecta os hubs automaticamente via backbone Microsoft — sem precisar configurar peering entre hubs manualmente.
+O Virtual WAN conecta os hubs automaticamente via backbone Microsoft, sem precisar configurar peering entre hubs manualmente.
 
 ## Failover de workloads entre regiões
 
@@ -77,8 +77,8 @@ Para workloads que precisam failover automático, combine topologia multi-regiã
 Usuário
   ↓ DNS query
 Traffic Manager (prioridade)
-  ├── App Service Brazil South (prioridade 1 — primário)
-  └── App Service East US (prioridade 2 — DR)
+  ├── App Service Brazil South (prioridade 1, primário)
+  └── App Service East US (prioridade 2, DR)
          │
          ambos acessam Azure OpenAI
          via Private Endpoint na sua região
@@ -104,7 +104,7 @@ az search service create \
 # Storage com geo-redundância
 az storage account create \
   --name storageprod \
-  --sku Standard_GRS  # Geo-redundant storage — replica para região par
+  --sku Standard_GRS  # Geo-redundant storage, replica para região par
 ```
 
 <div class="callout">
@@ -113,4 +113,4 @@ az storage account create \
 
 ## Conclusão
 
-Multi-região no Azure não é simplesmente duplicar a infraestrutura. A escolha entre hubs regionais independentes e Virtual WAN depende do volume de hubs e da necessidade de gerenciamento centralizado. O ponto mais crítico — e mais frequentemente negligenciado — é garantir que os dados estejam na região de destino antes do failover ocorrer.
+Multi-região no Azure não é simplesmente duplicar a infraestrutura. A escolha entre hubs regionais independentes e Virtual WAN depende do volume de hubs e da necessidade de gerenciamento centralizado. O ponto mais crítico, e mais frequentemente negligenciado, é garantir que os dados estejam na região de destino antes do failover ocorrer.

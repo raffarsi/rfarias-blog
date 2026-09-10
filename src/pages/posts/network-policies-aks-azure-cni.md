@@ -8,7 +8,7 @@ readTime: "10 min"
 description: "Por padrão, todos os pods de um cluster AKS se comunicam livremente. Como implementar Network Policies para isolar namespaces e restringir tráfego leste-oeste em ambientes de produção."
 ---
 
-Por padrão, todos os pods de um cluster AKS se comunicam livremente entre si — qualquer pod pode chamar qualquer outro, independente do namespace. Em produção, especialmente em ambientes com múltiplas equipes ou classificações de dados diferentes, isso é um risco de movimento lateral.
+Por padrão, todos os pods de um cluster AKS se comunicam livremente entre si, qualquer pod pode chamar qualquer outro, independente do namespace. Em produção, especialmente em ambientes com múltiplas equipes ou classificações de dados diferentes, isso é um risco de movimento lateral.
 
 Network Policies são o mecanismo nativo do Kubernetes para definir quais pods podem se comunicar entre si. No AKS com Azure CNI, as políticas são implementadas pelo Azure NPM (Network Policy Manager) diretamente no kernel do nó.
 
@@ -25,12 +25,12 @@ az aks create \
   --vnet-subnet-id $SUBNET_ID
 ```
 
-## Política de default deny — isolar tudo primeiro
+## Política de default deny, isolar tudo primeiro
 
 A abordagem recomendada é começar negando tudo e liberar explicitamente:
 
 ```yaml
-# default-deny-all.yaml — aplicar em cada namespace
+# default-deny-all.yaml, aplicar em cada namespace
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -137,9 +137,9 @@ spec:
 ```
 
 <div class="callout">
-<strong>Testando antes de aplicar:</strong> Use <code>kubectl exec</code> para validar conectividade antes e depois de aplicar políticas. O comando <code>nc -zv ip porta</code> dentro de um pod mostra rapidamente se a conexão está aberta ou bloqueada — muito mais rápido que depurar via logs de aplicação.
+<strong>Testando antes de aplicar:</strong> Use <code>kubectl exec</code> para validar conectividade antes e depois de aplicar políticas. O comando <code>nc -zv ip porta</code> dentro de um pod mostra rapidamente se a conexão está aberta ou bloqueada, muito mais rápido que depurar via logs de aplicação.
 </div>
 
 ## Conclusão
 
-Network Policies no AKS são o equivalente de NSGs para comunicação entre pods. O padrão default-deny-all seguido de liberações explícitas é o mais seguro e mais fácil de auditar — você sabe exatamente quais comunicações são permitidas porque estão documentadas em YAML versionado no Git.
+Network Policies no AKS são o equivalente de NSGs para comunicação entre pods. O padrão default-deny-all seguido de liberações explícitas é o mais seguro e mais fácil de auditar, você sabe exatamente quais comunicações são permitidas porque estão documentadas em YAML versionado no Git.

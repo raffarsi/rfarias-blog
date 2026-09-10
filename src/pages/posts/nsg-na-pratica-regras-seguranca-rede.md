@@ -8,15 +8,15 @@ readTime: "9 min"
 description: "NSG parece simples — até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em produção."
 ---
 
-O Network Security Group (NSG) é o firewall de camada 3/4 do Azure. Ele filtra tráfego de entrada e saída com base em IP de origem/destino, porta e protocolo. Parece simples — e é, até aparecer o primeiro caso de "funciona no dev, não funciona em produção".
+O Network Security Group (NSG) é o firewall de camada 3/4 do Azure. Ele filtra tráfego de entrada e saída com base em IP de origem/destino, porta e protocolo. Parece simples, e é, até aparecer o primeiro caso de "funciona no dev, não funciona em produção".
 
 ## Como o NSG funciona
 
 Um NSG contém regras de segurança, cada uma com:
-- **Prioridade** — número entre 100 e 4096. Quanto menor, maior a prioridade
-- **Origem e destino** — IP, range CIDR, Service Tag ou Application Security Group
-- **Protocolo** — TCP, UDP, ICMP ou Any
-- **Ação** — Allow ou Deny
+- **Prioridade**, número entre 100 e 4096. Quanto menor, maior a prioridade
+- **Origem e destino**, IP, range CIDR, Service Tag ou Application Security Group
+- **Protocolo**, TCP, UDP, ICMP ou Any
+- **Ação**, Allow ou Deny
 
 O Azure avalia as regras em ordem de prioridade e para na primeira que corresponde. Se nenhuma regra corresponder, o tráfego é bloqueado (para inbound) ou permitido (para outbound) pelas regras padrão.
 
@@ -60,13 +60,13 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
 ## Regras padrão que você não pode apagar
 
 Todo NSG tem regras padrão com prioridade 65000+:
-- `AllowVNetInBound` (65000) — permite tráfego de qualquer VNet
-- `AllowAzureLoadBalancerInBound` (65001) — permite health probes do Load Balancer
-- `DenyAllInBound` (65500) — bloqueia todo o resto
+- `AllowVNetInBound` (65000), permite tráfego de qualquer VNet
+- `AllowAzureLoadBalancerInBound` (65001), permite health probes do Load Balancer
+- `DenyAllInBound` (65500), bloqueia todo o resto
 
 O erro mais comum: criar uma regra Deny com prioridade alta sem perceber que `AllowVNetInBound` (65000) ainda permite tráfego vindo de outras subnets da mesma VNet.
 
-## Service Tags — não use IPs fixos
+## Service Tags, não use IPs fixos
 
 Em vez de manter listas de IPs de serviços Azure, use Service Tags:
 
@@ -88,11 +88,11 @@ Em vez de manter listas de IPs de serviços Azure, use Service Tags:
 ```
 
 Service Tags importantes:
-- `Internet` — tráfego vindo da internet
-- `VirtualNetwork` — todo o espaço de endereçamento da VNet e peerings
-- `AzureLoadBalancer` — health probes do Load Balancer
-- `Storage` — endpoints públicos do Azure Storage
-- `AzureMonitor` — telemetria para Azure Monitor
+- `Internet`, tráfego vindo da internet
+- `VirtualNetwork`, todo o espaço de endereçamento da VNet e peerings
+- `AzureLoadBalancer`, health probes do Load Balancer
+- `Storage`, endpoints públicos do Azure Storage
+- `AzureMonitor`, telemetria para Azure Monitor
 
 ## NSG em subnet vs NSG em NIC
 

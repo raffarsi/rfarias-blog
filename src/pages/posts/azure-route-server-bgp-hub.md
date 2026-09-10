@@ -8,7 +8,7 @@ readTime: "10 min"
 description: "O Route Server permite que NVAs de terceiros troquem rotas BGP diretamente com o fabric do Azure. Quando usar no lugar do VPN Gateway e como configurar em topologia hub-and-spoke."
 ---
 
-O Azure Route Server resolve um problema específico: NVAs (Network Virtual Appliances) de terceiros — Fortinet, Palo Alto, Check Point — precisam propagar rotas para o fabric do Azure sem depender de UDRs estáticas mantidas manualmente.
+O Azure Route Server resolve um problema específico: NVAs (Network Virtual Appliances) de terceiros. Fortinet, Palo Alto, Check Point, precisam propagar rotas para o fabric do Azure sem depender de UDRs estáticas mantidas manualmente.
 
 ## O problema sem Route Server
 
@@ -17,7 +17,7 @@ Sem o Route Server, quando você coloca uma NVA no hub:
 1. Você cria UDRs (User Defined Routes) apontando para o IP da NVA
 2. A NVA aprende rotas on-premises via BGP com o VPN/ER Gateway
 3. Mas o Azure não propaga automaticamente essas rotas para os spokes
-4. Você mantém UDRs estáticas em cada spoke — e atualiza manualmente quando surgem novos prefixos on-premises
+4. Você mantém UDRs estáticas em cada spoke, e atualiza manualmente quando surgem novos prefixos on-premises
 
 Com Route Server, a NVA troca rotas BGP diretamente com o fabric do Azure, e as rotas aprendidas são propagadas automaticamente para todos os spokes.
 
@@ -99,7 +99,7 @@ az network routeserver peering list-advertised-routes \
 ```
 
 <div class="callout">
-<strong>Branch-to-Branch:</strong> Com <code>allow-b2b-traffic</code> habilitado, rotas aprendidas de um circuito ExpressRoute são propagadas para conexões VPN e vice-versa — sem precisar de UDRs manuais. Útil quando você tem múltiplos sites conectando por tipos de circuito diferentes.
+<strong>Branch-to-Branch:</strong> Com <code>allow-b2b-traffic</code> habilitado, rotas aprendidas de um circuito ExpressRoute são propagadas para conexões VPN e vice-versa, sem precisar de UDRs manuais. Útil quando você tem múltiplos sites conectando por tipos de circuito diferentes.
 </div>
 
 ## Quando usar Route Server vs UDRs estáticas
@@ -116,4 +116,4 @@ az network routeserver peering list-advertised-routes \
 
 ## Conclusão
 
-O Route Server elimina a manutenção manual de UDRs em ambientes com NVAs de terceiros. O investimento na configuração BGP inicial retorna em horas poupadas toda vez que um novo prefixo on-premises aparece — em vez de atualizar UDRs em cada spoke manualmente.
+O Route Server elimina a manutenção manual de UDRs em ambientes com NVAs de terceiros. O investimento na configuração BGP inicial retorna em horas poupadas toda vez que um novo prefixo on-premises aparece, em vez de atualizar UDRs em cada spoke manualmente.

@@ -8,14 +8,14 @@ readTime: "10 min"
 description: "Regional VNet Integration permite que App Services acessem recursos dentro de uma VNet sem IP público. Configuração, limitações e a diferença para Private Endpoints."
 ---
 
-O App Service é um serviço PaaS que roda fora da sua VNet por padrão. Para que ele acesse recursos privados — SQL Database com Private Endpoint, Azure OpenAI em rede privada, Storage sem acesso público — você precisa de VNet Integration.
+O App Service é um serviço PaaS que roda fora da sua VNet por padrão. Para que ele acesse recursos privados. SQL Database com Private Endpoint, Azure OpenAI em rede privada, Storage sem acesso público, você precisa de VNet Integration.
 
 Existem dois mecanismos distintos que frequentemente causam confusão:
 
 - **VNet Integration:** permite que o App Service faça chamadas **saindo** para recursos dentro da VNet
 - **Private Endpoint para App Service:** permite que chamadas **entrando** no App Service cheguem por endereço privado
 
-Este artigo cobre o primeiro caso — VNet Integration de saída.
+Este artigo cobre o primeiro caso. VNet Integration de saída.
 
 ## Regional VNet Integration
 
@@ -41,7 +41,7 @@ az webapp vnet-integration add \
 
 ## Roteando todo o tráfego de saída pela VNet
 
-Por padrão, apenas tráfego para endereços RFC 1918 vai pela VNet. Para rotear todo o tráfego de saída (incluindo internet) pela VNet — útil quando você tem Azure Firewall inspecionando a saída:
+Por padrão, apenas tráfego para endereços RFC 1918 vai pela VNet. Para rotear todo o tráfego de saída (incluindo internet) pela VNet, útil quando você tem Azure Firewall inspecionando a saída:
 
 ```bash
 az webapp config appsettings set \
@@ -54,7 +54,7 @@ Com isso, todo o tráfego de saída do App Service passa pelo Azure Firewall do 
 
 ## Acessando Private Endpoints pela integração
 
-Depois de habilitar VNet Integration, o App Service pode chamar recursos com Private Endpoints normalmente — desde que o DNS resolva para o IP privado:
+Depois de habilitar VNet Integration, o App Service pode chamar recursos com Private Endpoints normalmente, desde que o DNS resolva para o IP privado:
 
 ```python
 # No App Service, após VNet Integration:
@@ -83,7 +83,7 @@ az webapp config appsettings set \
 ```
 
 <div class="callout">
-<strong>Subnet exclusiva:</strong> A subnet de VNet Integration não pode ter outros recursos. Não coloque VMs, Private Endpoints ou qualquer outra coisa nela — só a delegação para App Service. Isso também significa que o NSG associado a essa subnet deve permitir tráfego de saída para os recursos que o App precisa acessar.
+<strong>Subnet exclusiva:</strong> A subnet de VNet Integration não pode ter outros recursos. Não coloque VMs, Private Endpoints ou qualquer outra coisa nela, só a delegação para App Service. Isso também significa que o NSG associado a essa subnet deve permitir tráfego de saída para os recursos que o App precisa acessar.
 </div>
 
 ## VNet Integration vs Private Endpoint no App Service
@@ -98,4 +98,4 @@ Para o cenário completo de App Service totalmente privado: VNet Integration par
 
 ## Conclusão
 
-VNet Integration é o que conecta um App Service à sua topologia de rede privada sem precisar migrar para IaaS. O custo é uma subnet dedicada e configuração de DNS — mas o resultado é que o App Service acessa Azure OpenAI, AI Search, SQL e qualquer recurso com Private Endpoint exatamente como se estivesse dentro da VNet.
+VNet Integration é o que conecta um App Service à sua topologia de rede privada sem precisar migrar para IaaS. O custo é uma subnet dedicada e configuração de DNS, mas o resultado é que o App Service acessa Azure OpenAI, AI Search, SQL e qualquer recurso com Private Endpoint exatamente como se estivesse dentro da VNet.

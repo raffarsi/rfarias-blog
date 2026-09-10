@@ -10,9 +10,9 @@ description: "IDPS no Azure Firewall Premium detecta ameaças conhecidas por ass
 
 O IDPS (Intrusion Detection and Prevention System) e o Threat Intelligence do Azure Firewall Premium são frequentemente habilitados sem uma estratégia clara de como gerenciar os alertas. O resultado: centenas de alertas por dia que ninguém analisa, ou modo Deny que bloqueia tráfego legítimo sem que ninguém entenda por quê.
 
-## IDPS vs Threat Intelligence — a diferença
+## IDPS vs Threat Intelligence, a diferença
 
-**Threat Intelligence:** bloqueia IPs e domínios conhecidamente maliciosos com base em feeds de inteligência da Microsoft. É mais simples — uma lista de "nunca permitir isso".
+**Threat Intelligence:** bloqueia IPs e domínios conhecidamente maliciosos com base em feeds de inteligência da Microsoft. É mais simples, uma lista de "nunca permitir isso".
 
 **IDPS:** analisa o conteúdo do tráfego por padrões de ataque usando assinaturas (SQL injection em URLs, payloads de malware, C2 traffic). Mais granular, mais falsos positivos possíveis.
 
@@ -65,7 +65,7 @@ AzureDiagnostics
 ```
 
 ```kql
-// Alertas por IP de origem — identificar se é tráfego interno ou externo
+// Alertas por IP de origem, identificar se é tráfego interno ou externo
 AzureDiagnostics
 | where Category == "AzureFirewallIDSLog"
 | where Action_s == "Alert"
@@ -93,7 +93,7 @@ Antes de ativar modo Deny no IDPS, faça esse processo:
 4. **Após 2 semanas sem falsos positivos confirmados:** mover para Deny
 
 <div class="callout">
-<strong>Performance com IDPS:</strong> O IDPS processa o payload de cada pacote, não só headers. Isso tem impacto de CPU no Firewall. Monitore a utilização de CPU do Azure Firewall após habilitar IDPS — se estiver consistentemente acima de 80%, considere aumentar a capacidade ou revisar quais regras de aplicação estão com IDPS habilitado.
+<strong>Performance com IDPS:</strong> O IDPS processa o payload de cada pacote, não só headers. Isso tem impacto de CPU no Firewall. Monitore a utilização de CPU do Azure Firewall após habilitar IDPS, se estiver consistentemente acima de 80%, considere aumentar a capacidade ou revisar quais regras de aplicação estão com IDPS habilitado.
 </div>
 
 ## Alertas no Azure Monitor

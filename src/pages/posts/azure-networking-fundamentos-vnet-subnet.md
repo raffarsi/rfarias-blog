@@ -8,9 +8,9 @@ readTime: "8 min"
 description: "Antes de criar uma VM, um container ou qualquer recurso no Azure, você precisa entender como as redes virtuais funcionam. Tudo começa aqui."
 ---
 
-Antes de criar qualquer recurso no Azure — uma VM, um container, um banco de dados — você precisa tomar uma decisão de rede. E a decisão errada aqui custa caro para desfazer.
+Antes de criar qualquer recurso no Azure, uma VM, um container, um banco de dados, você precisa tomar uma decisão de rede. E a decisão errada aqui custa caro para desfazer.
 
-Uma **Virtual Network (VNet)** é a rede privada do Azure. É o isolamento fundamental que separa seus recursos dos recursos de outros clientes e da internet. Tudo que você cria no Azure fica dentro de uma VNet — ou precisa ser conectado a uma para se comunicar de forma privada com outros recursos.
+Uma **Virtual Network (VNet)** é a rede privada do Azure. É o isolamento fundamental que separa seus recursos dos recursos de outros clientes e da internet. Tudo que você cria no Azure fica dentro de uma VNet, ou precisa ser conectado a uma para se comunicar de forma privada com outros recursos.
 
 ## O que é uma VNet
 
@@ -29,9 +29,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-09-01' = {
 ```
 
 Diferente de uma rede física, uma VNet:
-- É **regional** — existe dentro de uma região Azure específica
-- É **isolada por padrão** — sem configuração explícita, recursos de VNets diferentes não se comunicam
-- Tem **custo zero** — o que você paga é pelo tráfego que sai, não pela VNet em si
+- É **regional**, existe dentro de uma região Azure específica
+- É **isolada por padrão**, sem configuração explícita, recursos de VNets diferentes não se comunicam
+- Tem **custo zero**: o que você paga é pelo tráfego que sai, não pela VNet em si
 
 ## Subnets: segmentando o espaço
 
@@ -59,16 +59,16 @@ Use sempre ranges RFC 1918 (privados):
 O erro mais comum é criar VNets com ranges que se sobrepõem. Se você depois precisar conectar duas VNets (via peering) ou conectar ao on-premises (via VPN), ranges sobrepostos tornam isso impossível.
 
 <div class="callout">
-<strong>Planejamento de IP:</strong> Reserve sempre mais espaço do que você acha que vai precisar. Trocar o range de uma VNet em produção é destrutivo — você precisa recriar tudo. Use no mínimo /16 para VNets de produção, deixando headroom para crescimento.
+<strong>Planejamento de IP:</strong> Reserve sempre mais espaço do que você acha que vai precisar. Trocar o range de uma VNet em produção é destrutivo, você precisa recriar tudo. Use no mínimo /16 para VNets de produção, deixando headroom para crescimento.
 </div>
 
 ## O que o Azure reserva automaticamente
 
 Em cada subnet, o Azure reserva 5 endereços IP para uso interno:
-- `.0` — endereço de rede
-- `.1` — gateway padrão
-- `.2` e `.3` — DNS do Azure
-- `.255` — broadcast
+- `.0`, endereço de rede
+- `.1`, gateway padrão
+- `.2` e `.3`, DNS do Azure
+- `.255`, broadcast
 
 Uma subnet `/29` tem 8 IPs totais, mas só 3 disponíveis para seus recursos. Planeje com isso em mente.
 
@@ -77,11 +77,11 @@ Uma subnet `/29` tem 8 IPs totais, mas só 3 disponíveis para seus recursos. Pl
 Por padrão, recursos na mesma VNet se comunicam livremente (mesmo em subnets diferentes). Para restringir, você usa NSGs.
 
 Para comunicação entre VNets ou com on-premises, as opções são:
-- **VNet Peering** — conexão direta entre duas VNets (mesmo ou diferentes regiões)
-- **VPN Gateway** — túnel criptografado pela internet para on-premises
-- **ExpressRoute** — conexão privada dedicada para on-premises
+- **VNet Peering**, conexão direta entre duas VNets (mesmo ou diferentes regiões)
+- **VPN Gateway**, túnel criptografado pela internet para on-premises
+- **ExpressRoute**, conexão privada dedicada para on-premises
 
-Cada um tem casos de uso distintos — tema dos próximos artigos desta série.
+Cada um tem casos de uso distintos, tema dos próximos artigos desta série.
 
 ## Conclusão
 

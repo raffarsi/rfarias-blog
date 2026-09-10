@@ -8,7 +8,7 @@ readTime: "10 min"
 description: "WAF no Application Gateway vai além de habilitar o OWASP ruleset. Regras customizadas, exclusões e integração com o Azure Monitor para uma proteção que não quebra aplicações legítimas."
 ---
 
-O Azure Application Gateway com WAF (Web Application Firewall) é frequentemente habilitado e esquecido — o OWASP ruleset vai para produção com as configurações padrão e fica lá até começar a bloquear requisições legítimas. Configuração adequada exige entender como as regras se aplicam, como criar exclusões cirúrgicas e como monitorar o que está sendo bloqueado.
+O Azure Application Gateway com WAF (Web Application Firewall) é frequentemente habilitado e esquecido, o OWASP ruleset vai para produção com as configurações padrão e fica lá até começar a bloquear requisições legítimas. Configuração adequada exige entender como as regras se aplicam, como criar exclusões cirúrgicas e como monitorar o que está sendo bloqueado.
 
 ## Modos de operação: Detection vs Prevention
 
@@ -80,7 +80,7 @@ AzureDiagnostics
 | order by TimeGenerated desc
 ```
 
-Antes de criar exclusões, confirme que o tráfego bloqueado é legítimo — o log inclui o IP de origem e a URI completa.
+Antes de criar exclusões, confirme que o tráfego bloqueado é legítimo, o log inclui o IP de origem e a URI completa.
 
 ## Regras customizadas
 
@@ -106,7 +106,7 @@ customRules: [
 ```
 
 <div class="callout">
-<strong>WAF Policy vs WAF Config:</strong> O modelo antigo usa WAF Config diretamente no Application Gateway. O modelo atual usa WAF Policy (recurso separado) que pode ser associada a múltiplos gateways e listeners individualmente. Prefira WAF Policy — é mais flexível e permite políticas diferentes por URI path.
+<strong>WAF Policy vs WAF Config:</strong> O modelo antigo usa WAF Config diretamente no Application Gateway. O modelo atual usa WAF Policy (recurso separado) que pode ser associada a múltiplos gateways e listeners individualmente. Prefira WAF Policy, é mais flexível e permite políticas diferentes por URI path.
 </div>
 
 ## Conclusão

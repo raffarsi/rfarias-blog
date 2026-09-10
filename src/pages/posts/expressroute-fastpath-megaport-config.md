@@ -8,7 +8,7 @@ readTime: "10 min"
 description: "FastPath elimina o gateway do caminho de dados para alto throughput. Global Reach conecta circuitos ExpressRoute diferentes. Quando cada um se justifica e o impacto real na latência."
 ---
 
-O ExpressRoute tem dois componentes de latência que frequentemente são ignorados: o gateway de rede virtual e o overhead de throughput. FastPath e Global Reach resolvem problemas distintos — entender qual você tem antes de pagar pelo upgrade é essencial.
+O ExpressRoute tem dois componentes de latência que frequentemente são ignorados: o gateway de rede virtual e o overhead de throughput. FastPath e Global Reach resolvem problemas distintos, entender qual você tem antes de pagar pelo upgrade é essencial.
 
 ## O problema que FastPath resolve
 
@@ -18,7 +18,7 @@ O fluxo padrão de tráfego ExpressRoute:
 On-premises → Edge da Microsoft → VNet Gateway → VMs/recursos na VNet
 ```
 
-O VNet Gateway é um gargalo de throughput e latência — especialmente para tráfego de alta frequência entre VMs e sistemas on-premises. O FastPath bypassa o gateway para tráfego de dados:
+O VNet Gateway é um gargalo de throughput e latência, especialmente para tráfego de alta frequência entre VMs e sistemas on-premises. O FastPath bypassa o gateway para tráfego de dados:
 
 ```
 On-premises → Edge da Microsoft → VMs/recursos diretamente
@@ -78,7 +78,7 @@ Para ambientes com múltiplos circuitos ExpressRoute (alta disponibilidade ou m�
 
 Em vez de contratar um circuito dedicado de São Paulo para o peering da Microsoft em cada provedor, você contrata uma porta no Megaport e cria Virtual Cross Connects para os peering points da Microsoft. Mais flexível e geralmente mais barato para múltiplos destinos.
 
-A latência adicional do Megaport (fabric de interconexão) é tipicamente < 1ms — irrelevante para a maioria dos casos de uso.
+A latência adicional do Megaport (fabric de interconexão) é tipicamente < 1ms, irrelevante para a maioria dos casos de uso.
 
 ## Monitorando a latência real
 
@@ -94,7 +94,7 @@ NetworkMonitoring
 ```
 
 <div class="callout">
-<strong>FastPath e Private Endpoints:</strong> O FastPath não funciona para tráfego destinado a Private Endpoints — esse tráfego sempre passa pelo gateway. Se o seu caso de uso é principalmente acessar serviços PaaS (Storage, SQL, OpenAI) via Private Endpoints de on-premises, FastPath não vai ajudar.
+<strong>FastPath e Private Endpoints:</strong> O FastPath não funciona para tráfego destinado a Private Endpoints, esse tráfego sempre passa pelo gateway. Se o seu caso de uso é principalmente acessar serviços PaaS (Storage, SQL, OpenAI) via Private Endpoints de on-premises, FastPath não vai ajudar.
 </div>
 
 ## Quando investir em cada um
@@ -108,4 +108,4 @@ NetworkMonitoring
 
 ## Conclusão
 
-FastPath e Global Reach são investimentos adicionais sobre o ExpressRoute base. Meça a latência atual com Connection Monitor antes de decidir — o problema pode estar no roteamento on-premises, não no gateway Azure.
+FastPath e Global Reach são investimentos adicionais sobre o ExpressRoute base. Meça a latência atual com Connection Monitor antes de decidir, o problema pode estar no roteamento on-premises, não no gateway Azure.
