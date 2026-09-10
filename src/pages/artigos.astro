@@ -166,6 +166,7 @@ const filters = [
       </div>
     </div>
 
+    <!-- Linha 1: Categorias -->
     <div class="filters" id="filters">
       {filters.map((f, i) => (
         <button class:list={['filter-btn', { active: i === 0 }]} data-filter={f.tag}>
@@ -175,9 +176,51 @@ const filters = [
       ))}
     </div>
 
+    <!-- Linha 2: Período rápido -->
+    <div class="filters period-filters" id="period-filters">
+      <span class="filter-label">Período:</span>
+      <button class="filter-btn period-btn active" data-period="all">Tudo</button>
+      <button class="filter-btn period-btn" data-period="2024">2024</button>
+      <button class="filter-btn period-btn" data-period="2025">2025</button>
+      <button class="filter-btn period-btn" data-period="2026">2026</button>
+      <button class="filter-btn period-btn" data-period="3m">Últ. 3 meses</button>
+      <button class="filter-btn period-btn" data-period="6m">Últ. 6 meses</button>
+      <button class="filter-btn period-btn" data-period="12m">Últ. 12 meses</button>
+    </div>
+
+    <!-- Linha 3: A partir de -->
+    <div class="from-date-wrap" id="from-date-wrap">
+      <span class="filter-label">A partir de:</span>
+      <select id="from-month" class="date-select">
+        <option value="">Mês</option>
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+      </select>
+      <select id="from-year" class="date-select">
+        <option value="">Ano</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+      <button id="clear-date" class="clear-date-btn" style="display:none">✕ Limpar</button>
+    </div>
+
     <section class="post-grid" id="post-grid">
       {posts.map(post => (
-        <div class="post-item" data-tag={post.tag} data-search={`${post.title} ${post.excerpt} ${post.category}`.toLowerCase()}>
+        <div class="post-item"
+          data-tag={post.tag}
+          data-date={post.date}
+          data-search={`${post.title} ${post.excerpt} ${post.category}`.toLowerCase()}>
           <PostCard {...post} />
         </div>
       ))}
@@ -186,43 +229,140 @@ const filters = [
 
   <script is:inline>
     let activeFilter = 'todos';
+    let activePeriod = 'all';
+    let fromMonth = '';
+    let fromYear = '';
     let searchQuery = '';
+
+    // Parse "DD Mmm YYYY" → Date
+    const MONTHS = {Jan:0,Fev:1,Mar:2,Abr:3,Mai:4,Jun:5,Jul:6,Ago:7,Set:8,Out:9,Nov:10,Dez:11};
+    function parseDate(str) {
+      if (!str) return null;
+      const parts = str.trim().split(' ');
+      if (parts.length < 3) return null;
+      const d = parseInt(parts[0]);
+      const m = MONTHS[parts[1]];
+      const y = parseInt(parts[2]);
+      if (isNaN(d) || m === undefined || isNaN(y)) return null;
+      return new Date(y, m, d);
+    }
+
+    function getMinDate() {
+      // "A partir de" tem prioridade sobre período rápido
+      if (fromMonth && fromYear) {
+        return new Date(parseInt(fromYear), parseInt(fromMonth) - 1, 1);
+      }
+      const now = new Date();
+      if (activePeriod === '3m')  return new Date(now.getFullYear(), now.getMonth() - 3, 1);
+      if (activePeriod === '6m')  return new Date(now.getFullYear(), now.getMonth() - 6, 1);
+      if (activePeriod === '12m') return new Date(now.getFullYear(), now.getMonth() - 12, 1);
+      return null;  // all / ano específico tratado abaixo
+    }
 
     function applyFilters() {
       const items = document.querySelectorAll('.post-item');
+      const minDate = getMinDate();
+      const now = new Date();
       let visible = 0;
+
       items.forEach(item => {
         const tagMatch = activeFilter === 'todos' || item.dataset.tag === activeFilter;
         const searchMatch = !searchQuery || (item.dataset.search || '').includes(searchQuery);
-        const show = tagMatch && searchMatch;
+
+        let dateMatch = true;
+        const artDate = parseDate(item.dataset.date);
+
+        if (fromMonth && fromYear) {
+          // "A partir de" ativo — ignora período rápido
+          dateMatch = artDate && artDate >= minDate;
+        } else if (activePeriod === '2024') {
+          dateMatch = artDate && artDate.getFullYear() === 2024;
+        } else if (activePeriod === '2025') {
+          dateMatch = artDate && artDate.getFullYear() === 2025;
+        } else if (activePeriod === '2026') {
+          dateMatch = artDate && artDate.getFullYear() === 2026;
+        } else if (['3m','6m','12m'].includes(activePeriod)) {
+          dateMatch = artDate && artDate >= minDate;
+        }
+        // 'all' → dateMatch = true
+
+        const show = tagMatch && searchMatch && dateMatch;
         item.style.display = show ? '' : 'none';
         if (show) visible++;
       });
+
       const countEl = document.getElementById('search-count');
       if (countEl) {
-        countEl.textContent = searchQuery ? `${visible} resultado${visible !== 1 ? 's' : ''}` : '';
+        const total = document.querySelectorAll('.post-item').length;
+        countEl.textContent = visible < total ? `${visible} artigo${visible !== 1 ? 's' : ''}` : '';
       }
     }
 
+    // Filtros de categoria
     document.getElementById('filters').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-filter]');
       if (!btn) return;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-btn:not(.period-btn)').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeFilter = btn.dataset.filter;
       applyFilters();
     });
 
+    // Filtros de período
+    document.getElementById('period-filters').addEventListener('click', (e) => {
+      const btn = e.target.closest('.period-btn');
+      if (!btn) return;
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activePeriod = btn.dataset.period;
+      // Limpar "a partir de" ao selecionar período rápido
+      fromMonth = ''; fromYear = '';
+      document.getElementById('from-month').value = '';
+      document.getElementById('from-year').value = '';
+      document.getElementById('clear-date').style.display = 'none';
+      applyFilters();
+    });
+
+    // A partir de — mês
+    document.getElementById('from-month').addEventListener('change', (e) => {
+      fromMonth = e.target.value;
+      updateFromDate();
+    });
+
+    // A partir de — ano
+    document.getElementById('from-year').addEventListener('change', (e) => {
+      fromYear = e.target.value;
+      updateFromDate();
+    });
+
+    function updateFromDate() {
+      const hasDate = fromMonth && fromYear;
+      document.getElementById('clear-date').style.display = hasDate ? '' : 'none';
+      if (hasDate) {
+        // Desativar período rápido visualmente quando "a partir de" está ativo
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      }
+      applyFilters();
+    }
+
+    // Limpar data
+    document.getElementById('clear-date').addEventListener('click', () => {
+      fromMonth = ''; fromYear = '';
+      document.getElementById('from-month').value = '';
+      document.getElementById('from-year').value = '';
+      document.getElementById('clear-date').style.display = 'none';
+      // Reativar "Tudo"
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.period-btn[data-period="all"]').classList.add('active');
+      activePeriod = 'all';
+      applyFilters();
+    });
+
+    // Busca
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         searchQuery = e.target.value.toLowerCase().trim();
-        // Reset filter when searching
-        if (searchQuery) {
-          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-          document.querySelector('[data-filter="todos"]')?.classList.add('active');
-          activeFilter = 'todos';
-        }
         applyFilters();
       });
     }
@@ -243,7 +383,14 @@ const filters = [
   .search-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
   .search-count { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
 
-  .filters { display: flex; gap: 0.375rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .filters { display: flex; gap: 0.375rem; margin-bottom: 0.625rem; flex-wrap: wrap; align-items: center; }
+  .period-filters { margin-bottom: 0.625rem; }
+  .filter-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; margin-right: 0.25rem; }
+  .from-date-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .date-select { font-size: 0.8125rem; padding: 0.3rem 0.625rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; }
+  .date-select:focus { outline: none; border-color: var(--blue); }
+  .clear-date-btn { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 0.3rem 0.625rem; cursor: pointer; transition: all 0.15s; }
+  .clear-date-btn:hover { border-color: #e53e3e; color: #e53e3e; }
   .filter-btn {
     display: flex; align-items: center; gap: 0.375rem;
     font-size: 0.8125rem; font-weight: 500; font-family: var(--font-sans);
