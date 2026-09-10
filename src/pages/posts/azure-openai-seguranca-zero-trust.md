@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Seguranca Zero Trust para aplicacoes Azure OpenAI"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "24 Fev 2026"
 readTime: "10 min"

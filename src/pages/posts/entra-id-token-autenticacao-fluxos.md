@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Tokens e fluxos de autenticacao no Entra ID: OAuth 2.0 e OIDC na pratica"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "05 Fev 2026"
 readTime: "10 min"

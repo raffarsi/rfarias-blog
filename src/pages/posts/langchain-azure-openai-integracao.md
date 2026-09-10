@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "LangChain com Azure OpenAI: integração passo a passo"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "23 Set 2025"
 readTime: "9 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [4] — Storage Accounts: tudo que você precisa saber"
-category: "Azure"
+category: "IA Generativa"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieSlug: "az104"

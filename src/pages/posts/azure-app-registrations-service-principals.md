@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "App Registrations e Service Principals: identidade para aplicacoes no Azure"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "06 Nov 2025"
 readTime: "9 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "External Identities no Entra ID: colaboracao B2B segura"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "20 Nov 2025"
 readTime: "8 min"

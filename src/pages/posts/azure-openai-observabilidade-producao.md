@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Observabilidade de pipelines de IA no Azure: logs, traces e metricas"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "03 Fev 2026"
 readTime: "10 min"

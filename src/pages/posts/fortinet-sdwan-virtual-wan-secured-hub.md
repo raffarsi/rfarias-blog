@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Fortinet SD-WAN no Virtual WAN: comparando com a Secured Hub nativa da Microsoft"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 7

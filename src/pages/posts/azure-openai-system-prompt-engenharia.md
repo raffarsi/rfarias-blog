@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Engenharia de System Prompt para agentes corporativos no Azure OpenAI"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "30 Set 2025"
 readTime: "9 min"

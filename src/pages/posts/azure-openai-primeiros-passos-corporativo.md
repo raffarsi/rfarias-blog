@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure OpenAI Service: primeiros passos em ambiente corporativo"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "14 Ago 2025"
 readTime: "8 min"

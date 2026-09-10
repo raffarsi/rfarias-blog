@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Streaming de respostas do Azure OpenAI: UX responsiva"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "09 Dez 2025"
 readTime: "8 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Microsoft Entra ID: o que mudou do Azure AD e por que importa para você"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "07 Ago 2025"
 readTime: "7 min"

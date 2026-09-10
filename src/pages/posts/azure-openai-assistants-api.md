@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure OpenAI Assistants API: quando usar em vez de RAG customizado"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "18 Nov 2025"
 readTime: "9 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure NAT Gateway: saida de internet controlada e previsivel"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "19 Fev 2026"
 readTime: "8 min"

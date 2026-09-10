@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "SC-900 na prática [1] — Zero Trust e defesa em profundidade"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 serie: "SC-900 na prática"
 serieSlug: "sc900"

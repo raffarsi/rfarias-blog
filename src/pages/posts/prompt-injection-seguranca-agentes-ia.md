@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Prompt Injection: risco de seguranca em agentes de IA"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "16 Dez 2025"
 readTime: "9 min"

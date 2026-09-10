@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Fine-tuning no Azure OpenAI: quando vale a pena e quando e desperdicio"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "14 Out 2025"
 readTime: "9 min"

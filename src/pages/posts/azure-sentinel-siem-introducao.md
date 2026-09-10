@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Microsoft Sentinel: SIEM nativo do Azure para deteccao de ameacas"
-category: "Azure"
+category: "Segurança"
 tag: "azure"
 date: "16 Out 2025"
 readTime: "10 min"

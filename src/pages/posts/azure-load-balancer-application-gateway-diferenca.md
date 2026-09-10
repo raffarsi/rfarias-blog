@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Load Balancer vs Application Gateway: qual usar em cada cenario"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "29 Jan 2026"
 readTime: "9 min"

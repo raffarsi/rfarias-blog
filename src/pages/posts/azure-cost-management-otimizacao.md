@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Gerenciamento de custos no Azure: do caos ao controle"
-category: "Azure"
+category: "FinOps"
 tag: "azure"
 date: "27 Nov 2025"
 readTime: "9 min"

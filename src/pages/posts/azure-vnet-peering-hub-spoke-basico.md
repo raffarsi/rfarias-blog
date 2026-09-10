@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "VNet Peering e topologia hub-and-spoke: conceitos fundamentais"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "16 Set 2025"
 readTime: "9 min"

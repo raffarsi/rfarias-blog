@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Virtual WAN: quando a topologia hub-and-spoke nao escala"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "26 Fev 2026"
 readTime: "9 min"

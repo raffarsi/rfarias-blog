@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [5] — Azure Files e Azure File Sync"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieSlug: "az104"

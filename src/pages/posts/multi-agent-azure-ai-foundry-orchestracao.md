@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Orquestracao de multiplos agentes com Azure AI Foundry"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "27 Jan 2026"
 readTime: "11 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure AI Foundry: a plataforma unificada para agentes de IA"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "21 Out 2025"
 readTime: "9 min"

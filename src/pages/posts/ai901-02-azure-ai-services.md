@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AI-901 na prática [2] — Azure AI Services: visão e fala"
-category: "IA"
+category: "IA Generativa"
 tag: "ia"
 serie: "AI-901 na prática"
 serieSlug: "ai901"

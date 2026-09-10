@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Document Intelligence: extracao de dados de documentos nao estruturados"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "17 Fev 2026"
 readTime: "9 min"

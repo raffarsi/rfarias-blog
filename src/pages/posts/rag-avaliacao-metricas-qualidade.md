@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Como avaliar a qualidade de um pipeline RAG: metricas e frameworks"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "30 Dez 2025"
 readTime: "10 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [3] — Computação e redes no Azure"
-category: "Azure"
+category: "Docência"
 tag: "azure"
 serie: "AZ-900 na prática"
 serieSlug: "az900"

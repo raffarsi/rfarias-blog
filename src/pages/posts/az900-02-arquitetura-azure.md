@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [2] — Arquitetura e componentes do Azure"
-category: "Azure"
+category: "Docência"
 tag: "azure"
 serie: "AZ-900 na prática"
 serieSlug: "az900"

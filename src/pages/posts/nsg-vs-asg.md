@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Network Security Groups vs Application Security Groups: quando usar cada um"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "13 Ago 2026"
 readTime: "10 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Network Watcher: diagnostico de problemas de rede"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "13 Nov 2025"
 readTime: "9 min"

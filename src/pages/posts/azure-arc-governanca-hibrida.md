@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Arc: governanca unificada para ambientes hibridos e multi-cloud"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 date: "04 Dez 2025"
 readTime: "9 min"

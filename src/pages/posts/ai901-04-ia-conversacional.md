@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AI-901 na prática [4] — IA conversacional e agentes"
-category: "IA"
+category: "IA Generativa"
 tag: "ia"
 serie: "AI-901 na prática"
 serieSlug: "ai901"

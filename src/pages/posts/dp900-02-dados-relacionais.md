@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "DP-900 na prática [2] — Dados relacionais no Azure"
-category: "Azure"
+category: "Docência"
 tag: "azure"
 serie: "DP-900 na prática"
 serieSlug: "dp900"

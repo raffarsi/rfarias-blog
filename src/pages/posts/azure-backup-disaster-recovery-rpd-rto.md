@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Backup e Disaster Recovery no Azure: RPO, RTO e estrategia certa"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 date: "22 Jan 2026"
 readTime: "10 min"

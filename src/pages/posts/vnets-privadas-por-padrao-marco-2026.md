@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "VNets privadas por padrão a partir de março de 2026: o que isso quebra e como migrar sem downtime"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 5

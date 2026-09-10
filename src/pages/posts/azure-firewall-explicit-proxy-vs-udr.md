@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Firewall com Explicit Proxy: guia prático de configuração e quando faz sentido trocar UDR por proxy"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 6

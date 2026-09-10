@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure AI Foundry: criando seu primeiro projeto de IA Generativa"
-category: "IA"
+category: "IA Generativa"
 tag: "ia"
 date: "20 Ago 2026"
 readTime: "12 min"

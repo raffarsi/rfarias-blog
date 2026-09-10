@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Como configurar Private Endpoints no Azure sem perder o acesso ao portal"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "27 Ago 2026"
 readTime: "8 min"

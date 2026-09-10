@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [10] — VNets, subnets e peering"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieSlug: "az104"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Arc para Kubernetes: GitOps e governanca de clusters"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 date: "12 Fev 2026"
 readTime: "9 min"

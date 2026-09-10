@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Monitor e Log Analytics: monitoramento que realmente funciona"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 date: "09 Out 2025"
 readTime: "10 min"

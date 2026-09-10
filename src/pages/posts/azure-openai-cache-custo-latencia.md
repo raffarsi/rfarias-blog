@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Cache de respostas no Azure OpenAI: reduzindo custo e latencia"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "10 Fev 2026"
 readTime: "9 min"

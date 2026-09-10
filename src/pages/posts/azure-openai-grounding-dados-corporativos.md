@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Grounding com dados corporativos: Azure OpenAI e base de conhecimento"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "02 Dez 2025"
 readTime: "10 min"

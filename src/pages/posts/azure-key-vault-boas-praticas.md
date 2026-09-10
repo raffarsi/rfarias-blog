@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Key Vault: boas práticas de gestão de secrets e certificados"
-category: "Azure"
+category: "Segurança"
 tag: "azure"
 date: "02 Out 2025"
 readTime: "8 min"

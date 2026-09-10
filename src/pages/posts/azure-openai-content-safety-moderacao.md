@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Content Safety: moderacao de conteudo em aplicacoes de IA"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "04 Nov 2025"
 readTime: "8 min"

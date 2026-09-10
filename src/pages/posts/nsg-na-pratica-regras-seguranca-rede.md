@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "NSG na prática: como criar regras de segurança de rede que realmente protegem"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "12 Ago 2025"
 readTime: "9 min"

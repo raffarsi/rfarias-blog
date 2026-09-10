@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Hub-and-spoke para workloads de IA generativa: onde colocar Azure AI Foundry, Search e Storage na topologia"
-category: "Azure"
+category: "IA Generativa"
 tag: "azure"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 2

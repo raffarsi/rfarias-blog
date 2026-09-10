@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "IA Responsavel na pratica corporativa com Azure OpenAI"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "20 Jan 2026"
 readTime: "9 min"

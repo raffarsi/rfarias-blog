@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Privileged Identity Management: acesso privilegiado just-in-time no Azure"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "18 Set 2025"
 readTime: "10 min"

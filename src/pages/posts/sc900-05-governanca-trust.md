@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "SC-900 na prática [5] — Governança e Service Trust Portal"
-category: "Azure"
+category: "Segurança"
 tag: "azure"
 serie: "SC-900 na prática"
 serieSlug: "sc900"

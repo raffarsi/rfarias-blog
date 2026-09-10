@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure DDoS Protection: Standard vs Basic e quando contratar"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "25 Set 2025"
 readTime: "8 min"

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Estrategias de chunking para RAG no Azure AI Search"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "11 Nov 2025"
 readTime: "10 min"

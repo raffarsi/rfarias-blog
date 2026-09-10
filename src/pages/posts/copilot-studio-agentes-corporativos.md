@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Copilot Studio: criando agentes corporativos sem codigo"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "13 Jan 2026"
 readTime: "8 min"

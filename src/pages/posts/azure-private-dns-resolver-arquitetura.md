@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Private DNS Resolver: resolucao de nomes centralizada no hub"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "18 Dez 2025"
 readTime: "9 min"

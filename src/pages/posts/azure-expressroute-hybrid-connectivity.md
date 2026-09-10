@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "ExpressRoute na pratica: conectividade hibrida para ambientes corporativos"
-category: "Azure"
+category: "Networking"
 tag: "azure"
 date: "01 Jan 2026"
 readTime: "11 min"

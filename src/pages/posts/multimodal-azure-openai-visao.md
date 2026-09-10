@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Modelos multimodais no Azure OpenAI: visao computacional com GPT-4o"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "25 Nov 2025"
 readTime: "9 min"

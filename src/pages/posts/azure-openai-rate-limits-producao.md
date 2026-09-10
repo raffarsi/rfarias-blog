@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Rate limits do Azure OpenAI em producao: como dimensionar e lidar com throttling"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "28 Out 2025"
 readTime: "9 min"

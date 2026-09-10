@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Conformidade regulatoria no Azure: LGPD, PCI-DSS e ISO 27001"
-category: "Azure"
+category: "Segurança"
 tag: "azure"
 date: "25 Dez 2025"
 readTime: "9 min"

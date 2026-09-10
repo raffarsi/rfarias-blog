@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Grupos no Entra ID: como estruturar para escalar com governanca"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 date: "23 Out 2025"
 readTime: "9 min"

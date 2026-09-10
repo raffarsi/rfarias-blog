@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Microsoft Defender for Cloud: postura de seguranca e Secure Score"
-category: "Azure"
+category: "Segurança"
 tag: "azure"
 date: "30 Out 2025"
 readTime: "8 min"

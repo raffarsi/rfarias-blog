@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [6] — VMs: criação, tamanhos e discos"
-category: "Azure"
+category: "Infra"
 tag: "azure"
 serie: "AZ-104 na prática"
 serieSlug: "az104"

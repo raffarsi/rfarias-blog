@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-900 na prática [5] — Identidade, segurança e governança"
-category: "Azure"
+category: "IAM"
 tag: "azure"
 serie: "AZ-900 na prática"
 serieSlug: "az900"

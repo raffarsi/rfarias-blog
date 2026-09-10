@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Function Calling no Azure OpenAI: como agentes executam acoes reais"
-category: "IA"
+category: "IA Generativa"
 tag: "azure"
 date: "23 Dez 2025"
 readTime: "10 min"
