@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
-import Newsletter from '../components/Newsletter.astro';
+
 
 const allPosts = [
   { slug: 'fortinet-sdwan-virtual-wan-secured-hub', title: 'Fortinet SD-WAN no Virtual WAN: comparando com a Secured Hub nativa da Microsoft', category: 'Azure', tag: 'azure' as const, date: '10 Set 2026', readTime: '11 min', excerpt: 'Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure já faz metade do que você paga por ela. Vale migrar tudo?' },
@@ -212,7 +212,7 @@ const counts = {
 
     <div class="carousel-dots" id="carouselDots"></div>
 
-    <Newsletter />
+    
 
     <div class="ver-todos">
       <a href="/artigos">Ver todos os {counts.todos} artigos →</a>

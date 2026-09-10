@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import Newsletter from '../components/Newsletter.astro';
+
 
 interface Props {
   frontmatter: {
@@ -75,7 +75,7 @@ const tocHeadings = headings.filter(h => h.depth === 2);
       </div>
     </div>
 
-    <Newsletter compact={true} />
+    
 
     {(frontmatter.prev || frontmatter.next) && (
       <nav class="post-nav">
