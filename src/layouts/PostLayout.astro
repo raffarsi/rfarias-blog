@@ -22,7 +22,10 @@ const { frontmatter, headings = [] } = Astro.props;
 const isTech = ['azure', 'ia', 'cloud', 'tech'].includes(frontmatter.tag);
 
 // Open Graph
-const ogImage = `/og-default.png`;
+const mvpSlugs = ['fortinet-sdwan-virtual-wan-secured-hub', 'expressroute-400g-vale-a-pena-migrar', 'azure-openai-exposto-na-internet-private-link', 'dns-privado-arquiteturas-ia-multi-vnet', 'azure-firewall-explicit-proxy-vs-udr', 'azure-private-dns-resolver-arquitetura', 'hub-and-spoke-ia-generativa-azure', 'vnets-privadas-por-padrao-marco-2026', 'azure-firewall-idps-threat-intel-config', 'expressroute-fastpath-megaport-config', 'latencia-rede-pipelines-rag-azure', 'azure-openai-seguranca-zero-trust', 'multi-agent-azure-ai-foundry-orchestracao', 'azure-openai-multi-tenant-arquitetura', 'azure-openai-observabilidade-producao', 'prompt-injection-seguranca-agentes-ia', 'azure-openai-rate-limits-producao', 'azure-openai-grounding-dados-corporativos', 'azure-openai-function-calling-agentes', 'azure-ai-foundry-agentes-introducao'];
+const articleSlug = Astro.url.pathname.replace('/posts/', '').replace('/', '');
+const hasOG = mvpSlugs.includes(articleSlug);
+const ogImage = hasOG ? `/og/${articleSlug}.png` : `/og-default.png`;
 const badgeClass = isTech ? 'badge-tech' : 'badge-carreira';
 const tocHeadings = headings.filter(h => h.depth === 2);
 ---
@@ -34,6 +37,11 @@ const tocHeadings = headings.filter(h => h.depth === 2);
   type="article"
 >
   <article class="container post-page">
+    {hasOG && (
+      <div class="post-cover-image">
+        <img src={ogImage} alt={frontmatter.title} loading="eager" />
+      </div>
+    )}
     {frontmatter.serie && (
       <div class="serie-banner">
         <div class="serie-banner-left">
@@ -287,5 +295,17 @@ const tocHeadings = headings.filter(h => h.depth === 2);
     .post-main-title {
       font-size: 1.5rem;
     }
+  }
+
+  .post-cover-image {
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .post-cover-image img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 </style>

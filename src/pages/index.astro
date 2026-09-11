@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
 
+const mvpSlugs = new Set(['azure-private-dns-resolver-arquitetura', 'azure-firewall-explicit-proxy-vs-udr', 'azure-openai-seguranca-zero-trust', 'hub-and-spoke-ia-generativa-azure', 'azure-openai-observabilidade-producao', 'azure-firewall-idps-threat-intel-config', 'azure-openai-multi-tenant-arquitetura', 'azure-openai-function-calling-agentes', 'multi-agent-azure-ai-foundry-orchestracao', 'latencia-rede-pipelines-rag-azure', 'dns-privado-arquiteturas-ia-multi-vnet', 'fortinet-sdwan-virtual-wan-secured-hub', 'vnets-privadas-por-padrao-marco-2026', 'azure-openai-grounding-dados-corporativos', 'azure-openai-rate-limits-producao', 'azure-openai-exposto-na-internet-private-link', 'prompt-injection-seguranca-agentes-ia', 'expressroute-400g-vale-a-pena-migrar', 'expressroute-fastpath-megaport-config', 'azure-ai-foundry-agentes-introducao']);
+
 
 const allPosts = [
   { slug: 'fortinet-sdwan-virtual-wan-secured-hub', title: "Secured Hub nativa da Microsoft vs Fortinet SD-WAN no Virtual WAN: a migração não precisa ser tudo ou nada", category: 'Networking', tag: 'networking' as const, date: '10 Set 2026', readTime: '11 min', excerpt: "Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure já faz metade do que você paga por ela. Vale migrar tud" },
@@ -220,7 +222,7 @@ const counts = {
         <div class="carousel-track" id="carouselTrack">
           {allPosts.map(post => (
             <div class="carousel-card">
-              <PostCard {...post} />
+              <PostCard {...post} coverImage={mvpSlugs.has(post.slug) ? `/og/${post.slug}.png` : undefined} />
             </div>
           ))}
         </div>
