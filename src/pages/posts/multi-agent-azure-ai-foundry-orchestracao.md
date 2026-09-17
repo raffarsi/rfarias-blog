@@ -33,6 +33,8 @@ Isso parece um detalhe pequeno, mas muda o design inteiro. Um erro comum é trat
 
 Isso tem uma implicação prática direta: a qualidade do prompt do orquestrador determina a precisão do sistema inteiro, muito mais do que a qualidade dos prompts dos agentes especializados. Vale gastar mais tempo de teste ali do que em qualquer outro componente.
 
+![Orquestrador central conectado a quatro agentes especializados: pesquisa, execução, validação e atendimento](/images/posts/multi-agent-azure-ai-foundry-orchestracao/orquestrador-hub-spoke.png)
+
 ## As camadas que ninguém pode pular
 
 Um sistema multiagente em produção tem responsabilidades que não aparecem no protótipo de laboratório e que custam caro quando são adicionadas depois:
@@ -44,6 +46,8 @@ Um sistema multiagente em produção tem responsabilidades que não aparecem no 
 - **Observabilidade**: logs e tracing de cada chamada entre agentes, porque depurar "por que o sistema respondeu isso" sem rastro por etapa é praticamente impossível em um fluxo com mais de dois agentes.
 
 A camada de observabilidade costuma ser a primeira a ficar de fora do escopo inicial e a primeira a faltar no primeiro incidente sério.
+
+![Cinco camadas de responsabilidade em degraus: orquestração, agentes especializados, ferramentas e APIs, memória e estado, observabilidade](/images/posts/multi-agent-azure-ai-foundry-orchestracao/camadas-responsabilidade.png)
 
 ## Checklist antes de colocar em produção
 
