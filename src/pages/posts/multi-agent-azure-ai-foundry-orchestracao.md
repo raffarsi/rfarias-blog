@@ -1,100 +1,62 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Orquestracao de multiplos agentes com Azure AI Foundry"
+title: "Orquestração de múltiplos agentes com Azure AI Foundry"
 category: "IA Generativa"
 tag: "ia-generativa"
-date: "27 Jan 2026"
-readTime: "11 min"
-description: "Artigo tecnico sobre orquestracao de multiplos agentes com azure ai foundry — parte da serie de conteudo Azure no blog rfarias.com."
+date: "18 Set 2026"
+readTime: "9 min"
+description: "Antes de dividir um problema em vários agentes de IA, entenda o que muda de responsabilidade, custo e governança no Azure AI Foundry."
 ---
 
-Um agente generalista que tenta fazer tudo tende a fazer tudo mal. Isso nao e teoria, e o que observo na pratica: quanto maior o escopo de responsabilidade, menor a precisao por topico.
+Um time me perguntou essa semana quantos agentes eles precisavam para automatizar um fluxo de triagem de chamados. A resposta que eu dei não foi um número. Foi outra pergunta: quem vai ser responsável quando um desses agentes responder errado?
 
-A solucao e especializar. Um agente de RH que so conhece politicas de RH responde melhor sobre ferias do que um agente generico que sabe de tudo superficialmente. O desafio e orquestrar esses especialistas de forma que o usuario nem saiba que existem varios.
+Isso incomoda quem está acostumado a pensar em arquitetura como catálogo de peças. Multiagente virou um dos termos mais usados em IA generativa em 2026, e boa parte dos projetos que vejo começar assim, decidindo quantos agentes construir antes de decidir quem decide o quê, entra em produção com um problema de governança que ninguém desenhou de propósito.
 
-## O padrao de orquestracao
+## Um agente com boas ferramentas ainda resolve a maioria dos casos
 
-Um orquestrador central recebe a solicitacao, decide qual especialista chamar e consolida a resposta. Os especialistas nao falam entre si diretamente.
+Antes de falar de orquestração, vale a pena dizer o que multiagente não é: não é a resposta padrão para qualquer sistema de IA que faça mais de uma coisa. Um agente único, bem configurado, com acesso a ferramentas certas (busca, function calling, um banco de dados), já cobre grande parte dos casos de uso que aparecem em times de produto.
 
-```
-Usuario
-  -> Orquestrador (roteamento)
-       -> Agente RH       (ferias, beneficios, politicas)
-       -> Agente TI       (suporte, tickets, acessos)
-       -> Agente Juridico (contratos, compliance)
-  <- Resposta
-```
+A divisão em múltiplos agentes começa a fazer sentido quando aparece pelo menos um destes quatro sinais:
 
-```python
-from azure.ai.projects import AIProjectClient
-from azure.identity import DefaultAzureCredential
-import json
+- **Domínios incompatíveis.** Um agente que responde sobre política de reembolso e outro que responde sobre configuração técnica de rede precisam de contexto, tom e fontes de dados tão diferentes que forçar os dois num único prompt degrada a qualidade dos dois.
+- **Permissões distintas por etapa.** Se uma etapa do fluxo precisa acessar um sistema financeiro e outra só precisa ler uma base de conhecimento pública, misturar isso num agente só significa dar a ele o maior escopo de permissão que qualquer etapa individual exige. Isso é o oposto de princípio de menor privilégio.
+- **Paralelismo que realmente importa.** Quando duas etapas são independentes entre si e a soma dos tempos de execução afeta a experiência do usuário, rodar em paralelo corta a latência total. Isso só vale a complexidade extra quando o ganho de tempo é sentido de verdade.
+- **Auditoria por responsável.** Em ambientes regulados (e trabalhando num banco, isso aparece toda semana), cada decisão relevante precisa ser rastreável a um agente e a uma etapa específicos, não a um bloco monolítico de raciocínio.
 
-client = AIProjectClient.from_connection_string(
-    credential=DefaultAzureCredential(),
-    conn_str='eastus.api.azureml.ms;{sub};{rg};{project}'
-)
+Se nenhum desses quatro pontos aparece no seu caso, multiagente provavelmente vai adicionar custo e superfície de falha sem entregar qualidade equivalente.
 
-agente_rh = client.agents.create_agent(
-    model='gpt-4o', name='agente-rh',
-    instructions='Especialista em RH. Responda APENAS sobre ferias, beneficios, politicas. '
-                 'Para outros topicos: {"encaminhar": true}',
-    tools=[{'type': 'file_search'}],
-    tool_resources={'file_search': {'vector_store_ids': [vs_rh.id]}}
-)
+## O orquestrador é a peça que decide, não a que sabe tudo
 
-agente_ti = client.agents.create_agent(
-    model='gpt-4o', name='agente-ti',
-    instructions='Especialista em TI. Responda sobre sistemas, acessos, incidentes. '
-                 'Para outros topicos: {"encaminhar": true}',
-    tools=[{'type': 'file_search'}]
-)
+No Azure AI Foundry, o padrão mais direto de multiagente é o de agentes conectados: você registra agentes especializados como se fossem ferramentas do agente principal. O orquestrador não precisa saber como cada agente executa sua tarefa. Ele precisa saber quando chamar cada um.
 
-AGENTES = {'rh': agente_rh, 'ti': agente_ti}
+Isso parece um detalhe pequeno, mas muda o design inteiro. Um erro comum é tratar o orquestrador como um agente "mais inteligente" que os outros, quando na prática ele é o agente com o prompt de sistema mais crítico do fluxo inteiro. Se ele classifica errado a intenção do usuário e chama o agente de suporte técnico para uma pergunta financeira, o agente errado vai produzir uma resposta coerente e completamente inútil, porque o problema não estava na execução, estava no roteamento.
 
-def chamar_agente(agente, mensagem: str) -> str:
-    thread = client.agents.create_thread()
-    client.agents.create_message(thread_id=thread.id, role='user', content=mensagem)
-    run = client.agents.create_and_process_run(
-        thread_id=thread.id, assistant_id=agente.id
-    )
-    messages = client.agents.list_messages(thread_id=thread.id)
-    return messages.data[0].content[0].text.value
+Isso tem uma implicação prática direta: a qualidade do prompt do orquestrador determina a precisão do sistema inteiro, muito mais do que a qualidade dos prompts dos agentes especializados. Vale gastar mais tempo de teste ali do que em qualquer outro componente.
 
-def orquestrar(solicitacao: str) -> str:
-    decisao_str = chamar_agente(
-        agente_orquestrador,
-        f'Retorne JSON: {{"agente": "rh|ti", "mensagem": "..."}}.\nSolicitacao: {solicitacao}'
-    )
-    try:
-        roteamento = json.loads(decisao_str)
-        agente = AGENTES.get(roteamento.get('agente'))
-        if agente:
-            return chamar_agente(agente, roteamento.get('mensagem', solicitacao))
-    except (json.JSONDecodeError, KeyError):
-        pass
-    return decisao_str
-```
+## As camadas que ninguém pode pular
 
-## O problema que mais aparece: loops
+Um sistema multiagente em produção tem responsabilidades que não aparecem no protótipo de laboratório e que custam caro quando são adicionadas depois:
 
-Agente A chama orquestrador que chama agente A de volta. Acontece quando o orquestrador nao tem confianca suficiente para decidir. Limite de profundidade e obrigatorio:
+- **Orquestração**: decide o próximo passo e compõe a resposta final.
+- **Agentes especializados**: cada um com escopo, prompt e, quando fizer sentido, modelo próprios.
+- **Ferramentas e APIs**: o ponto onde o sistema toca dados e sistemas reais.
+- **Memória e estado**: contexto entre turnos, histórico e resultados intermediários que precisam sobreviver entre chamadas.
+- **Observabilidade**: logs e tracing de cada chamada entre agentes, porque depurar "por que o sistema respondeu isso" sem rastro por etapa é praticamente impossível em um fluxo com mais de dois agentes.
 
-```python
-def orquestrar_com_limite(solicitacao: str, limite: int = 3) -> str:
-    tentativas = 0
-    while tentativas < limite:
-        resultado = orquestrar(solicitacao)
-        if not isinstance(resultado, dict) or 'encaminhar' not in resultado:
-            return resultado
-        tentativas += 1
-    return 'Nao consegui processar. Por favor reformule a solicitacao.'
-```
+A camada de observabilidade costuma ser a primeira a ficar de fora do escopo inicial e a primeira a faltar no primeiro incidente sério.
 
-## Quando multi-agent vale o investimento
+## Checklist antes de colocar em produção
 
-Nao parta para multi-agent por achar que e mais avancado. Um agente unico bem instruido resolve 80% dos casos de uso com muito menos overhead.
+Antes de assinar embaixo de um sistema multiagente:
 
-Vale quando: dominios com bases de conhecimento muito diferentes que nao devem se misturar, quando cada especialista precisa de ferramentas distintas, ou quando voce tem evidencia de que o agente unico esta falhando em topicos especificos.
+- Papel e escopo de cada agente documentados, não apenas implementados.
+- Orquestrador testado contra intents ambíguos, não só contra os exemplos óbvios.
+- Fallback definido para quando um agente falha ou responde fora do esperado.
+- Permissões e identidade isoladas por agente, seguindo o mesmo princípio que você já aplica a serviços.
+- Auditoria e trace ponta a ponta habilitados desde o primeiro deploy, não como item de backlog.
+- Testes de regressão cobrindo os fluxos críticos, porque cada ajuste de prompt em um agente pode mudar o comportamento de roteamento do orquestrador.
+- Limite de custo e de chamadas por conversa, porque multiagente multiplica chamadas de modelo por natureza.
 
-Comece simples. Adicione especialistas so quando os dados mostrarem que voce precisa.
+Nenhum desses itens é sofisticado. Todos são esquecidos quando o projeto sai do protótipo direto para a demonstração ao cliente.
+
+Orquestração de múltiplos agentes não é sobre quantos agentes você consegue colocar para conversar entre si. É sobre ter clareza de papel: quem decide, quem executa, quem responde quando algo dá errado. Se essa resposta não está clara no seu desenho hoje, o número de agentes é a menor das suas preocupações.
