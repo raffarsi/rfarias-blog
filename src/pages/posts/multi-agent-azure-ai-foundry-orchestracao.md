@@ -3,7 +3,7 @@ layout: ../../layouts/PostLayout.astro
 title: "Orquestração de múltiplos agentes com Azure AI Foundry"
 category: "IA Generativa"
 tag: "ia-generativa"
-date: "18 Set 2026"
+date: "17 Set 2026"
 readTime: "9 min"
 description: "Antes de dividir um problema em vários agentes de IA, entenda o que muda de responsabilidade, custo e governança no Azure AI Foundry."
 ---
