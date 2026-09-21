@@ -3,32 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
 
-
-
-
-
-
-
-
 const mvpSlugs = new Set([]);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const allPosts = [
-  { slug: 'onde-rodar-seus-agentes-azure-compute', title: "Um agente trava e os outros três caem junto: onde rodar seus agentes no Azure", category: 'Infra', tag: 'infra' as const, date: '24 Set 2026', readTime: '8 min', excerpt: "O agente de resumo segurou um documento grande em memória e derrubou o processo. Os quatro caíram, inclusive o que não tinha nada a ver." },
   { slug: 'onde-rodar-seus-agentes-azure-compute', title: "Um agente trava e os outros três caem junto: onde rodar seus agentes no Azure", category: 'Infra', tag: 'infra' as const, date: '24 Set 2026', readTime: '8 min', excerpt: "O agente de resumo segurou um documento grande em memória e derrubou o processo. Os quatro caíram, inclusive o que não tinha nada a ver." },
   { slug: 'managed-identity-isolamento-rede-multiagente', title: "Cada agente precisa da própria identidade? Managed Identity e isolamento de rede em arquiteturas multiagente", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '22 Set 2026', readTime: '9 min', excerpt: "Vi um time subir quatro agentes reaproveitando a mesma Managed Identity. Funcionou até alguém perguntar o que cada um tinha acessado." },
     { slug: 'multi-agent-azure-ai-foundry-orchestracao', title: "Orquestração de múltiplos agentes com Azure AI Foundry", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '17 Set 2026', readTime: '9 min', excerpt: "Um time me perguntou quantos agentes precisava. Respondi com outra pergunta: quem é responsável quando um deles errar." },
@@ -54,3 +32,476 @@ const allPosts = [
   { slug: 'az104-12-load-balancer', title: "AZ-104 na prática [12] — Load Balancer e Application Gateway", category: 'Networking', tag: 'networking' as const, date: '1 Ago 2026', readTime: '10 min', excerpt: "Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7)." },
   { slug: 'az104-11-nsg-roteamento', title: "AZ-104 na prática [11] — NSG, UDR e roteamento", category: 'Networking', tag: 'networking' as const, date: '25 Jul 2026', readTime: '10 min', excerpt: "Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure." },
   { slug: 'az104-10-vnets-subnets', title: "AZ-104 na prática [10] — VNets, subnets e peering", category: 'Networking', tag: 'networking' as const, date: '18 Jul 2026', readTime: '11 min', excerpt: "Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering." },
+  { slug: 'az104-09-containers-aks', title: "AZ-104 na prática [9] — Containers: ACI e AKS", category: 'Infra', tag: 'infra' as const, date: '11 Jul 2026', readTime: '10 min', excerpt: "Azure Container Instances para containers simples e Azure Kubernetes Service para orquestração." },
+  { slug: 'az104-08-app-service', title: "AZ-104 na prática [8] — Azure App Service", category: 'Infra', tag: 'infra' as const, date: '4 Jul 2026', readTime: '9 min', excerpt: "Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações." },
+  { slug: 'az104-07-vm-disponibilidade', title: "AZ-104 na prática [7] — VMs: alta disponibilidade e Scale Sets", category: 'Infra', tag: 'infra' as const, date: '27 Jun 2026', readTime: '10 min', excerpt: "Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade." },
+  { slug: 'az104-06-virtual-machines', title: "AZ-104 na prática [6] — VMs: criação, tamanhos e discos", category: 'Infra', tag: 'infra' as const, date: '20 Jun 2026', readTime: '12 min', excerpt: "Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos." },
+  { slug: 'az104-05-azure-files', title: "AZ-104 na prática [5] — Azure Files e Azure File Sync", category: 'Infra', tag: 'infra' as const, date: '13 Jun 2026', readTime: '8 min', excerpt: "Compartilhamentos SMB na nuvem com Azure Files e sincronização com servidores on-premises." },
+  { slug: 'az104-04-storage-accounts', title: "AZ-104 na prática [4] — Storage Accounts: tudo que você precisa saber", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '6 Jun 2026', readTime: '11 min', excerpt: "Tipos de storage, redundância, acesso e lifecycle management no Azure Storage." },
+  { slug: 'az104-03-azure-policy', title: "AZ-104 na prática [3] — Azure Policy e governança", category: 'Segurança', tag: 'seguranca' as const, date: '30 Mai 2026', readTime: '8 min', excerpt: "Como usar Azure Policy para enforçar padrões, auditar conformidade e governar seu ambiente Azure." },
+  { slug: 'az104-02-rbac-escopos', title: "AZ-104 na prática [2] — RBAC: controle de acesso baseado em funções", category: 'IAM', tag: 'iam' as const, date: '23 Mai 2026', readTime: '9 min', excerpt: "Como o RBAC funciona no Azure, como atribuir funções e entender escopos de forma prática." },
+  { slug: 'az104-01-entra-id-na-pratica', title: "AZ-104 na prática [1] — Gerenciando identidades com Microsoft Entra ID", category: 'IAM', tag: 'iam' as const, date: '16 Mai 2026', readTime: '10 min', excerpt: "Como gerenciar usuários, grupos e identidades no Microsoft Entra ID para o exame AZ-104 e para o dia a dia." },
+  { slug: 'dp900-05-pipelines-governanca', title: "DP-900 na prática [5] — Pipelines e governança de dados", category: 'Docência', tag: 'docencia' as const, date: '12 Mai 2026', readTime: '9 min', excerpt: "Azure Data Factory, Event Hubs, Stream Analytics e governança de dados com Microsoft Purview." },
+  { slug: 'dp900-04-analytics-powerbi', title: "DP-900 na prática [4] — Analytics, Synapse e Power BI", category: 'Docência', tag: 'docencia' as const, date: '9 Mai 2026', readTime: '10 min', excerpt: "Azure Synapse Analytics, Data Lake, Azure Databricks e Power BI para analytics moderno." },
+  { slug: 'dp900-03-dados-nao-relacionais', title: "DP-900 na prática [3] — Dados não relacionais e Cosmos DB", category: 'Docência', tag: 'docencia' as const, date: '5 Mai 2026', readTime: '9 min', excerpt: "Azure Cosmos DB, tipos de NoSQL e Azure Storage para dados não relacionais." },
+  { slug: 'dp900-02-dados-relacionais', title: "DP-900 na prática [2] — Dados relacionais no Azure", category: 'Docência', tag: 'docencia' as const, date: '2 Mai 2026', readTime: '9 min', excerpt: "Azure SQL Database, SQL Managed Instance, PostgreSQL e os serviços de banco de dados relacional." },
+  { slug: 'dp900-01-conceitos-dados', title: "DP-900 na prática [1] — Conceitos fundamentais de dados", category: 'Docência', tag: 'docencia' as const, date: '28 Abr 2026', readTime: '9 min', excerpt: "Dados estruturados, semiestruturados e não estruturados. Processamento batch vs streaming para o DP-900." },
+  { slug: 'sc900-05-governanca-trust', title: "SC-900 na prática [5] — Governança e Service Trust Portal", category: 'Segurança', tag: 'seguranca' as const, date: '25 Abr 2026', readTime: '8 min', excerpt: "Service Trust Portal, Microsoft Privacy, Secure Score e as ferramentas de governança para o SC-900." },
+  { slug: 'sc900-04-conformidade-purview', title: "SC-900 na prática [4] — Conformidade e Microsoft Purview", category: 'Segurança', tag: 'seguranca' as const, date: '21 Abr 2026', readTime: '9 min', excerpt: "GDPR, Compliance Manager, Microsoft Purview e as ferramentas de conformidade da Microsoft." },
+  { slug: 'sc900-03-solucoes-seguranca', title: "SC-900 na prática [3] — Soluções de segurança Microsoft", category: 'Segurança', tag: 'seguranca' as const, date: '18 Abr 2026', readTime: '10 min', excerpt: "Microsoft Defender XDR, Sentinel, Defender for Cloud e as principais soluções de segurança." },
+  { slug: 'sc900-02-identidade-entra', title: "SC-900 na prática [2] — Identidade e acesso com Microsoft Entra ID", category: 'IAM', tag: 'iam' as const, date: '14 Abr 2026', readTime: '10 min', excerpt: "Microsoft Entra ID, MFA, RBAC, PIM e controle de acesso para o SC-900." },
+  { slug: 'sc900-01-zero-trust-defesa', title: "SC-900 na prática [1] — Zero Trust e defesa em profundidade", category: 'IAM', tag: 'iam' as const, date: '11 Abr 2026', readTime: '9 min', excerpt: "Fundamentos de segurança: modelo Zero Trust, defesa em profundidade e responsabilidade compartilhada." },
+  { slug: 'ai901-05-ia-responsavel-foundry', title: "AI-901 na prática [5] — IA Responsável e Azure AI Foundry", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '7 Abr 2026', readTime: '9 min', excerpt: "Princípios de IA Responsável, Content Safety e o Azure AI Foundry como plataforma unificada." },
+  { slug: 'ai901-04-ia-conversacional', title: "AI-901 na prática [4] — IA conversacional e agentes", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '4 Abr 2026', readTime: '8 min', excerpt: "Azure Bot Service, Copilot Studio e como criar assistentes virtuais inteligentes." },
+  { slug: 'ai901-03-linguagem-ia-generativa', title: "AI-901 na prática [3] — Linguagem natural e IA Generativa", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '31 Mar 2026', readTime: '10 min', excerpt: "NLP, Azure Language Service, Azure OpenAI e os fundamentos de IA Generativa para o AI-901." },
+  { slug: 'ai901-02-azure-ai-services', title: "AI-901 na prática [2] — Azure AI Services: visão e fala", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '28 Mar 2026', readTime: '9 min', excerpt: "Azure Computer Vision, Custom Vision, Face API e Azure Speech Services na prática." },
+  { slug: 'ai901-01-fundamentos-ia', title: "AI-901 na prática [1] — Fundamentos de IA e Machine Learning", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '24 Mar 2026', readTime: '9 min', excerpt: "Conceitos essenciais de IA, ML, Deep Learning e os tipos de problemas que cada abordagem resolve." },
+  { slug: 'az900-06-custos-sla', title: "AZ-900 na prática [6] — Custos, SLA e ciclo de vida de serviços", category: 'FinOps', tag: 'finops' as const, date: '21 Mar 2026', readTime: '8 min', excerpt: "Como calcular custos no Azure, entender SLAs e o ciclo de vida de serviços — tópicos obrigatórios do AZ-900." },
+  { slug: 'az900-05-identidade-seguranca', title: "AZ-900 na prática [5] — Identidade, segurança e governança", category: 'IAM', tag: 'iam' as const, date: '17 Mar 2026', readTime: '10 min', excerpt: "Microsoft Entra ID, MFA, RBAC, Azure Policy e as ferramentas de segurança e governança do Azure." },
+  { slug: 'az900-04-storage-database', title: "AZ-900 na prática [4] — Storage e banco de dados no Azure", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '14 Mar 2026', readTime: '9 min', excerpt: "Azure Storage, Azure SQL, Cosmos DB e os principais serviços de dados para o AZ-900." },
+  { slug: 'az900-03-computacao-redes', title: "AZ-900 na prática [3] — Computação e redes no Azure", category: 'Docência', tag: 'docencia' as const, date: '10 Mar 2026', readTime: '10 min', excerpt: "VMs, containers, serverless e redes virtuais — os principais serviços de computação e rede do Azure para o AZ-900." },
+  { slug: 'az900-02-arquitetura-azure', title: "AZ-900 na prática [2] — Arquitetura e componentes do Azure", category: 'Docência', tag: 'docencia' as const, date: '7 Mar 2026', readTime: '9 min', excerpt: "Regiões, Zonas de Disponibilidade, Resource Groups e a hierarquia de organização do Azure." },
+  { slug: 'az900-01-conceitos-nuvem', title: "AZ-900 na prática [1] — Conceitos fundamentais de Cloud Computing", category: 'Docência', tag: 'docencia' as const, date: '3 Mar 2026', readTime: '8 min', excerpt: "IaaS, PaaS e SaaS explicados com exemplos reais. O ponto de partida para qualquer certificação Azure." },
+  { slug: 'azure-virtual-wan-redes-escala', title: "Azure Virtual WAN: quando a topologia hub-and-spoke nao escala", category: 'Networking', tag: 'networking' as const, date: '26 Fev 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre azure virtual wan: quando a topologia hub-and-spoke nao escala — parte da serie de conteudo Azure n" },
+  { slug: 'azure-openai-seguranca-zero-trust', title: "Seguranca Zero Trust para aplicacoes Azure OpenAI", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '24 Fev 2026', readTime: '10 min', excerpt: "Artigo tecnico sobre seguranca zero trust para aplicacoes azure openai — parte da serie de conteudo Azure no blog rfaria" },
+  { slug: 'azure-nat-gateway-saida-controlada', title: "Azure NAT Gateway: saida de internet controlada e previsivel", category: 'Networking', tag: 'networking' as const, date: '19 Fev 2026', readTime: '8 min', excerpt: "Artigo tecnico sobre azure nat gateway: saida de internet controlada e previsivel — parte da serie de conteudo Azure no " },
+  { slug: 'azure-openai-document-intelligence-extracao', title: "Azure Document Intelligence: extracao de dados de documentos nao estruturados", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '17 Fev 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre azure document intelligence: extracao de dados de documentos nao estruturados — parte da serie de c" },
+  { slug: 'azure-arc-kubernetes-gitops', title: "Azure Arc para Kubernetes: GitOps e governanca de clusters", category: 'Infra', tag: 'infra' as const, date: '12 Fev 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre azure arc para kubernetes: gitops e governanca de clusters — parte da serie de conteudo Azure no bl" },
+  { slug: 'azure-openai-cache-custo-latencia', title: "Cache de respostas no Azure OpenAI: reduzindo custo e latencia", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '10 Fev 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre cache de respostas no azure openai: reduzindo custo e latencia — parte da serie de conteudo Azure n" },
+  { slug: 'entra-id-token-autenticacao-fluxos', title: "Tokens e fluxos de autenticacao no Entra ID: OAuth 2.0 e OIDC na pratica", category: 'IAM', tag: 'iam' as const, date: '05 Fev 2026', readTime: '10 min', excerpt: "Artigo tecnico sobre tokens e fluxos de autenticacao no entra id: oauth 2.0 e oidc na pratica — parte da serie de conteu" },
+  { slug: 'azure-openai-observabilidade-producao', title: "Observabilidade de pipelines de IA no Azure: logs, traces e metricas", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '03 Fev 2026', readTime: '10 min', excerpt: "Artigo tecnico sobre observabilidade de pipelines de ia no azure: logs, traces e metricas — parte da serie de conteudo A" },
+  { slug: 'azure-load-balancer-application-gateway-diferenca', title: "Load Balancer vs Application Gateway: qual usar em cada cenario", category: 'Networking', tag: 'networking' as const, date: '29 Jan 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre load balancer vs application gateway: qual usar em cada cenario — parte da serie de conteudo Azure " },
+  { slug: 'azure-backup-disaster-recovery-rpd-rto', title: "Backup e Disaster Recovery no Azure: RPO, RTO e estrategia certa", category: 'Infra', tag: 'infra' as const, date: '22 Jan 2026', readTime: '10 min', excerpt: "Artigo tecnico sobre backup e disaster recovery no azure: rpo, rto e estrategia certa — parte da serie de conteudo Azure" },
+  { slug: 'azure-openai-responsible-ai-corporativo', title: "IA Responsavel na pratica corporativa com Azure OpenAI", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '20 Jan 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre ia responsavel na pratica corporativa com azure openai — parte da serie de conteudo Azure no blog r" },
+  { slug: 'azure-bastion-acesso-seguro-vms', title: "Azure Bastion: acesso seguro a VMs sem expor portas RDP/SSH", category: 'Azure', tag: 'azure' as const, date: '15 Jan 2026', readTime: '8 min', excerpt: "Artigo tecnico sobre azure bastion: acesso seguro a vms sem expor portas rdp/ssh — parte da serie de conteudo Azure no b" },
+  { slug: 'copilot-studio-agentes-corporativos', title: "Copilot Studio: criando agentes corporativos sem codigo", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '13 Jan 2026', readTime: '8 min', excerpt: "Artigo tecnico sobre copilot studio: criando agentes corporativos sem codigo — parte da serie de conteudo Azure no blog " },
+  { slug: 'azure-front-door-waf-cdn', title: "Azure Front Door: WAF, CDN e balanceamento global explicados", category: 'Azure', tag: 'azure' as const, date: '08 Jan 2026', readTime: '9 min', excerpt: "Artigo tecnico sobre azure front door: waf, cdn e balanceamento global explicados — parte da serie de conteudo Azure no " },
+  { slug: 'azure-openai-multi-tenant-arquitetura', title: "Arquitetura multi-tenant com Azure OpenAI: isolamento e governanca", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '06 Jan 2026', readTime: '10 min', excerpt: "Artigo tecnico sobre arquitetura multi-tenant com azure openai: isolamento e governanca — parte da serie de conteudo Azu" },
+  { slug: 'azure-expressroute-hybrid-connectivity', title: "ExpressRoute na pratica: conectividade hibrida para ambientes corporativos", category: 'Networking', tag: 'networking' as const, date: '01 Jan 2026', readTime: '11 min', excerpt: "Artigo tecnico sobre expressroute na pratica: conectividade hibrida para ambientes corporativos — parte da serie de cont" },
+  { slug: 'rag-avaliacao-metricas-qualidade', title: "Como avaliar a qualidade de um pipeline RAG: metricas e frameworks", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '30 Dez 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre como avaliar a qualidade de um pipeline rag: metricas e frameworks — parte da serie de conteudo Azu" },
+  { slug: 'azure-security-center-compliance', title: "Conformidade regulatoria no Azure: LGPD, PCI-DSS e ISO 27001", category: 'Segurança', tag: 'seguranca' as const, date: '25 Dez 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre conformidade regulatoria no azure: lgpd, pci-dss e iso 27001 — parte da serie de conteudo Azure no " },
+  { slug: 'azure-openai-function-calling-agentes', title: "Function Calling no Azure OpenAI: como agentes executam acoes reais", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '23 Dez 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre function calling no azure openai: como agentes executam acoes reais — parte da serie de conteudo Az" },
+  { slug: 'azure-private-dns-resolver-arquitetura', title: "Azure Private DNS Resolver: resolucao de nomes centralizada no hub", category: 'Networking', tag: 'networking' as const, date: '18 Dez 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre azure private dns resolver: resolucao de nomes centralizada no hub — parte da serie de conteudo Azu" },
+  { slug: 'prompt-injection-seguranca-agentes-ia', title: "Prompt Injection: risco de seguranca em agentes de IA", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '16 Dez 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre prompt injection: risco de seguranca em agentes de ia — parte da serie de conteudo Azure no blog rf" },
+  { slug: 'azure-blueprints-landing-zone', title: "Landing Zones no Azure: estruturando ambientes com governanca", category: 'Segurança', tag: 'seguranca' as const, date: '11 Dez 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre landing zones no azure: estruturando ambientes com governanca — parte da serie de conteudo Azure no" },
+  { slug: 'azure-openai-streaming-ux', title: "Streaming de respostas do Azure OpenAI: UX responsiva", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '09 Dez 2025', readTime: '8 min', excerpt: "Artigo tecnico sobre streaming de respostas do azure openai: ux responsiva — parte da serie de conteudo Azure no blog rf" },
+  { slug: 'azure-arc-governanca-hibrida', title: "Azure Arc: governanca unificada para ambientes hibridos e multi-cloud", category: 'Infra', tag: 'infra' as const, date: '04 Dez 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre azure arc: governanca unificada para ambientes hibridos e multi-cloud — parte da serie de conteudo " },
+  { slug: 'azure-openai-grounding-dados-corporativos', title: "Grounding com dados corporativos: Azure OpenAI e base de conhecimento", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '02 Dez 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre grounding com dados corporativos: azure openai e base de conhecimento — parte da serie de conteudo " },
+  { slug: 'expressroute-fastpath-megaport-config', title: "ExpressRoute FastPath e Global Reach: quando o bypass do gateway faz diferença", category: 'Networking', tag: 'networking' as const, date: '01 Dez 2025', readTime: '10 min', excerpt: "FastPath elimina o gateway do caminho de dados para alto throughput. Global Reach conecta circuitos ExpressRoute diferen" },
+  { slug: 'azure-firewall-idps-threat-intel-config', title: "Azure Firewall IDPS e Threat Intelligence: configuração prática e análise de alertas", category: 'Networking', tag: 'networking' as const, date: '29 Nov 2025', readTime: '10 min', excerpt: "IDPS no Azure Firewall Premium detecta ameaças conhecidas por assinatura. Como configurar, analisar alertas no Log Analy" },
+  { slug: 'azure-cost-management-otimizacao', title: "Gerenciamento de custos no Azure: do caos ao controle", category: 'FinOps', tag: 'finops' as const, date: '27 Nov 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre gerenciamento de custos no azure: do caos ao controle — parte da serie de conteudo Azure no blog rf" },
+  { slug: 'multimodal-azure-openai-visao', title: "Modelos multimodais no Azure OpenAI: visao computacional com GPT-4o", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '25 Nov 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre modelos multimodais no azure openai: visao computacional com gpt-4o — parte da serie de conteudo Az" },
+  { slug: 'network-topology-multi-region-azure', title: "Topologia de rede multi-região no Azure: estratégias de conectividade e failover", category: 'Networking', tag: 'networking' as const, date: '24 Nov 2025', readTime: '10 min', excerpt: "Quando um hub único não basta — como arquitetar redes Azure em múltiplas regiões com Virtual WAN, peering global e failo" },
+  { slug: 'azure-dns-zones-delegation-subdomain', title: "Azure DNS: delegação de zonas e gerenciamento de subdomínios corporativos", category: 'Networking', tag: 'networking' as const, date: '22 Nov 2025', readTime: '10 min', excerpt: "Como estruturar zonas DNS no Azure para ambientes corporativos com múltiplos domínios, subdomínios delegados e integraçã" },
+  { slug: 'entra-id-external-identities-b2b', title: "External Identities no Entra ID: colaboracao B2B segura", category: 'IAM', tag: 'iam' as const, date: '20 Nov 2025', readTime: '8 min', excerpt: "Artigo tecnico sobre external identities no entra id: colaboracao b2b segura — parte da serie de conteudo Azure no blog " },
+  { slug: 'azure-openai-assistants-api', title: "Azure OpenAI Assistants API: quando usar em vez de RAG customizado", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '18 Nov 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre azure openai assistants api: quando usar em vez de rag customizado — parte da serie de conteudo Azu" },
+  { slug: 'vnet-integration-app-service-private', title: "VNet Integration no App Service: conectando aplicações a recursos privados sem expor endpoints", category: 'Networking', tag: 'networking' as const, date: '17 Nov 2025', readTime: '10 min', excerpt: "Regional VNet Integration permite que App Services acessem recursos dentro de uma VNet sem IP público. Configuração, lim" },
+  { slug: 'azure-firewall-policy-hierarquia-regras', title: "Azure Firewall Policy: hierarquia de políticas e herança de regras entre ambientes", category: 'Networking', tag: 'networking' as const, date: '15 Nov 2025', readTime: '10 min', excerpt: "Firewall Policies podem ser herdadas — a política base define regras globais, políticas filhas adicionam regras específi" },
+  { slug: 'azure-network-watcher-diagnostico', title: "Azure Network Watcher: diagnostico de problemas de rede", category: 'Networking', tag: 'networking' as const, date: '13 Nov 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre azure network watcher: diagnostico de problemas de rede — parte da serie de conteudo Azure no blog " },
+  { slug: 'rag-chunking-estrategias-azure', title: "Estrategias de chunking para RAG no Azure AI Search", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '11 Nov 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre estrategias de chunking para rag no azure ai search — parte da serie de conteudo Azure no blog rfar" },
+  { slug: 'network-policies-aks-azure-cni', title: "Network Policies no AKS: isolamento de tráfego entre pods com Azure CNI", category: 'Networking', tag: 'networking' as const, date: '10 Nov 2025', readTime: '10 min', excerpt: "Por padrão, todos os pods de um cluster AKS se comunicam livremente. Como implementar Network Policies para isolar names" },
+  { slug: 'azure-traffic-manager-failover-global', title: "Azure Traffic Manager: roteamento global e failover automático para aplicações críticas", category: 'Networking', tag: 'networking' as const, date: '08 Nov 2025', readTime: '10 min', excerpt: "Como configurar o Traffic Manager para distribuir tráfego entre regiões com failover automático — e as diferenças prátic" },
+  { slug: 'azure-app-registrations-service-principals', title: "App Registrations e Service Principals: identidade para aplicacoes no Azure", category: 'IAM', tag: 'iam' as const, date: '06 Nov 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre app registrations e service principals: identidade para aplicacoes no azure — parte da serie de con" },
+  { slug: 'azure-openai-content-safety-moderacao', title: "Azure Content Safety: moderacao de conteudo em aplicacoes de IA", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '04 Nov 2025', readTime: '8 min', excerpt: "Artigo tecnico sobre azure content safety: moderacao de conteudo em aplicacoes de ia — parte da serie de conteudo Azure " },
+  { slug: 'azure-route-server-bgp-hub', title: "Azure Route Server: propagação de rotas BGP no hub sem VPN Gateway", category: 'Networking', tag: 'networking' as const, date: '03 Nov 2025', readTime: '10 min', excerpt: "O Route Server permite que NVAs de terceiros troquem rotas BGP diretamente com o fabric do Azure. Quando usar no lugar d" },
+  { slug: 'azure-application-gateway-waf-configuracao', title: "Azure Application Gateway com WAF: configuração prática e regras customizadas", category: 'Networking', tag: 'networking' as const, date: '01 Nov 2025', readTime: '10 min', excerpt: "WAF no Application Gateway vai além de habilitar o OWASP ruleset. Regras customizadas, exclusões e integração com o Azur" },
+  { slug: 'azure-defender-for-cloud-postura', title: "Microsoft Defender for Cloud: postura de seguranca e Secure Score", category: 'Segurança', tag: 'seguranca' as const, date: '30 Out 2025', readTime: '8 min', excerpt: "Artigo tecnico sobre microsoft defender for cloud: postura de seguranca e secure score — parte da serie de conteudo Azur" },
+  { slug: 'azure-openai-rate-limits-producao', title: "Rate limits do Azure OpenAI em producao: como dimensionar e lidar com throttling", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '28 Out 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre rate limits do azure openai em producao: como dimensionar e lidar com throttling — parte da serie d" },
+  { slug: 'entra-id-grupos-licencas-governanca', title: "Grupos no Entra ID: como estruturar para escalar com governanca", category: 'IAM', tag: 'iam' as const, date: '23 Out 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre grupos no entra id: como estruturar para escalar com governanca — parte da serie de conteudo Azure " },
+  { slug: 'azure-ai-foundry-agentes-introducao', title: "Azure AI Foundry: a plataforma unificada para agentes de IA", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '21 Out 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre azure ai foundry: a plataforma unificada para agentes de ia — parte da serie de conteudo Azure no b" },
+  { slug: 'azure-sentinel-siem-introducao', title: "Microsoft Sentinel: SIEM nativo do Azure para deteccao de ameacas", category: 'Segurança', tag: 'seguranca' as const, date: '16 Out 2025', readTime: '10 min', excerpt: "Artigo tecnico sobre microsoft sentinel: siem nativo do azure para deteccao de ameacas — parte da serie de conteudo Azur" },
+  { slug: 'azure-openai-fine-tuning-quando-vale', title: "Fine-tuning no Azure OpenAI: quando vale a pena e quando e desperdicio", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '14 Out 2025', readTime: '9 min', excerpt: "Artigo tecnico sobre fine-tuning no azure openai: quando vale a pena e quando e desperdicio — parte da serie de conteudo" },
+  { slug: 'azure-monitor-log-analytics-alertas', title: "Azure Monitor e Log Analytics: monitoramento que realmente funciona", category: 'Infra', tag: 'infra' as const, date: '09 Out 2025', readTime: '10 min', excerpt: "Como centralizar logs, criar alertas úteis (não ruidosos) e usar KQL para investigar incidentes no Azure Monitor." },
+  { slug: 'semantic-kernel-azure-openai', title: "Semantic Kernel com Azure OpenAI: construindo agentes de IA em .NET", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '07 Out 2025', readTime: '10 min', excerpt: "Como usar o Semantic Kernel da Microsoft para orquestrar chamadas ao Azure OpenAI e construir agentes com plugins e memó" },
+  { slug: 'azure-key-vault-boas-praticas', title: "Azure Key Vault: boas práticas de gestão de secrets e certificados", category: 'Segurança', tag: 'seguranca' as const, date: '02 Out 2025', readTime: '8 min', excerpt: "Rotação automática, acesso via Managed Identity, soft-delete e purge protection — o que configurar antes de guardar o pr" },
+  { slug: 'azure-openai-system-prompt-engenharia', title: "Engenharia de System Prompt para agentes corporativos no Azure OpenAI", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '30 Set 2025', readTime: '9 min', excerpt: "Como escrever um System Prompt que define comportamento, restrições e tom do agente — com exemplos reais de ambiente cor" },
+  { slug: 'azure-ddos-protection-quando-usar', title: "Azure DDoS Protection: Standard vs Basic e quando contratar", category: 'Networking', tag: 'networking' as const, date: '25 Set 2025', readTime: '8 min', excerpt: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege — análise técni" },
+  { slug: 'langchain-azure-openai-integracao', title: "LangChain com Azure OpenAI: integração passo a passo", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '23 Set 2025', readTime: '9 min', excerpt: "Como conectar LangChain ao Azure OpenAI Service respeitando as configurações de rede e autenticação corporativas." },
+  { slug: 'azure-pim-privileged-identity-management', title: "Privileged Identity Management: acesso privilegiado just-in-time no Azure", category: 'IAM', tag: 'iam' as const, date: '18 Set 2025', readTime: '10 min', excerpt: "PIM é o que separa um ambiente Azure maduro de um ambiente com Owner permanente para todo mundo. Como configurar e usar " },
+  { slug: 'azure-vnet-peering-hub-spoke-basico', title: "VNet Peering e topologia hub-and-spoke: conceitos fundamentais", category: 'Networking', tag: 'networking' as const, date: '16 Set 2025', readTime: '9 min', excerpt: "Como conectar VNets com peering, quando usar hub-and-spoke e as limitações que você só descobre em produção." },
+  { slug: 'azure-openai-primeiros-passos-corporativo', title: "Azure OpenAI Service: primeiros passos em ambiente corporativo", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '14 Ago 2025', readTime: '8 min', excerpt: "Como provisionar, autenticar e fazer as primeiras chamadas ao Azure OpenAI dentro dos requisitos de segurança de uma emp" },
+  { slug: 'nsg-na-pratica-regras-seguranca-rede', title: "NSG na prática: como criar regras de segurança de rede que realmente protegem", category: 'Networking', tag: 'networking' as const, date: '12 Ago 2025', readTime: '9 min', excerpt: "NSG parece simples — até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em prod" },
+  { slug: 'azure-ad-entra-id-o-que-mudou', title: "Microsoft Entra ID: o que mudou do Azure AD e por que importa para você", category: 'IAM', tag: 'iam' as const, date: '07 Ago 2025', readTime: '7 min', excerpt: "O Azure Active Directory virou Microsoft Entra ID. Mais do que renomeação, é uma mudança de posicionamento. Entenda o qu" },
+  { slug: 'azure-networking-fundamentos-vnet-subnet', title: "Azure Networking: VNets e Subnets — o que você precisa saber antes de criar qualquer recurso", category: 'Networking', tag: 'networking' as const, date: '05 Ago 2025', readTime: '8 min', excerpt: "Antes de criar uma VM, um container ou qualquer recurso no Azure, você precisa entender como as redes virtuais funcionam" },
+];
+
+const hero = allPosts[0];
+const grid = allPosts.slice(1, 7); // mostra 6 posts mais recentes no grid
+
+// Contadores para filtros
+const counts = {
+  todos:          allPosts.length,
+  'ia-generativa':allPosts.filter(p => p.tag === 'ia-generativa').length,
+  networking:     allPosts.filter(p => p.tag === 'networking').length,
+  iam:            allPosts.filter(p => p.tag === 'iam').length,
+  seguranca:      allPosts.filter(p => p.tag === 'seguranca').length,
+  infra:          allPosts.filter(p => p.tag === 'infra').length,
+  finops:         allPosts.filter(p => p.tag === 'finops').length,
+  docencia:       allPosts.filter(p => p.tag === 'docencia').length,
+  carreira:       allPosts.filter(p => p.tag === 'carreira').length,
+};
+---
+
+<BaseLayout>
+  <div class="container home">
+
+    <!-- Hero pessoal -->
+    <div class="personal-hero">
+      <div class="personal-hero-left">
+        <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" class="personal-avatar" />
+      </div>
+      <div class="personal-hero-right">
+        <h1 class="personal-name">Rafael Farias da Silva</h1>
+        <p class="personal-bio">
+          Software Engineer &amp; IT Auditor no Bradesco com 17+ anos de experiência.
+          Professor no Senac Osasco, palestrante em eventos de tecnologia e mestrando em IA.
+          Aqui escrevo sobre <strong>Azure, Cloud e IA Generativa</strong> — com casos reais, sem enrolação.
+        </p>
+        <div class="personal-badges">
+          <span class="pb">🏢 17+ anos em TI</span>
+          <span class="pb">🎓 Professor Senac</span>
+          <span class="pb">🎤 Palestrante</span>
+          <span class="pb">📚 Mestrando em IA</span>
+        </div>
+        <div class="personal-links">
+          <a href="https://linkedin.com/in/rafael-farias-da-silva" target="_blank" rel="noopener" class="pl-link pl-linkedin">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://instagram.com/rafael.farias.s" target="_blank" rel="noopener" class="pl-link pl-ig">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @rafael.farias.s
+          </a>
+          <a href="/sobre" class="pl-link pl-sobre">Saiba mais →</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero-section">
+      <HeroPost
+        title={hero.title}
+        slug={hero.slug}
+        category={hero.category}
+        date={hero.date}
+        readTime={hero.readTime}
+        excerpt={hero.excerpt}
+      />
+    </section>
+
+    <!-- Banner Treinamentos -->
+    <a href="/treinamentos" class="training-banner">
+      <div class="training-banner-content">
+        <div class="training-badge">🎮 Plataforma Gamificada</div>
+        <h3>Treinamentos com simulados, XP, ranking e conquistas</h3>
+        <p>Prepare-se para certificações Azure e domine MS Project com banco de questões, jogos e laboratórios práticos — tudo integrado ao blog.</p>
+        <span class="training-cta">Acessar treinamentos →</span>
+      </div>
+      <div class="training-stats-bar">
+        <span>📝 400+ questões</span>
+        <span>🧪 28 labs</span>
+        <span>🏅 76 conquistas</span>
+        <span>🏆 Ranking entre alunos</span>
+      </div>
+    </a>
+
+    <h2 class="section-title">Artigos recentes</h2>
+
+    <div class="filters">
+      <a href="/artigos" class="filter-btn active">Todos <span class="filter-count">{counts.todos}</span></a>
+      <a href="/artigos?cat=ia-generativa" class="filter-btn">IA Generativa <span class="filter-count">{counts['ia-generativa']}</span></a>
+      <a href="/artigos?cat=networking" class="filter-btn">Networking <span class="filter-count">{counts.networking}</span></a>
+      <a href="/artigos?cat=iam" class="filter-btn">IAM <span class="filter-count">{counts.iam}</span></a>
+      <a href="/artigos?cat=seguranca" class="filter-btn">Segurança <span class="filter-count">{counts.seguranca}</span></a>
+      <a href="/artigos?cat=infra" class="filter-btn">Infra <span class="filter-count">{counts.infra}</span></a>
+      <a href="/artigos?cat=finops" class="filter-btn">FinOps <span class="filter-count">{counts.finops}</span></a>
+      <a href="/artigos?cat=docencia" class="filter-btn">Docência <span class="filter-count">{counts.docencia}</span></a>
+      <a href="/artigos?cat=carreira" class="filter-btn">Carreira <span class="filter-count">{counts.carreira}</span></a>
+    </div>
+
+    <!-- Carrossel -->
+    <div class="carousel-wrapper">
+      <button class="carousel-btn prev" id="prevBtn" aria-label="Anterior">‹</button>
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="carouselTrack">
+          {allPosts.map(post => (
+            <div class="carousel-card">
+              <PostCard {...post} coverImage={mvpSlugs.has(post.slug) ? `/og/${post.slug}.png` : undefined} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <button class="carousel-btn next" id="nextBtn" aria-label="Próximo">›</button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
+
+    
+
+    <div class="ver-todos">
+      <a href="/artigos">Ver todos os {counts.todos} artigos →</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const track = document.getElementById('carouselTrack');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.getElementById('carouselDots');
+
+  function getVisible() {
+    return window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+  }
+
+  let current = 0;
+  const cards = track.querySelectorAll('.carousel-card');
+  const total = cards.length;
+
+  function maxIndex() { return total - getVisible(); }
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    const pages = maxIndex() + 1;
+    for (let i = 0; i <= Math.min(pages - 1, 8); i++) {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(index, maxIndex()));
+    const cardWidth = cards[0].offsetWidth + 20; // gap
+    track.style.transform = `translateX(-${current * cardWidth}px)`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex();
+    updateDots();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  buildDots();
+  goTo(0);
+
+  window.addEventListener('resize', () => { buildDots(); goTo(Math.min(current, maxIndex())); });
+
+  // Touch/swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) diff > 0 ? goTo(current + 1) : goTo(current - 1);
+  });
+</script>
+
+<style>
+  .home { padding-top: 2rem; padding-bottom: 2rem; }
+
+  /* Hero pessoal */
+  .personal-hero {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .personal-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 3px solid var(--blue-light, #EBF3FF);
+    flex-shrink: 0;
+  }
+  .personal-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .personal-bio {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.875rem;
+    max-width: 560px;
+  }
+  .personal-bio strong { color: var(--text); }
+  .personal-badges {
+    display: flex;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.875rem;
+  }
+  .pb {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--blue-light, #EBF3FF);
+    color: var(--blue);
+    white-space: nowrap;
+  }
+  .personal-links {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .pl-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .pl-linkedin { background: #0077b5; color: #fff; }
+  .pl-linkedin:hover { opacity: 0.9; }
+  .pl-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+  .pl-ig:hover { opacity: 0.9; }
+  .pl-sobre { color: var(--blue); border: 1px solid var(--blue); }
+  .pl-sobre:hover { background: var(--blue); color: #fff; }
+
+  @media (max-width: 580px) {
+    .personal-hero { flex-direction: column; gap: 1rem; }
+    .personal-avatar { width: 72px; height: 72px; }
+    .personal-name { font-size: 1.125rem; }
+  }
+
+  .hero-section { margin-bottom: 1.5rem; }
+
+  .training-banner {
+    display: block;
+    background: linear-gradient(135deg, #0f3285 0%, #1a56db 60%, #3b73e8 100%);
+    border-radius: 14px;
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .training-banner:hover { box-shadow: 0 6px 24px rgba(26, 86, 219, 0.2); }
+  .training-badge { display: inline-block; background: rgba(255,255,255,0.15); font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 0.75rem; }
+  .training-banner h3 { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; max-width: 540px; }
+  .training-banner-content p { font-size: 0.875rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 1rem; max-width: 520px; }
+  .training-cta { font-size: 0.875rem; font-weight: 600; color: #fff; background: var(--coral); padding: 0.5rem 1.25rem; border-radius: 8px; display: inline-block; }
+  .training-stats-bar { display: flex; gap: 1.5rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.15); flex-wrap: wrap; }
+  .training-stats-bar span { font-size: 0.75rem; color: rgba(255,255,255,0.7); white-space: nowrap; }
+
+  .section-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+
+  .filters { display: flex; gap: 0.375rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .filter-btn {
+    display: flex; align-items: center; gap: 0.375rem;
+    font-size: 0.8125rem; font-weight: 500; font-family: var(--font-sans);
+    padding: 0.375rem 0.875rem; border-radius: 20px;
+    border: 1px solid var(--border); color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .filter-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .filter-count { background: rgba(0,0,0,0.08); font-size: 0.6875rem; font-weight: 700; padding: 1px 6px; border-radius: 20px; }
+  .filter-btn.active .filter-count { background: rgba(255,255,255,0.25); }
+
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+
+  .ver-todos { text-align: center; margin-top: 1.5rem; }
+  .ver-todos a { font-size: 0.875rem; font-weight: 600; color: var(--blue); }
+
+  /* Carrossel */
+  .carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .carousel-track-outer {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    transition: transform 0.35s ease;
+  }
+
+  .carousel-card {
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    min-width: 0;
+  }
+
+  .carousel-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 1.375rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-btn:hover:not(:disabled) {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: var(--blue-light);
+  }
+
+  .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.375rem;
+    margin-top: 1rem;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    padding: 0;
+  }
+
+  .carousel-dot.active {
+    background: var(--blue);
+    transform: scale(1.25);
+  }
+
+  @media (max-width: 1023px) {
+    .carousel-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
+  }
+
+  @media (max-width: 639px) {
+    .carousel-card { flex: 0 0 100%; }
+    .carousel-btn { width: 32px; height: 32px; font-size: 1.125rem; }
+  }
+</style>
