@@ -4,12 +4,32 @@ import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
 
 
+
+
+
+
+
+
 const mvpSlugs = new Set([]);
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 const allPosts = [
+  { slug: 'onde-rodar-seus-agentes-azure-compute', title: "Um agente trava e os outros três caem junto: onde rodar seus agentes no Azure", category: 'Infra', tag: 'infra' as const, date: '24 Set 2026', readTime: '8 min', excerpt: "O agente de resumo segurou um documento grande em memória e derrubou o processo. Os quatro caíram, inclusive o que não tinha nada a ver." },
+  { slug: 'onde-rodar-seus-agentes-azure-compute', title: "Um agente trava e os outros três caem junto: onde rodar seus agentes no Azure", category: 'Infra', tag: 'infra' as const, date: '24 Set 2026', readTime: '8 min', excerpt: "O agente de resumo segurou um documento grande em memória e derrubou o processo. Os quatro caíram, inclusive o que não tinha nada a ver." },
   { slug: 'managed-identity-isolamento-rede-multiagente', title: "Cada agente precisa da própria identidade? Managed Identity e isolamento de rede em arquiteturas multiagente", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '22 Set 2026', readTime: '9 min', excerpt: "Vi um time subir quatro agentes reaproveitando a mesma Managed Identity. Funcionou até alguém perguntar o que cada um tinha acessado." },
     { slug: 'multi-agent-azure-ai-foundry-orchestracao', title: "Orquestração de múltiplos agentes com Azure AI Foundry", category: 'IA Generativa', tag: 'ia-generativa' as const, date: '17 Set 2026', readTime: '9 min', excerpt: "Um time me perguntou quantos agentes precisava. Respondi com outra pergunta: quem é responsável quando um deles errar." },
   { slug: 'application-gateway-front-door-load-balancer-arquitetura', title: "Application Gateway vs. Front Door vs. Load Balancer: qual usar em cada camada da arquitetura", category: 'Networking', tag: 'networking' as const, date: '15 Set 2026', readTime: '10 min', excerpt: "Já vi um time passar semanas escalando máquina para resolver performance. O problema não era capacidade. Era roteamento. Load Balancer não lê URL." },
@@ -34,7 +54,3 @@ const allPosts = [
   { slug: 'az104-12-load-balancer', title: "AZ-104 na prática [12] — Load Balancer e Application Gateway", category: 'Networking', tag: 'networking' as const, date: '1 Ago 2026', readTime: '10 min', excerpt: "Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7)." },
   { slug: 'az104-11-nsg-roteamento', title: "AZ-104 na prática [11] — NSG, UDR e roteamento", category: 'Networking', tag: 'networking' as const, date: '25 Jul 2026', readTime: '10 min', excerpt: "Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure." },
   { slug: 'az104-10-vnets-subnets', title: "AZ-104 na prática [10] — VNets, subnets e peering", category: 'Networking', tag: 'networking' as const, date: '18 Jul 2026', readTime: '11 min', excerpt: "Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering." },
-  { slug: 'az104-09-containers-aks', title: "AZ-104 na prática [9] — Containers: ACI e AKS", category: 'Infra', tag: 'infra' as const, date: '11 Jul 2026', readTime: '10 min', excerpt: "Azure Container Instances para containers simples e Azure Kubernetes Service para orquestração." },
-  { slug: 'az104-08-app-service', title: "AZ-104 na prática [8] — Azure App Service", category: 'Infra', tag: 'infra' as const, date: '4 Jul 2026', readTime: '9 min', excerpt: "Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações." },
-  { slug: 'az104-07-vm-disponibilidade', title: "AZ-104 na prática [7] — VMs: alta disponibilidade e Scale Sets", category: 'Infra', tag: 'infra' as const, date: '27 Jun 2026', readTime: '10 min', excerpt: "Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade." },
-  { slug: 'az104-06-virtual-machines', title: "AZ-104 na prática [6] — VMs: criação, tamanhos e discos", category: 'Infra', tag: 'infra' as const, date: '20 Jun 2026', readTime: '12 min', excerpt: "Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos." },
