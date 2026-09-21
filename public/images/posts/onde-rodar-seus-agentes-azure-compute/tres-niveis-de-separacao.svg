@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Tres niveis de separacao entre agentes: um app, um ambiente, ambientes separados">
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Três níveis de separação</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">"Mesmo ambiente" pode significar qualquer um dos três</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+
+    <!-- NIVEL 1 -->
+    <text x="195" y="148" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">NÍVEL 1</text>
+    <text x="195" y="173" text-anchor="middle" font-size="17" font-weight="700" fill="#10233F">Um app só</text>
+    <rect x="62" y="195" width="266" height="190" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <g font-size="13" fill="#10233F" text-anchor="middle">
+      <rect x="86" y="222" width="100" height="62" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/><text x="136" y="258">Triagem</text>
+      <rect x="204" y="222" width="100" height="62" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/><text x="254" y="258">Busca</text>
+      <rect x="86" y="296" width="100" height="62" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/><text x="136" y="332">Resumo</text>
+      <rect x="204" y="296" width="100" height="62" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/><text x="254" y="332">Ação</text>
+    </g>
+    <text x="62" y="422" font-size="14" font-weight="700" fill="#1A56DB">Compartilham tudo</text>
+    <text x="62" y="446" font-size="14" fill="#4A5568">Memória, CPU, deploy e</text>
+    <text x="62" y="468" font-size="14" fill="#4A5568">o destino em caso de falha.</text>
+
+    <!-- NIVEL 2 -->
+    <text x="500" y="148" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">NÍVEL 2</text>
+    <text x="500" y="173" text-anchor="middle" font-size="17" font-weight="700" fill="#10233F">Apps no mesmo ambiente</text>
+    <rect x="367" y="195" width="266" height="190" rx="10" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2" stroke-dasharray="8 6"/>
+    <g font-size="13" fill="#10233F" text-anchor="middle">
+      <rect x="391" y="222" width="100" height="62" rx="6" fill="#EEF3FB" stroke="#1A56DB" stroke-width="1.5"/><text x="441" y="258">Triagem</text>
+      <rect x="509" y="222" width="100" height="62" rx="6" fill="#EEF3FB" stroke="#1A56DB" stroke-width="1.5"/><text x="559" y="258">Busca</text>
+      <rect x="391" y="296" width="100" height="62" rx="6" fill="#EEF3FB" stroke="#1A56DB" stroke-width="1.5"/><text x="441" y="332">Resumo</text>
+      <rect x="509" y="296" width="100" height="62" rx="6" fill="#EEF3FB" stroke="#1A56DB" stroke-width="1.5"/><text x="559" y="332">Ação</text>
+    </g>
+    <text x="367" y="422" font-size="14" font-weight="700" fill="#1A56DB">Falha e escala separadas</text>
+    <text x="367" y="446" font-size="14" fill="#4A5568">Rede e limites de plataforma</text>
+    <text x="367" y="468" font-size="14" fill="#4A5568">continuam compartilhados.</text>
+
+    <!-- NIVEL 3 -->
+    <text x="805" y="148" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">NÍVEL 3</text>
+    <text x="805" y="173" text-anchor="middle" font-size="17" font-weight="700" fill="#10233F">Ambientes separados</text>
+    <g font-size="13" fill="#10233F" text-anchor="middle">
+      <rect x="672" y="210" width="118" height="74" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/><text x="731" y="252" fill="#FFFFFF">Triagem</text>
+      <rect x="810" y="210" width="118" height="74" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/><text x="869" y="252" fill="#FFFFFF">Busca</text>
+      <rect x="672" y="300" width="118" height="74" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/><text x="731" y="342" fill="#FFFFFF">Resumo</text>
+      <rect x="810" y="300" width="118" height="74" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/><text x="869" y="342" fill="#FFFFFF">Ação</text>
+    </g>
+    <text x="672" y="422" font-size="14" font-weight="700" fill="#1A56DB">Rede também separada</text>
+    <text x="672" y="446" font-size="14" fill="#4A5568">Mais isolamento, mais</text>
+    <text x="672" y="468" font-size="14" fill="#4A5568">superfície para operar.</text>
+  </g>
+
+  <text x="60" y="524" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">A decisão é por agente, não para o conjunto. Terminar com três juntos e um separado é um desenho legítimo.</text>
+</svg>
