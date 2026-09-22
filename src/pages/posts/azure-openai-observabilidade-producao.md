@@ -8,11 +8,11 @@ readTime: "10 min"
 description: "Como instrumentar pipelines RAG com Application Insights, OpenTelemetry e Azure Monitor para visibilidade real em produção."
 ---
 
-Voce colocou o pipeline RAG em producao. Esta respondendo. E ai alguem reclama que esta lento, e voce nao sabe dizer onde.
+Você colocou o pipeline RAG em produção. Está respondendo. E ai alguém reclama que está lento, e você não sabe dizer onde.
 
-E o embedding? A busca? A geracao? A rede entre os servicos?
+E o embedding? A busca? A geração? A rede entre os serviços?
 
-Sem instrumentacao, a resposta e sempre 'nao sei'. O problema nao e falta de ferramenta, e falta de granularidade. A maioria dos logs de Azure OpenAI mostra latencia total. O que voce precisa e latencia por componente.
+Sem instrumentação, a resposta e sempre 'não sei'. O problema não e falta de ferramenta, e falta de granularidade. A maioria dos logs de Azure OpenAI mostra latência total. O que você precisa e latência por componente.
 
 ## Instrumentando cada etapa do pipeline
 
@@ -73,7 +73,7 @@ dependencies
 | order by timestamp desc
 ```
 
-Essa query revela algo que me surpreende sempre que configuro um novo ambiente: embedding frequentemente e mais lento que busca quando os Private Endpoints estao em regioes diferentes. A chamada de embedding e para um endpoint separado, e se os dois nao estao na mesma regiao, o overhead de rede acumula.
+Essa query revela algo que me surpreende sempre que configuro um novo ambiente: embedding frequentemente e mais lento que busca quando os Private Endpoints estão em regiões diferentes. A chamada de embedding e para um endpoint separado, e se os dois não estão na mesma região, o overhead de rede acumula.
 
 ```kql
 // Custo de tokens por hora
@@ -96,7 +96,7 @@ dependencies
 | order by duration desc
 ```
 
-## Alerta para degradacao de latencia
+## Alerta para degradação de latência
 
 ```bash
 az monitor scheduled-query create \
@@ -110,7 +110,7 @@ az monitor scheduled-query create \
 ```
 
 <div class="callout">
-<strong>Nao logue o conteudo das mensagens em producao.</strong> Por LGPD e privacidade, logue metricas (tamanho em tokens, latencia, sucesso/falha), nao o texto das perguntas e respostas.
+<strong>Não logue o conteúdo das mensagens em produção.</strong> Por LGPD e privacidade, logue métricas (tamanho em tokens, latência, sucesso/falha), não o texto das perguntas e respostas.
 </div>
 
-A diferenca entre resolver um incidente em 5 minutos e em 2 horas e ter o trace certo no momento certo. Instrumentar antes do problema e a unica forma de ter esse trace disponivel quando voce precisar.
+A diferenca entre resolver um incidente em 5 minutos e em 2 horas e ter o trace certo no momento certo. Instrumentar antes do problema e a única forma de ter esse trace disponível quando você precisar.
