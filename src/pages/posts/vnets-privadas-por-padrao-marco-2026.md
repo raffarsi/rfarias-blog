@@ -18,19 +18,19 @@ next:
 
 ---
 
-Em marco de 2026, o Azure mudou o comportamento padrao de Virtual Networks: recursos criados em VNets novas nao recebem mais acesso publico por padrao. Se voce tem automacao de infraestrutura, scripts de deploy ou pipelines que assumem que VMs e outros recursos vao ter conectividade de saida sem configuracao explicita, isso quebrou silenciosamente.
+Em marco de 2026, o Azure mudou o comportamento padrão de Virtual Networks: recursos criados em VNets novas não recebem mais acesso público por padrão. Se você tem automação de infraestrutura, scripts de deploy ou pipelines que assumem que VMs e outros recursos vão ter conectividade de saída sem configuração explicita, isso quebrou silenciosamente.
 
-Vale auditar o que voce tem antes de descobrir num incidente.
+Vale auditar o que você tem antes de descobrir num incidente.
 
 ## O que mudou exatamente
 
-Antes de marco de 2026: VNets novas tinham "default outbound access" habilitado. VMs sem IP publico conseguiam acessar a internet via um IP efemero gerenciado pelo Azure.
+Antes de marco de 2026: VNets novas tinham "default outbound access" habilitado. VMs sem IP público conseguiam acessar a internet via um IP efêmero gerenciado pelo Azure.
 
-Depois: VNets novas nao tem esse comportamento. VMs sem IP publico e sem NAT Gateway ou Load Balancer configurado nao tem saida para internet.
+Depois: VNets novas não tem esse comportamento. VMs sem IP público e sem NAT Gateway ou Load Balancer configurado não tem saída para internet.
 
-VNets existentes criadas antes da mudanca continuam funcionando como antes. O impacto e so em VNets criadas apos a mudanca.
+VNets existentes criadas antes da mudança continuam funcionando como antes. O impacto e só em VNets criadas apos a mudança.
 
-## Como identificar o que esta afetado
+## Como identificar o que está afetado
 
 ```bash
 # Listar VMs sem IP publico e sem NAT Gateway
@@ -40,9 +40,9 @@ az vm list --query "[].{Nome:name,RG:resourceGroup,IP:publicIps}"   --show-detai
 az network vnet subnet list   --vnet-name vnet-producao   --resource-group rg-networking   --query "[?natGateway==null].{Nome:name,Prefix:addressPrefix}"   --output table
 ```
 
-## Configurando saida corretamente com NAT Gateway
+## Configurando saída corretamente com NAT Gateway
 
-A solucao correta para saida de internet em VNets novas e NAT Gateway:
+A solução correta para saída de internet em VNets novas e NAT Gateway:
 
 ```bicep
 resource publicIpNat 'Microsoft.Network/publicIPAddresses@2023-09-01' = {
@@ -73,9 +73,9 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-09-01' = {
 }
 ```
 
-## O que fazer se voce usa IaC
+## O que fazer se você usa IaC
 
-Se voce usa Terraform, Bicep ou ARM templates para criar VNets, inclua explicitamente a configuracao de saida em todos os templates. Nao assuma o comportamento padrao porque ele mudou.
+Se você usa Terraform, Bicep ou ARM templates para criar VNets, inclua explicitamente a configuração de saída em todos os templates. Não assuma o comportamento padrão porque ele mudou.
 
 ```hcl
 # Terraform: adicionar explicitamente
@@ -90,10 +90,10 @@ resource "azurerm_nat_gateway_public_ip_association" "app" {
 }
 ```
 
-## Workloads que so acessam servicos privados
+## Workloads que só acessam serviços privados
 
-Se voce tem VMs ou containers que so precisam acessar recursos via Private Endpoints (OpenAI, AI Search, Storage) e nunca acessam a internet, voce nao precisa de NAT Gateway. Esses recursos continuam funcionando sem configuracao de saida.
+Se você tem VMs ou containers que só precisam acessar recursos via Private Endpoints (OpenAI, AI Search, Storage) e nunca acessam a internet, você não precisa de NAT Gateway. Esses recursos continuam funcionando sem configuração de saída.
 
-O problema aparece em workloads que precisam baixar dependencias, acessar APIs externas, atualizar pacotes ou qualquer coisa que saia da VNet para a internet. Esses sao os cenarios que quebraram.
+O problema aparece em workloads que precisam baixar dependências, acessar APIs externas, atualizar pacotes ou qualquer coisa que saia da VNet para a internet. Esses são os cenários que quebraram.
 
-A mudanca e correta do ponto de vista de segurança: saida para internet deve ser configurada explicitamente, nao habilitada por padrao. Mas se voce nao estava acompanhando, e uma surpresa desagradavel.
+A mudança e correta do ponto de vista de segurança: saída para internet deve ser configurada explicitamente, não habilitada por padrão. Mas se você não estava acompanhando, e uma surpresa desagradável.
