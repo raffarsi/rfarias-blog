@@ -8,15 +8,15 @@ readTime: "10 min"
 description: "IDPS no Azure Firewall Premium detecta ameaças conhecidas por assinatura. Como configurar, analisar alertas no Log Analytics e ajustar para reduzir falsos positivos em produção."
 ---
 
-IDPS e Threat Intelligence sao recursos que a maioria habilita em modo Alert, nunca analisa os alertas e depois ativa modo Deny esperando que funcione. O resultado: centenas de alertas por dia que ninguem ve, ou bloqueios inesperados em producao que o time leva horas para diagnosticar.
+IDPS e Threat Intelligence são recursos que a maioria habilita em modo Alert, nunca analisa os alertas e depois ativa modo Deny esperando que funcione. O resultado: centenas de alertas por dia que ninguém vê, ou bloqueios inesperados em produção que o time leva horas para diagnosticar.
 
 Existe uma sequencia que funciona.
 
 ## A diferenca entre os dois
 
-**Threat Intelligence:** bloqueia IPs e dominios conhecidamente maliciosos com base em feeds da Microsoft. Mais simples, menos falsos positivos, habilite em Alert ou Deny desde o inicio.
+**Threat Intelligence:** bloqueia IPs e domínios conhecidamente maliciosos com base em feeds da Microsoft. Mais simples, menos falsos positivos, habilite em Alert ou Deny desde o inicio.
 
-**IDPS:** analisa o conteudo dos pacotes por padroes de ataque usando assinaturas. Mais granular, mais falsos positivos possiveis. Comece em Alert, analise por duas semanas antes de ir para Deny.
+**IDPS:** analisa o conteúdo dos pacotes por padrões de ataque usando assinaturas. Mais granular, mais falsos positivos possíveis. Comece em Alert, analise por duas semanas antes de ir para Deny.
 
 ```bicep
 resource firewallPolicy 'Microsoft.Network/firewallPolicies@2023-09-01' = {
@@ -49,7 +49,7 @@ AzureDiagnostics
 | take 20
 ```
 
-Para cada assinatura frequente: e trafego legitimo ou malicioso? Se for trafego legitimo, adicione a exclusao antes de ir para Deny.
+Para cada assinatura frequente: e tráfego legitimo ou malicioso? Se for tráfego legitimo, adicione a exclusão antes de ir para Deny.
 
 ## Excluindo assinaturas que geram falsos positivos confirmados
 
@@ -69,8 +69,8 @@ intrusionDetection: {
 
 ## O processo que funciona
 
-Duas semanas em Alert, analisar os top 20 alertas, confirmar quais sao falsos positivos, criar exclusoes para esses, mudar para Deny, monitorar a primeira semana em Deny com atencao.
+Duas semanas em Alert, analisar os top 20 alertas, confirmar quais são falsos positivos, criar exclusões para esses, mudar para Deny, monitorar a primeira semana em Deny com atenção.
 
-Nao pule a fase de Alert. Ja vi ambientes onde ir direto para Deny bloqueou trafego de atualizacao de SO, trafego de monitoramento e ate trafego de DNS interno, porque as assinaturas confundiram padroes legitimos com ataques.
+Não pule a fase de Alert. Já vi ambientes onde ir direto para Deny bloqueou tráfego de atualização de SO, tráfego de monitoramento e até tráfego de DNS interno, porque as assinaturas confundiram padrões legítimos com ataques.
 
-IDPS em producao e um recurso que exige operacao ativa, nao e configure-e-esqueça.
+IDPS em produção e um recurso que exige operação ativa, não e configure-e-esqueça.
