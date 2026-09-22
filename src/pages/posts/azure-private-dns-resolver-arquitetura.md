@@ -1,22 +1,22 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Azure Private DNS Resolver: resolucao de nomes centralizada no hub"
+title: "Azure Private DNS Resolver: resolução de nomes centralizada no hub"
 category: "Networking"
 tag: "networking"
 date: "18 Dez 2025"
 readTime: "9 min"
-description: "Como configurar o Private DNS Resolver para centralizar a resolucao de nomes em arquiteturas hub-and-spoke."
+description: "Funciona no primeiro spoke. No segundo já não resolve, e no on-premises também não. Centralizar o DNS no hub é o que faz a topologia escalar."
 ---
 
-Voce criou o Private Endpoint, configurou a zona Private DNS, vinculou a VNet. A VM no spoke resolve o nome certo e alcanca o recurso. Ate ai tudo bem.
+Você criou o Private Endpoint, configurou a zona Private DNS, vinculou a VNet. A VM no spoke resolve o nome certo e alcanca o recurso. Até ai tudo bem.
 
-Ai voce adiciona um segundo spoke, e ele nao resolve. Ai o servidor on-premises tenta acessar e tambem nao resolve. Cada novo elemento na topologia exige configuracao manual de DNS. Escalar assim nao funciona.
+Ai você adiciona um segundo spoke, e ele não resolve. Ai o servidor on-premises tenta acessar e também não resolve. Cada novo elemento na topologia exige configuração manual de DNS. Escalar assim não funciona.
 
 O Private DNS Resolver centraliza tudo isso.
 
 ## O problema sem o Resolver
 
-Sem um resolvedor centralizado, cada spoke e cada servidor on-premises precisa de configuracao individual para resolver `oai-producao.privatelink.openai.azure.com`. Em ambientes com dezenas de spokes e varios servicos PaaS, isso e inviavel de gerenciar.
+Sem um resolvedor centralizado, cada spoke e cada servidor on-premises precisa de configuração individual para resolver `oai-producao.privatelink.openai.azure.com`. Em ambientes com dezenas de spokes e vários serviços PaaS, isso e inviável de gerenciar.
 
 ## Arquitetura centralizada no hub
 
@@ -87,7 +87,7 @@ resource ruleOnPrem 'Microsoft.Network/dnsForwardingRulesets/forwardingRules@202
 }
 ```
 
-## Configurando on-premises para resolver dominios Azure
+## Configurando on-premises para resolver domínios Azure
 
 ```powershell
 Add-DnsServerConditionalForwarderZone `
@@ -99,4 +99,4 @@ Add-DnsServerConditionalForwarderZone `
   -MasterServers 10.0.4.4
 ```
 
-Novo Private Endpoint adicionado? A zona ja esta configurada no hub, o resolver ja esta ativo. Nenhuma configuracao adicional nos spokes ou no on-premises. Esse e o ponto.
+Novo Private Endpoint adicionado? A zona já está configurada no hub, o resolver já está ativo. Nenhuma configuração adicional nos spokes ou no on-premises. Esse e o ponto.
