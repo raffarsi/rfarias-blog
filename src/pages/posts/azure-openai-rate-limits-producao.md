@@ -1,24 +1,24 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Rate limits do Azure OpenAI em producao: como dimensionar e lidar com throttling"
+title: "Rate limits do Azure OpenAI em produção: como dimensionar e lidar com throttling"
 category: "IA Generativa"
 tag: "ia-generativa"
 date: "28 Out 2025"
 readTime: "9 min"
-description: "Artigo tecnico sobre rate limits do azure openai em producao: como dimensionar e lidar com throttling — parte da serie de conteudo Azure no blog rfarias.com."
+description: "Você vai atingir o rate limit. A questão é se o sistema degrada em silêncio ou entrega um 429 na cara do usuário."
 ---
 
-Em desenvolvimento, rate limit e inconveniente. Em producao, e incidente.
+Em desenvolvimento, rate limit e inconveniente. Em produção, e incidente.
 
-Voce vai atingir rate limit. A questao e se o sistema vai degradar graciosamente ou mostrar HTTP 429 direto para o usuario.
+Você vai atingir rate limit. A questão e se o sistema vai degradar graciosamente ou mostrar HTTP 429 direto para o usuário.
 
 ## O que cada limite significa
 
-**TPM (Tokens Per Minute):** cada token no prompt mais tokens na resposta conta. Um System Prompt longo que voce nao esta medindo pode estar consumindo muito mais TPM do que percebe.
+**TPM (Tokens Per Minute):** cada token no prompt mais tokens na resposta conta. Um System Prompt longo que você não está medindo pode estar consumindo muito mais TPM do que percebe.
 
-**RPM (Requests Per Minute):** em aplicacoes com muitos usuarios simultaneos, voce atinge RPM antes de TPM, mesmo com prompts curtos.
+**RPM (Requests Per Minute):** em aplicações com muitos usuários simultâneos, você atinge RPM antes de TPM, mesmo com prompts curtos.
 
-O header `Retry-After` da resposta 429 diz quantos segundos esperar. Nao ignore esse header.
+O header `Retry-After` da resposta 429 diz quantos segundos esperar. Não ignore esse header.
 
 ## Retry com backoff que funciona
 
@@ -46,7 +46,7 @@ def call_with_retry(func, max_retries=5, base_delay=1):
                 raise
 ```
 
-## Multiplos deployments para alta disponibilidade
+## Múltiplos deployments para alta disponibilidade
 
 ```python
 DEPLOYMENTS = [
@@ -73,12 +73,12 @@ def chamar_com_fallback(messages: list) -> str:
     raise Exception('Todos os deployments com rate limit')
 ```
 
-## PTU: quando o pay-as-you-go nao e suficiente
+## PTU: quando o pay-as-you-go não e suficiente
 
-Provisioned Throughput Units garantem throughput sem throttling. Voce paga por hora de capacidade reservada. Faz sentido quando voce usa mais de 60-70% da capacidade de forma consistente.
+Provisioned Throughput Units garantem throughput sem throttling. Você paga por hora de capacidade reservada. Faz sentido quando você usa mais de 60-70% da capacidade de forma consistente.
 
 <div class="callout">
-<strong>Monitore TPM e RPM separadamente.</strong> Rate limit por RPM = distribuir requisicoes. Rate limit por TPM = reduzir o contexto. Saber qual dos dois e qual define a solucao certa.
+<strong>Monitore TPM e RPM separadamente.</strong> Rate limit por RPM = distribuir requisições. Rate limit por TPM = reduzir o contexto. Saber qual dos dois e qual define a solução certa.
 </div>
 
-Rate limit bem tratado e invisivel para o usuario. Mal tratado, vira 429 na tela.
+Rate limit bem tratado e invisível para o usuário. Mal tratado, vira 429 na tela.
