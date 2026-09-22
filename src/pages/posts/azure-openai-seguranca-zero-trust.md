@@ -8,17 +8,17 @@ readTime: "11 min"
 description: "Como aplicar os princípios de Zero Trust em toda a stack de uma aplicação com Azure OpenAI — rede, identidade e dados. Guia prático com Bicep e Python."
 ---
 
-Toda semana aparece uma noticia de vazamento de dados envolvendo IA. E quando voce vai ler os detalhes, quase sempre o problema nao foi o modelo. Foi a forma como ele foi conectado ao mundo.
+Toda semana aparece uma noticia de vazamento de dados envolvendo IA. E quando você vai ler os detalhes, quase sempre o problema não foi o modelo. Foi a forma como ele foi conectado ao mundo.
 
-API key hardcoded no repositorio. Azure OpenAI com acesso publico habilitado. Sem logs de auditoria. Sem validacao do que entra e do que sai.
+API key hardcoded no repositório. Azure OpenAI com acesso público habilitado. Sem logs de auditoria. Sem validação do que entra e do que sai.
 
-Zero Trust para IA nao e sobre desconfiar do modelo. E sobre assumir que qualquer camada pode ser comprometida e projetar o sistema para sobreviver a isso.
+Zero Trust para IA não e sobre desconfiar do modelo. E sobre assumir que qualquer camada pode ser comprometida e projetar o sistema para sobreviver a isso.
 
-## As tres camadas que precisam funcionar juntas
+## As três camadas que precisam funcionar juntas
 
-**Rede:** acesso publico desabilitado, trafego so via Private Endpoint.
-**Identidade:** sem API keys, Managed Identity com role minima.
-**Dados:** Content Safety validando entrada e saida, logs de auditoria.
+**Rede:** acesso público desabilitado, tráfego só via Private Endpoint.
+**Identidade:** sem API keys, Managed Identity com role mínima.
+**Dados:** Content Safety validando entrada e saída, logs de auditoria.
 
 ## Camada de rede
 
@@ -38,7 +38,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
 
 Com `publicNetworkAccess: Disabled`, qualquer chamada de fora da VNet recebe 403, mesmo com API key valida.
 
-## Camada de identidade: sem API keys em producao
+## Camada de identidade: sem API keys em produção
 
 ```bash
 APP_IDENTITY=$(az webapp show \
@@ -68,7 +68,7 @@ client = AzureOpenAI(
 )
 ```
 
-Desabilite as API keys completamente para que ninguem possa usa-las:
+Desabilite as API keys completamente para que ninguém possa usa-las:
 
 ```bash
 az cognitiveservices account update \
@@ -117,4 +117,4 @@ def processar(user_input: str) -> str:
 - [ ] Content Safety verificando input e output
 - [ ] Logs de auditoria no Log Analytics
 
-Zero Trust nao e um estado que voce atinge. E um processo de eliminar suposicoes de confianca, uma camada por vez. A maioria dos comprometimentos que leio poderia ser evitada com so a primeira camada implementada corretamente.
+Zero Trust não e um estado que você atinge. E um processo de eliminar suposições de confiança, uma camada por vez. A maioria dos comprometimentos que leio poderia ser evitada com só a primeira camada implementada corretamente.
