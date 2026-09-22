@@ -5,16 +5,16 @@ category: "IA Generativa"
 tag: "ia-generativa"
 date: "23 Dez 2025"
 readTime: "10 min"
-description: "Artigo tecnico sobre function calling no azure openai: como agentes executam acoes reais — parte da serie de conteudo Azure no blog rfarias.com."
+description: "O modelo não executa nada: ele devolve uma instrução estruturada e quem executa é você. É nesse intervalo que mora a segurança do agente."
 ---
 
-Existe uma diferenca enorme entre um chatbot que responde perguntas e um agente que resolve problemas. A diferenca esta em function calling.
+Existe uma diferenca enorme entre um chatbot que responde perguntas e um agente que resolve problemas. A diferenca está em function calling.
 
-Um chatbot diz: 'para solicitar ferias, acesse o sistema de RH e preencha o formulario'. Um agente faz: abre o sistema, verifica o saldo de dias, cria a solicitacao, retorna o protocolo. O usuario nao muda de sistema.
+Um chatbot diz: 'para solicitar ferias, acesse o sistema de RH e preencha o formulário'. Um agente faz: abre o sistema, verifica o saldo de dias, cria a solicitação, retorna o protocolo. O usuário não muda de sistema.
 
-## Como funciona: o modelo nao executa
+## Como funciona: o modelo não executa
 
-O modelo decide o que executar e retorna uma instrucao estruturada. Voce executa. Esse detalhe e critico para seguranca: voce tem controle total.
+O modelo decide o que executar e retorna uma instrução estruturada. Você executa. Esse detalhe e critico para segurança: você tem controle total.
 
 ```python
 from openai import AzureOpenAI
@@ -108,8 +108,8 @@ def agente(mensagem: str, matricula_usuario: str) -> str:
 
 ## O que validar antes de executar
 
-A validacao entre o modelo retornar o tool_call e voce executar e onde mora a seguranca. O usuario tem permissao para essa acao? Os parametros fazem sentido? A acao e sobre os proprios dados do usuario ou de outra pessoa?
+A validação entre o modelo retornar o tool_call e você executar e onde mora a segurança. O usuário tem permissão para essa ação? Os parâmetros fazem sentido? A ação e sobre os próprios dados do usuário ou de outra pessoa?
 
-O modelo nao valida isso. Voce valida.
+O modelo não valida isso. Você valida.
 
-Function calling e o que separa IA generativa de automacao real. A qualidade do resultado depende menos do modelo e mais das descricoes das funcoes e da robustez das validacoes.
+Function calling e o que separa IA generativa de automação real. A qualidade do resultado depende menos do modelo e mais das descrições das funções e da robustez das validações.
