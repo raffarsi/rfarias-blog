@@ -7,14 +7,14 @@ const totalArtigos = 20;
 
 // Artigos publicados (em ordem da série)
 const publicados = [
-  { num:1,  slug:'azure-openai-exposto-na-internet-private-link', title:'Seu Azure OpenAI está exposto na internet — e você provavelmente sabe',                                    date:'19 Ago 2026', readTime:'9 min',  excerpt:'Pipelines de RAG sobem em produção com acesso público "por enquanto" — e o por enquanto nunca acaba.' },
+  { num:1,  slug:'azure-openai-exposto-na-internet-private-link', title:'Seu Azure OpenAI está exposto na internet, e você provavelmente sabe',                                    date:'19 Ago 2026', readTime:'9 min',  excerpt:'Pipelines de RAG sobem em produção com acesso público "por enquanto", e o por enquanto nunca acaba.' },
   { num:2,  slug:'hub-and-spoke-ia-generativa-azure',             title:'Hub-and-spoke para IA generativa: onde colocar AI Foundry, Search e Storage na topologia',              date:'21 Ago 2026', readTime:'10 min', excerpt:'A topologia "óbvia" quebra a governança assim que a segunda squad de IA aparece.' },
   { num:3,  slug:'dns-privado-arquiteturas-ia-multi-vnet',        title:'DNS privado em arquiteturas de IA multi-VNet: os erros mais comuns',                                     date:'26 Ago 2026', readTime:'10 min', excerpt:'O Private Endpoint está configurado certo. O recurso responde no telnet. E mesmo assim a aplicação não resolve o nome.' },
   { num:4,  slug:'latencia-rede-pipelines-rag-azure',             title:'Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI',                   date:'26 Ago 2026', readTime:'10 min', excerpt:'Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. São pelo menos 4 saltos de rede escondidos numa única chamada.' },
   { num:5,  slug:'vnets-privadas-por-padrao-marco-2026',          title:'VNets privadas por padrão a partir de março de 2026: o que isso quebra e como migrar sem downtime',     date:'2 Set 2026',  readTime:'9 min',  excerpt:'Em março de 2026 o Azure muda o padrão. Se sua automação depende do comportamento antigo, ela vai quebrar.' },
-  { num:6,  slug:'azure-firewall-explicit-proxy-vs-udr',          title:'Azure Firewall com Explicit Proxy: guia prático e quando faz sentido trocar UDR por proxy',             date:'4 Set 2026',  readTime:'10 min', excerpt:'Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado — e derrubar todo o tráfego de saída.' },
+  { num:6,  slug:'azure-firewall-explicit-proxy-vs-udr',          title:'Azure Firewall com Explicit Proxy: guia prático e quando faz sentido trocar UDR por proxy',             date:'4 Set 2026',  readTime:'10 min', excerpt:'Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado e derrubar todo o tráfego de saída.' },
   { num:7,  slug:'fortinet-sdwan-virtual-wan-secured-hub', title:'Fortinet SD-WAN vs Secured Hub nativa: a migração não precisa ser tudo ou nada', date:'10 Set 2026', readTime:'11 min', excerpt:'Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa já faz metade do que você paga por ela.' },
-  { num:1,  slug:'expressroute-400g-vale-a-pena-migrar',          title:'ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa',                               date:'8 Set 2026',  readTime:'9 min',  excerpt:'A pergunta certa não é "dá pra ter" — é "eu preciso disso ou só quero o número maior".' },
+  { num:1,  slug:'expressroute-400g-vale-a-pena-migrar',          title:'ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa',                               date:'8 Set 2026',  readTime:'9 min',  excerpt:'A pergunta certa não é "dá pra ter", é "eu preciso disso ou só quero o número maior".' },
 ];
 
 // Artigos em breve (ainda não publicados)
@@ -38,8 +38,8 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
 ---
 
 <BaseLayout
-  title="Série Azure Networking + IA Generativa — rfarias"
-  description="Série completa de 20 artigos sobre Azure Networking e IA Generativa — arquitetura de referência, decisões de rede e os erros mais comuns em produção."
+  title="Série Azure Networking + IA Generativa | rfarias"
+  description="Série completa de 20 artigos sobre Azure Networking e IA Generativa: arquitetura de referência, decisões de rede e os erros mais comuns em produção."
 >
   <div class="container serie-page">
 
@@ -57,7 +57,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
       <h1 class="serie-hero-title">Azure Networking + IA Generativa</h1>
       <p class="serie-hero-desc">
         Arquitetura de referência, decisões de rede e os erros mais comuns em produção.
-        Uma série de {totalArtigos} artigos publicados às terças e quintas — com casos reais do ambiente corporativo.
+        Uma série de {totalArtigos} artigos publicados às terças e quintas, com casos reais do ambiente corporativo.
       </p>
       <div class="serie-hero-meta">
         <span>📄 {totalArtigos} artigos planejados</span>
@@ -79,7 +79,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
     </div>
 
     <div class="serie-progress-hint">
-      <span>💡 Leia em ordem — cada artigo constrói sobre o anterior.</span>
+      <span>💡 Leia em ordem: cada artigo constrói sobre o anterior.</span>
       <a href={`/posts/${publicados[0].slug}`} class="btn-start-serie">Começar do início →</a>
     </div>
 
