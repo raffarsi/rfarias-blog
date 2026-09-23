@@ -5,10 +5,10 @@ category: "FinOps"
 tag: "finops"
 date: "27 Nov 2025"
 readTime: "9 min"
-description: "Tags, budgets, alertas, reservas e Advisor -- o fluxo completo para ter visibilidade e controle sobre os custos do ambiente Azure."
+description: "Tags, budgets, alertas, reservas e Advisor: o fluxo completo para ter visibilidade e controle sobre os custos do ambiente Azure."
 ---
 
-Custos do Azure fora de controle é um dos problemas mais comuns em organizações que adotam a nuvem sem uma estratégia de governança financeira. O Azure tem ferramentas nativas para cada etapa -- o desafio é usar todas elas de forma integrada.
+Custos do Azure fora de controle é um dos problemas mais comuns em organizações que adotam a nuvem sem uma estratégia de governança financeira. O Azure tem ferramentas nativas para cada etapa: o desafio é usar todas elas de forma integrada.
 
 ## Tags: o alicerce da visibilidade
 
@@ -57,7 +57,7 @@ az advisor recommendation list \
 ```
 
 Recomendações típicas:
-- VMs com CPU < 5% por 7 dias -- desligar ou reduzir tamanho
+- VMs com CPU < 5% por 7 dias: desligar ou reduzir tamanho
 - Reserved Instances para VMs com uso consistente
 - Storage sem acesso nos últimos 30 dias
 - Recursos órfãos (discos sem VM, IPs sem recurso)
@@ -102,4 +102,4 @@ AzureCostData
 
 ## Conclusão
 
-Controle de custos no Azure é um processo contínuo: tags para visibilidade, budgets para alertas precoces, Advisor para otimização e reservas para recursos previsíveis. A maioria das organizações começa sem tags e depois luta para entender de onde vem o custo -- investir 1 dia em configurar tags e budgets no início poupa semanas de investigação depois.
+Controle de custos no Azure é um processo contínuo: tags para visibilidade, budgets para alertas precoces, Advisor para otimização e reservas para recursos previsíveis. A maioria das organizações começa sem tags e depois luta para entender de onde vem o custo. Investir 1 dia em configurar tags e budgets no início poupa semanas de investigação depois.

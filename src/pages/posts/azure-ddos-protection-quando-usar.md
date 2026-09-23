@@ -5,7 +5,7 @@ category: "Networking"
 tag: "networking"
 date: "25 Set 2025"
 readTime: "8 min"
-description: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege — análise técnica e financeira."
+description: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege. Análise técnica e financeira."
 ---
 
 Todo ambiente Azure tem proteção DDoS básica incluída sem custo. A pergunta real é: quando o DDoS Protection Standard, que custa em torno de 3 mil dólares por mês, agrega valor suficiente para justificar esse investimento?

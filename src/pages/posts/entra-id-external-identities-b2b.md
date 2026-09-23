@@ -18,7 +18,7 @@ Quando você convida um usuário externo:
 3. Um Guest user e criado no seu tenant Entra ID
 4. Você atribui permissões a esse Guest user como qualquer usuário interno
 
-O usuário externo nunca tem senha no seu tenant -- sempre autentica no tenant de origem.
+O usuário externo nunca tem senha no seu tenant: sempre autentica no tenant de origem.
 
 ## Convidando usuários externos
 
@@ -76,7 +76,7 @@ Em vez de gerenciar acesso de cada parceiro manualmente:
 2. Configure aprovação e expiração (ex: 6 meses renovável)
 3. Compartilhe o link do package com o parceiro
 4. O parceiro solicita acesso, aprovador interno aprova
-5. Revisão periódica automática -- se não renovar, acesso expira
+5. Revisão periódica automática: se não renovar, acesso expira
 
 Quando o contrato expira, o acesso expira junto.
 
@@ -93,4 +93,4 @@ Quando o contrato expira, o acesso expira junto.
 
 ## Conclusão
 
-B2B no Entra ID é a forma correta de colaborar com externos no ecossistema Microsoft -- sem contas não gerenciadas, com controle de acesso que expira automaticamente e auditoria completa. Access Packages com aprovação e revisão periódica é o padrão para ambientes com compliance como requisito.
+B2B no Entra ID é a forma correta de colaborar com externos no ecossistema Microsoft, sem contas não gerenciadas, com controle de acesso que expira automaticamente e auditoria completa. Access Packages com aprovação e revisão periódica é o padrão para ambientes com compliance como requisito.

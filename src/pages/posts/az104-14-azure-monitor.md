@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [14] — Azure Monitor e Log Analytics"
+title: "AZ-104 na prática [14]: Azure Monitor e Log Analytics"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "15 Ago 2026"
 readTime: "9 min"
 description: "Monitoramento de recursos Azure com Azure Monitor, Log Analytics e alertas."
 prev:
-  title: "AZ-104 [13] — VPN e ExpressRoute"
+  title: "AZ-104 [13]: VPN e ExpressRoute"
   slug: "az104-13-vpn-expressroute"
 next:
-  title: "AZ-104 [15] — Backup e ASR"
+  title: "AZ-104 [15]: Backup e ASR"
   slug: "az104-15-backup"
 
 ---

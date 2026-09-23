@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "SC-900 na prática [1] — Zero Trust e defesa em profundidade"
+title: "SC-900 na prática [1]: Zero Trust e defesa em profundidade"
 category: "IAM"
 tag: "iam"
 serie: "SC-900 na prática"
@@ -10,7 +10,7 @@ date: "11 Abr 2026"
 readTime: "9 min"
 description: "Fundamentos de segurança: modelo Zero Trust, defesa em profundidade e responsabilidade compartilhada."
 next:
-  title: "SC-900 [2] — Identidade e Acesso"
+  title: "SC-900 [2]: Identidade e Acesso"
   slug: "sc900-02-identidade-entra"
 
 ---

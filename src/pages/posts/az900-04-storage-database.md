@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-900 na prática [4] — Storage e banco de dados no Azure"
+title: "AZ-900 na prática [4]: Storage e banco de dados no Azure"
 category: "Infra"
 tag: "infra"
 serie: "AZ-900 na prática"
@@ -10,10 +10,10 @@ date: "14 Mar 2026"
 readTime: "9 min"
 description: "Azure Storage, Azure SQL, Cosmos DB e os principais serviços de dados para o AZ-900."
 prev:
-  title: "AZ-900 [3] — Computação e Redes"
+  title: "AZ-900 [3]: Computação e Redes"
   slug: "az900-03-computacao-redes"
 next:
-  title: "AZ-900 [5] — Identidade e Segurança"
+  title: "AZ-900 [5]: Identidade e Segurança"
   slug: "az900-05-identidade-seguranca"
 
 ---

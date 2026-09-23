@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AI-901 na prática [4] — IA conversacional e agentes"
+title: "AI-901 na prática [4]: IA conversacional e agentes"
 category: "IA Generativa"
 tag: "ia-generativa"
 serie: "AI-901 na prática"
@@ -10,10 +10,10 @@ date: "4 Abr 2026"
 readTime: "8 min"
 description: "Azure Bot Service, Copilot Studio e como criar assistentes virtuais inteligentes."
 prev:
-  title: "AI-901 [3] — Linguagem e IA Generativa"
+  title: "AI-901 [3]: Linguagem e IA Generativa"
   slug: "ai901-03-linguagem-ia-generativa"
 next:
-  title: "AI-901 [5] — IA Responsável"
+  title: "AI-901 [5]: IA Responsável"
   slug: "ai901-05-ia-responsavel-foundry"
 
 ---

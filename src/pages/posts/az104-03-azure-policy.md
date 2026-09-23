@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [3] — Azure Policy e governança"
+title: "AZ-104 na prática [3]: Azure Policy e governança"
 category: "Segurança"
 tag: "seguranca"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "30 Mai 2026"
 readTime: "8 min"
 description: "Como usar Azure Policy para enforçar padrões, auditar conformidade e governar seu ambiente Azure."
 prev:
-  title: "AZ-104 [2] — RBAC"
+  title: "AZ-104 [2]: RBAC"
   slug: "az104-02-rbac-escopos"
 next:
-  title: "AZ-104 [4] — Storage Accounts"
+  title: "AZ-104 [4]: Storage Accounts"
   slug: "az104-04-storage-accounts"
 
 ---

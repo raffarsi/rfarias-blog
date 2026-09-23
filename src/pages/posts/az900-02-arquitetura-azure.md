@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-900 na prática [2] — Arquitetura e componentes do Azure"
+title: "AZ-900 na prática [2]: Arquitetura e componentes do Azure"
 category: "Docência"
 tag: "docencia"
 serie: "AZ-900 na prática"
@@ -10,10 +10,10 @@ date: "7 Mar 2026"
 readTime: "9 min"
 description: "Regiões, Zonas de Disponibilidade, Resource Groups e a hierarquia de organização do Azure."
 prev:
-  title: "AZ-900 [1] — Conceitos de Cloud"
+  title: "AZ-900 [1]: Conceitos de Cloud"
   slug: "az900-01-conceitos-nuvem"
 next:
-  title: "AZ-900 [3] — Computação e Redes"
+  title: "AZ-900 [3]: Computação e Redes"
   slug: "az900-03-computacao-redes"
 
 ---

@@ -8,12 +8,12 @@ serieNum: 4
 serieSlug: "serie-azure-networking-ia"
 date: "26 Ago 2026"
 readTime: "10 min"
-description: "Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. Spoiler: são pelo menos 4 saltos de rede escondidos numa única chamada — e a rede pode estar dominando mais que o modelo."
+description: "Sua consulta RAG parece lenta, mas ninguém sabe dizer onde. Spoiler: são pelo menos 4 saltos de rede escondidos numa única chamada, e a rede pode estar dominando mais que o modelo."
 next:
-  title: "Azure Networking [5] — VNets privadas por padrão a partir de março de 2026"
+  title: "Azure Networking [5]: VNets privadas por padrão a partir de março de 2026"
   slug: "vnets-privadas-por-padrao-marco-2026"
 prev:
-  title: "Azure Networking [3] — DNS privado em arquiteturas de IA multi-VNet"
+  title: "Azure Networking [3]: DNS privado em arquiteturas de IA multi-VNet"
   slug: "dns-privado-arquiteturas-ia-multi-vnet"
 
 ---

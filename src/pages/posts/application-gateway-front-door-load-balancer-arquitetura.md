@@ -59,7 +59,7 @@ Para defesa em profundidade, especialmente em arquiteturas que lidam com dados c
 Não é redundância. É profundidade.
 
 ```bicep
-// Application Gateway WAF v2 — WAF regional
+// Application Gateway WAF v2: WAF regional
 resource appGw 'Microsoft.Network/applicationGateways@2023-09-01' = {
   name: 'agw-ia-producao'
   properties: {

@@ -5,7 +5,7 @@ category: "Segurança"
 tag: "seguranca"
 date: "02 Out 2025"
 readTime: "8 min"
-description: "Rotação automática, acesso via Managed Identity, soft-delete e purge protection — o que configurar antes de guardar o primeiro secret."
+description: "Rotação automática, acesso via Managed Identity, soft-delete e purge protection: o que configurar antes de guardar o primeiro secret."
 ---
 
 

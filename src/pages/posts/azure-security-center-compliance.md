@@ -8,7 +8,7 @@ readTime: "9 min"
 description: "Como o Microsoft Defender for Cloud mapeia controles para frameworks regulatórios e gera evidências de conformidade para auditorias."
 ---
 
-Demonstrar conformidade com LGPD, PCI-DSS, ISO 27001 ou qualquer outro framework regulatório em ambientes Azure é um processo que pode ser significativamente automatizado -- em vez de depender de evidências coletadas manualmente a cada ciclo de auditoria.
+Demonstrar conformidade com LGPD, PCI-DSS, ISO 27001 ou qualquer outro framework regulatório em ambientes Azure é um processo que pode ser significativamente automatizado, em vez de depender de evidências coletadas manualmente a cada ciclo de auditoria.
 
 ## Como o Defender for Cloud mapeia frameworks
 
@@ -49,13 +49,13 @@ az security auto-provisioning-setting update \
 
 ## Controles críticos por framework
 
-**LGPD -- controles técnicos que o Azure facilita demonstrar:**
+**LGPD: controles técnicos que o Azure facilita demonstrar:**
 - Criptografia de dados em repouso (Azure Storage, SQL com TDE habilitado)
 - Controle de acesso baseado em necessidade (RBAC + PIM)
 - Logs de auditoria de acesso a dados pessoais (Audit logs no Entra ID)
 - Capacidade de exclusão de dados (Azure Policy para retenção)
 
-**PCI-DSS -- controles de rede:**
+**PCI-DSS: controles de rede:**
 ```bash
 # Verificar se todos os recursos de pagamento tem acesso publico bloqueado
 az network public-ip list \
@@ -63,7 +63,7 @@ az network public-ip list \
   --output table
 ```
 
-**ISO 27001 -- controles operacionais:**
+**ISO 27001: controles operacionais:**
 - A.9 Controle de acesso: demonstrado via Entra ID + Acesso Condicional + PIM
 - A.10 Criptografia: Azure Key Vault + customer-managed keys
 - A.12 Segurança de operações: Azure Monitor + Log Analytics
@@ -94,9 +94,9 @@ SecurityRegulatoryCompliance
 ```
 
 <div class="callout">
-<strong>Conformidade não é auditoria:</strong> O dashboard de conformidade do Defender for Cloud mostra o estado atual dos controles técnicos -- não substitui uma auditoria formal conduzida por auditor independente. Mas gera evidências sólidas que aceleram significativamente o processo de auditoria.
+<strong>Conformidade não é auditoria:</strong> O dashboard de conformidade do Defender for Cloud mostra o estado atual dos controles técnicos, mas não substitui uma auditoria formal conduzida por auditor independente. Mas gera evidências sólidas que aceleram significativamente o processo de auditoria.
 </div>
 
 ## Conclusão
 
-Conformidade regulatória no Azure passa de um processo manual e estressante para um processo contínuo e auditável quando você usa Defender for Cloud, Azure Policy e Sentinel de forma integrada. As evidências existem continuamente -- a auditoria vira um exercício de exportar e apresentar o que já está coletado, não de correr para coletar antes da data.
+Conformidade regulatória no Azure passa de um processo manual e estressante para um processo contínuo e auditável quando você usa Defender for Cloud, Azure Policy e Sentinel de forma integrada. As evidências existem continuamente: a auditoria vira um exercício de exportar e apresentar o que já está coletado, não de correr para coletar antes da data.

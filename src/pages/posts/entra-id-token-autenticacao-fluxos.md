@@ -5,7 +5,7 @@ category: "IAM"
 tag: "iam"
 date: "05 Fev 2026"
 readTime: "10 min"
-description: "Auth code flow, client credentials, on-behalf-of — como escolher o fluxo correto para cada tipo de aplicação no ecossistema Azure."
+description: "Auth code flow, client credentials, on-behalf-of: como escolher o fluxo correto para cada tipo de aplicação no ecossistema Azure."
 ---
 OAuth 2.0 e OpenID Connect são padrões, mas o Microsoft Entra ID tem suas particularidades, endpoints específicos, tokens com formato próprio e fluxos adaptados para o ecossistema Azure. Entender qual fluxo usar para cada tipo de aplicação evita implementações incorretas que parecem funcionar mas têm falhas de segurança sutis.
 

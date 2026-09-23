@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [11] — NSG, UDR e roteamento"
+title: "AZ-104 na prática [11]: NSG, UDR e roteamento"
 category: "Networking"
 tag: "networking"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "25 Jul 2026"
 readTime: "10 min"
 description: "Network Security Groups e User Defined Routes para controle de tráfego nas redes Azure."
 prev:
-  title: "AZ-104 [10] — VNets e Subnets"
+  title: "AZ-104 [10]: VNets e Subnets"
   slug: "az104-10-vnets-subnets"
 next:
-  title: "AZ-104 [12] — Load Balancer"
+  title: "AZ-104 [12]: Load Balancer"
   slug: "az104-12-load-balancer"
 
 ---

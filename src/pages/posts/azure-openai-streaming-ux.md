@@ -125,7 +125,7 @@ response = llm.invoke("Explique hub-and-spoke no Azure")
 
 ## Considerações de produção
 
-**Timeout:** configure adequadamente -- respostas longas podem levar 30-60 segundos.
+**Timeout:** configure adequadamente: respostas longas podem levar 30-60 segundos.
 
 **Buffering no nginx:** adicione `proxy_buffering off` na configuração do servidor.
 
@@ -155,4 +155,4 @@ function conectarStream(pergunta, onChunk, onDone) {
 
 ## Conclusão
 
-Streaming é uma das melhorias de UX de maior impacto com o menor esforço de implementação. Para usuários acostumados com ChatGPT e Copilot, ver a resposta aparecer progressivamente é o comportamento esperado -- um requisito básico de usabilidade em aplicações de IA em 2026.
+Streaming é uma das melhorias de UX de maior impacto com o menor esforço de implementação. Para usuários acostumados com ChatGPT e Copilot, ver a resposta aparecer progressivamente é o comportamento esperado, um requisito básico de usabilidade em aplicações de IA em 2026.

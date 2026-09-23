@@ -8,12 +8,12 @@ serieNum: 2
 serieSlug: "serie-azure-networking-ia"
 date: "21 Ago 2026"
 readTime: "10 min"
-description: "A topologia 'óbvia' para IA generativa quebra a governança assim que a segunda squad de IA aparece. O padrão hub-and-spoke resolve — mas só se você souber onde colocar cada componente."
+description: "A topologia 'óbvia' para IA generativa quebra a governança assim que a segunda squad de IA aparece. O padrão hub-and-spoke resolve, mas só se você souber onde colocar cada componente."
 prev:
-  title: "Azure Networking [1] — Seu Azure OpenAI está exposto na internet"
+  title: "Azure Networking [1]: Seu Azure OpenAI está exposto na internet"
   slug: "azure-openai-exposto-na-internet-private-link"
 next:
-  title: "Azure Networking [3] — DNS privado em arquiteturas de IA multi-VNet"
+  title: "Azure Networking [3]: DNS privado em arquiteturas de IA multi-VNet"
   slug: "dns-privado-arquiteturas-ia-multi-vnet"
 ---
 

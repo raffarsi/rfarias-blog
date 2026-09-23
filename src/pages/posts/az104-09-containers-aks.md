@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [9] — Containers: ACI e AKS"
+title: "AZ-104 na prática [9]: containers com ACI e AKS"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "11 Jul 2026"
 readTime: "10 min"
 description: "Azure Container Instances para containers simples e Azure Kubernetes Service para orquestração."
 prev:
-  title: "AZ-104 [8] — App Service"
+  title: "AZ-104 [8]: App Service"
   slug: "az104-08-app-service"
 next:
-  title: "AZ-104 [10] — VNets e Subnets"
+  title: "AZ-104 [10]: VNets e Subnets"
   slug: "az104-10-vnets-subnets"
 
 ---

@@ -91,10 +91,10 @@ Usage
 | order by GB desc
 ```
 
-O Sentinel cobra por GB de dados ingeridos (~$2.46/GB). Habilite conectores seletivamente -- nem todos os logs de todos os serviços precisam ir para o Sentinel.
+O Sentinel cobra por GB de dados ingeridos (~$2.46/GB). Habilite conectores seletivamente: nem todos os logs de todos os serviços precisam ir para o Sentinel.
 
 <div class="callout">
-<strong>Regras de Analytics built-in:</strong> O Sentinel tem centenas de regras pré-configuradas que você pode habilitar com um clique. Comece habilitando as regras para os conectores que você já tem ativos -- é um ponto de partida rápido sem precisar escrever KQL do zero.
+<strong>Regras de Analytics built-in:</strong> O Sentinel tem centenas de regras pré-configuradas que você pode habilitar com um clique. Comece habilitando as regras para os conectores que você já tem ativos: é um ponto de partida rápido sem precisar escrever KQL do zero.
 </div>
 
 ## Conclusão

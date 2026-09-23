@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-900 na prática [3] — Computação e redes no Azure"
+title: "AZ-900 na prática [3]: Computação e redes no Azure"
 category: "Docência"
 tag: "docencia"
 serie: "AZ-900 na prática"
@@ -8,12 +8,12 @@ serieSlug: "az900"
 serieNum: 3
 date: "10 Mar 2026"
 readTime: "10 min"
-description: "VMs, containers, serverless e redes virtuais — os principais serviços de computação e rede do Azure para o AZ-900."
+description: "VMs, containers, serverless e redes virtuais: os principais serviços de computação e rede do Azure para o AZ-900."
 prev:
-  title: "AZ-900 [2] — Arquitetura Azure"
+  title: "AZ-900 [2]: Arquitetura Azure"
   slug: "az900-02-arquitetura-azure"
 next:
-  title: "AZ-900 [4] — Storage e Banco de Dados"
+  title: "AZ-900 [4]: Storage e Banco de Dados"
   slug: "az900-04-storage-database"
 
 ---

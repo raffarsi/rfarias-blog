@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-900 na prática [1] — Conceitos fundamentais de Cloud Computing"
+title: "AZ-900 na prática [1]: Conceitos fundamentais de Cloud Computing"
 category: "Docência"
 tag: "docencia"
 serie: "AZ-900 na prática"
@@ -10,7 +10,7 @@ date: "3 Mar 2026"
 readTime: "8 min"
 description: "IaaS, PaaS e SaaS explicados com exemplos reais. O ponto de partida para qualquer certificação Azure."
 next:
-  title: "AZ-900 [2] — Arquitetura Azure"
+  title: "AZ-900 [2]: Arquitetura Azure"
   slug: "az900-02-arquitetura-azure"
 
 ---

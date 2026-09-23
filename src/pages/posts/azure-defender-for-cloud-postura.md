@@ -26,7 +26,7 @@ az security pricing create \
 
 ## Secure Score: a fotografia da postura
 
-O Secure Score é calculado com base nas recomendações ativas. Cada recomendação tem um peso -- corrigir as de maior peso sobe mais o score.
+O Secure Score é calculado com base nas recomendações ativas. Cada recomendação tem um peso: corrigir as de maior peso sobe mais o score.
 
 ```kql
 SecurityRecommendation
@@ -77,7 +77,7 @@ az security regulatory-compliance-controls list \
   --standard-name "CIS Azure 2.0.0"
 ```
 
-O relatório mostra quais controles estão compliant -- com evidências automáticas que podem ser usadas em auditorias.
+O relatório mostra quais controles estão compliant, com evidências automáticas que podem ser usadas em auditorias.
 
 ## Just-in-Time VM Access
 
@@ -100,9 +100,9 @@ az security auto-provisioning-setting update \
 ```
 
 <div class="callout">
-<strong>Secure Score não é a única métrica:</strong> Um Secure Score alto e bom sinal, mas não garante segurança completa. Ele mede configurações verificáveis -- não detecta ameaças ativas, não substitui monitoramento com Sentinel, não cobre todos os riscos. Use como um dos vários indicadores de postura, não como o único.
+<strong>Secure Score não é a única métrica:</strong> Um Secure Score alto e bom sinal, mas não garante segurança completa. Ele mede configurações verificáveis. Não detecta ameaças ativas, não substitui monitoramento com Sentinel, não cobre todos os riscos. Use como um dos vários indicadores de postura, não como o único.
 </div>
 
 ## Conclusão
 
-O Defender for Cloud transforma segurança de reativa para proativa -- em vez de descobrir problemas em auditorias ou incidentes, você vê continuamente o que está exposto e recebe um caminho claro de correção priorizado pelo impacto real. Para candidatura ao MVP de Azure, o Secure Score e a demonstração de conformidade são evidências concretas de domínio da área.
+O Defender for Cloud transforma segurança de reativa para proativa: em vez de descobrir problemas em auditorias ou incidentes, você vê continuamente o que está exposto e recebe um caminho claro de correção priorizado pelo impacto real. Para candidatura ao MVP de Azure, o Secure Score e a demonstração de conformidade são evidências concretas de domínio da área.

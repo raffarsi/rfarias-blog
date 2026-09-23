@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "SC-900 na prática [3] — Soluções de segurança Microsoft"
+title: "SC-900 na prática [3]: Soluções de segurança Microsoft"
 category: "Segurança"
 tag: "seguranca"
 serie: "SC-900 na prática"
@@ -10,10 +10,10 @@ date: "18 Abr 2026"
 readTime: "10 min"
 description: "Microsoft Defender XDR, Sentinel, Defender for Cloud e as principais soluções de segurança."
 prev:
-  title: "SC-900 [2] — Identidade e Acesso"
+  title: "SC-900 [2]: Identidade e Acesso"
   slug: "sc900-02-identidade-entra"
 next:
-  title: "SC-900 [4] — Conformidade"
+  title: "SC-900 [4]: Conformidade"
   slug: "sc900-04-conformidade-purview"
 
 ---

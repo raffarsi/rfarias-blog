@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [16] — Gerenciamento de custos no Azure"
+title: "AZ-104 na prática [16]: Gerenciamento de custos no Azure"
 category: "FinOps"
 tag: "finops"
 serie: "AZ-104 na prática"
@@ -10,7 +10,7 @@ date: "29 Ago 2026"
 readTime: "8 min"
 description: "Como monitorar, analisar e otimizar custos no Azure com Cost Management e estratégias de reserva."
 prev:
-  title: "AZ-104 [15] — Backup e ASR"
+  title: "AZ-104 [15]: Backup e ASR"
   slug: "az104-15-backup"
 
 ---

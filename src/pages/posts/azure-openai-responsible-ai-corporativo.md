@@ -5,7 +5,7 @@ category: "IA Generativa"
 tag: "ia-generativa"
 date: "20 Jan 2026"
 readTime: "9 min"
-description: "Como implementar os princípios de IA Responsável da Microsoft em projetos reais — content filters, auditoria e políticas de uso aceitável."
+description: "Como implementar os princípios de IA Responsável da Microsoft em projetos reais: content filters, auditoria e políticas de uso aceitável."
 ---
 IA Responsável virou buzzword. Todo mundo fala, poucos implementam de forma que sobrevive ao primeiro incidente em produção.
 

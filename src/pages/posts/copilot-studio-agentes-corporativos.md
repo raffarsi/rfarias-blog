@@ -8,15 +8,15 @@ readTime: "8 min"
 description: "Como o Microsoft Copilot Studio permite criar agentes de IA conectados a dados corporativos sem precisar escrever código."
 ---
 
-O Microsoft Copilot Studio (antigo Power Virtual Agents) é a plataforma low-code da Microsoft para criar agentes de IA. Com ele, equipes de negócio podem construir chatbots e agentes conectados a dados corporativos, fluxos do Power Automate e bases de conhecimento -- sem escrever código Python ou configurar infraestrutura Azure.
+O Microsoft Copilot Studio (antigo Power Virtual Agents) é a plataforma low-code da Microsoft para criar agentes de IA. Com ele, equipes de negócio podem construir chatbots e agentes conectados a dados corporativos, fluxos do Power Automate e bases de conhecimento, sem escrever código Python ou configurar infraestrutura Azure.
 
 ## O que o Copilot Studio oferece
 
 **Topics:** os fluxos de conversa. Cada tópico define como o agente responde a um tipo de pergunta ou intenção do usuário.
 
-**Generative AI:** integração com Azure OpenAI para respostas generativas baseadas em documentos ou bases de conhecimento -- o agente "faz RAG" sem você implementar o pipeline.
+**Generative AI:** integração com Azure OpenAI para respostas generativas baseadas em documentos ou bases de conhecimento: o agente "faz RAG" sem você implementar o pipeline.
 
-**Ações (Power Automate):** o agente pode executar ações reais -- criar tickets, consultar CRMs, enviar emails, atualizar planilhas -- conectando ao ecossistema Power Platform.
+**Ações (Power Automate):** o agente pode executar ações reais (criar tickets, consultar CRMs, enviar emails, atualizar planilhas), conectando ao ecossistema Power Platform.
 
 **Canais:** Teams, SharePoint, site web, WhatsApp e outros canais de publicação com um clique.
 
@@ -44,7 +44,7 @@ Settings > Generative AI > Add knowledge source
   -> URL: https://intranet.empresa.com/politicas
 ```
 
-O agente usa essas fontes para responder com grounding -- igual ao RAG, mas sem escrever código.
+O agente usa essas fontes para responder com grounding, igual ao RAG, mas sem escrever código.
 
 ## Criando Topics (fluxos de conversa)
 

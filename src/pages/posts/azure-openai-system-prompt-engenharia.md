@@ -5,7 +5,7 @@ category: "IA Generativa"
 tag: "ia-generativa"
 date: "30 Set 2025"
 readTime: "9 min"
-description: "Como escrever um System Prompt que define comportamento, restrições e tom do agente — com exemplos reais de ambiente corporativo."
+description: "Como escrever um System Prompt que define comportamento, restrições e tom do agente, com exemplos reais de ambiente corporativo."
 ---
 
 O System Prompt é a instrução base que define o comportamento do modelo antes de qualquer interação com o usuário. Em agentes corporativos, é onde você define persona, limitações, tom e regras de negócio. É também onde a maioria dos erros de comportamento do agente pode ser corrigida.

@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AI-901 na prática [3] — Linguagem natural e IA Generativa"
+title: "AI-901 na prática [3]: Linguagem natural e IA Generativa"
 category: "IA Generativa"
 tag: "ia-generativa"
 serie: "AI-901 na prática"
@@ -10,10 +10,10 @@ date: "31 Mar 2026"
 readTime: "10 min"
 description: "NLP, Azure Language Service, Azure OpenAI e os fundamentos de IA Generativa para o AI-901."
 prev:
-  title: "AI-901 [2] — Visão e Fala"
+  title: "AI-901 [2]: Visão e Fala"
   slug: "ai901-02-azure-ai-services"
 next:
-  title: "AI-901 [4] — IA Conversacional"
+  title: "AI-901 [4]: IA Conversacional"
   slug: "ai901-04-ia-conversacional"
 
 ---

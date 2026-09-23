@@ -5,7 +5,7 @@ category: "Networking"
 tag: "networking"
 date: "13 Nov 2025"
 readTime: "9 min"
-description: "Connection Monitor, IP Flow Verify, Next Hop -- as ferramentas do Network Watcher que resolvem incidentes de conectividade em minutos."
+description: "Connection Monitor, IP Flow Verify, Next Hop: as ferramentas do Network Watcher que resolvem incidentes de conectividade em minutos."
 ---
 
 Você abriu um ticket, o usuário reclama que não acessa o recurso, e você passa a próxima hora olhando para regras de NSG tentando descobrir o que está bloqueando. Isso acontece porque a maioria das pessoas não usa o Network Watcher para diagnosticar, usa intuição e tentativa e erro.

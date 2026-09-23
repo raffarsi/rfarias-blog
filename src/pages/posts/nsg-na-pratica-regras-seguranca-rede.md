@@ -5,7 +5,7 @@ category: "Networking"
 tag: "networking"
 date: "12 Ago 2025"
 readTime: "9 min"
-description: "NSG parece simples — até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em produção."
+description: "NSG parece simples até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em produção."
 ---
 
 NSG parece simples. Até você travar o acesso de produção porque uma regra de prioridade mais baixa está liberando o que você tentou bloquear, ou descobrir que o tráfego entre duas subnets da mesma VNet passou por cima das suas restrições por causa do AllowVNetInBound padrão.

@@ -5,7 +5,7 @@ category: "IA Generativa"
 tag: "ia-generativa"
 date: "24 Fev 2026"
 readTime: "11 min"
-description: "Como aplicar os princípios de Zero Trust em toda a stack de uma aplicação com Azure OpenAI — rede, identidade e dados. Guia prático com Bicep e Python."
+description: "Como aplicar os princípios de Zero Trust em toda a stack de uma aplicação com Azure OpenAI: rede, identidade e dados. Guia prático com Bicep e Python."
 ---
 
 Toda semana aparece uma noticia de vazamento de dados envolvendo IA. E quando você vai ler os detalhes, quase sempre o problema não foi o modelo. Foi a forma como ele foi conectado ao mundo.

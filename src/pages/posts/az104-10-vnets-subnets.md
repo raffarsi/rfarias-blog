@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [10] — VNets, subnets e peering"
+title: "AZ-104 na prática [10]: VNets, subnets e peering"
 category: "Networking"
 tag: "networking"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "18 Jul 2026"
 readTime: "11 min"
 description: "Como planejar e implementar Virtual Networks, subnets e conectar VNets com peering."
 prev:
-  title: "AZ-104 [9] — Containers e AKS"
+  title: "AZ-104 [9]: Containers e AKS"
   slug: "az104-09-containers-aks"
 next:
-  title: "AZ-104 [11] — NSG e Roteamento"
+  title: "AZ-104 [11]: NSG e Roteamento"
   slug: "az104-11-nsg-roteamento"
 
 ---

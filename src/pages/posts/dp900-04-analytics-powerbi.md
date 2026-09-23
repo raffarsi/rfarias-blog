@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "DP-900 na prática [4] — Analytics, Synapse e Power BI"
+title: "DP-900 na prática [4]: Analytics, Synapse e Power BI"
 category: "Docência"
 tag: "docencia"
 serie: "DP-900 na prática"
@@ -10,10 +10,10 @@ date: "9 Mai 2026"
 readTime: "10 min"
 description: "Azure Synapse Analytics, Data Lake, Azure Databricks e Power BI para analytics moderno."
 prev:
-  title: "DP-900 [3] — Dados Não Relacionais"
+  title: "DP-900 [3]: Dados Não Relacionais"
   slug: "dp900-03-dados-nao-relacionais"
 next:
-  title: "DP-900 [5] — Pipelines e Governança"
+  title: "DP-900 [5]: Pipelines e Governança"
   slug: "dp900-05-pipelines-governanca"
 
 ---

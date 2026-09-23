@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Azure Networking: VNets e Subnets — o que você precisa saber antes de criar qualquer recurso"
+title: "VNets e Subnets no Azure: o que você precisa saber antes de criar qualquer recurso"
 category: "Networking"
 tag: "networking"
 date: "05 Ago 2025"

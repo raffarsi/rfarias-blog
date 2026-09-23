@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [2] — RBAC: controle de acesso baseado em funções"
+title: "AZ-104 na prática [2]: RBAC e controle de acesso baseado em funções"
 category: "IAM"
 tag: "iam"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "23 Mai 2026"
 readTime: "9 min"
 description: "Como o RBAC funciona no Azure, como atribuir funções e entender escopos de forma prática."
 prev:
-  title: "AZ-104 [1] — Entra ID"
+  title: "AZ-104 [1]: Entra ID"
   slug: "az104-01-entra-id-na-pratica"
 next:
-  title: "AZ-104 [3] — Azure Policy"
+  title: "AZ-104 [3]: Azure Policy"
   slug: "az104-03-azure-policy"
 
 ---

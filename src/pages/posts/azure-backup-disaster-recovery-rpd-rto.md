@@ -8,11 +8,11 @@ readTime: "10 min"
 description: "Como calcular RPO e RTO e quando usar Azure Backup, ASR ou geo-replication para cada tipo de workload."
 ---
 
-Backup e Disaster Recovery são frequentemente tratados como a mesma coisa -- não são. Backup protege contra perda de dados (deletar acidentalmente, corrupção). DR protege contra indisponibilidade de infraestrutura (falha de datacenter, região Azure fora do ar). A estratégia certa depende de dois números: RPO e RTO.
+Backup e Disaster Recovery são frequentemente tratados como a mesma coisa, mas não são. Backup protege contra perda de dados (deletar acidentalmente, corrupção). DR protege contra indisponibilidade de infraestrutura (falha de datacenter, região Azure fora do ar). A estratégia certa depende de dois números: RPO e RTO.
 
 ## RPO e RTO: os dois números que definem sua estratégia
 
-**RPO (Recovery Point Objective):** quanto de dado você pode perder? Se seu RPO é 1 hora, você precisa de backup a cada hora -- um incidente pode te fazer perder no máximo 1 hora de dados.
+**RPO (Recovery Point Objective):** quanto de dado você pode perder? Se seu RPO é 1 hora, você precisa de backup a cada hora: um incidente pode te fazer perder no máximo 1 hora de dados.
 
 **RTO (Recovery Time Objective):** quanto tempo você pode ficar fora do ar? Se seu RTO é 4 horas, sua solução de recuperação precisa restaurar tudo em 4 horas.
 
@@ -113,9 +113,9 @@ az storage account create \
 | < 1 minuto | < 5 minutos | Active-Active multi-região (custo muito maior) |
 
 <div class="callout">
-<strong>Teste o RTO real, não o estimado.</strong> A maioria das organizações sabe o RTO teórico mas nunca testou quanto tempo leva de fato para restaurar. Faça um teste de DR anual -- só assim você sabe se o RTO real está dentro do acordado em contrato.
+<strong>Teste o RTO real, não o estimado.</strong> A maioria das organizações sabe o RTO teórico mas nunca testou quanto tempo leva de fato para restaurar. Faça um teste de DR anual: só assim você sabe se o RTO real está dentro do acordado em contrato.
 </div>
 
 ## Conclusão
 
-Backup e DR são necessidades diferentes com soluções diferentes. Azure Backup protege dados contra perda ou corrupção. ASR e geo-replication protegem contra indisponibilidade de infraestrutura. A escolha da estratégia certa começa pelos números de RPO e RTO -- e esses números devem ser definidos com o negócio, não pela equipe de TI unilateralmente.
+Backup e DR são necessidades diferentes com soluções diferentes. Azure Backup protege dados contra perda ou corrupção. ASR e geo-replication protegem contra indisponibilidade de infraestrutura. A escolha da estratégia certa começa pelos números de RPO e RTO, e esses números devem ser definidos com o negócio, não pela equipe de TI unilateralmente.

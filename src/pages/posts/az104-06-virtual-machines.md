@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [6] — VMs: criação, tamanhos e discos"
+title: "AZ-104 na prática [6]: criação, tamanhos e discos de VMs"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "20 Jun 2026"
 readTime: "12 min"
 description: "Como criar e configurar VMs no Azure, escolher o tamanho certo e gerenciar discos."
 prev:
-  title: "AZ-104 [5] — Azure Files"
+  title: "AZ-104 [5]: Azure Files"
   slug: "az104-05-azure-files"
 next:
-  title: "AZ-104 [7] — VMs: Disponibilidade"
+  title: "AZ-104 [7]: Disponibilidade de VMs"
   slug: "az104-07-vm-disponibilidade"
 
 ---

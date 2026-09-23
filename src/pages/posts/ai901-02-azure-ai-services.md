@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AI-901 na prática [2] — Azure AI Services: visão e fala"
+title: "AI-901 na prática [2]: Azure AI Services para visão e fala"
 category: "IA Generativa"
 tag: "ia-generativa"
 serie: "AI-901 na prática"
@@ -10,10 +10,10 @@ date: "28 Mar 2026"
 readTime: "9 min"
 description: "Azure Computer Vision, Custom Vision, Face API e Azure Speech Services na prática."
 prev:
-  title: "AI-901 [1] — Fundamentos de IA"
+  title: "AI-901 [1]: Fundamentos de IA"
   slug: "ai901-01-fundamentos-ia"
 next:
-  title: "AI-901 [3] — Linguagem e IA Generativa"
+  title: "AI-901 [3]: Linguagem e IA Generativa"
   slug: "ai901-03-linguagem-ia-generativa"
 
 ---

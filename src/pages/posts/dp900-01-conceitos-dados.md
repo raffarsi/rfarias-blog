@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "DP-900 na prática [1] — Conceitos fundamentais de dados"
+title: "DP-900 na prática [1]: Conceitos fundamentais de dados"
 category: "Docência"
 tag: "docencia"
 serie: "DP-900 na prática"
@@ -10,7 +10,7 @@ date: "28 Abr 2026"
 readTime: "9 min"
 description: "Dados estruturados, semiestruturados e não estruturados. Processamento batch vs streaming para o DP-900."
 next:
-  title: "DP-900 [2] — Dados Relacionais"
+  title: "DP-900 [2]: Dados Relacionais"
   slug: "dp900-02-dados-relacionais"
 
 ---

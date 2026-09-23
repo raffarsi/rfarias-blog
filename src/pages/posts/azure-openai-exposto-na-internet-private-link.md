@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Seu Azure OpenAI está exposto na internet — e você provavelmente sabe"
+title: "Seu Azure OpenAI está exposto na internet, e você provavelmente sabe"
 category: "IA Generativa"
 tag: "ia-generativa"
 serie: "Série Azure Networking + IA Generativa"
@@ -8,9 +8,9 @@ serieNum: 1
 serieSlug: "serie-azure-networking-ia"
 date: "19 Ago 2026"
 readTime: "9 min"
-description: "Pipelines de RAG sobem com Azure OpenAI e Azure AI Search em acesso público 'por enquanto' — e o 'por enquanto' nunca acaba. Como eliminar essa exposição com Private Link de ponta a ponta."
+description: "Pipelines de RAG sobem com Azure OpenAI e Azure AI Search em acesso público 'por enquanto', e o 'por enquanto' nunca acaba. Como eliminar essa exposição com Private Link de ponta a ponta."
 next:
-  title: "Azure Networking [2] — Hub-and-spoke para IA generativa"
+  title: "Azure Networking [2]: Hub-and-spoke para IA generativa"
   slug: "hub-and-spoke-ia-generativa-azure"
 ---
 

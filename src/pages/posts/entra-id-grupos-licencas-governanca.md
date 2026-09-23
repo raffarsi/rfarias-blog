@@ -8,11 +8,11 @@ readTime: "9 min"
 description: "Grupos dinâmicos, atribuição de licenças e governança com Entitlement Management para gerenciar acesso em escala."
 ---
 
-Grupos no Microsoft Entra ID são o mecanismo central para gerenciar acesso em escala. Em vez de atribuir roles, licenças e permissões individualmente a cada usuário, você gerencia grupos -- e quem faz parte de cada grupo.
+Grupos no Microsoft Entra ID são o mecanismo central para gerenciar acesso em escala. Em vez de atribuir roles, licenças e permissões individualmente a cada usuário, você gerencia grupos, e quem faz parte de cada grupo.
 
 ## Tipos de grupos
 
-**Grupos de Segurança:** usados para controle de acesso -- RBAC no Azure, permissões em aplicações, políticas de Acesso Condicional.
+**Grupos de Segurança:** usados para controle de acesso: RBAC no Azure, permissões em aplicações, políticas de Acesso Condicional.
 
 **Grupos Microsoft 365:** incluem caixa de email compartilhada, site SharePoint, canal Teams. Para colaboração, não para controle de acesso técnico.
 
@@ -24,7 +24,7 @@ Em vez de adicionar usuários manualmente, grupos dinâmicos usam regras para in
 az ad group create   --display-name "Desenvolvedores TI"   --mail-nickname "devs-ti"   --group-types DynamicMembership   --membership-rule "(user.department -eq 'TI') and (user.jobTitle -contains 'Desenvolvedor')"   --membership-rule-processing-state On
 ```
 
-Quando um usuário muda de departamento no diretório, automaticamente sai do grupo -- sem intervenção manual.
+Quando um usuário muda de departamento no diretório, automaticamente sai do grupo, sem intervenção manual.
 
 ## Atribuição de licenças baseada em grupo
 
@@ -52,7 +52,7 @@ Access Package "Acesso Ambiente IA - Producao":
   - Revisao trimestral: usuario confirma que ainda precisa
 ```
 
-Usuários externos (B2B) também podem solicitar acesso -- a aprovação determina se e por quanto tempo tem acesso.
+Usuários externos (B2B) também podem solicitar acesso: a aprovação determina se e por quanto tempo tem acesso.
 
 ## Estrutura recomendada de grupos
 
@@ -89,7 +89,7 @@ az rest --method post   --url "https://graph.microsoft.com/v1.0/identityGovernan
 ```
 
 <div class="callout">
-<strong>Grupos aninhados:</strong> O Entra ID suporta grupos aninhados para permissões RBAC. Mas grupos dinâmicos não podem ter outros grupos como membros -- apenas usuários e service principals. Planeje a hierarquia antes de criar dependências entre grupos.
+<strong>Grupos aninhados:</strong> O Entra ID suporta grupos aninhados para permissões RBAC. Mas grupos dinâmicos não podem ter outros grupos como membros: apenas usuários e service principals. Planeje a hierarquia antes de criar dependências entre grupos.
 </div>
 
 ## Auditoria de associações
@@ -108,4 +108,4 @@ AuditLogs
 
 ## Conclusão
 
-Estruturar grupos corretamente -- grupos dinâmicos para automação, licenças baseadas em grupo, Entitlement Management para self-service -- é o que permite escalar o ambiente sem crescer a equipe de administração na mesma proporção. A governança fica no design dos grupos, não no trabalho manual de gerenciar cada usuário individualmente.
+Estruturar grupos corretamente (grupos dinâmicos para automação, licenças baseadas em grupo, Entitlement Management para self-service) é o que permite escalar o ambiente sem crescer a equipe de administração na mesma proporção. A governança fica no design dos grupos, não no trabalho manual de gerenciar cada usuário individualmente.

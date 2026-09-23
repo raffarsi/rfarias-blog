@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [12] — Load Balancer e Application Gateway"
+title: "AZ-104 na prática [12]: Load Balancer e Application Gateway"
 category: "Networking"
 tag: "networking"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "1 Ago 2026"
 readTime: "10 min"
 description: "Distribuição de carga com Azure Load Balancer (L4) e Application Gateway (L7)."
 prev:
-  title: "AZ-104 [11] — NSG e Roteamento"
+  title: "AZ-104 [11]: NSG e Roteamento"
   slug: "az104-11-nsg-roteamento"
 next:
-  title: "AZ-104 [13] — VPN e ExpressRoute"
+  title: "AZ-104 [13]: VPN e ExpressRoute"
   slug: "az104-13-vpn-expressroute"
 
 ---

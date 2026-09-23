@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AI-901 na prática [1] — Fundamentos de IA e Machine Learning"
+title: "AI-901 na prática [1]: Fundamentos de IA e Machine Learning"
 category: "IA Generativa"
 tag: "ia-generativa"
 serie: "AI-901 na prática"
@@ -10,7 +10,7 @@ date: "24 Mar 2026"
 readTime: "9 min"
 description: "Conceitos essenciais de IA, ML, Deep Learning e os tipos de problemas que cada abordagem resolve."
 next:
-  title: "AI-901 [2] — Visão e Fala"
+  title: "AI-901 [2]: Visão e Fala"
   slug: "ai901-02-azure-ai-services"
 
 ---

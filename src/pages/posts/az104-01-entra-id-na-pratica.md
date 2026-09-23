@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [1] — Gerenciando identidades com Microsoft Entra ID"
+title: "AZ-104 na prática [1]: Gerenciando identidades com Microsoft Entra ID"
 category: "IAM"
 tag: "iam"
 serie: "AZ-104 na prática"
@@ -10,7 +10,7 @@ date: "16 Mai 2026"
 readTime: "10 min"
 description: "Como gerenciar usuários, grupos e identidades no Microsoft Entra ID para o exame AZ-104 e para o dia a dia."
 next:
-  title: "AZ-104 [2] — RBAC"
+  title: "AZ-104 [2]: RBAC"
   slug: "az104-02-rbac-escopos"
 
 ---

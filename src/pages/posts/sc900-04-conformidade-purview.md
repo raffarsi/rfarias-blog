@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "SC-900 na prática [4] — Conformidade e Microsoft Purview"
+title: "SC-900 na prática [4]: Conformidade e Microsoft Purview"
 category: "Segurança"
 tag: "seguranca"
 serie: "SC-900 na prática"
@@ -10,10 +10,10 @@ date: "21 Abr 2026"
 readTime: "9 min"
 description: "GDPR, Compliance Manager, Microsoft Purview e as ferramentas de conformidade da Microsoft."
 prev:
-  title: "SC-900 [3] — Soluções de Segurança"
+  title: "SC-900 [3]: Soluções de Segurança"
   slug: "sc900-03-solucoes-seguranca"
 next:
-  title: "SC-900 [5] — Governança"
+  title: "SC-900 [5]: Governança"
   slug: "sc900-05-governanca-trust"
 
 ---

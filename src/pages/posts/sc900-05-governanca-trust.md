@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "SC-900 na prática [5] — Governança e Service Trust Portal"
+title: "SC-900 na prática [5]: Governança e Service Trust Portal"
 category: "Segurança"
 tag: "seguranca"
 serie: "SC-900 na prática"
@@ -10,7 +10,7 @@ date: "25 Abr 2026"
 readTime: "8 min"
 description: "Service Trust Portal, Microsoft Privacy, Secure Score e as ferramentas de governança para o SC-900."
 prev:
-  title: "SC-900 [4] — Conformidade"
+  title: "SC-900 [4]: Conformidade"
   slug: "sc900-04-conformidade-purview"
 
 ---

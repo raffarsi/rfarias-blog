@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "DP-900 na prática [3] — Dados não relacionais e Cosmos DB"
+title: "DP-900 na prática [3]: Dados não relacionais e Cosmos DB"
 category: "Docência"
 tag: "docencia"
 serie: "DP-900 na prática"
@@ -10,10 +10,10 @@ date: "5 Mai 2026"
 readTime: "9 min"
 description: "Azure Cosmos DB, tipos de NoSQL e Azure Storage para dados não relacionais."
 prev:
-  title: "DP-900 [2] — Dados Relacionais"
+  title: "DP-900 [2]: Dados Relacionais"
   slug: "dp900-02-dados-relacionais"
 next:
-  title: "DP-900 [4] — Analytics e Power BI"
+  title: "DP-900 [4]: Analytics e Power BI"
   slug: "dp900-04-analytics-powerbi"
 
 ---

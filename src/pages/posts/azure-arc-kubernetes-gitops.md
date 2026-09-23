@@ -8,7 +8,7 @@ readTime: "9 min"
 description: "Como usar Azure Arc para gerenciar clusters Kubernetes on-premises e em outras clouds com GitOps, políticas e monitoramento centralizados."
 ---
 
-O Azure Arc estende o plano de gerenciamento do Azure para clusters Kubernetes que estão fora do Azure -- on-premises, AWS EKS, Google GKE, OpenShift. Com ele, você aplica as mesmas políticas, monitora com o mesmo Log Analytics e usa GitOps para sincronizar configurações.
+O Azure Arc estende o plano de gerenciamento do Azure para clusters Kubernetes que estão fora do Azure: on-premises, AWS EKS, Google GKE, OpenShift. Com ele, você aplica as mesmas políticas, monitora com o mesmo Log Analytics e usa GitOps para sincronizar configurações.
 
 ## Conectando um cluster externo
 
@@ -19,7 +19,7 @@ az connectedk8s connect \
   --location brazilsouth
 ```
 
-Isso instala um agente no cluster que estabelece conexão de saída com o Azure -- sem precisar abrir portas de entrada no datacenter.
+Isso instala um agente no cluster que estabelece conexão de saída com o Azure, sem precisar abrir portas de entrada no datacenter.
 
 ## GitOps com Flux CD
 
@@ -36,7 +36,7 @@ az k8s-configuration create \
   --sync-interval 5m
 ```
 
-O Flux CD e instalado automaticamente e sincroniza as configurações do repositório Git com o cluster a cada 5 minutos. Mudanças no Git são aplicadas automaticamente -- incluindo em clusters on-premises.
+O Flux CD e instalado automaticamente e sincroniza as configurações do repositório Git com o cluster a cada 5 minutos. Mudanças no Git são aplicadas automaticamente, incluindo em clusters on-premises.
 
 ## Azure Policy para clusters Arc
 
@@ -48,7 +48,7 @@ az policy assignment create \
   --scope "/subscriptions/{sub}/resourceGroups/rg-arc-kubernetes"
 ```
 
-A política é avaliada em todos os clusters Arc conectados -- não apenas nos clusters AKS gerenciados.
+A política é avaliada em todos os clusters Arc conectados, não apenas nos clusters AKS gerenciados.
 
 ## Azure Monitor para clusters externos
 
@@ -80,4 +80,4 @@ KubeNodeInventory
 
 ## Conclusão
 
-Azure Arc para Kubernetes unifica o gerenciamento de clusters independente de onde estão. GitOps via Flux CD garante que todos os clusters -- Azure ou on-premises -- aplicam as mesmas configurações do repositório Git. Para organizações com clusters em múltiplos ambientes, é o que permite tratar toda a frota de clusters como um único sistema gerenciado.
+Azure Arc para Kubernetes unifica o gerenciamento de clusters independente de onde estão. GitOps via Flux CD garante que todos os clusters (Azure ou on-premises) aplicam as mesmas configurações do repositório Git. Para organizações com clusters em múltiplos ambientes, é o que permite tratar toda a frota de clusters como um único sistema gerenciado.

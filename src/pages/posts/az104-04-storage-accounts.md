@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [4] — Storage Accounts: tudo que você precisa saber"
+title: "AZ-104 na prática [4]: Storage Accounts, tudo que você precisa saber"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "6 Jun 2026"
 readTime: "11 min"
 description: "Tipos de storage, redundância, acesso e lifecycle management no Azure Storage."
 prev:
-  title: "AZ-104 [3] — Azure Policy"
+  title: "AZ-104 [3]: Azure Policy"
   slug: "az104-03-azure-policy"
 next:
-  title: "AZ-104 [5] — Azure Files"
+  title: "AZ-104 [5]: Azure Files"
   slug: "az104-05-azure-files"
 
 ---

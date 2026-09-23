@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [8] — Azure App Service"
+title: "AZ-104 na prática [8]: Azure App Service"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "4 Jul 2026"
 readTime: "9 min"
 description: "Deploy de aplicações web no Azure App Service: planos, slots, scaling e configurações."
 prev:
-  title: "AZ-104 [7] — VMs: Disponibilidade"
+  title: "AZ-104 [7]: Disponibilidade de VMs"
   slug: "az104-07-vm-disponibilidade"
 next:
-  title: "AZ-104 [9] — Containers e AKS"
+  title: "AZ-104 [9]: Containers e AKS"
   slug: "az104-09-containers-aks"
 
 ---

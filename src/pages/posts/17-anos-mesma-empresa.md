@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "17 anos na mesma empresa — o que me fez ficar (e o que quase me fez sair)"
+title: "17 anos na mesma empresa: o que me fez ficar (e o que quase me fez sair)"
 category: "Carreira"
 tag: "carreira"
 date: "16 Ago 2026"

@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "SC-900 na prática [2] — Identidade e acesso com Microsoft Entra ID"
+title: "SC-900 na prática [2]: Identidade e acesso com Microsoft Entra ID"
 category: "IAM"
 tag: "iam"
 serie: "SC-900 na prática"
@@ -10,10 +10,10 @@ date: "14 Abr 2026"
 readTime: "10 min"
 description: "Microsoft Entra ID, MFA, RBAC, PIM e controle de acesso para o SC-900."
 prev:
-  title: "SC-900 [1] — Zero Trust"
+  title: "SC-900 [1]: Zero Trust"
   slug: "sc900-01-zero-trust-defesa"
 next:
-  title: "SC-900 [3] — Soluções de Segurança"
+  title: "SC-900 [3]: Soluções de Segurança"
   slug: "sc900-03-solucoes-seguranca"
 
 ---

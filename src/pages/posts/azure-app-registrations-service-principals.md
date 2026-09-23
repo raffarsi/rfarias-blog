@@ -12,7 +12,7 @@ Quando uma aplicação precisa acessar recursos do Azure ou APIs da Microsoft, e
 
 ## App Registration vs Service Principal
 
-**App Registration** é o objeto global -- o registro da aplicação no tenant. Define o que a aplicação é: nome, URLs de redirect, permissões necessárias, certificados e secrets.
+**App Registration** é o objeto global, o registro da aplicação no tenant. Define o que a aplicação é: nome, URLs de redirect, permissões necessárias, certificados e secrets.
 
 **Service Principal** é a instância local. É o objeto que recebe permissões RBAC, aparece nos logs de auditoria e pode ser associado a Managed Identities.
 
@@ -31,7 +31,7 @@ az ad sp create --id $APP_ID
 
 ## Client Secret vs Certificate
 
-**Client Secret** -- simples, menos seguro:
+**Client Secret**: simples, menos seguro:
 ```bash
 az ad app credential reset \
   --id $APP_ID \
@@ -39,7 +39,7 @@ az ad app credential reset \
   --years 1
 ```
 
-**Certificate** -- recomendado para produção:
+**Certificate**: recomendado para produção:
 ```bash
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 az ad app credential reset \

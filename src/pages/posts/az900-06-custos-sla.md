@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-900 na prática [6] — Custos, SLA e ciclo de vida de serviços"
+title: "AZ-900 na prática [6]: Custos, SLA e ciclo de vida de serviços"
 category: "FinOps"
 tag: "finops"
 serie: "AZ-900 na prática"
@@ -8,9 +8,9 @@ serieSlug: "az900"
 serieNum: 6
 date: "21 Mar 2026"
 readTime: "8 min"
-description: "Como calcular custos no Azure, entender SLAs e o ciclo de vida de serviços — tópicos obrigatórios do AZ-900."
+description: "Como calcular custos no Azure, entender SLAs e o ciclo de vida de serviços, tópicos obrigatórios do AZ-900."
 prev:
-  title: "AZ-900 [5] — Identidade e Segurança"
+  title: "AZ-900 [5]: Identidade e Segurança"
   slug: "az900-05-identidade-seguranca"
 
 ---

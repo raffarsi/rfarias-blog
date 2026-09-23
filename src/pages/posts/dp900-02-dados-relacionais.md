@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "DP-900 na prática [2] — Dados relacionais no Azure"
+title: "DP-900 na prática [2]: Dados relacionais no Azure"
 category: "Docência"
 tag: "docencia"
 serie: "DP-900 na prática"
@@ -10,10 +10,10 @@ date: "2 Mai 2026"
 readTime: "9 min"
 description: "Azure SQL Database, SQL Managed Instance, PostgreSQL e os serviços de banco de dados relacional."
 prev:
-  title: "DP-900 [1] — Conceitos de Dados"
+  title: "DP-900 [1]: Conceitos de Dados"
   slug: "dp900-01-conceitos-dados"
 next:
-  title: "DP-900 [3] — Dados Não Relacionais"
+  title: "DP-900 [3]: Dados Não Relacionais"
   slug: "dp900-03-dados-nao-relacionais"
 
 ---

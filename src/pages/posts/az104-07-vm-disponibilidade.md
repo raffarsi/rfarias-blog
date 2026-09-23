@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [7] — VMs: alta disponibilidade e Scale Sets"
+title: "AZ-104 na prática [7]: alta disponibilidade de VMs e Scale Sets"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "27 Jun 2026"
 readTime: "10 min"
 description: "Availability Sets, Availability Zones e Virtual Machine Scale Sets para alta disponibilidade."
 prev:
-  title: "AZ-104 [6] — VMs: Criação"
+  title: "AZ-104 [6]: Criação de VMs"
   slug: "az104-06-virtual-machines"
 next:
-  title: "AZ-104 [8] — App Service"
+  title: "AZ-104 [8]: App Service"
   slug: "az104-08-app-service"
 
 ---

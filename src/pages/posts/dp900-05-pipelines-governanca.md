@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "DP-900 na prática [5] — Pipelines e governança de dados"
+title: "DP-900 na prática [5]: Pipelines e governança de dados"
 category: "Docência"
 tag: "docencia"
 serie: "DP-900 na prática"
@@ -10,7 +10,7 @@ date: "12 Mai 2026"
 readTime: "9 min"
 description: "Azure Data Factory, Event Hubs, Stream Analytics e governança de dados com Microsoft Purview."
 prev:
-  title: "DP-900 [4] — Analytics e Power BI"
+  title: "DP-900 [4]: Analytics e Power BI"
   slug: "dp900-04-analytics-powerbi"
 
 ---

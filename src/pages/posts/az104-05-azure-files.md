@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "AZ-104 na prática [5] — Azure Files e Azure File Sync"
+title: "AZ-104 na prática [5]: Azure Files e Azure File Sync"
 category: "Infra"
 tag: "infra"
 serie: "AZ-104 na prática"
@@ -10,10 +10,10 @@ date: "13 Jun 2026"
 readTime: "8 min"
 description: "Compartilhamentos SMB na nuvem com Azure Files e sincronização com servidores on-premises."
 prev:
-  title: "AZ-104 [4] — Storage Accounts"
+  title: "AZ-104 [4]: Storage Accounts"
   slug: "az104-04-storage-accounts"
 next:
-  title: "AZ-104 [6] — VMs: Criação"
+  title: "AZ-104 [6]: Criação de VMs"
   slug: "az104-06-virtual-machines"
 
 ---
