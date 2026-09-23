@@ -123,7 +123,7 @@ llm = AzureChatOpenAI(
 response = llm.invoke("Explique hub-and-spoke no Azure")
 ```
 
-## Considerações de producao
+## Considerações de produção
 
 **Timeout:** configure adequadamente -- respostas longas podem levar 30-60 segundos.
 
@@ -153,6 +153,6 @@ function conectarStream(pergunta, onChunk, onDone) {
 <strong>Streaming e RAG:</strong> Em pipelines RAG, faça a busca de documentos antes de iniciar o stream. Mostre "Buscando na base de conhecimento..." enquanto faz a query no AI Search, e inicie o streaming quando o modelo começa a gerar. Isso melhora a percepção de velocidade sem comprometer o grounding.
 </div>
 
-## Conclusao
+## Conclusão
 
 Streaming é uma das melhorias de UX de maior impacto com o menor esforço de implementação. Para usuários acostumados com ChatGPT e Copilot, ver a resposta aparecer progressivamente é o comportamento esperado -- um requisito básico de usabilidade em aplicações de IA em 2026.

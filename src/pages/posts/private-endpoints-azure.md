@@ -14,13 +14,13 @@ next:
   slug: "azure-ai-foundry"
 ---
 
-Private Endpoint e um dos recursos que parece simples de configurar e complexo de funcionar corretamente. Voce cria, o IP privado aparece, o status fica como "Approved", e mesmo assim a aplicacao nao alcança o servico. Quase sempre e DNS.
+Private Endpoint é um dos recursos que parece simples de configurar e complexo de funcionar corretamente. Você cria, o IP privado aparece, o status fica como "Approved", e mesmo assim a aplicação não alcança o serviço. Quase sempre é DNS.
 
-Vou mostrar a configuracao correta e os pontos onde a maioria trava.
+Vou mostrar a configuração correta e os pontos onde a maioria trava.
 
-## O que acontece quando voce cria um Private Endpoint
+## O que acontece quando você cria um Private Endpoint
 
-O Private Endpoint recebe um IP privado na subnet que voce escolheu. Mas por padrao, o nome do servico (ex: `oai-producao.openai.azure.com`) ainda resolve para o IP publico via DNS. Para que a resolucao retorne o IP privado, voce precisa de uma zona Private DNS vinculada a VNet.
+O Private Endpoint recebe um IP privado na subnet que você escolheu. Mas por padrão, o nome do serviço (ex: `oai-producao.openai.azure.com`) ainda resolve para o IP público via DNS. Para que a resolução retorne o IP privado, você precisa de uma zona Private DNS vinculada a VNet.
 
 ```bash
 # Criar o Private Endpoint
@@ -42,15 +42,15 @@ az network private-dns record-set a add-record   --resource-group rg-dns   --zon
 
 ## O erro mais comum: vincular a zona ao spoke em vez do hub
 
-A zona Private DNS precisa estar vinculada ao hub, onde o DNS Resolver esta. Se voce vincula so ao spoke, recursos em outros spokes e on-premises nao vao resolver corretamente. A regra: **zona vinculada ao hub, valida para todos que consultam o resolver do hub**.
+A zona Private DNS precisa estar vinculada ao hub, onde o DNS Resolver está. Se você vincula só ao spoke, recursos em outros spokes e on-premises não vão resolver corretamente. A regra: **zona vinculada ao hub, válida para todos que consultam o resolver do hub**.
 
-## Como nao perder o acesso ao portal
+## Como não perder o acesso ao portal
 
-Quando voce desabilita o acesso publico de um servico como o Azure OpenAI, o portal Azure nao consegue mais se conectar a ele diretamente. Voce nao perde o acesso ao portal em si, mas certas funcionalidades do recurso (como testar deployments no playground) ficam indisponiveis de fora da VNet.
+Quando você desabilita o acesso público de um serviço como o Azure OpenAI, o portal Azure não consegue mais se conectar a ele diretamente. Você não perde o acesso ao portal em si, mas certas funcionalidades do recurso (como testar deployments no playground) ficam indisponíveis de fora da VNet.
 
-Para manter acesso administrativo ao portal, mantenha o acesso publico habilitado durante a configuracao e so desabilite depois que o Private Endpoint estiver funcionando e verificado. Ou use Azure Bastion + VM dentro da VNet para gerenciar recursos com acesso publico desabilitado.
+Para manter acesso administrativo ao portal, mantenha o acesso público habilitado durante a configuração e só desabilite depois que o Private Endpoint estiver funcionando e verificado. Ou use Azure Bastion + VM dentro da VNet para gerenciar recursos com acesso público desabilitado.
 
-## Verificando se esta funcionando
+## Verificando se está funcionando
 
 ```bash
 # De uma VM dentro da VNet
@@ -62,4 +62,4 @@ curl -I https://oai-producao.openai.azure.com
 # Deve retornar sem erro de certificado
 ```
 
-Private Endpoint funciona quando DNS, zona Private DNS e vinculacao ao hub estao corretos. Se voce verificou os tres e ainda nao funciona, verifique o NSG da subnet onde esta o Private Endpoint. Por padrao, NSGs nao bloqueiam trafego para Private Endpoints, mas UDRs mal configuradas podem redirecionar o trafego para o lugar errado.
+Private Endpoint funciona quando DNS, zona Private DNS e vinculação ao hub estão corretos. Se você verificou os três e ainda não funciona, verifique o NSG da subnet onde está o Private Endpoint. Por padrão, NSGs não bloqueiam tráfego para Private Endpoints, mas UDRs mal configuradas podem redirecionar o tráfego para o lugar errado.

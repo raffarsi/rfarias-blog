@@ -9,9 +9,9 @@ description: "Rotação automática, acesso via Managed Identity, soft-delete e 
 ---
 
 
-Secret no codigo fonte. Connection string no arquivo de configuracao. API key no repositorio publico.
+Secret no código fonte. Connection string no arquivo de configuração. API key no repositório público.
 
-Esses sao os tres erros de seguranca mais comuns que vejo em projetos Azure, e os tres sao resolvidos com Key Vault. O problema nao e falta de ferramenta, e que a forma errada de fazer e mais rapida no curto prazo. Esse artigo mostra como fazer certo sem ser mais lento.
+Esses são os três erros de segurança mais comuns que vejo em projetos Azure, e os três são resolvidos com Key Vault. O problema não é falta de ferramenta, é que a forma errada de fazer é mais rápida no curto prazo. Esse artigo mostra como fazer certo sem ser mais lento.
 
 ## Configurações que você deve habilitar antes de tudo
 

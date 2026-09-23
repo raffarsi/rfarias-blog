@@ -19,9 +19,9 @@ next:
 ---
 
 
-Identidade e o topico que o SC-900 mais aprofunda, e por uma razao pratica: e onde a maioria dos ataques comeca. Phishing, credential stuffing, MFA ausente. Nao e a rede, nao e o endpoint, e a identidade.
+Identidade é o tópico que o SC-900 mais aprofunda, e por uma razão prática: é onde a maioria dos ataques começa. Phishing, credential stuffing, MFA ausente. Não é a rede, não é o endpoint, é a identidade.
 
-O Microsoft Entra ID e a resposta da Microsoft para esse problema. O SC-900 testa se voce entende como as pecas se encaixam.
+O Microsoft Entra ID é a resposta da Microsoft para esse problema. O SC-900 testa se você entende como as peças se encaixam.
 
 ## Microsoft Entra ID
 

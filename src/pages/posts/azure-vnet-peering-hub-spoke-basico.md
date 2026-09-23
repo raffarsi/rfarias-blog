@@ -8,13 +8,13 @@ readTime: "9 min"
 description: "Como conectar VNets com peering, quando usar hub-and-spoke e as limitações que você só descobre em produção."
 ---
 
-Hub-and-spoke e uma das topologias mais faladas em Azure. Mas a maioria das implementacoes que vejo tem o mesmo problema: peering configurado sem entender a nao-transitividade, e ai surgem os incidentes de "por que o spoke A nao alcanca o spoke B?".
+Hub-and-spoke é uma das topologias mais faladas em Azure. Mas a maioria das implementações que vejo tem o mesmo problema: peering configurado sem entender a não-transitividade, e ai surgem os incidentes de "por que o spoke A não alcança o spoke B?".
 
 ## Como o peering funciona de verdade
 
-O peering conecta duas VNets pelo backbone da Microsoft. Sem internet publica, com baixa latencia e alta confiabilidade. O que importa entender: **o peering nao e transitivo por padrao**.
+O peering conecta duas VNets pelo backbone da Microsoft. Sem internet pública, com baixa latência e alta confiabilidade. O que importa entender: **o peering não é transitivo por padrão**.
 
-Se A tem peering com B, e B tem peering com C, A nao alcanca C automaticamente. Voce precisa de peering direto entre A e C, ou de um hub intermediario com roteamento configurado.
+Se A tem peering com B, e B tem peering com C, A não alcança C automaticamente. Você precisa de peering direto entre A e C, ou de um hub intermediário com roteamento configurado.
 
 ```bash
 # Peering bidirecional entre Hub e Spoke
@@ -23,9 +23,9 @@ az network vnet peering create   --name hub-to-spoke-ia   --resource-group rg-ne
 az network vnet peering create   --name spoke-ia-to-hub   --resource-group rg-ia   --vnet-name vnet-spoke-ia   --remote-vnet vnet-hub   --allow-vnet-access   --allow-forwarded-traffic   --use-remote-gateways
 ```
 
-## Por que hub-and-spoke resolve a nao-transitividade
+## Por que hub-and-spoke resolve a não-transitividade
 
-O hub centraliza recursos compartilhados: Azure Firewall, VPN/ER Gateway, DNS Resolver. Os spokes se conectam ao hub via peering. Trafego entre spokes passa pelo hub, onde o Firewall pode inspecionar e controlar.
+O hub centraliza recursos compartilhados: Azure Firewall, VPN/ER Gateway, DNS Resolver. Os spokes se conectam ao hub via peering. Tráfego entre spokes passa pelo hub, onde o Firewall pode inspecionar e controlar.
 
 ```
 on-premises -- VPN/ER Gateway -- VNet HUB -- Azure Firewall
@@ -36,9 +36,9 @@ on-premises -- VPN/ER Gateway -- VNet HUB -- Azure Firewall
      (10.1.0.0/16)         (10.2.0.0/16)         (10.3.0.0/16)
 ```
 
-## Forcando o trafego pelo Firewall do hub
+## Forçando o tráfego pelo Firewall do hub
 
-Por padrao, trafego entre spokes vai direto via backbone, sem passar pelo Firewall. Para forccar inspeção, voce precisa de UDR em cada spoke:
+Por padrão, tráfego entre spokes vai direto via backbone, sem passar pelo Firewall. Para forçar inspeção, você precisa de UDR em cada spoke:
 
 ```bicep
 resource routeTable 'Microsoft.Network/routeTables@2023-09-01' = {
@@ -59,14 +59,14 @@ resource routeTable 'Microsoft.Network/routeTables@2023-09-01' = {
 }
 ```
 
-Sem essa UDR, o trafego entre spokes nunca passa pelo Firewall, independente de como voce configurou as regras dele.
+Sem essa UDR, o tráfego entre spokes nunca passa pelo Firewall, independente de como você configurou as regras dele.
 
-## Peering global: o que muda entre regioes
+## Peering global: o que muda entre regiões
 
-O peering funciona entre regioes diferentes. O trafego usa o backbone da Microsoft, mas ha consideracoes importantes: latencia maior que peering na mesma regiao, custo de transferencia de dados cross-region, e gateway transit nao suportado em peering global.
+O peering funciona entre regiões diferentes. O tráfego usa o backbone da Microsoft, mas há considerações importantes: latência maior que peering na mesma região, custo de transferência de dados cross-region, e gateway transit não suportado em peering global.
 
 <div class="callout">
-<strong>Limitacao critica:</strong> VNets com ranges de IP sobrepostos nao podem ter peering. Se voce esta planejando a topologia agora, defina os ranges com cuidado. Mudar o range de uma VNet em producao e destrutivo.
+<strong>Limitação crítica:</strong> VNets com ranges de IP sobrepostos não podem ter peering. Se você está planejando a topologia agora, defina os ranges com cuidado. Mudar o range de uma VNet em produção é destrutivo.
 </div>
 
-Hub-and-spoke com peering bem configurado e a base de qualquer arquitetura Azure corporativa. O detalhe que mais causa problema na pratica e esse: peering e comunicacao, nao roteamento. Voce precisa das UDRs para controlar para onde o trafego vai depois que chega ao hub.
+Hub-and-spoke com peering bem configurado é a base de qualquer arquitetura Azure corporativa. O detalhe que mais causa problema na prática é esse: peering é comunicação, não roteamento. Você precisa das UDRs para controlar para onde o tráfego vai depois que chega ao hub.

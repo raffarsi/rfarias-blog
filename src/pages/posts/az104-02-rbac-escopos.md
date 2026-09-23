@@ -19,9 +19,9 @@ next:
 ---
 
 
-A pergunta que mais aparece em incidentes de acesso no Azure e: quem deu essa permissao, para quem, e por que ainda esta ativa?
+A pergunta que mais aparece em incidentes de acesso no Azure é: quem deu essa permissão, para quem, e por que ainda está ativa?
 
-RBAC e o que deveria responder isso. Na pratica, ambientes sem governanca de RBAC acumulam permissoes durante meses, e a auditoria revela roles de Owner atribuidas para 'facilitar' e nunca removidas. O AZ-104 testa se voce sabe estruturar isso corretamente desde o inicio.
+RBAC é o que deveria responder isso. Na prática, ambientes sem governança de RBAC acumulam permissões durante meses, e a auditoria revela roles de Owner atribuídas para 'facilitar' e nunca removidas. O AZ-104 testa se você sabe estruturar isso corretamente desde o início.
 
 ## Como o RBAC funciona
 

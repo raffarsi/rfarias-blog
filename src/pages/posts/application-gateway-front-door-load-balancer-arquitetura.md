@@ -5,32 +5,32 @@ category: "Networking"
 tag: "networking"
 date: "15 Set 2026"
 readTime: "10 min"
-description: "Escolher pelo nome e a forma mais cara de errar. A decisao certa depende da camada OSI e do escopo geografico, nao do que parece mais robusto."
+description: "Escolher pelo nome é a forma mais cara de errar. A decisão certa depende da camada OSI e do escopo geográfico, não do que parece mais robusto."
 ---
 
-Ja vi um time passar semanas tentando resolver um problema de performance escalando maquina. Primeiro vertical. Depois horizontal. Depois Load Balancer na frente.
+Já vi um time passar semanas tentando resolver um problema de performance escalando máquina. Primeiro vertical. Depois horizontal. Depois Load Balancer na frente.
 
 O problema continuava.
 
-Quando fui olhar, o gargalo nao era capacidade. Era roteamento. A aplicacao tinha multiplos servicos e todo o trafego ia para o mesmo destino, independente do endpoint chamado.
+Quando fui olhar, o gargalo não era capacidade. Era roteamento. A aplicação tinha múltiplos serviços e todo o tráfego ia para o mesmo destino, independente do endpoint chamado.
 
-Load Balancer distribui conexoes. Ele nao le URL. Nao sabe que `/api` deveria ir para um lugar e `/app` para outro.
+Load Balancer distribui conexões. Ele não lê URL. Não sabe que `/api` deveria ir para um lugar e `/app` para outro.
 
-Trocaram pelo Application Gateway. Resolvido em horas depois de semanas tentando escalar o que nao precisava escalar.
+Trocaram pelo Application Gateway. Resolvido em horas depois de semanas tentando escalar o que não precisava escalar.
 
-## A diferenca que muda tudo
+## A diferença que muda tudo
 
-Nao e sobre qual dos tres e o melhor. E sobre qual camada voce precisa atuar.
+Não é sobre qual dos três é o melhor. É sobre qual camada você precisa atuar.
 
-**Load Balancer (Camada 4):** distribui conexoes TCP/UDP por IP e porta. Nao inspeciona o conteudo HTTP. Rapido, baixa latencia, sem overhead. Certo para protocolos que nao sao HTTP, para cenarios onde latencia e critica ou quando custo e uma restricao real.
+**Load Balancer (Camada 4):** distribui conexões TCP/UDP por IP e porta. Não inspeciona o conteúdo HTTP. Rápido, baixa latência, sem overhead. Certo para protocolos que não são HTTP, para cenários onde latência é crítica ou quando custo é uma restrição real.
 
-**Application Gateway (Camada 7):** entende HTTP. Roteia por URL path, headers, cookies. WAF integrado com OWASP ruleset. SSL offload centralizado. Afinidade de sessao. Certo quando voce precisa que `/api` va para um backend e `/app` va para outro, ou quando WAF e requisito.
+**Application Gateway (Camada 7):** entende HTTP. Roteia por URL path, headers, cookies. WAF integrado com OWASP ruleset. SSL offload centralizado. Afinidade de sessão. Certo quando você precisa que `/api` va para um backend e `/app` va para outro, ou quando WAF é requisito.
 
-**Front Door (Global):** tambem entende HTTP, mas opera na borda global antes do trafego entrar em qualquer regiao Azure. Anycast, CDN integrada, WAF global, failover automatico entre regioes. Certo quando voce tem usuarios em multiplos paises ou quando alta disponibilidade entre regioes e requisito.
+**Front Door (Global):** também entende HTTP, mas opera na borda global antes do tráfego entrar em qualquer região Azure. Anycast, CDN integrada, WAF global, failover automático entre regiões. Certo quando você tem usuários em múltiplos países ou quando alta disponibilidade entre regiões é requisito.
 
-## Numa arquitetura de IA generativa, os tres coexistem
+## Numa arquitetura de IA generativa, os três coexistem
 
-Quando uma plataforma de IA generativa precisa atender usuarios via Web, Mobile e Teams de multiplas regioes, a pergunta nao e qual dos tres usar. E como cada um entra na arquitetura.
+Quando uma plataforma de IA generativa precisa atender usuários via Web, Mobile e Teams de múltiplas regiões, a pergunta não é qual dos três usar. É como cada um entra na arquitetura.
 
 ```
 Usuarios (Web, Mobile, Teams)
@@ -48,15 +48,15 @@ Usuarios (Web, Mobile, Teams)
        Sem overhead de inspecao de conteudo
 ```
 
-Cada um resolvendo a parte que sabe resolver melhor. Front Door nao substitui o WAF regional do Application Gateway, ele opera em camadas diferentes.
+Cada um resolvendo a parte que sabe resolver melhor. Front Door não substitui o WAF regional do Application Gateway, ele opera em camadas diferentes.
 
 ## O erro mais comum: Front Door sozinho
 
-Front Door tem WAF proprio. Mas ele opera na borda, antes do trafego chegar a sua regiao. Uma requisicao que passar pela borda ainda chega sem inspecao regional.
+Front Door tem WAF próprio. Mas ele opera na borda, antes do tráfego chegar a sua região. Uma requisição que passar pela borda ainda chega sem inspeção regional.
 
-Para defesa em profundidade, especialmente em arquiteturas que lidam com dados corporativos sensiveis via RAG, a pratica recomendada e combinar os dois: WAF do Front Door na borda global e WAF do Application Gateway na regiao.
+Para defesa em profundidade, especialmente em arquiteturas que lidam com dados corporativos sensíveis via RAG, a prática recomendada é combinar os dois: WAF do Front Door na borda global e WAF do Application Gateway na região.
 
-Nao e redundancia. E profundidade.
+Não é redundância. É profundidade.
 
 ```bicep
 // Application Gateway WAF v2 — WAF regional
@@ -116,11 +116,11 @@ resource wafPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@20
 }
 ```
 
-## O outro erro comum: Application Gateway v1 em producao nova
+## O outro erro comum: Application Gateway v1 em produção nova
 
-O v2 (Standard v2 e WAF v2) suporta autoscaling e zonas de disponibilidade. O v1 nao suporta nenhum dos dois.
+O v2 (Standard v2 e WAF v2) suporta autoscaling e zonas de disponibilidade. O v1 não suporta nenhum dos dois.
 
-Para qualquer ambiente de producao novo nao existe justificativa para escolher v1. Ainda aparece em arquiteturas legadas por receio de migrar, mas a divida tecnica acumula sem necessidade.
+Para qualquer ambiente de produção novo não existe justificativa para escolher v1. Ainda aparece em arquiteturas legadas por receio de migrar, mas a dívida técnica acumula sem necessidade.
 
 ```bash
 # Verificar SKU dos Application Gateways existentes
@@ -133,24 +133,24 @@ az network application-gateway list \
 # Se aparecer WAF ou Standard (sem v2), e candidato a migracao
 ```
 
-## Tabela de decisao
+## Tabela de decisão
 
 | | Load Balancer | Application Gateway | Front Door |
 |---|---|---|---|
 | Camada OSI | 4 | 7 | Global |
-| URL routing | Nao | Sim | Sim |
-| WAF | Nao | Sim (regional) | Sim (global) |
-| SSL offload | Nao | Sim | Sim |
-| Multi-regiao | Nao | Nao | Sim |
-| CDN | Nao | Nao | Sim |
-| Custo relativo | Baixo | Medio | Alto |
+| URL routing | Não | Sim | Sim |
+| WAF | Não | Sim (regional) | Sim (global) |
+| SSL offload | Não | Sim | Sim |
+| Multi-região | Não | Não | Sim |
+| CDN | Não | Não | Sim |
+| Custo relativo | Baixo | Médio | Alto |
 
 ## A regra que uso antes de escolher
 
-Tres perguntas, nessa ordem:
+Três perguntas, nessa ordem:
 
-1. O trafego e HTTP ou TCP/UDP? Se for TCP/UDP puro, Load Balancer. Se for HTTP, proxima pergunta.
-2. Preciso rotear por URL ou so distribuir carga? Se precisar de URL routing, Application Gateway. Se nao, Load Balancer.
-3. Meus usuarios estao em uma regiao ou no mundo todo? Se estiverem espalhados, Front Door na frente.
+1. O tráfego é HTTP ou TCP/UDP? Se for TCP/UDP puro, Load Balancer. Se for HTTP, próxima pergunta.
+2. Preciso rotear por URL ou só distribuir carga? Se precisar de URL routing, Application Gateway. Se não, Load Balancer.
+3. Meus usuários estão em uma região ou no mundo todo? Se estiverem espalhados, Front Door na frente.
 
-Quando voce entende isso, a escolha vira consequencia da arquitetura. Nao o ponto de partida.
+Quando você entende isso, a escolha vira consequência da arquitetura. Não o ponto de partida.

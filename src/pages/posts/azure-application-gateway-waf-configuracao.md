@@ -8,21 +8,21 @@ readTime: "10 min"
 description: "WAF no Application Gateway vai além de habilitar o OWASP ruleset. Regras customizadas, exclusões e integração com o Azure Monitor para uma proteção que não quebra aplicações legítimas."
 ---
 
-WAF no Application Gateway e aquele recurso que a maioria habilita, marca "configurado" no checklist de segurança e esquece. Ate o primeiro falso positivo em producao, quando o WAF começa a bloquear requisicoes legitimas e o time de aplicacao abre incidente achando que e bug deles.
+WAF no Application Gateway é aquele recurso que a maioria habilita, marca "configurado" no checklist de segurança e esquece. Até o primeiro falso positivo em produção, quando o WAF começa a bloquear requisições legítimas e o time de aplicação abre incidente achando que é bug deles.
 
-A configuracao correta evita esse ciclo.
+A configuração correta evita esse ciclo.
 
-## Modos de operacao: Detection antes de Prevention
+## Modos de operação: Detection antes de Prevention
 
-Nunca habilite o WAF direto em modo Prevention sem passar pelo Detection antes. Em Detection, o WAF loga o que bloquearia mas nao bloqueia. Voce tem visibilidade do impacto sem derrubar producao.
+Nunca habilite o WAF direto em modo Prevention sem passar pelo Detection antes. Em Detection, o WAF loga o que bloquearia mas não bloqueia. Você tem visibilidade do impacto sem derrubar produção.
 
 ```bash
 az network application-gateway waf-config set   --gateway-name agw-producao   --resource-group rg-app   --enabled true   --firewall-mode Detection   --rule-set-type OWASP   --rule-set-version 3.2
 ```
 
-Analise os logs por pelo menos 48 horas em trafego real antes de mudar para Prevention.
+Analise os logs por pelo menos 48 horas em tráfego real antes de mudar para Prevention.
 
-## Identificando o que esta sendo bloqueado
+## Identificando o que está sendo bloqueado
 
 ```kql
 AzureDiagnostics
@@ -33,9 +33,9 @@ AzureDiagnostics
 | order by TimeGenerated desc
 ```
 
-Para cada regra que aparece com frequencia, decida: e um ataque real ou falso positivo? Se for falso positivo, crie uma exclusao cirurgica, nao desabilite a regra inteira.
+Para cada regra que aparece com frequência, decida: é um ataque real ou falso positivo? Se for falso positivo, crie uma exclusão cirúrgica, não desabilite a regra inteira.
 
-## Exclusoes cirurgicas (nao desabilitar a regra inteira)
+## Exclusões cirúrgicas (não desabilitar a regra inteira)
 
 ```bicep
 resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies@2023-09-01' = {
@@ -70,7 +70,7 @@ resource wafPolicy 'Microsoft.Network/ApplicationGatewayWebApplicationFirewallPo
 }
 ```
 
-Exclusao por campo especifico e por regra especifica. Nao por toda a categoria, nao por todo o request.
+Exclusão por campo específico e por regra específica. Não por toda a categoria, não por todo o request.
 
 ## Regras customizadas para controle fino
 
@@ -94,7 +94,7 @@ customRules: [
 ```
 
 <div class="callout">
-<strong>WAF Policy em vez de WAF Config:</strong> O modelo antigo configura WAF diretamente no Application Gateway. O modelo atual usa WAF Policy como recurso separado, que pode ser associada a multiplos gateways e listeners individualmente. Se voce tem um ambiente existente com WAF Config, vale avaliar a migracao para WAF Policy antes de adicionar mais regras customizadas.
+<strong>WAF Policy em vez de WAF Config:</strong> O modelo antigo configura WAF diretamente no Application Gateway. O modelo atual usa WAF Policy como recurso separado, que pode ser associada a múltiplos gateways e listeners individualmente. Se você tem um ambiente existente com WAF Config, vale avaliar a migração para WAF Policy antes de adicionar mais regras customizadas.
 </div>
 
-O ciclo correto: Detection por 48h, analisar os top alertas, criar exclusoes para falsos positivos confirmados, mudar para Prevention, monitorar. Pular essa etapa e a receita para um incidente de producao desnecessario.
+O ciclo correto: Detection por 48h, analisar os top alertas, criar exclusões para falsos positivos confirmados, mudar para Prevention, monitorar. Pular essa etapa é a receita para um incidente de produção desnecessário.

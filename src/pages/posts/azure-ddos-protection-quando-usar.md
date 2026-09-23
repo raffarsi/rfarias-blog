@@ -8,31 +8,31 @@ readTime: "8 min"
 description: "DDoS Protection Standard custa caro. Quando faz sentido contratar, o que ele protege e o que não protege — análise técnica e financeira."
 ---
 
-Todo ambiente Azure tem protecao DDoS basica incluida sem custo. A pergunta real e: quando o DDoS Protection Standard, que custa em torno de 3 mil dolares por mes, agrega valor suficiente para justificar esse investimento?
+Todo ambiente Azure tem proteção DDoS básica incluída sem custo. A pergunta real é: quando o DDoS Protection Standard, que custa em torno de 3 mil dólares por mês, agrega valor suficiente para justificar esse investimento?
 
-Na maioria dos casos corporativos que analiso, a resposta e nao.
+Na maioria dos casos corporativos que analiso, a resposta é não.
 
-## O que a protecao basica gratuita ja faz
+## O que a proteção básica gratuita já faz
 
-O Azure mitiga automaticamente ataques volumetricos de grande escala contra a infraestrutura da Microsoft. Isso inclui UDP/TCP flood de alta escala, amplification attacks (DNS, NTP, SSDP) e ataques a camada de infraestrutura.
+O Azure mitiga automaticamente ataques volumétricos de grande escala contra a infraestrutura da Microsoft. Isso inclui UDP/TCP flood de alta escala, amplification attacks (DNS, NTP, SSDP) e ataques a camada de infraestrutura.
 
-O que a protecao basica nao faz: mitigar ataques direcionados especificamente aos seus IPs publicos, detectar ataques de camada de aplicacao (L7) e fornecer telemetria detalhada sobre o que esta acontecendo.
+O que a proteção básica não faz: mitigar ataques direcionados especificamente aos seus IPs públicos, detectar ataques de camada de aplicação (L7) e fornecer telemetria detalhada sobre o que está acontecendo.
 
 ## O que o Standard adiciona
 
-**Tuning adaptativo por IP:** aprende o perfil de trafego normal do seu IP e ajusta os limites automaticamente. Reduz falsos positivos durante picos legitimos.
+**Tuning adaptativo por IP:** aprende o perfil de tráfego normal do seu IP e ajusta os limites automaticamente. Reduz falsos positivos durante picos legítimos.
 
-**Telemetria em tempo real:** voce sabe o que aconteceu durante um ataque, quais vetores, quantos pacotes descartados.
+**Telemetria em tempo real:** você sabe o que aconteceu durante um ataque, quais vetores, quantos pacotes descartados.
 
-**Garantia de reembolso:** se um ataque causar scale-out automatico dos seus recursos, a Microsoft reembolsa o custo de computacao gerado.
+**Garantia de reembolso:** se um ataque causar scale-out automático dos seus recursos, a Microsoft reembolsa o custo de computação gerado.
 
-**Suporte prioritario:** acesso ao time de DDoS da Microsoft durante um ataque ativo.
+**Suporte prioritário:** acesso ao time de DDoS da Microsoft durante um ataque ativo.
 
 ## Quando faz sentido contratar
 
-Contratar quando: a aplicacao e financeira ou de comercio eletronico onde downtime tem custo direto e mensuravel, quando voce ja foi alvo de DDoS antes, ou quando o requisito de compliance exige documentacao de protecao DDoS.
+Contratar quando: a aplicação é financeira ou de comércio eletrônico onde downtime tem custo direto e mensurável, quando você já foi alvo de DDoS antes, ou quando o requisito de compliance exige documentação de proteção DDoS.
 
-Nao faz sentido quando: a maioria do trafego passa por Private Endpoints (trafego privado nao e exposto), o ambiente e interno sem IPs publicos relevantes, ou quando o WAF do Front Door ou Application Gateway ja cobre os vetores L7 que sao sua preocupacao real.
+Não faz sentido quando: a maioria do tráfego passa por Private Endpoints (tráfego privado não é exposto), o ambiente é interno sem IPs públicos relevantes, ou quando o WAF do Front Door ou Application Gateway já cobre os vetores L7 que são sua preocupação real.
 
 ```bash
 # Criar plano e associar VNet
@@ -42,7 +42,7 @@ az network vnet update   --name vnet-producao   --resource-group rg-networking  
 ```
 
 <div class="callout">
-<strong>WAF vs DDoS Standard:</strong> Se sua preocupacao principal e ataques HTTP flood, SQL injection ou XSS, o WAF do Application Gateway ou Front Door cobre isso por uma fracao do custo do DDoS Standard. Os dois nao sao substitutos tecnicamente, mas para muitas empresas de medio porte, o WAF resolve o que preocupa de verdade.
+<strong>WAF vs DDoS Standard:</strong> Se sua preocupação principal e ataques HTTP flood, SQL injection ou XSS, o WAF do Application Gateway ou Front Door cobre isso por uma fração do custo do DDoS Standard. Os dois não são substitutos tecnicamente, mas para muitas empresas de médio porte, o WAF resolve o que preocupa de verdade.
 </div>
 
-Calcule o custo real de um downtime de 4 horas para o seu negocio. Se for menor que 3 mil dolares por mes, o DDoS Standard provavelmente nao se paga. Se for significativamente maior, vale a avaliacao.
+Calcule o custo real de um downtime de 4 horas para o seu negócio. Se for menor que 3 mil dólares por mês, o DDoS Standard provavelmente não se paga. Se for significativamente maior, vale a avaliação.

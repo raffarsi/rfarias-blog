@@ -8,15 +8,15 @@ readTime: "10 min"
 description: "O Route Server permite que NVAs de terceiros troquem rotas BGP diretamente com o fabric do Azure. Quando usar no lugar do VPN Gateway e como configurar em topologia hub-and-spoke."
 ---
 
-Se voce tem NVAs de terceiros no hub, como Fortinet ou Palo Alto, provavelmente ja passou por isso: aprender uma nova rota on-premises via BGP e ter que atualizar UDRs manualmente em cada spoke para que o trafego chegue la. Em ambientes que crescem, isso vira rotina de manutencao toda vez que surgem novos prefixos.
+Se você tem NVAs de terceiros no hub, como Fortinet ou Palo Alto, provavelmente já passou por isso: aprender uma nova rota on-premises via BGP e ter que atualizar UDRs manualmente em cada spoke para que o tráfego chegue la. Em ambientes que crescem, isso vira rotina de manutenção toda vez que surgem novos prefixos.
 
 O Route Server resolve exatamente esse problema.
 
 ## O que o Route Server faz
 
-Sem o Route Server, a NVA aprende rotas on-premises via BGP com o VPN/ER Gateway, mas o Azure nao propagas essas rotas para os spokes automaticamente. Voce mantem UDRs estaticas em cada spoke e atualiza manualmente quando surgem novos prefixos on-premises.
+Sem o Route Server, a NVA aprende rotas on-premises via BGP com o VPN/ER Gateway, mas o Azure não propagas essas rotas para os spokes automaticamente. Você mantém UDRs estáticas em cada spoke e atualiza manualmente quando surgem novos prefixos on-premises.
 
-Com o Route Server, a NVA troca rotas BGP diretamente com o fabric do Azure. As rotas aprendidas sao propagadas automaticamente para todos os spokes. Chega de planilha de UDRs para atualizar.
+Com o Route Server, a NVA troca rotas BGP diretamente com o fabric do Azure. As rotas aprendidas são propagadas automaticamente para todos os spokes. Chega de planilha de UDRs para atualizar.
 
 ```bash
 # Criar o Route Server no hub
@@ -49,7 +49,7 @@ end
 
 O Route Server sempre tem dois IPs para alta disponibilidade. Configure os dois como neighbors na NVA.
 
-## Verificando se esta funcionando
+## Verificando se está funcionando
 
 ```bash
 # Rotas que o Route Server aprendeu da NVA
@@ -59,8 +59,8 @@ az network routeserver peering list-learned-routes   --name peering-fortinet   -
 az network routeserver peering list-advertised-routes   --name peering-fortinet   --routeserver route-server-hub   --resource-group rg-networking
 ```
 
-## Quando vale (e quando nao vale)
+## Quando vale (e quando não vale)
 
-Use Route Server quando a NVA precisa propagar rotas dinamicamente ou quando voce tem muitos prefixos on-premises que mudam com frequencia. UDRs estaticas ainda sao suficientes para cenarios simples com poucas rotas estaveis ou quando voce usa Azure Firewall nativo (que tem integracao direta com o fabric sem precisar de BGP).
+Use Route Server quando a NVA precisa propagar rotas dinamicamente ou quando você tem muitos prefixos on-premises que mudam com frequência. UDRs estáticas ainda são suficientes para cenários simples com poucas rotas estáveis ou quando você usa Azure Firewall nativo (que tem integração direta com o fabric sem precisar de BGP).
 
-A regra pratica que uso: se voce esta atualizando UDRs mais de uma vez por mes por causa de mudancas no roteamento on-premises, o Route Server ja se paga em tempo de operacao poupado.
+A regra prática que uso: se você está atualizando UDRs mais de uma vez por mês por causa de mudanças no roteamento on-premises, o Route Server já se paga em tempo de operação poupado.

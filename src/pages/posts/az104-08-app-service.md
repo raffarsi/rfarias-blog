@@ -19,9 +19,9 @@ next:
 ---
 
 
-App Service e a forma mais rapida de colocar uma aplicacao web em producao no Azure sem gerenciar VM. Mas 'sem gerenciar VM' nao significa sem decisoes de infraestrutura.
+App Service é a forma mais rápida de colocar uma aplicação web em produção no Azure sem gerenciar VM. Mas 'sem gerenciar VM' não significa sem decisões de infraestrutura.
 
-Escolha errada de plano, aplicacao que nao consegue escalar, variaveis de ambiente no lugar errado: esses sao os erros que o AZ-104 cobra. O servico e simples de comecar e cheio de detalhe para quem vai a fundo.
+Escolha errada de plano, aplicação que não consegue escalar, variáveis de ambiente no lugar errado: esses são os erros que o AZ-104 cobra. O serviço é simples de começar e cheio de detalhe para quem vai a fundo.
 
 ## App Service Plans
 

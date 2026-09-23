@@ -14,13 +14,13 @@ next:
   slug: "17-anos-mesma-empresa"
 ---
 
-NSG e ASG aparecem juntos em toda documentacao de seguranca de rede Azure. A diferenca entre eles e simples, mas a confusao sobre quando usar cada um aparece com frequencia.
+NSG e ASG aparecem juntos em toda documentação de segurança de rede Azure. A diferença entre eles é simples, mas a confusão sobre quando usar cada um aparece com frequência.
 
-NSG define regras. ASG e uma forma de referenciar grupos de VMs nessas regras sem usar IPs fixos.
+NSG define regras. ASG é uma forma de referenciar grupos de VMs nessas regras sem usar IPs fixos.
 
 ## O problema que ASG resolve
 
-Imagine uma regra de NSG: "permitir trafego da porta 80 dos servidores web para os servidores de aplicacao". Sem ASG, voce escreve isso com IPs ou ranges:
+Imagine uma regra de NSG: "permitir tráfego da porta 80 dos servidores web para os servidores de aplicação". Sem ASG, você escreve isso com IPs ou ranges:
 
 ```
 Origem: 10.0.1.4, 10.0.1.5, 10.0.1.6
@@ -28,9 +28,9 @@ Destino: 10.0.2.4, 10.0.2.5
 Porta: 80
 ```
 
-Quando adiciona uma nova VM web, atualiza a regra. Quando remove, atualiza de novo. Em ambientes que crescem, isso vira manutencao constante.
+Quando adiciona uma nova VM web, atualiza a regra. Quando remove, atualiza de novo. Em ambientes que crescem, isso vira manutenção constante.
 
-Com ASG, voce cria grupos logicos e as regras referenciam os grupos:
+Com ASG, você cria grupos lógicos e as regras referenciam os grupos:
 
 ```
 Origem: asg-servidores-web
@@ -38,7 +38,7 @@ Destino: asg-servidores-app
 Porta: 80
 ```
 
-Adicionar uma VM ao grupo web e so associar o ASG a NIC dela. A regra continua valendo automaticamente.
+Adicionar uma VM ao grupo web é só associar o ASG a NIC dela. A regra continua valendo automaticamente.
 
 ## Criando ASGs e usando nas regras
 
@@ -58,8 +58,8 @@ az network nsg rule create   --nsg-name nsg-app   --resource-group rg-app   --na
 
 ASGs adicionam uma camada de gerenciamento. Para ambientes pequenos com poucas VMs e sem crescimento previsto, manter IPs nas regras pode ser mais simples.
 
-Use ASG quando: o numero de VMs num grupo muda com frequencia, ou quando voce quer que as regras de seguranca sejam independentes dos IPs especificos das maquinas.
+Use ASG quando: o número de VMs num grupo muda com frequência, ou quando você quer que as regras de segurança sejam independentes dos IPs específicos das máquinas.
 
-Use IP direto quando: o ambiente e pequeno e estaevel, ou quando a regra e para ranges amplos (Internet, VirtualNetwork) onde ASG nao faz diferenca.
+Use IP direto quando: o ambiente é pequeno e estável, ou quando a regra é para ranges amplos (Internet, VirtualNetwork) onde ASG não faz diferença.
 
-NSG e ASG nao competem, trabalham juntos. O NSG tem as regras, o ASG organiza os alvos dessas regras.
+NSG e ASG não competem, trabalham juntos. O NSG tem as regras, o ASG organiza os alvos dessas regras.

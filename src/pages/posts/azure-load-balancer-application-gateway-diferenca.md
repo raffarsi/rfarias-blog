@@ -1,22 +1,22 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Load Balancer vs Application Gateway: qual usar em cada cenario"
+title: "Load Balancer vs Application Gateway: qual usar em cada cenário"
 category: "Networking"
 tag: "networking"
 date: "29 Jan 2026"
 readTime: "9 min"
-description: "Camada 4 vs camada 7, quando cada um resolve e quando voce precisa dos dois."
+description: "Camada 4 vs camada 7, quando cada um resolve e quando você precisa dos dois."
 ---
 
-Essa confusao aparece em todo projeto: voce precisa distribuir carga e nao sabe se e Load Balancer ou Application Gateway. A documentacao lista features dos dois. As apresentacoes de vendas sugerem o mais completo. E o mais completo custa tres vezes mais e adiciona latencia que voce talvez nao precise.
+Essa confusão aparece em todo projeto: você precisa distribuir carga e não sabe se é Load Balancer ou Application Gateway. A documentação lista features dos dois. As apresentações de vendas sugerem o mais completo. É o mais completo custa três vezes mais e adiciona latência que você talvez não precise.
 
-A diferenca real esta na camada OSI, e isso define tudo.
+A diferença real está na camada OSI, e isso define tudo.
 
 ## O que cada um faz de verdade
 
-**Azure Load Balancer (Camada 4):** distribui conexoes TCP/UDP com base em IP e porta. Nao ve o conteudo HTTP. Rapido, baixa latencia, sem overhead de inspecao de pacote.
+**Azure Load Balancer (Camada 4):** distribui conexões TCP/UDP com base em IP e porta. Não vê o conteúdo HTTP. Rápido, baixa latência, sem overhead de inspeção de pacote.
 
-**Azure Application Gateway (Camada 7):** distribui requisicoes HTTP/HTTPS com base em URL, headers, host, cookies. Entende o protocolo. Mais recursos, mais latencia, custo maior.
+**Azure Application Gateway (Camada 7):** distribui requisições HTTP/HTTPS com base em URL, headers, host, cookies. Entende o protocolo. Mais recursos, mais latência, custo maior.
 
 ```bash
 # Load Balancer interno para VMs
@@ -27,7 +27,7 @@ az network lb probe create   --lb-name lb-interno   --resource-group rg-app   --
 az network lb rule create   --lb-name lb-interno   --resource-group rg-app   --name rule-http   --protocol Tcp   --frontend-port 80   --backend-port 80   --frontend-ip-name fe-interno   --backend-pool-name pool-vms   --probe-name probe-http
 ```
 
-## Application Gateway: quando a camada 7 faz diferenca
+## Application Gateway: quando a camada 7 faz diferença
 
 ```bicep
 resource appGw 'Microsoft.Network/applicationGateways@2023-09-01' = {
@@ -59,21 +59,21 @@ resource appGw 'Microsoft.Network/applicationGateways@2023-09-01' = {
 }
 ```
 
-## A tabela que resolve a duvida
+## A tabela que resolve a dúvida
 
 | | Load Balancer | Application Gateway |
 |---|---|---|
 | Protocolos | TCP/UDP | HTTP/HTTPS |
-| WAF | Nao | Sim |
-| URL routing | Nao | Sim |
-| SSL offload | Nao | Sim |
-| Latencia | Menor | Maior |
+| WAF | Não | Sim |
+| URL routing | Não | Sim |
+| SSL offload | Não | Sim |
+| Latência | Menor | Maior |
 | Custo | Menor | Maior |
-| AKS Ingress | Nao | Sim (AGIC) |
+| AKS Ingress | Não | Sim (AGIC) |
 
-## A combinacao que mais aparece em producao
+## A combinação que mais aparece em produção
 
-Em arquiteturas com multiplos tiers, os dois coexistem:
+Em arquiteturas com múltiplos tiers, os dois coexistem:
 
 ```
 Internet
@@ -82,6 +82,6 @@ Internet
             -> VMs Backend
 ```
 
-O Application Gateway lida com tudo que e HTTP. O Load Balancer distribui a carga dentro de cada tier sem overhead de inspecao de pacote.
+O Application Gateway lida com tudo que é HTTP. O Load Balancer distribui a carga dentro de cada tier sem overhead de inspeção de pacote.
 
-Escolha Load Balancer quando o problema e TCP/UDP, latencia e prioridade ou custo e uma restricao real. Escolha Application Gateway quando voce precisa de WAF, roteamento por URL ou SSL offload centralizado. Nao escolha Application Gateway so porque parece mais completo, o custo adicional precisa de justificativa tecnica real.
+Escolha Load Balancer quando o problema é TCP/UDP, latência é prioridade ou custo é uma restrição real. Escolha Application Gateway quando você precisa de WAF, roteamento por URL ou SSL offload centralizado. Não escolha Application Gateway só porque parece mais completo, o custo adicional precisa de justificativa técnica real.

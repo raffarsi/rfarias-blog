@@ -1,41 +1,41 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Copilot Studio: criando agentes corporativos sem codigo"
+title: "Copilot Studio: criando agentes corporativos sem código"
 category: "IA Generativa"
 tag: "ia-generativa"
 date: "13 Jan 2026"
 readTime: "8 min"
-description: "Como o Microsoft Copilot Studio permite criar agentes de IA conectados a dados corporativos sem precisar escrever codigo."
+description: "Como o Microsoft Copilot Studio permite criar agentes de IA conectados a dados corporativos sem precisar escrever código."
 ---
 
-O Microsoft Copilot Studio (antigo Power Virtual Agents) e a plataforma low-code da Microsoft para criar agentes de IA. Com ele, equipes de negocio podem construir chatbots e agentes conectados a dados corporativos, fluxos do Power Automate e bases de conhecimento -- sem escrever codigo Python ou configurar infraestrutura Azure.
+O Microsoft Copilot Studio (antigo Power Virtual Agents) é a plataforma low-code da Microsoft para criar agentes de IA. Com ele, equipes de negócio podem construir chatbots e agentes conectados a dados corporativos, fluxos do Power Automate e bases de conhecimento -- sem escrever código Python ou configurar infraestrutura Azure.
 
 ## O que o Copilot Studio oferece
 
-**Topics:** os fluxos de conversa. Cada topico define como o agente responde a um tipo de pergunta ou intencao do usuario.
+**Topics:** os fluxos de conversa. Cada tópico define como o agente responde a um tipo de pergunta ou intenção do usuário.
 
-**Generative AI:** integracao com Azure OpenAI para respostas generativas baseadas em documentos ou bases de conhecimento -- o agente "faz RAG" sem voce implementar o pipeline.
+**Generative AI:** integração com Azure OpenAI para respostas generativas baseadas em documentos ou bases de conhecimento -- o agente "faz RAG" sem você implementar o pipeline.
 
-**Acoes (Power Automate):** o agente pode executar acoes reais -- criar tickets, consultar CRMs, enviar emails, atualizar planilhas -- conectando ao ecossistema Power Platform.
+**Ações (Power Automate):** o agente pode executar ações reais -- criar tickets, consultar CRMs, enviar emails, atualizar planilhas -- conectando ao ecossistema Power Platform.
 
-**Canais:** Teams, SharePoint, site web, WhatsApp e outros canais de publicacao com um clique.
+**Canais:** Teams, SharePoint, site web, WhatsApp e outros canais de publicação com um clique.
 
 ## Criando o primeiro agente
 
 No portal studio.microsoft.com:
 
-1. Novo agente -> definir nome e idioma (Portugues do Brasil)
-2. Configurar instrucoes do agente (equivalente ao System Prompt)
+1. Novo agente -> definir nome e idioma (Português do Brasil)
+2. Configurar instruções do agente (equivalente ao System Prompt)
 3. Adicionar fontes de conhecimento (SharePoint, PDFs, sites internos)
 4. Publicar no canal desejado (Microsoft Teams para uso corporativo)
 
 ## Integrando com base de conhecimento corporativa
 
-O Copilot Studio suporta conexao direta com:
+O Copilot Studio suporta conexão direta com:
 
 - **SharePoint:** indexa automaticamente documentos de sites SharePoint selecionados
-- **Sites web:** crawl de URLs especificas para base de conhecimento
-- **Azure AI Search:** para ambientes que ja tem indices criados
+- **Sites web:** crawl de URLs específicas para base de conhecimento
+- **Azure AI Search:** para ambientes que já tem índices criados
 
 ```
 Configuracao no Studio:
@@ -44,11 +44,11 @@ Settings > Generative AI > Add knowledge source
   -> URL: https://intranet.empresa.com/politicas
 ```
 
-O agente usa essas fontes para responder com grounding -- igual ao RAG, mas sem escrever codigo.
+O agente usa essas fontes para responder com grounding -- igual ao RAG, mas sem escrever código.
 
 ## Criando Topics (fluxos de conversa)
 
-Alem do modo generativo, voce define Topics para fluxos estruturados:
+Além do modo generativo, você define Topics para fluxos estruturados:
 
 ```
 Topic: Solicitar Ferias
@@ -67,9 +67,9 @@ Topic: Solicitar Ferias
   Resposta: "Solicitacao #{protocolo} criada. Seu gestor recebera notificacao."
 ```
 
-## Integracoes via Power Automate
+## Integrações via Power Automate
 
-Para acoes que vao alem de responder perguntas:
+Para ações que vão além de responder perguntas:
 
 ```
 Fluxo Power Automate: "Consultar Status de Ticket"
@@ -81,33 +81,33 @@ Fluxo Power Automate: "Consultar Status de Ticket"
   Resposta de volta ao agente com os dados
 ```
 
-O agente consegue executar esse fluxo sem o usuario sair da conversa.
+O agente consegue executar esse fluxo sem o usuário sair da conversa.
 
 ## Quando usar Copilot Studio vs Azure AI Foundry
 
-| Criterio | Copilot Studio | Azure AI Foundry |
+| Critério | Copilot Studio | Azure AI Foundry |
 |----------|---------------|-----------------|
-| Audiencia | Business users, IT | Desenvolvedores |
-| Codigo | Low-code | Pro-code |
-| Customizacao | Media | Total |
-| Integracao Power Platform | Nativa | Requer desenvolvimento |
+| Audiência | Business users, IT | Desenvolvedores |
+| Código | Low-code | Pro-code |
+| Customização | Média | Total |
+| Integração Power Platform | Nativa | Requer desenvolvimento |
 | Controle de rede/segurança | Limitado | Total |
-| Tempo para primeira versao | Horas | Dias/Semanas |
+| Tempo para primeira versão | Horas | Dias/Semanas |
 
 **Use Copilot Studio quando:**
-- A equipe nao tem desenvolvedores Python/Azure disponíveis
+- A equipe não tem desenvolvedores Python/Azure disponíveis
 - O agente vai para Microsoft Teams rapidamente
-- Integracoes sao principalmente com Power Platform e M365
+- Integrações são principalmente com Power Platform e M365
 
 **Use Azure AI Foundry quando:**
 - Precisa de controle total sobre o pipeline RAG
 - Requisitos rigorosos de rede (Private Endpoints, VNet)
-- O agente vai para canais proprios (app web, API)
+- O agente vai para canais próprios (app web, API)
 
 <div class="callout">
-<strong>Governanca de dados:</strong> O Copilot Studio usa o Microsoft Azure como infraestrutura, mas os dados processados passam pelos servicos da Power Platform. Verifique as politicas de retencao de dados e conformidade com LGPD antes de conectar fontes de dados sensíveis.
+<strong>Governança de dados:</strong> O Copilot Studio usa o Microsoft Azure como infraestrutura, mas os dados processados passam pelos serviços da Power Platform. Verifique as políticas de retenção de dados e conformidade com LGPD antes de conectar fontes de dados sensíveis.
 </div>
 
-## Conclusao
+## Conclusão
 
-O Copilot Studio democratiza a criacao de agentes de IA corporativos. Para casos de uso onde velocidade de entrega e integracao com M365 sao prioridade, e a escolha correta. Para agentes com requisitos tecnicos avancados de rede, seguranca ou customizacao de pipeline, Azure AI Foundry oferece o controle necessario.
+O Copilot Studio democratiza a criação de agentes de IA corporativos. Para casos de uso onde velocidade de entrega e integração com M365 são prioridade, é a escolha correta. Para agentes com requisitos técnicos avançados de rede, segurança ou customização de pipeline, Azure AI Foundry oferece o controle necessário.

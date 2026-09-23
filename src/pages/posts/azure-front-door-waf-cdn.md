@@ -5,20 +5,20 @@ category: "Azure"
 tag: "azure"
 date: "08 Jan 2026"
 readTime: "9 min"
-description: "Como o Azure Front Door combina WAF, CDN e roteamento global -- e quando usa-lo em vez do Application Gateway."
+description: "Como o Azure Front Door combina WAF, CDN e roteamento global -- e quando usá-lo em vez do Application Gateway."
 ---
 
-O Azure Front Door e frequentemente descrito como "CDN com WAF" -- mas essa descricao subestima o que ele faz. E uma plataforma de entrega de aplicacoes globais que combina roteamento inteligente, protecao contra ataques, aceleracao de conteudo e failover automatico em um unico servico.
+O Azure Front Door é frequentemente descrito como "CDN com WAF" -- mas essa descrição subestima o que ele faz. É uma plataforma de entrega de aplicações globais que combina roteamento inteligente, proteção contra ataques, aceleração de conteúdo e failover automático em um único serviço.
 
 ## O que o Front Door faz
 
-**Anycast global:** o Front Door tem pontos de presenca (PoPs) em dezenas de regioes. Quando um usuario acessa seu dominio, o DNS resolve para o PoP mais proximo. O trafego chega rapido ao PoP e viaja pelo backbone da Microsoft ate o backend -- mais rapido que pela internet publica.
+**Anycast global:** o Front Door tem pontos de presença (PoPs) em dezenas de regiões. Quando um usuário acessa seu domínio, o DNS resolve para o PoP mais próximo. O tráfego chega rápido ao PoP e viaja pelo backbone da Microsoft até o backend -- mais rápido que pela internet pública.
 
-**WAF:** protecao contra ataques na camada de aplicacao (OWASP Top 10, DDoS L7, bots maliciosos) aplicada globalmente em todos os PoPs.
+**WAF:** proteção contra ataques na camada de aplicação (OWASP Top 10, DDoS L7, bots maliciosos) aplicada globalmente em todos os PoPs.
 
-**CDN:** cache de conteudo estatico e dinamico nos PoPs -- reduz a carga nos backends e melhora a latencia para usuarios distantes.
+**CDN:** cache de conteúdo estático e dinâmico nos PoPs -- reduz a carga nos backends e melhora a latência para usuários distantes.
 
-**Roteamento inteligente:** distribui trafego entre multiplos backends por latencia, peso, prioridade ou regras customizadas.
+**Roteamento inteligente:** distribui tráfego entre múltiplos backends por latência, peso, prioridade ou regras customizadas.
 
 ## Criando um perfil Front Door
 
@@ -85,7 +85,7 @@ resource originSecondary 'Microsoft.Cdn/profiles/originGroups/origins@2023-05-01
 }
 ```
 
-## WAF: protecao aplicada globalmente
+## WAF: proteção aplicada globalmente
 
 ```bicep
 resource wafPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2022-05-01' = {
@@ -130,28 +130,28 @@ resource wafPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@20
 
 | | Front Door | Application Gateway |
 |---|---|---|
-| Escopo | Global (multi-regiao) | Regional (uma regiao) |
-| Anycast | Sim | Nao |
-| CDN | Sim | Nao |
+| Escopo | Global (multi-região) | Regional (uma região) |
+| Anycast | Sim | Não |
+| CDN | Sim | Não |
 | WAF | Sim (global) | Sim (regional) |
 | SSL Offload | Sim | Sim |
-| Private Link para backend | Sim (Premium) | Nao |
+| Private Link para backend | Sim (Premium) | Não |
 | Custo base | Maior | Menor |
 
 **Use Front Door quando:**
-- Aplicacao com usuarios em multiplas regioes
-- Precisa de CDN + WAF + balanceamento global em um servico
-- Failover automatico entre regioes
+- Aplicação com usuários em múltiplas regiões
+- Precisa de CDN + WAF + balanceamento global em um serviço
+- Failover automático entre regiões
 
 **Use Application Gateway quando:**
-- Aplicacao em uma unica regiao
-- Precisao de roteamento por URL path para microservicos
-- Integracao direta com AKS Ingress
+- Aplicação em uma única região
+- Precisão de roteamento por URL path para microsserviços
+- Integração direta com AKS Ingress
 
 <div class="callout">
-<strong>Private Link para backends:</strong> No SKU Premium, o Front Door pode se conectar aos seus backends via Private Link -- o trafego do PoP ao backend nao passa pela internet publica. Util quando o backend precisa estar sem IP publico mas com acesso via Front Door.
+<strong>Private Link para backends:</strong> No SKU Premium, o Front Door pode se conectar aos seus backends via Private Link -- o tráfego do PoP ao backend não passa pela internet pública. Útil quando o backend precisa estar sem IP público mas com acesso via Front Door.
 </div>
 
-## Conclusao
+## Conclusão
 
-O Azure Front Door e a escolha certa para aplicacoes com requisitos globais de latencia, protecao contra ataques e alta disponibilidade multi-regiao. Para aplicacoes regionais sem necessidade de CDN, o Application Gateway e mais simples e economico.
+O Azure Front Door é a escolha certa para aplicações com requisitos globais de latência, proteção contra ataques e alta disponibilidade multi-região. Para aplicações regionais sem necessidade de CDN, o Application Gateway é mais simples e econômico.

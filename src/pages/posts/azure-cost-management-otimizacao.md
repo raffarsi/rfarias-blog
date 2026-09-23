@@ -8,11 +8,11 @@ readTime: "9 min"
 description: "Tags, budgets, alertas, reservas e Advisor -- o fluxo completo para ter visibilidade e controle sobre os custos do ambiente Azure."
 ---
 
-Custos do Azure fora de controle e um dos problemas mais comuns em organizacoes que adotam a nuvem sem uma estrategia de governanca financeira. O Azure tem ferramentas nativas para cada etapa -- o desafio e usar todas elas de forma integrada.
+Custos do Azure fora de controle é um dos problemas mais comuns em organizações que adotam a nuvem sem uma estratégia de governança financeira. O Azure tem ferramentas nativas para cada etapa -- o desafio é usar todas elas de forma integrada.
 
 ## Tags: o alicerce da visibilidade
 
-Sem tags, voce sabe quanto gasta no Azure total, mas nao sabe quem ou o que esta gerando cada custo. Tags transformam uma fatura unica em um relatorio por projeto, ambiente e centro de custo.
+Sem tags, você sabe quanto gasta no Azure total, mas não sabe quem ou o que está gerando cada custo. Tags transformam uma fatura única em um relatório por projeto, ambiente e centro de custo.
 
 ```bash
 # Politica Azure para exigir tags obrigatorias em todos os recursos
@@ -47,7 +47,7 @@ az consumption budget create \
   ]'
 ```
 
-## Azure Advisor: recomendacoes de reducao de custo
+## Azure Advisor: recomendações de redução de custo
 
 ```bash
 az advisor recommendation list \
@@ -56,13 +56,13 @@ az advisor recommendation list \
   --output table
 ```
 
-Recomendacoes tipicas:
+Recomendações típicas:
 - VMs com CPU < 5% por 7 dias -- desligar ou reduzir tamanho
 - Reserved Instances para VMs com uso consistente
-- Storage sem acesso nos ultimos 30 dias
-- Recursos orfaos (discos sem VM, IPs sem recurso)
+- Storage sem acesso nos últimos 30 dias
+- Recursos órfãos (discos sem VM, IPs sem recurso)
 
-## Reservas: ate 72% de desconto
+## Reservas: até 72% de desconto
 
 ```bash
 # Verificar elegibilidade antes de comprar
@@ -74,7 +74,7 @@ az consumption reservation summary list \
 # Avalie com a calculadora de precos antes
 ```
 
-Antes de comprar: analise pelo menos 30 dias de uso para confirmar que o recurso roda continuamente. Reservas nao se pagam para recursos intermitentes.
+Antes de comprar: analise pelo menos 30 dias de uso para confirmar que o recurso roda continuamente. Reservas não se pagam para recursos intermitentes.
 
 ## Desligar ambientes de desenvolvimento automaticamente
 
@@ -90,7 +90,7 @@ az automation runbook create \
 # Get-AzVM -ResourceGroupName rg-dev | Stop-AzVM -Force
 ```
 
-## Consulta KQL para analise de custos por tag
+## Consulta KQL para análise de custos por tag
 
 ```kql
 // Custo por projeto (requer exportacao de dados de custo para Log Analytics)
@@ -100,6 +100,6 @@ AzureCostData
 | order by Custo desc
 ```
 
-## Conclusao
+## Conclusão
 
-Controle de custos no Azure e um processo continuo: tags para visibilidade, budgets para alertas precoces, Advisor para otimizacao e reservas para recursos previsivos. A maioria das organizacoes começa sem tags e depois luta para entender de onde vem o custo -- investir 1 dia em configurar tags e budgets no inicio poupa semanas de investigacao depois.
+Controle de custos no Azure é um processo contínuo: tags para visibilidade, budgets para alertas precoces, Advisor para otimização e reservas para recursos previsíveis. A maioria das organizações começa sem tags e depois luta para entender de onde vem o custo -- investir 1 dia em configurar tags e budgets no início poupa semanas de investigação depois.

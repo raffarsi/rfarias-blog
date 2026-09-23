@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Backup e Disaster Recovery no Azure: RPO, RTO e como escolher a estrategia certa"
+title: "Backup e Disaster Recovery no Azure: RPO, RTO e como escolher a estratégia certa"
 category: "Infra"
 tag: "infra"
 date: "22 Jan 2026"
@@ -8,17 +8,17 @@ readTime: "10 min"
 description: "Como calcular RPO e RTO e quando usar Azure Backup, ASR ou geo-replication para cada tipo de workload."
 ---
 
-Backup e Disaster Recovery sao frequentemente tratados como a mesma coisa -- nao sao. Backup protege contra perda de dados (deletar acidentalmente, corrupcao). DR protege contra indisponibilidade de infraestrutura (falha de datacenter, regiao Azure fora do ar). A estrategia certa depende de dois numeros: RPO e RTO.
+Backup e Disaster Recovery são frequentemente tratados como a mesma coisa -- não são. Backup protege contra perda de dados (deletar acidentalmente, corrupção). DR protege contra indisponibilidade de infraestrutura (falha de datacenter, região Azure fora do ar). A estratégia certa depende de dois números: RPO e RTO.
 
-## RPO e RTO: os dois numeros que definem sua estrategia
+## RPO e RTO: os dois números que definem sua estratégia
 
-**RPO (Recovery Point Objective):** quanto de dado voce pode perder? Se seu RPO e 1 hora, voce precisa de backup a cada hora -- um incidente pode te fazer perder no maximo 1 hora de dados.
+**RPO (Recovery Point Objective):** quanto de dado você pode perder? Se seu RPO é 1 hora, você precisa de backup a cada hora -- um incidente pode te fazer perder no máximo 1 hora de dados.
 
-**RTO (Recovery Time Objective):** quanto tempo voce pode ficar fora do ar? Se seu RTO e 4 horas, sua solucao de recuperacao precisa restaurar tudo em 4 horas.
+**RTO (Recovery Time Objective):** quanto tempo você pode ficar fora do ar? Se seu RTO é 4 horas, sua solução de recuperação precisa restaurar tudo em 4 horas.
 
-Quanto menor o RPO e RTO, mais cara e a solucao.
+Quanto menor o RPO e RTO, mais cara é a solução.
 
-## Azure Backup: protecao de dados
+## Azure Backup: proteção de dados
 
 Para VMs, SQL Server, Storage e outros recursos:
 
@@ -55,9 +55,9 @@ az backup protection enable-for-vm \
   --policy-name politica-vms
 ```
 
-## Azure Site Recovery (ASR): replicacao para DR
+## Azure Site Recovery (ASR): replicação para DR
 
-Para replicar VMs entre regioes com failover automatico:
+Para replicar VMs entre regiões com failover automático:
 
 ```bash
 # Criar vault de recuperacao
@@ -75,16 +75,16 @@ az site-recovery protection-container create \
   --vault-name vault-asr
 ```
 
-Com ASR, as VMs sao replicadas continuamente para a regiao de DR. RPO tipico: 15 segundos para VMs VMware/Hyper-V, poucos minutos para VMs Azure.
+Com ASR, as VMs são replicadas continuamente para a região de DR. RPO típico: 15 segundos para VMs VMware/Hyper-V, poucos minutos para VMs Azure.
 
 ## Geo-replication para dados: quando usar
 
-| Servico | Opcao de Geo-replication | RPO tipico |
+| Serviço | Opção de Geo-replication | RPO típico |
 |---------|--------------------------|------------|
 | Azure SQL Database | Active Geo-Replication | < 5 segundos |
 | Azure Storage | GRS/GZRS | < 15 minutos |
 | Azure Cosmos DB | Multi-region writes | < 1 segundo |
-| Azure AI Search | Servico separado + reindexacao | Horas |
+| Azure AI Search | Serviço separado + reindexação | Horas |
 
 ```bash
 # SQL Database com replica em outra regiao
@@ -103,19 +103,19 @@ az storage account create \
   --sku Standard_GZRS  # Zone + Geo redundant
 ```
 
-## Escolhendo a estrategia por RPO/RTO
+## Escolhendo a estratégia por RPO/RTO
 
-| RPO | RTO | Estrategia |
+| RPO | RTO | Estratégia |
 |-----|-----|------------|
-| 24 horas | 4 horas | Azure Backup diario + restore manual |
-| 4 horas | 1 hora | Azure Backup horario + ASR para VMs criticas |
-| 15 minutos | 15 minutos | ASR continuo + SQL Active Geo-Replication |
-| < 1 minuto | < 5 minutos | Active-Active multi-regiao (custo muito maior) |
+| 24 horas | 4 horas | Azure Backup diário + restore manual |
+| 4 horas | 1 hora | Azure Backup horário + ASR para VMs críticas |
+| 15 minutos | 15 minutos | ASR contínuo + SQL Active Geo-Replication |
+| < 1 minuto | < 5 minutos | Active-Active multi-região (custo muito maior) |
 
 <div class="callout">
-<strong>Teste o RTO real, nao o estimado.</strong> A maioria das organizacoes sabe o RTO teorico mas nunca testou quanto tempo leva de fato para restaurar. Faca um teste de DR anual -- so assim voce sabe se o RTO real esta dentro do acordado em contrato.
+<strong>Teste o RTO real, não o estimado.</strong> A maioria das organizações sabe o RTO teórico mas nunca testou quanto tempo leva de fato para restaurar. Faça um teste de DR anual -- só assim você sabe se o RTO real está dentro do acordado em contrato.
 </div>
 
-## Conclusao
+## Conclusão
 
-Backup e DR sao necessidades diferentes com solucoes diferentes. Azure Backup protege dados contra perda ou corrupcao. ASR e geo-replication protegem contra indisponibilidade de infraestrutura. A escolha da estrategia certa comeca pelos numeros de RPO e RTO -- e esses numeros devem ser definidos com o negocio, nao pela equipe de TI unilateralmente.
+Backup e DR são necessidades diferentes com soluções diferentes. Azure Backup protege dados contra perda ou corrupção. ASR e geo-replication protegem contra indisponibilidade de infraestrutura. A escolha da estratégia certa começa pelos números de RPO e RTO -- e esses números devem ser definidos com o negócio, não pela equipe de TI unilateralmente.

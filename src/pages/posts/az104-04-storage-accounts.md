@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "AZ-104 na prática [4] — Storage Accounts: tudo que você precisa saber"
-category: "IA Generativa"
-tag: "ia-generativa"
+category: "Infra"
+tag: "infra"
 serie: "AZ-104 na prática"
 serieSlug: "az104"
 serieNum: 4
@@ -18,9 +18,9 @@ next:
 
 ---
 
-Storage Account parece simples ate voce precisar escolher entre LRS, GRS, ZRS e GZRS sem entender o que cada um significa na pratica. Ou ate perceber que escolheu o tier errado e nao pode mudar sem recriar a conta.
+Storage Account parece simples até você precisar escolher entre LRS, GRS, ZRS e GZRS sem entender o que cada um significa na prática. Ou até perceber que escolheu o tier errado e não pode mudar sem recriar a conta.
 
-Essas sao as decisoes que o AZ-104 testa. Nao se voce sabe o que e Storage Account, todo mundo sabe. Se voce sabe escolher a configuracao certa para cada cenario. um dos mais cobrados no AZ-104. Entender os tipos, redundância e opções de acesso é obrigatório.
+Essas são as decisões que o AZ-104 testa. Não se você sabe o que é Storage Account, todo mundo sabe. Se você sabe escolher a configuração certa para cada cenário. um dos mais cobrados no AZ-104. Entender os tipos, redundância e opções de acesso é obrigatório.
 
 ## Tipos de storage
 

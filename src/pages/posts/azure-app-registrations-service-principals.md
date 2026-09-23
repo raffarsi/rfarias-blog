@@ -1,22 +1,22 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "App Registrations e Service Principals: identidade para aplicacoes no Azure"
+title: "App Registrations e Service Principals: identidade para aplicações no Azure"
 category: "IAM"
 tag: "iam"
 date: "06 Nov 2025"
 readTime: "9 min"
-description: "A diferenca entre App Registration e Service Principal, como configurar permissoes e por que Managed Identity deve ser a primeira escolha."
+description: "A diferença entre App Registration e Service Principal, como configurar permissões e por que Managed Identity deve ser a primeira escolha."
 ---
 
-Quando uma aplicacao precisa acessar recursos do Azure ou APIs da Microsoft, ela precisa de uma identidade. O Microsoft Entra ID oferece dois mecanismos relacionados: App Registration e Service Principal.
+Quando uma aplicação precisa acessar recursos do Azure ou APIs da Microsoft, ela precisa de uma identidade. O Microsoft Entra ID oferece dois mecanismos relacionados: App Registration e Service Principal.
 
 ## App Registration vs Service Principal
 
-**App Registration** e o objeto global -- o registro da aplicacao no tenant. Define o que a aplicacao e: nome, URLs de redirect, permissoes necessarias, certificados e secrets.
+**App Registration** é o objeto global -- o registro da aplicação no tenant. Define o que a aplicação é: nome, URLs de redirect, permissões necessárias, certificados e secrets.
 
-**Service Principal** e a instancia local. E o objeto que recebe permissoes RBAC, aparece nos logs de auditoria e pode ser associado a Managed Identities.
+**Service Principal** é a instância local. É o objeto que recebe permissões RBAC, aparece nos logs de auditoria e pode ser associado a Managed Identities.
 
-A relacao: um App Registration pode ter Service Principals em multiplos tenants. Em um tenant single, geralmente um App Registration = um Service Principal.
+A relação: um App Registration pode ter Service Principals em múltiplos tenants. Em um tenant single, geralmente um App Registration = um Service Principal.
 
 ## Criando um App Registration
 
@@ -39,7 +39,7 @@ az ad app credential reset \
   --years 1
 ```
 
-**Certificate** -- recomendado para producao:
+**Certificate** -- recomendado para produção:
 ```bash
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 az ad app credential reset \
@@ -48,7 +48,7 @@ az ad app credential reset \
   --append
 ```
 
-## Permissoes de API
+## Permissões de API
 
 ```bash
 # Adicionar permissao para Microsoft Graph
@@ -62,7 +62,7 @@ az ad app permission admin-consent --id $APP_ID
 
 ## Workload Identity Federation: sem secrets para CI/CD
 
-Para GitHub Actions e outras plataformas CI/CD, use federacao em vez de secrets:
+Para GitHub Actions e outras plataformas CI/CD, use federação em vez de secrets:
 
 ```bash
 az ad app federated-credential create \
@@ -87,17 +87,17 @@ No GitHub Actions:
 
 ## Quando usar o que
 
-| Cenario | Recomendacao |
+| Cenário | Recomendação |
 |---------|-------------|
 | App rodando no Azure (VM, App Service, AKS) | Managed Identity |
 | App rodando on-premises | App Registration + Certificate |
 | CI/CD pipeline (GitHub Actions, Azure DevOps) | Workload Identity Federation |
-| Integracao com API de terceiros | App Registration + Secret/Certificate |
+| Integração com API de terceiros | App Registration + Secret/Certificate |
 
 <div class="callout">
-<strong>Managed Identity e sempre preferivel.</strong> Para qualquer recurso rodando no Azure, Managed Identity elimina a classe inteira de problemas de gestao de credenciais. Reserve App Registrations para o que genuinamente nao pode usar Managed Identity.
+<strong>Managed Identity é sempre preferível.</strong> Para qualquer recurso rodando no Azure, Managed Identity elimina a classe inteira de problemas de gestão de credenciais. Reserve App Registrations para o que genuinamente não pode usar Managed Identity.
 </div>
 
-## Conclusao
+## Conclusão
 
-App Registrations sao necessarios quando Managed Identity nao e uma opcao. Para tudo que roda no Azure, prefira sempre Managed Identity. Para pipelines CI/CD externos, Workload Identity Federation elimina secrets por completo. Client secrets devem ser o ultimo recurso.
+App Registrations são necessários quando Managed Identity não é uma opção. Para tudo que roda no Azure, prefira sempre Managed Identity. Para pipelines CI/CD externos, Workload Identity Federation elimina secrets por completo. Client secrets devem ser o último recurso.

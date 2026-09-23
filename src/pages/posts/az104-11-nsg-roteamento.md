@@ -18,25 +18,25 @@ next:
 
 ---
 
-NSG e UDR aparecem juntos no AZ-104 e juntos em producao. Entender como os dois interagem e o que separa quem resolve incidentes de rede rapido de quem fica horas tentando.
+NSG e UDR aparecem juntos no AZ-104 e juntos em produção. Entender como os dois interagem e o que separa quem resolve incidentes de rede rápido de quem fica horas tentando.
 
 ## NSG: o que o AZ-104 foca
 
-NSG tem regras com prioridade numerica de 100 a 4096. Menor numero, maior prioridade. O Azure para na primeira regra que corresponde.
+NSG tem regras com prioridade numérica de 100 a 4096. Menor número, maior prioridade. O Azure para na primeira regra que corresponde.
 
-Tres regras default existem em todo NSG e nao podem ser removidas: `AllowVNetInBound` (65000), `AllowAzureLoadBalancerInBound` (65001), `DenyAllInBound` (65500). Para entrada vinda da internet, o padrao e bloquear. Para saida, o padrao e permitir para internet.
+Três regras default existem em todo NSG e não podem ser removidas: `AllowVNetInBound` (65000), `AllowAzureLoadBalancerInBound` (65001), `DenyAllInBound` (65500). Para entrada vinda da internet, o padrão é bloquear. Para saída, o padrão é permitir para internet.
 
 ```bash
 az network nsg rule create   --nsg-name nsg-app   --resource-group rg-app   --name allow-https   --priority 100   --protocol Tcp   --direction Inbound   --source-address-prefix Internet   --source-port-range '*'   --destination-address-prefix '*'   --destination-port-range 443   --access Allow
 ```
 
-NSG pode ser associado a subnet (afeta todos os recursos) ou a NIC de VM (afeta so aquela VM). Quando os dois existem, entrada passa pelo NSG da subnet primeiro, depois pelo da NIC. Saida: NIC primeiro, subnet depois.
+NSG pode ser associado a subnet (afeta todos os recursos) ou a NIC de VM (afeta só aquela VM). Quando os dois existem, entrada passa pelo NSG da subnet primeiro, depois pelo da NIC. Saída: NIC primeiro, subnet depois.
 
-## UDR: quando o roteamento padrao nao basta
+## UDR: quando o roteamento padrão não basta
 
-Por padrao, Azure roteia trafego automaticamente entre subnets, para internet e para conexoes on-premises. UDR (User Defined Route) sobrescreve esse comportamento.
+Por padrão, Azure roteia tráfego automaticamente entre subnets, para internet e para conexões on-premises. UDR (User Defined Route) sobrescreve esse comportamento.
 
-O caso de uso mais comum: forcar todo o trafego a passar pelo Azure Firewall no hub antes de sair para internet ou ir para outro spoke.
+O caso de uso mais comum: forçar todo o tráfego a passar pelo Azure Firewall no hub antes de sair para internet ou ir para outro spoke.
 
 ```bash
 az network route-table create   --name rt-spoke-app   --resource-group rg-networking   --location brazilsouth
@@ -49,12 +49,12 @@ az network vnet subnet update   --name snet-app   --vnet-name vnet-spoke   --res
 
 ## O que o AZ-104 pergunta sobre UDR
 
-"Voce tem um Azure Firewall no hub e quer que todo trafego de saida dos spokes passe por ele. O que voce configura?"
+"Você tem um Azure Firewall no hub e quer que todo tráfego de saída dos spokes passe por ele. O que você configura?"
 
 Resposta: UDR em cada subnet dos spokes com rota 0.0.0.0/0 apontando para o IP privado do Firewall (next-hop-type VirtualAppliance).
 
-"Um administrador criou uma UDR com next-hop-type None para um range especifico. O que acontece com o trafego para esse range?"
+"Um administrador criou uma UDR com next-hop-type None para um range específico. O que acontece com o tráfego para esse range?"
 
-Resposta: o trafego e descartado (black hole). `None` significa que nao ha proximo salto valido.
+Resposta: o tráfego é descartado (black hole). `None` significa que não há próximo salto válido.
 
-NSG e UDR resolvem problemas diferentes: NSG filtra o trafego, UDR define para onde ele vai. Em incidentes de rede, verifique os dois antes de concluir qual esta causando o problema.
+NSG e UDR resolvem problemas diferentes: NSG filtra o tráfego, UDR define para onde ele vai. Em incidentes de rede, verifique os dois antes de concluir qual está causando o problema.

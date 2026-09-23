@@ -136,5 +136,5 @@ az network watcher packet-capture create \
 - Diferença entre Métricas (tempo real) e Logs (histórico, KQL)
 - Como configurar alertas de métrica e de log
 - Que Diagnostic Settings conectam recursos ao Log Analytics
-- Application Insights e seus recursos (availabilty tests, live metrics)
+- Application Insights e seus recursos (availability tests, live metrics)
 - Network Watcher para troubleshooting de rede

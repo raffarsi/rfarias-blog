@@ -9,9 +9,9 @@ description: "Como centralizar logs, criar alertas úteis (não ruidosos) e usar
 ---
 
 
-Azure Monitor e Log Analytics sao o tipo de recurso que todo mundo configura, poucos entendem de verdade e a maioria so vai estudar quando um incidente ocorre e nao tem os logs necessarios.
+Azure Monitor e Log Analytics são o tipo de recurso que todo mundo configura, poucos entendem de verdade e a maioria só vai estudar quando um incidente ocorre e não tem os logs necessários.
 
-Configurar diagnostics settings depois do incidente nao ajuda. Os dados nao existem retroativamente. Esse artigo cobre o que configurar antes de precisar, e como estruturar alertas que realmente avisam antes de o usuario reclamar.
+Configurar diagnostics settings depois do incidente não ajuda. Os dados não existem retroativamente. Esse artigo cobre o que configurar antes de precisar, e como estruturar alertas que realmente avisam antes de o usuário reclamar.
 
 ## Log Analytics Workspace: o centro de tudo
 

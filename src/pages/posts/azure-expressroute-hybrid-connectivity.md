@@ -1,26 +1,26 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "ExpressRoute na pratica: conectividade hibrida para ambientes corporativos"
+title: "ExpressRoute na prática: conectividade híbrida para ambientes corporativos"
 category: "Networking"
 tag: "networking"
 date: "01 Jan 2026"
 readTime: "11 min"
-description: "Como o ExpressRoute funciona, diferenca entre provider e direct, peering types e o processo real de contratacao e configuracao."
+description: "Como o ExpressRoute funciona, diferença entre provider e direct, peering types e o processo real de contratação e configuração."
 ---
 
-VPN funciona. Para a maioria dos ambientes corporativos com trafego razoavel e sem exigencia de SLA de latencia, uma VPN Gateway resolve a conectividade hibrida. ExpressRoute e para quando VPN nao e suficiente: volume de dados alto, latencia previsivel e baixa, ou requisito de compliance que exige conexao privada sem internet.
+VPN funciona. Para a maioria dos ambientes corporativos com tráfego razoável e sem exigência de SLA de latência, uma VPN Gateway resolve a conectividade híbrida. ExpressRoute é para quando VPN não é suficiente: volume de dados alto, latência previsível e baixa, ou requisito de compliance que exige conexão privada sem internet.
 
-Antes de contratar, entenda o que voce esta realmente comprando.
+Antes de contratar, entenda o que você está realmente comprando.
 
 ## ExpressRoute Provider vs ExpressRoute Direct
 
-**ExpressRoute Provider:** voce contrata com um provedor parceiro (Equinix, Ascenty, Claro). O provedor conecta ao peering da Microsoft. E o modelo mais comum, mais rapido de contratar e com opcoes de bandwidth de 50 Mbps a 10 Gbps.
+**ExpressRoute Provider:** você contrata com um provedor parceiro (Equinix, Ascenty, Claro). O provedor conecta ao peering da Microsoft. É o modelo mais comum, mais rápido de contratar e com opções de bandwidth de 50 Mbps a 10 Gbps.
 
-**ExpressRoute Direct:** voce conecta diretamente ao equipamento da Microsoft em datacenter de colocation. Portas de 10 Gbps ou 100 Gbps. Mais controle, mais complexidade operacional, para quem precisa de capacidade muito alta ou quer eliminar o intermediario.
+**ExpressRoute Direct:** você conecta diretamente ao equipamento da Microsoft em datacenter de colocation. Portas de 10 Gbps ou 100 Gbps. Mais controle, mais complexidade operacional, para quem precisa de capacidade muito alta ou quer eliminar o intermediário.
 
-Para a maioria das empresas brasileiras, ExpressRoute via provedor no Equinix SP ou Ascenty e o caminho mais rapido.
+Para a maioria das empresas brasileiras, ExpressRoute via provedor no Equinix SP ou Ascenty é o caminho mais rápido.
 
-## O processo real de contratacao
+## O processo real de contratação
 
 ```bash
 # 1. Criar o circuito no Azure (gera o Service Key)
@@ -30,7 +30,7 @@ az network express-route create   --name er-circuit-producao   --resource-group 
 az network express-route show   --name er-circuit-producao   --resource-group rg-networking   --query serviceKey -o tsv
 ```
 
-Com o Service Key em maos, voce vai ao portal do provedor e provisiona a conexao fisica. O circuito fica em "Not Provisioned" ate o provedor concluir, tipicamente 2 a 6 semanas. Planeje com isso em projetos de migracao.
+Com o Service Key em mãos, você vai ao portal do provedor e provisiona a conexão física. O circuito fica em "Not Provisioned" até o provedor concluir, tipicamente 2 a 6 semanas. Planeje com isso em projetos de migração.
 
 ## Configurando o Private Peering
 
@@ -60,7 +60,7 @@ resource erGateway 'Microsoft.Network/virtualNetworkGateways@2023-09-01' = {
 
 ## Alta disponibilidade: dois circuitos
 
-A Microsoft recomenda dois circuitos em locais de peering diferentes para HA real. Um circuito unico com path primario e secundario e um unico ponto de falha no lado do provedor.
+A Microsoft recomenda dois circuitos em locais de peering diferentes para HA real. Um circuito único com path primário e secundário e um único ponto de falha no lado do provedor.
 
 ```
 Datacenter SP
@@ -69,7 +69,7 @@ Datacenter SP
 ```
 
 <div class="callout">
-<strong>Tempo de provisionamento:</strong> O ExpressRoute via provedor leva 2 a 8 semanas entre criar o circuito no Azure e ter conectividade funcionando. O tempo maior e do lado do provedor. Comece o processo bem antes do prazo do projeto.
+<strong>Tempo de provisionamento:</strong> O ExpressRoute via provedor leva 2 a 8 semanas entre criar o circuito no Azure e ter conectividade funcionando. O tempo maior é do lado do provedor. Comece o processo bem antes do prazo do projeto.
 </div>
 
-ExpressRoute e a escolha certa quando VPN nao atende. O processo envolve tres partes (voce, o provedor e a Microsoft) e requer coordenacao. Se voce nunca fez antes, planeje o dobro do tempo que voce acha que vai levar.
+ExpressRoute é a escolha certa quando VPN não atende. O processo envolve três partes (você, o provedor e a Microsoft) e requer coordenação. Se você nunca fez antes, planeje o dobro do tempo que você acha que vai levar.

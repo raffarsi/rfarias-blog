@@ -8,15 +8,15 @@ readTime: "10 min"
 description: "Como estruturar zonas DNS no Azure para ambientes corporativos com múltiplos domínios, subdomínios delegados e integração com DNS on-premises via Private DNS Resolver."
 ---
 
-DNS e aquele servico que ninguem pensa ate parar de funcionar. E no Azure, a maioria dos problemas de Private Endpoint que vejo nao sao de configuracao de rede, sao de DNS. O Private Endpoint existe, o IP privado esta certo, e mesmo assim a aplicacao nao resolve o nome.
+DNS é aquele serviço que ninguém pensa até parar de funcionar. E no Azure, a maioria dos problemas de Private Endpoint que vejo não são de configuração de rede, são de DNS. O Private Endpoint existe, o IP privado está certo, e mesmo assim a aplicação não resolve o nome.
 
-Entender como estruturar zonas DNS desde o inicio evita esses incidentes.
+Entender como estruturar zonas DNS desde o início evita esses incidentes.
 
-## Zonas publicas vs zonas privadas
+## Zonas públicas vs zonas privadas
 
-**Zona publica** (`empresa.com.br`): resolve para IPs publicos, acessivel da internet. Voce gerencia pelo portal ou via Azure CLI como qualquer recurso.
+**Zona pública** (`empresa.com.br`): resolve para IPs públicos, acessível da internet. Você gerencia pelo portal ou via Azure CLI como qualquer recurso.
 
-**Zona privada** (`internal.empresa.com.br`): resolve para IPs privados, funciona apenas de dentro das VNets que voce vincular a ela. Essa e a peca central dos Private Endpoints.
+**Zona privada** (`internal.empresa.com.br`): resolve para IPs privados, funciona apenas de dentro das VNets que você vincular a ela. Essa é a peça central dos Private Endpoints.
 
 ```bash
 # Zona publica
@@ -29,9 +29,9 @@ az network private-dns zone create   --name internal.empresa.com.br   --resource
 az network private-dns link vnet create   --name link-vnet-hub   --zone-name internal.empresa.com.br   --resource-group rg-dns   --virtual-network vnet-hub   --registration-enabled false
 ```
 
-## Delegacao de subdominio: autonomia sem perder controle
+## Delegação de subdomínio: autonomia sem perder controle
 
-Quando times diferentes gerenciam dominios diferentes, voce nao precisa dar acesso a zona principal para cada um. Delegue o subdominio:
+Quando times diferentes gerenciam domínios diferentes, você não precisa dar acesso a zona principal para cada um. Delegue o subdomínio:
 
 ```bicep
 // Zona principal, gerenciada pelo time de plataforma
@@ -56,7 +56,7 @@ resource delegacaoIA 'Microsoft.Network/dnsZones/NS@2018-05-01' = {
 }
 ```
 
-A partir dai, a equipe de IA gerencia tudo em `ia.empresa.com.br` de forma autonoma. Mudancas la nao exigem intervencao no time de plataforma.
+A partir daí, a equipe de IA gerencia tudo em `ia.empresa.com.br` de forma autônoma. Mudanças la não exigem intervenção no time de plataforma.
 
 ## Estrutura que funciona para ambientes Azure corporativos
 
@@ -75,9 +75,9 @@ privatelink.openai.azure.com       (privada, criada pelo Private Endpoint)
   oai-prod -> 10.0.1.4
 ```
 
-## Integracao com DNS on-premises via Private DNS Resolver
+## Integração com DNS on-premises via Private DNS Resolver
 
-Para que maquinas on-premises resolvam os dominios `privatelink.*`, configure forwarders condicionais no DNS interno apontando para o inbound endpoint do DNS Resolver:
+Para que máquinas on-premises resolvam os domínios `privatelink.*`, configure forwarders condicionais no DNS interno apontando para o inbound endpoint do DNS Resolver:
 
 ```powershell
 # No DNS on-premises
@@ -85,7 +85,7 @@ Add-DnsServerConditionalForwarderZone   -Name "privatelink.openai.azure.com"   -
 ```
 
 <div class="callout">
-<strong>O erro mais comum:</strong> Vincular zonas Private DNS aos spokes em vez do hub. O DNS Resolver usa as zonas vinculadas a VNet onde ele esta (o hub). Vincular apenas nos spokes nao funciona.
+<strong>O erro mais comum:</strong> Vincular zonas Private DNS aos spokes em vez do hub. O DNS Resolver usa as zonas vinculadas a VNet onde ele está (o hub). Vincular apenas nos spokes não funciona.
 </div>
 
-DNS mal planejado e a causa mais frequente de "Private Endpoint configurado mas nao funciona". Vale 1 hora de planejamento de zonas antes de comecar a criar Private Endpoints.
+DNS mal planejado é a causa mais frequente de "Private Endpoint configurado mas não funciona". Vale 1 hora de planejamento de zonas antes de começar a criar Private Endpoints.

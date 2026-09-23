@@ -19,9 +19,9 @@ next:
 ---
 
 
-Azure Files resolve um problema especifico: compartilhamento de arquivos que precisa ser acessado por multiplas VMs simultaneamente, com suporte a protocolo SMB, sem gerenciar servidor de arquivos.
+Azure Files resolve um problema específico: compartilhamento de arquivos que precisa ser acessado por múltiplas VMs simultaneamente, com suporte a protocolo SMB, sem gerenciar servidor de arquivos.
 
-Nao e o recurso mais glamouroso do Azure. E o que evita que voce precise manter um servidor Windows so para compartilhar arquivos entre aplicacoes. O AZ-104 testa quando usar Files versus Blob versus Disk.
+Não é o recurso mais glamoroso do Azure. É o que evita que você precise manter um servidor Windows só para compartilhar arquivos entre aplicações. O AZ-104 testa quando usar Files versus Blob versus Disk.
 
 ## Criando um compartilhamento
 

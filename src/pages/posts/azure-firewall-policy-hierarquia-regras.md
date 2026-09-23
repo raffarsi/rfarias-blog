@@ -8,13 +8,13 @@ readTime: "10 min"
 description: "Firewall Policies podem ser herdadas, a política base define regras globais, políticas filhas adicionam regras específicas por ambiente. Como estruturar para escalar sem duplicar configuração."
 ---
 
-Se voce tem Azure Firewall em mais de um ambiente, em producao, homologacao e desenvolvimento, provavelmente esta mantendo as mesmas regras base duplicadas em cada politica. Toda vez que precisa adicionar um novo endpoint de monitoramento ou atualizar um range de IP, atualiza em tres lugares. E inevitavel que um fique defasado.
+Se você tem Azure Firewall em mais de um ambiente, em produção, homologação e desenvolvimento, provavelmente está mantendo as mesmas regras base duplicadas em cada política. Toda vez que precisa adicionar um novo endpoint de monitoramento ou atualizar um range de IP, atualiza em três lugares. É inevitável que um fique defasado.
 
 Hierarquia de Firewall Policies resolve esse problema.
 
 ## A estrutura que funciona
 
-Uma politica pai define regras globais. Politicas filhas herdam essas regras e adicionam as especificas do ambiente:
+Uma política pai define regras globais. Políticas filhas herdam essas regras e adicionam as específicas do ambiente:
 
 ```
 Politica Base (regras globais)
@@ -84,19 +84,19 @@ resource policyProd 'Microsoft.Network/firewallPolicies@2023-09-01' = {
 }
 ```
 
-## Como a precedencia funciona
+## Como a precedência funciona
 
-Regras da politica base e da politica filha sao avaliadas juntas por prioridade numerica. Para que a regra da filha sobrescreva a da base, ela precisa ter prioridade MENOR:
+Regras da política base e da política filha são avaliadas juntas por prioridade numérica. Para que a regra da filha sobrescreva a da base, ela precisa ter prioridade MENOR:
 
 ```
 Base:  Allow *.microsoft.com  (prioridade 200)
 Filha: Deny  *.microsoft.com  (prioridade 100) <- esta ganha
 ```
 
-Se a filha tiver prioridade maior que a base, a regra da base vence. Esse e o ponto que mais confunde em implementacoes novas.
+Se a filha tiver prioridade maior que a base, a regra da base vence. Esse é o ponto que mais confunde em implementações novas.
 
 <div class="callout">
-<strong>Limitacao importante:</strong> Uma politica filha so pode ter uma politica pai. Voce nao herda de multiplas bases. Planeje a hierarquia antes de criar, reorganizar depois exige recriar as politicas e reassociar os firewalls.
+<strong>Limitação importante:</strong> Uma política filha só pode ter uma política pai. Você não herda de múltiplas bases. Planeje a hierarquia antes de criar, reorganizar depois exige recriar as políticas e reassociar os firewalls.
 </div>
 
-Mudanca de regra global agora e: editar a politica base, propagar automaticamente para todos os firewalls de todos os ambientes. Sem precisar lembrar de qual ambiente ainda nao foi atualizado.
+Mudança de regra global agora é: editar a política base, propagar automaticamente para todos os firewalls de todos os ambientes. Sem precisar lembrar de qual ambiente ainda não foi atualizado.

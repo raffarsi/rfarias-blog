@@ -19,9 +19,9 @@ next:
 ---
 
 
-Conformidade regulatoria e o tipo de topico que profissionais de TI ignoram ate chegarem numa auditoria. E ai descobrem que nao tem evidencias, nao tem politicas documentadas e nao tem como provar o que o sistema faz com os dados.
+Conformidade regulatória é o tipo de tópico que profissionais de TI ignoram até chegarem numa auditoria. E ai descobrem que não tem evidências, não tem políticas documentadas e não tem como provar o que o sistema faz com os dados.
 
-O SC-900 cobre conformidade porque e isso que separa um ambiente cloud profissional de um ambiente que 'parece' seguro. O Microsoft Purview e a ferramenta central nesse contexto.
+O SC-900 cobre conformidade porque é isso que separa um ambiente cloud profissional de um ambiente que 'parece' seguro. O Microsoft Purview é a ferramenta central nesse contexto.
 
 ## Conceitos de conformidade
 

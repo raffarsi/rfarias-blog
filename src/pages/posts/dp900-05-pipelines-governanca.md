@@ -162,7 +162,7 @@ az purview scan \
 - **Data Lineage**, rastreamento de origem e transformações dos dados
 - **Classifications**, identificação automática de dados sensíveis (CPF, cartão de crédito)
 
-**Linhagem de dados**, rastrea a jornada dos dados:
+**Linhagem de dados**, rastreia a jornada dos dados:
 ```
 SQL Database → ADF Pipeline → Data Lake (Raw) → Databricks → Data Lake (Curated) → Synapse → Power BI
 ```

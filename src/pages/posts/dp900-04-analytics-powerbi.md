@@ -19,9 +19,9 @@ next:
 ---
 
 
-Dado armazenado que ninguem analisa nao tem valor. Essa e a premissa do DP-900 ao cobrir analytics: entender o pipeline completo desde a ingestao ate a visualizacao.
+Dado armazenado que ninguém analisa não tem valor. Essa é a premissa do DP-900 ao cobrir analytics: entender o pipeline completo desde a ingestão até a visualização.
 
-Power BI aparece no final desse pipeline, mas o DP-900 testa mais do que ferramenta. Testa se voce entende a diferenca entre dados operacionais e dados analiticos, e por que voce nao deveria rodar relatorio de BI direto no banco de producao.
+Power BI aparece no final desse pipeline, mas o DP-900 testa mais do que ferramenta. Testa se você entende a diferença entre dados operacionais e dados analíticos, e por que você não deveria rodar relatório de BI direto no banco de produção.
 
 ## Modern Data Warehouse
 

@@ -8,15 +8,15 @@ readTime: "9 min"
 description: "NSG parece simples — até você entender precedência de regras, stateful e os erros que bloqueiam tráfego legítimo em produção."
 ---
 
-NSG parece simples. Ate voce travar o acesso de producao porque uma regra de prioridade mais baixa esta liberando o que voce tentou bloquear, ou descobrir que o trafego entre duas subnets da mesma VNet passou por cima das suas restricoes por causa do AllowVNetInBound padrao.
+NSG parece simples. Até você travar o acesso de produção porque uma regra de prioridade mais baixa está liberando o que você tentou bloquear, ou descobrir que o tráfego entre duas subnets da mesma VNet passou por cima das suas restrições por causa do AllowVNetInBound padrão.
 
 Entender como o NSG avalia regras evita esses incidentes.
 
-## Como as regras sao avaliadas
+## Como as regras são avaliadas
 
-Cada regra tem uma prioridade numerica. O Azure avalia em ordem crescente e para na primeira que corresponde. Se nenhuma corresponder, aplica as regras padrao, que incluem bloquear todo trafego de entrada da internet e permitir trafego de saida para internet.
+Cada regra tem uma prioridade numérica. O Azure avalia em ordem crescente e para na primeira que corresponde. Se nenhuma corresponder, aplica as regras padrão, que incluem bloquear todo tráfego de entrada da internet e permitir tráfego de saída para internet.
 
-O que muita gente nao percebe: toda regra Deny que voce cria precisa ter prioridade MENOR que qualquer regra Allow que voce quer sobrescrever. Ao contrario do que parece intuitivo.
+O que muita gente não percebe: toda regra Deny que você cria precisa ter prioridade MENOR que qualquer regra Allow que você quer sobrescrever. Ao contrário do que parece intuitivo.
 
 ```bicep
 resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
@@ -55,15 +55,15 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
 }
 ```
 
-## As regras padrao que derrubam planos
+## As regras padrão que derrubam planos
 
-Todo NSG tem regras padrao com prioridade 65000+. A mais traicoeira: **AllowVNetInBound** (prioridade 65000) permite trafego de qualquer VNet, incluindo outras subnets da mesma VNet.
+Todo NSG tem regras padrão com prioridade 65000+. A mais traiçoeira: **AllowVNetInBound** (prioridade 65000) permite tráfego de qualquer VNet, incluindo outras subnets da mesma VNet.
 
-Se voce quer bloquear trafego entre subnets, precisa criar uma regra Deny explicita com prioridade menor que 65000. Muita gente cria um Deny generico na prioridade 4000 pensando que bloqueou tudo, e ainda assim o trafego interno passa porque AllowVNetInBound tem precedencia sobre o que o usuario configurou se mal estruturado.
+Se você quer bloquear tráfego entre subnets, precisa criar uma regra Deny explícita com prioridade menor que 65000. Muita gente cria um Deny genérico na prioridade 4000 pensando que bloqueou tudo, e ainda assim o tráfego interno passa porque AllowVNetInBound tem precedência sobre o que o usuário configurou se mal estruturado.
 
 ## Service Tags: pare de manter listas de IP
 
-Em vez de manter listas de IPs de servicos Azure, use Service Tags:
+Em vez de manter listas de IPs de serviços Azure, use Service Tags:
 
 ```bicep
 {
@@ -81,22 +81,22 @@ Em vez de manter listas de IPs de servicos Azure, use Service Tags:
 }
 ```
 
-Tags uteis: `Internet`, `VirtualNetwork`, `AzureLoadBalancer`, `Storage`, `AzureMonitor`. A Microsoft atualiza os ranges de IP por tras de cada tag automaticamente.
+Tags úteis: `Internet`, `VirtualNetwork`, `AzureLoadBalancer`, `Storage`, `AzureMonitor`. A Microsoft atualiza os ranges de IP por trás de cada tag automaticamente.
 
 ## NSG em subnet vs NIC: onde colocar
 
-Voce pode associar NSGs a subnets (afeta todos os recursos) ou a NICs de VMs especificas. Quando os dois existem, trafego de entrada passa primeiro pelo NSG da subnet, depois pelo da NIC. Saida: inverso.
+Você pode associar NSGs a subnets (afeta todos os recursos) ou a NICs de VMs específicas. Quando os dois existem, tráfego de entrada passa primeiro pelo NSG da subnet, depois pelo da NIC. Saída: inverso.
 
-Na pratica: use NSG na subnet como regra geral. NSG na NIC so quando uma VM especifica precisa de regras diferentes das outras da subnet. Manter NSGs em dois lugares torna o troubleshooting muito mais dificil.
+Na prática: use NSG na subnet como regra geral. NSG na NIC só quando uma VM específica precisa de regras diferentes das outras da subnet. Manter NSGs em dois lugares torna o troubleshooting muito mais difícil.
 
 ## Diagnosticando bloqueios com IP Flow Verify
 
-Quando o trafego esta sendo bloqueado e voce nao sabe por qual regra:
+Quando o tráfego está sendo bloqueado e você não sabe por qual regra:
 
 ```bash
 az network watcher test-ip-flow   --vm minha-vm   --direction Inbound   --protocol TCP   --local 10.0.1.4:443   --remote 203.0.113.1:54321   --out table
 ```
 
-O resultado mostra Allow ou Deny e qual regra especifica tomou a decisao. Economiza horas de analise manual de regras.
+O resultado mostra Allow ou Deny e qual regra específica tomou a decisão. Economiza horas de análise manual de regras.
 
-NSG bem configurado e o que separa um ambiente que "nao foi comprometido ainda" de um ambiente que tem controle real sobre o que trafega na rede.
+NSG bem configurado é o que separa um ambiente que "não foi comprometido ainda" de um ambiente que tem controle real sobre o que trafega na rede.

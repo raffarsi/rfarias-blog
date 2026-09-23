@@ -8,9 +8,9 @@ readTime: "10 min"
 description: "Como usar o Semantic Kernel da Microsoft para orquestrar chamadas ao Azure OpenAI e construir agentes com plugins e memória."
 ---
 
-Se voce trabalha com .NET e quer construir agentes de IA no Azure, o Semantic Kernel e a escolha natural da Microsoft. Nao porque e a unica opcao, mas porque a integracao com Azure OpenAI, autenticacao via Managed Identity e o ecossistema .NET e nativa.
+Se você trabalha com .NET e quer construir agentes de IA no Azure, o Semantic Kernel é a escolha natural da Microsoft. Não porque é a única opção, mas porque a integração com Azure OpenAI, autenticação via Managed Identity e o ecossistema .NET é nativa.
 
-A curva de aprendizado e real. Vale o investimento para quem ja esta no ecossistema .NET corporativo. (com suporte também a Python e Java). Ele orquestra chamadas a LLMs, gerencia plugins (funções que o modelo pode chamar), memória e planejamento. Para equipes .NET que adotam Azure OpenAI, é a opção mais integrada ao ecossistema Microsoft.
+A curva de aprendizado é real. Vale o investimento para quem já está no ecossistema .NET corporativo. (com suporte também a Python e Java). Ele orquestra chamadas a LLMs, gerencia plugins (funções que o modelo pode chamar), memória e planejamento. Para equipes .NET que adotam Azure OpenAI, é a opção mais integrada ao ecossistema Microsoft.
 
 ## Setup básico
 

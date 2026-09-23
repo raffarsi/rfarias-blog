@@ -19,9 +19,9 @@ next:
 ---
 
 
-A maioria das brechas de seguranca em cloud nao e invasao sofisticada. E credencial comprometida, permissao excessiva, MFA desabilitado.
+A maioria das brechas de segurança em cloud não é invasão sofisticada. É credencial comprometida, permissão excessiva, MFA desabilitado.
 
-O AZ-900 aborda identidade e seguranca por esse angulo: entender os mecanismos que a Microsoft oferece para evitar os erros mais comuns, nao teoria abstrata de segurança. E o que mais cai, e o que mais importa na pratica.
+O AZ-900 aborda identidade e segurança por esse ângulo: entender os mecanismos que a Microsoft oferece para evitar os erros mais comuns, não teoria abstrata de segurança. É o que mais cai, e o que mais importa na prática.
 
 ## Microsoft Entra ID
 

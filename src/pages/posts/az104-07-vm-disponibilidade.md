@@ -19,9 +19,9 @@ next:
 ---
 
 
-Alta disponibilidade no Azure nao e automatica. Voce precisa projetar para isso, e as escolhas que faz no momento de criar a VM definem o SLA que vai conseguir.
+Alta disponibilidade no Azure não é automática. Você precisa projetar para isso, e as escolhas que faz no momento de criar a VM definem o SLA que vai conseguir.
 
-Avalability Sets, Availability Zones, Scale Sets: cada um resolve um tipo diferente de falha. O AZ-104 testa se voce sabe qual usar para cada cenario, e por que colocar duas VMs no mesmo Availability Set nao e o mesmo que colocar em zonas diferentes.
+Avalability Sets, Availability Zones, Scale Sets: cada um resolve um tipo diferente de falha. O AZ-104 testa se você sabe qual usar para cada cenário, e por que colocar duas VMs no mesmo Availability Set não é o mesmo que colocar em zonas diferentes.
 
 ## Availability Sets
 

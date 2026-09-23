@@ -8,15 +8,15 @@ readTime: "10 min"
 description: "Como configurar o Traffic Manager para distribuir tráfego entre regiões com failover automático, e as diferenças práticas entre os modos Priority, Weighted e Performance."
 ---
 
-Traffic Manager e DNS. So isso. Ele nao roteia pacotes, nao esta no caminho dos dados, nao adiciona latencia as requisicoes. Ele responde consultas DNS com o IP do endpoint mais adequado segundo a politica configurada.
+Traffic Manager e DNS. Só isso. Ele não roteia pacotes, não está no caminho dos dados, não adiciona latência as requisições. Ele responde consultas DNS com o IP do endpoint mais adequado segundo a política configurada.
 
-Esse detalhe importa porque define o que voce pode e nao pode fazer com ele.
+Esse detalhe importa porque define o que você pode e não pode fazer com ele.
 
-## Como funciona na pratica
+## Como funciona na prática
 
-Quando um cliente resolve `meuapp.trafficmanager.net`, o Traffic Manager verifica a saude dos endpoints, aplica a politica de roteamento e retorna o IP do endpoint escolhido. O cliente conecta diretamente a esse endpoint. O Traffic Manager nao esta mais no caminho.
+Quando um cliente resolve `meuapp.trafficmanager.net`, o Traffic Manager verifica a saúde dos endpoints, aplica a política de roteamento e retorna o IP do endpoint escolhido. O cliente conecta diretamente a esse endpoint. O Traffic Manager não está mais no caminho.
 
-O tempo de failover depende do TTL configurado. Com TTL de 30 segundos, um cliente que acabou de resolver o DNS pode ficar ate 30 segundos conectando ao endpoint com problema antes de consultar novamente e receber o novo IP. Failover de DNS nao e instantaneo.
+O tempo de failover depende do TTL configurado. Com TTL de 30 segundos, um cliente que acabou de resolver o DNS pode ficar até 30 segundos conectando ao endpoint com problema antes de consultar novamente e receber o novo IP. Failover de DNS não é instantâneo.
 
 ```bash
 az network traffic-manager profile create   --name tm-meuapp   --resource-group rg-global   --routing-method Priority   --dns-config-relative-name meuapp   --dns-config-ttl 30   --monitor-protocol HTTPS   --monitor-port 443   --monitor-path "/health"
@@ -30,9 +30,9 @@ az network traffic-manager endpoint create   --name ep-eastus   --profile-name t
 
 ## O health check que realmente funciona
 
-O Traffic Manager faz health checks no endpoint `/health` que voce configurar. Se o endpoint retornar 200, esta saudavel. Se retornar qualquer outra coisa, esta fora.
+O Traffic Manager faz health checks no endpoint `/health` que você configurar. Se o endpoint retornar 200, está saudável. Se retornar qualquer outra coisa, está fora.
 
-O erro mais comum: configurar `/health` que sempre retorna 200 mesmo quando o banco esta fora ou a aplicacao nao consegue processar requisicoes. O Traffic Manager considera o endpoint saudavel e continua enviando trafego para uma instancia que nao consegue servir ninguem.
+O erro mais comum: configurar `/health` que sempre retorna 200 mesmo quando o banco está fora ou a aplicação não consegue processar requisições. O Traffic Manager considera o endpoint saudável e continua enviando tráfego para uma instância que não consegue servir ninguém.
 
 ```python
 from fastapi import FastAPI
@@ -59,8 +59,8 @@ async def health_check():
 |---|---|---|
 | Tipo | DNS-based | Anycast (layer 7) |
 | Failover | ~30-60s (TTL DNS) | menos de 10s |
-| WAF | Nao | Sim |
-| CDN | Nao | Sim |
+| WAF | Não | Sim |
+| CDN | Não | Sim |
 | Custo | Baixo | Maior |
 
-Quando o Traffic Manager resolve: failover multi-regiao simples, aplicacoes que nao precisam de WAF ou CDN, custo e uma restricao real. Quando o Front Door faz mais sentido: voce precisa de failover rapido, WAF global ou aceleracao de conteudo. A diferenca de preço e significativa, entao vale avaliar com base nos requisitos reais, nao no que parece mais completo.
+Quando o Traffic Manager resolve: failover multi-região simples, aplicações que não precisam de WAF ou CDN, custo é uma restrição real. Quando o Front Door faz mais sentido: você precisa de failover rápido, WAF global ou aceleração de conteúdo. A diferença de preço é significativa, então vale avaliar com base nos requisitos reais, não no que parece mais completo.

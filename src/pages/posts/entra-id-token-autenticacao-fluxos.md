@@ -15,7 +15,7 @@ O Entra ID emite três tipos de token:
 
 **Access Token:** comprova autorização para acessar um recurso. Contém scopes (permissões), expiração (geralmente 1h) e o `aud` (audience, para qual API é válido). É um JWT.
 
-**Refresh Token:** de longa duração (24h a semanas), usado para obter novos access tokens sem nova autenticação do usuário. Não deve ser loggado nem armazenado em cliente.
+**Refresh Token:** de longa duração (24h a semanas), usado para obter novos access tokens sem nova autenticação do usuário. Não deve ser logado nem armazenado em cliente.
 
 **ID Token:** contém informações do usuário autenticado (nome, email, objeto ID). Usado pela aplicação, não enviado para APIs.
 
