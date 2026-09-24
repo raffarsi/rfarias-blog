@@ -4,185 +4,135 @@ title: "Grounding com dados corporativos: conectando Azure OpenAI à base de con
 category: "IA Generativa"
 tag: "ia-generativa"
 date: "02 Dez 2025"
-readTime: "10 min"
-description: "O que é grounding, por que elimina alucinações e como implementar com Azure AI Search e Azure AI Foundry."
+readTime: "5 min"
+description: "Grounding reduz a alucinação, mas não resolve sozinho. O assistente pode responder com o documento errado, com o documento vencido ou com um documento que a pessoa não deveria ver. Como montar o grounding para que a resposta seja certa, atual e permitida."
 ---
 
-O GPT-4o sabe muita coisa. Mas não sabe nada sobre as políticas da sua empresa, os processos do seu departamento ou o que aconteceu na reunião de ontem.
+Um time me procurou porque o assistente de políticas internas tinha informado, com toda a segurança, uma regra de viagens que não valia mais. O modelo não inventou nada. Ele leu a política de dois anos atrás, que continuava no índice ao lado da versão nova, e respondeu com base nela.
 
-Quando você conecta um modelo sem grounding a perguntas corporativas, ele faz uma das duas coisas: diz que não sabe, ou inventa algo plausível. O segundo é o perigoso, porque parece correto., que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
+Esse caso resume bem o que grounding é e o que ele não é. Grounding é dar ao modelo os fatos certos no momento da pergunta, para que ele responda com base neles e não no que aprendeu no treinamento. Funciona. Mas "os fatos certos" carrega três exigências que costumam ficar de fora do primeiro protótipo: o documento precisa ser relevante, atual e permitido para quem perguntou.
 
-## Por que grounding elimina alucinações
+## O que o grounding resolve, e o que não resolve
 
-Um modelo de linguagem sem contexto externo responde com base no que "aprendeu" durante o treinamento. Para perguntas sobre a sua empresa, seus processos, seus produtos, ele vai ou dizer que não sabe, ou inventar algo plausível. O segundo caso é o problema: respostas inventadas apresentadas com confiança.
+Um modelo sem contexto externo, diante de uma pergunta sobre a sua empresa, faz uma de duas coisas: diz que não sabe, ou inventa algo plausível. A segunda é a perigosa, porque parece correta.
 
-O grounding resolve isso porque você fornece os fatos relevantes diretamente no prompt. O modelo não precisa "lembrar", ele lê o contexto e responde com base nele.
+Com grounding, você busca os trechos relevantes na sua base e entrega ao modelo junto com a pergunta, com a instrução de responder só com base neles. A alucinação cai muito. Não zera: o modelo ainda pode combinar dois trechos de forma errada, ou completar uma lacuna com o que sabe. E, como no caso da abertura, ele pode responder perfeitamente com base no trecho errado.
 
-## Implementação com Azure AI Search + Azure OpenAI
+Por isso eu trato grounding como um pipeline com quatro responsabilidades, não como uma chamada única:
 
-O pipeline básico de grounding tem três etapas:
+**Encontrar o trecho certo.** Busca híbrida, vetor mais palavra-chave, com reordenação semântica.
+
+**Filtrar o que não vale.** Documento vencido e documento que o usuário não pode ver saem antes de chegar ao modelo.
+
+**Mostrar a fonte.** Cada afirmação da resposta aponta para o trecho de onde veio.
+
+**Saber dizer que não sabe.** Sem trecho relevante, a resposta é "não encontrei", não um palpite.
+
+## O pipeline em código
+
+O exemplo usa o Azure AI Search e o Azure OpenAI pela API v1. O que importa está no filtro e na montagem do contexto:
 
 ```python
+from openai import OpenAI
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.search.documents import SearchClient
 from azure.search.documents.models import VectorizedQuery
-from openai import AzureOpenAI
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
-credential = DefaultAzureCredential()
-token_provider = get_bearer_token_provider(
-    credential, "https://cognitiveservices.azure.com/.default"
+credencial = DefaultAzureCredential()
+cliente_openai = OpenAI(
+    base_url="https://oai-producao.openai.azure.com/openai/v1/",
+    api_key=get_bearer_token_provider(credencial, "https://ai.azure.com/.default"),
 )
-
-openai_client = AzureOpenAI(
-    azure_ad_token_provider=token_provider,
-    api_version="2024-02-01",
-    azure_endpoint="https://oai-producao.openai.azure.com"
-)
-
-search_client = SearchClient(
+busca = SearchClient(
     endpoint="https://search-prod.search.windows.net",
     index_name="base-conhecimento",
-    credential=credential
+    credential=credencial,
 )
 
-def resposta_com_grounding(pergunta: str) -> dict:
-    # 1. Gerar embedding da pergunta
-    embedding = openai_client.embeddings.create(
-        input=pergunta,
-        model="text-embedding-3-large"
+INSTRUCOES = (
+    "Você é o assistente de políticas internas. "
+    "Responda somente com base nos trechos numerados. "
+    "Cite a fonte de cada afirmação no formato [1], [2]. "
+    'Se a resposta não estiver nos trechos, diga: "Não encontrei isso nas políticas publicadas."'
+)
+
+
+def responder(pergunta: str, grupos_do_usuario: list[str]) -> dict:
+    vetor = cliente_openai.embeddings.create(
+        model="text-embedding-3-large", input=pergunta
     ).data[0].embedding
 
-    # 2. Buscar documentos relevantes (busca híbrida)
-    resultados = list(search_client.search(
+    # Só documentos vigentes e liberados para algum grupo do usuário.
+    # Use os IDs dos grupos (GUIDs) e deixe a vírgula explícita como delimitador.
+    filtro = "vigente eq true and grupos_permitidos/any(g: search.in(g, '{}', ','))".format(
+        ",".join(g.replace("'", "''") for g in grupos_do_usuario)
+    )
+
+    trechos = list(busca.search(
         search_text=pergunta,
-        vector_queries=[VectorizedQuery(
-            vector=embedding,
-            fields="content_vector",
-            k_nearest_neighbors=5
-        )],
-        select=["content", "source", "titulo"],
-        top=5
+        vector_queries=[VectorizedQuery(vector=vetor, k_nearest_neighbors=20, fields="conteudo_vetor")],
+        filter=filtro,
+        query_type="semantic",
+        semantic_configuration_name="padrao",
+        select=["titulo", "conteudo", "url", "versao"],
+        top=5,
     ))
 
-    # 3. Montar contexto
-    contexto = "
+    if not trechos:
+        return {"resposta": "Não encontrei isso nas políticas publicadas.", "fontes": []}
 
-".join([
-        f"[Fonte: {r['source']}, {r['titulo']}]
-{r['content']}"
-        for r in resultados
-    ])
-
-    # 4. Gerar resposta com grounding
-    system_prompt = f"""Você é um assistente corporativo.
-
-REGRAS:
-- Responda APENAS com base no CONTEXTO abaixo
-- Se a informação não estiver no contexto, diga: "Não encontrei essa informação na base de conhecimento."
-- Cite sempre a fonte da informação
-
-CONTEXTO:
-{contexto}"""
-
-    response = openai_client.chat.completions.create(
-        model="gpt4o-prod",
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": pergunta}
-        ],
-        temperature=0.1
+    contexto = "\n\n".join(
+        f"[{i}] {t['titulo']} (versão {t['versao']})\n{t['conteudo']}"
+        for i, t in enumerate(trechos, start=1)
     )
-
-    return {
-        "resposta": response.choices[0].message.content,
-        "fontes": [r["source"] for r in resultados],
-        "documentos_usados": len(resultados)
-    }
-```
-
-## Grounding com Azure AI Foundry
-
-O AI Foundry integra grounding nativamente via File Search e Vector Stores:
-
-```python
-from azure.ai.projects import AIProjectClient
-
-client = AIProjectClient.from_connection_string(
-    credential=credential,
-    conn_str="eastus.api.azureml.ms;{sub};{rg};{project}"
-)
-
-# Criar vector store com documentos corporativos
-vector_store = client.agents.create_vector_store_and_poll(
-    file_ids=[arquivo.id for arquivo in arquivos_uploaded],
-    name="base-conhecimento-rh"
-)
-
-# Agente com grounding automático
-agente = client.agents.create_agent(
-    model="gpt-4o",
-    name="assistente-rh",
-    instructions="""Você é um assistente de RH.
-    Responda APENAS com base nos documentos disponibilizados.
-    Se não encontrar a informação, diga que não sabe.""",
-    tools=[{"type": "file_search"}],
-    tool_resources={
-        "file_search": {"vector_store_ids": [vector_store.id]}
-    }
-)
-```
-
-## Verificando qualidade do grounding com Content Safety
-
-O Azure Content Safety tem um endpoint específico para verificar se a resposta está fundamentada no contexto fornecido:
-
-```python
-from azure.ai.contentsafety import ContentSafetyClient
-from azure.ai.contentsafety.models import AnalyzeGroundednessOptions
-
-safety_client = ContentSafetyClient(
-    endpoint="https://content-safety.cognitiveservices.azure.com",
-    credential=credential
-)
-
-def verificar_grounding(contexto: str, pergunta: str, resposta: str) -> dict:
-    result = safety_client.analyze_text_groundedness(
-        AnalyzeGroundednessOptions(
-            domain="Generic",
-            task="QnA",
-            grounding_sources=[contexto],
-            query=pergunta,
-            text=resposta
-        )
+    resposta = cliente_openai.responses.create(
+        model="chat-prod",
+        instructions=INSTRUCOES,
+        input=f"Trechos:\n{contexto}\n\nPergunta: {pergunta}",
+        temperature=0.1,
     )
     return {
-        "fundamentada": not result.ungrounded,
-        "score_confianca": getattr(result, "confidence_score", None)
+        "resposta": resposta.output_text,
+        "fontes": [{"n": i, "titulo": t["titulo"], "url": t["url"]} for i, t in enumerate(trechos, start=1)],
     }
 ```
 
-## Estratégia de fallback quando não há contexto
+Três detalhes que fazem diferença. Os grupos do usuário vêm do token de login (ou do Microsoft Graph, quando o token não traz todos os grupos), nunca do corpo da requisição. Quando a busca não traz nada, o código responde sem chamar o modelo, o que é mais barato e mais honesto. E a temperatura baixa mantém o modelo perto do texto: aqui o objetivo é fidelidade, não criatividade.
 
-```python
-FALLBACKS = {
-    "ti":     "Para suporte de TI, acesse helpdesk.empresa.com ou ligue para a central.",
-    "rh":     "Para dúvidas de RH, entre em contato com rh@empresa.com.",
-    "padrao": "Não encontrei essa informação. Por favor, consulte seu gestor ou abra um chamado."
-}
+## Permissão por documento
 
-def detectar_falta_de_contexto(resposta: str) -> str | None:
-    indicadores = ["não encontrei", "não tenho essa informação",
-                   "não está na base", "não possuo informações"]
-    for ind in indicadores:
-        if ind in resposta.lower():
-            return FALLBACKS.get("padrao")
-    return None
-```
+O filtro de segurança do exemplo é o padrão consolidado no Azure AI Search, e a alternativa recomendada enquanto o controle nativo não é GA: cada trecho carrega, num campo filtrável, os grupos que podem vê-lo, e a busca filtra pelos grupos de quem perguntou. É simples, é GA e funciona bem quando a indexação preenche esse campo a partir das permissões da origem.
 
-<div class="callout">
-<strong>Temperature baixa para grounding:</strong> Use temperature entre 0.0 e 0.2 em pipelines RAG. O objetivo é fidelidade ao contexto, não criatividade. Temperature alta aumenta o risco de o modelo combinar o contexto fornecido com conhecimento do treinamento de forma indevida.
-</div>
+O AI Search também tem hoje controle de acesso nativo por documento, usando as permissões do Microsoft Entra e ACLs de origens como o SharePoint, com o token do usuário passado na consulta. Essa parte ainda está em preview. Para produção em ambiente regulado, eu fico com o filtro de segurança e acompanho o nativo.
 
-## Conclusão
+O ponto que não muda: se a permissão não é aplicada na busca, ela não existe. Instrução no prompt dizendo "não mostre documentos confidenciais" não é controle de acesso. Escrevi mais sobre essa decisão no artigo sobre [Assistants API e RAG customizado](/posts/azure-openai-assistants-api/).
 
-Grounding é o que transforma um chatbot genérico em um assistente corporativo confiável. A combinação de busca híbrida para recuperação, instrução explícita de fidelidade no System Prompt e verificação de groundedness fecha o ciclo, garantindo que o modelo responde com base nos seus dados, não nos dados de treinamento da OpenAI.
+## Versão e vigência
+
+O erro da abertura é o mais comum que eu vejo em bases de conhecimento corporativas: documento substituído que continua no índice. Três cuidados resolvem a maior parte:
+
+**Metadados de vigência.** Cada documento indexado carrega versão e se está vigente. O filtro `vigente eq true` tira o antigo da busca sem apagar o histórico.
+
+**Exclusão que acompanha a origem.** Documento apagado ou arquivado na origem precisa sair do índice. Com indexadores do AI Search, isso depende de configurar a política de detecção de exclusão; com um pipeline próprio, é uma etapa que precisa existir de propósito.
+
+**Versão visível na resposta.** Mostrar "versão 3, de março" junto da fonte faz o próprio usuário perceber quando algo está desatualizado.
+
+## Citação de fonte
+
+Pedir ao modelo que cite `[1]`, `[2]` e devolver a lista de fontes junto com a resposta tem dois ganhos. O usuário consegue conferir. E você consegue auditar: quando alguém reclama de uma resposta, dá para ver qual trecho a sustentou e se o problema foi a busca ou a geração.
+
+Para uma camada extra, o Azure AI Content Safety tem detecção de groundedness, que compara a resposta com os trechos e aponta afirmações sem apoio neles. Parte da documentação ainda marca o recurso como preview, então eu uso como verificação amostral e alerta, não como bloqueio em produção.
+
+## Três erros que eu vejo com frequência
+
+**Trecho sem contexto.** O chunking corta o documento no meio de uma seção, e o trecho "o prazo é de 30 dias" chega ao modelo sem dizer prazo de quê. Repetir o título do documento e da seção em cada trecho resolve boa parte disso.
+
+**Contexto demais.** Mandar vinte trechos "para garantir" dilui o que importa e aumenta custo e latência. Cinco trechos bem ranqueados costumam responder melhor que vinte.
+
+**Não medir o "não encontrei".** A taxa de perguntas sem trecho relevante é o melhor indicador de que a base parou de cobrir o que as pessoas perguntam. Se ela não aparece em nenhum painel, ninguém percebe.
+
+## O que fica
+
+Grounding bem feito não é só conectar o modelo a uma base. É garantir que o trecho que chega ao modelo é o certo, o atual e o permitido, e que a resposta mostra de onde veio.
+
+No seu assistente, se uma política fosse substituída hoje, quanto tempo a versão antiga continuaria respondendo?

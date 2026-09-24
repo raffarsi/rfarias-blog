@@ -14,8 +14,6 @@ prev:
   slug: "azure-firewall-explicit-proxy-vs-udr"
 ---
 
-*Atualizado em setembro de 2026.*
-
 Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure, com Azure Firewall Premium integrado ao Virtual WAN, já faz boa parte do que você paga por ela. Vale migrar tudo?
 
 A resposta que a maioria das arquiteturas corporativas precisa ouvir: **não precisa ser tudo ou nada**. E entender por quê muda completamente a conversa sobre custo e complexidade operacional.

@@ -8,8 +8,6 @@ readTime: "9 min"
 description: "Recurso, projetos, catálogo de modelos e avaliação resolvem problemas que uma chamada direta à API não tem. Quando a plataforma compensa e quando ela só acrescenta camada."
 ---
 
-*Atualizado em setembro de 2026: o Azure AI Foundry hoje se chama Microsoft Foundry, os projetos baseados em Hub viraram modelo clássico e o Prompt Flow está em aposentadoria. O texto abaixo já reflete o modelo atual.*
-
 O primeiro caso de uso de IA generativa dentro de uma empresa quase nunca precisa de plataforma. Alguém provisiona um Azure OpenAI, pega a chave, escreve trinta linhas de Python e mostra o protótipo funcionando na reunião seguinte. Funciona, impressiona, e a conversa vira "vamos colocar em produção".
 
 O problema aparece no terceiro caso de uso.

@@ -14,8 +14,6 @@ next:
   slug: "hub-and-spoke-ia-generativa-azure"
 ---
 
-*Atualizado em setembro de 2026.*
-
 É mais comum do que parece. O pipeline de RAG sobe em produção com Azure OpenAI e Azure AI Search acessíveis via rede pública "só por enquanto, depois a gente fecha". Ninguém mexe depois, o pipeline já está funcionando, a entrega foi feita, e a única linha de defesa vira uma API key ou o Microsoft Entra ID.
 
 Este é o artigo 1 de 20 da série **Azure Networking + IA Generativa**. Aqui mostro exatamente o risco disso e como eliminar a exposição com Private Link de ponta a ponta, sem travar a experiência de desenvolvimento.

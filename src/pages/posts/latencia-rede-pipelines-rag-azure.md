@@ -18,8 +18,6 @@ prev:
 
 ---
 
-*Atualizado em setembro de 2026.*
-
 Sua consulta RAG parece lenta. Você olha para o tempo de resposta do modelo e assume que é o modelo o culpado, afinal, geração de texto leva segundos. Mas quando você começa a medir cada componente separadamente, descobre que a rede está contribuindo com uma fatia relevante da latência total, e essa fatia pode ser otimizada.
 
 Este é o artigo 4 de 20 da série **Azure Networking + IA Generativa**. Aqui decomponho os quatro saltos de rede escondidos dentro de uma única consulta RAG e explico os três fatores de rede que mais impactam a latência do pipeline.

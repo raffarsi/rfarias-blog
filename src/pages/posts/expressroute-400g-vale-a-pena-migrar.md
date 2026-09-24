@@ -8,8 +8,6 @@ readTime: "9 min"
 description: "A Microsoft começou a oferecer portas ExpressRoute Direct de 400 Gbps. Mas a pergunta certa não é 'dá pra ter', é 'eu preciso disso ou só quero o número maior'."
 ---
 
-*Atualizado em setembro de 2026.*
-
 A Microsoft passou a oferecer portas ExpressRoute Direct de 400 Gbps, por enquanto sem disponibilidade geral: só em locais selecionados e com inscrição prévia. A notícia circulou, os slides apareceram nas apresentações e inevitavelmente alguém no seu comitê de arquitetura vai perguntar: *"precisamos migrar para 400G?"*
 
 A resposta honesta: **depende, e na maioria dos casos, não.**

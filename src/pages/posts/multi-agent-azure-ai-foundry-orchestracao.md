@@ -8,8 +8,6 @@ readTime: "9 min"
 description: "Antes de dividir um problema em vários agentes de IA, entenda o que muda de responsabilidade, custo e governança no Microsoft Foundry (antigo Azure AI Foundry)."
 ---
 
-*Atualizado em setembro de 2026: o Azure AI Foundry agora se chama Microsoft Foundry, e o recurso de agentes conectados ficou restrito ao modelo clássico. A seção sobre o orquestrador já reflete as opções atuais.*
-
 Um time me perguntou essa semana quantos agentes eles precisavam para automatizar um fluxo de triagem de chamados. A resposta que eu dei não foi um número. Foi outra pergunta: quem vai ser responsável quando um desses agentes responder errado?
 
 Isso incomoda quem está acostumado a pensar em arquitetura como catálogo de peças. Multiagente virou um dos termos mais usados em IA generativa em 2026, e boa parte dos projetos que vejo começar assim, decidindo quantos agentes construir antes de decidir quem decide o quê, entra em produção com um problema de governança que ninguém desenhou de propósito.
