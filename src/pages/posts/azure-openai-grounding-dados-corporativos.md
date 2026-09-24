@@ -10,7 +10,7 @@ description: "O que é grounding, por que elimina alucinações e como implement
 
 O GPT-4o sabe muita coisa. Mas não sabe nada sobre as políticas da sua empresa, os processos do seu departamento ou o que aconteceu na reunião de ontem.
 
-Quando você conecta um modelo sem grounding a perguntas corporativas, ele faz uma das duas coisas: diz que não sabe, ou inventa algo plausível. O segundo e o perigoso, porque parece correto., que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
+Quando você conecta um modelo sem grounding a perguntas corporativas, ele faz uma das duas coisas: diz que não sabe, ou inventa algo plausível. O segundo é o perigoso, porque parece correto., que tem data de corte e não conhece seus dados internos. Com grounding, você controla o contexto.
 
 ## Por que grounding elimina alucinações
 

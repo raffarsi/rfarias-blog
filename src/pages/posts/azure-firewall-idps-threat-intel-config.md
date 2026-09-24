@@ -10,11 +10,11 @@ description: "IDPS no Azure Firewall Premium detecta ameaças conhecidas por ass
 
 IDPS e Threat Intelligence são recursos que a maioria habilita em modo Alert, nunca analisa os alertas e depois ativa modo Deny esperando que funcione. O resultado: centenas de alertas por dia que ninguém vê, ou bloqueios inesperados em produção que o time leva horas para diagnosticar.
 
-Existe uma sequencia que funciona.
+Existe uma sequência que funciona.
 
-## A diferenca entre os dois
+## A diferença entre os dois
 
-**Threat Intelligence:** bloqueia IPs e domínios conhecidamente maliciosos com base em feeds da Microsoft. Mais simples, menos falsos positivos, habilite em Alert ou Deny desde o inicio.
+**Threat Intelligence:** bloqueia IPs e domínios conhecidamente maliciosos com base em feeds da Microsoft. Mais simples, menos falsos positivos, habilite em Alert ou Deny desde o início.
 
 **IDPS:** analisa o conteúdo dos pacotes por padrões de ataque usando assinaturas. Mais granular, mais falsos positivos possíveis. Comece em Alert, analise por duas semanas antes de ir para Deny.
 
@@ -49,7 +49,7 @@ AzureDiagnostics
 | take 20
 ```
 
-Para cada assinatura frequente: e tráfego legitimo ou malicioso? Se for tráfego legitimo, adicione a exclusão antes de ir para Deny.
+Para cada assinatura frequente: é tráfego legítimo ou malicioso? Se for tráfego legitimo, adicione a exclusão antes de ir para Deny.
 
 ## Excluindo assinaturas que geram falsos positivos confirmados
 
@@ -73,4 +73,4 @@ Duas semanas em Alert, analisar os top 20 alertas, confirmar quais são falsos p
 
 Não pule a fase de Alert. Já vi ambientes onde ir direto para Deny bloqueou tráfego de atualização de SO, tráfego de monitoramento e até tráfego de DNS interno, porque as assinaturas confundiram padrões legítimos com ataques.
 
-IDPS em produção e um recurso que exige operação ativa, não e configure-e-esqueça.
+IDPS em produção é um recurso que exige operação ativa, não é configure-e-esqueça.

@@ -8,11 +8,11 @@ readTime: "10 min"
 description: "Como instrumentar pipelines RAG com Application Insights, OpenTelemetry e Azure Monitor para visibilidade real em produção."
 ---
 
-Você colocou o pipeline RAG em produção. Está respondendo. E ai alguém reclama que está lento, e você não sabe dizer onde.
+Você colocou o pipeline RAG em produção. Está respondendo. E aí alguém reclama que está lento, e você não sabe dizer onde.
 
-E o embedding? A busca? A geração? A rede entre os serviços?
+É o embedding? A busca? A geração? A rede entre os serviços?
 
-Sem instrumentação, a resposta e sempre 'não sei'. O problema não e falta de ferramenta, e falta de granularidade. A maioria dos logs de Azure OpenAI mostra latência total. O que você precisa e latência por componente.
+Sem instrumentação, a resposta é sempre 'não sei'. O problema não é falta de ferramenta, é falta de granularidade. A maioria dos logs de Azure OpenAI mostra latência total. O que você precisa é latência por componente.
 
 ## Instrumentando cada etapa do pipeline
 
@@ -73,7 +73,7 @@ dependencies
 | order by timestamp desc
 ```
 
-Essa query revela algo que me surpreende sempre que configuro um novo ambiente: embedding frequentemente e mais lento que busca quando os Private Endpoints estão em regiões diferentes. A chamada de embedding e para um endpoint separado, e se os dois não estão na mesma região, o overhead de rede acumula.
+Essa query revela algo que me surpreende sempre que configuro um novo ambiente: embedding frequentemente é mais lento que busca quando os Private Endpoints estão em regiões diferentes. A chamada de embedding é para um endpoint separado, e se os dois não estão na mesma região, o overhead de rede acumula.
 
 ```kql
 // Custo de tokens por hora
@@ -113,4 +113,4 @@ az monitor scheduled-query create \
 <strong>Não logue o conteúdo das mensagens em produção.</strong> Por LGPD e privacidade, logue métricas (tamanho em tokens, latência, sucesso/falha), não o texto das perguntas e respostas.
 </div>
 
-A diferenca entre resolver um incidente em 5 minutos e em 2 horas e ter o trace certo no momento certo. Instrumentar antes do problema e a única forma de ter esse trace disponível quando você precisar.
+A diferença entre resolver um incidente em 5 minutos e em 2 horas é ter o trace certo no momento certo. Instrumentar antes do problema é a única forma de ter esse trace disponível quando você precisar.

@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Bastion: acesso seguro a VMs sem expor portas RDP/SSH"
-category: "Azure"
-tag: "azure"
+category: "Networking"
+tag: "networking"
 date: "15 Jan 2026"
 readTime: "8 min"
 description: "Como o Azure Bastion elimina a necessidade de IPs públicos para acesso administrativo a VMs e como configurá-lo corretamente."

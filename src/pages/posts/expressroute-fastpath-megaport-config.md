@@ -25,7 +25,7 @@ On-premises -> Edge da Microsoft -> VMs diretamente
              (gateway so para plano de controle BGP)
 ```
 
-O gateway sai do caminho de dados. Latência reduz, throughput aumenta. Mas há uma limitação crítica: **FastPath não funciona para tráfego destinado a Private Endpoints**. Esse tráfego sempre passa pelo gateway, independente de FastPath estar habilitado. Se o seu caso de uso principal e acessar serviços PaaS (Storage, OpenAI, SQL) via Private Endpoints a partir do on-premises, FastPath não vai ajudar.
+O gateway sai do caminho de dados. Latência reduz, throughput aumenta. Mas há uma limitação crítica: **FastPath não funciona para tráfego destinado a Private Endpoints**. Esse tráfego sempre passa pelo gateway, independente de FastPath estar habilitado. Se o seu caso de uso principal é acessar serviços PaaS (Storage, OpenAI, SQL) via Private Endpoints a partir do on-premises, FastPath não vai ajudar.
 
 ## Habilitando FastPath
 
@@ -39,7 +39,7 @@ az network vpn-connection update   --name connection-er-prod   --resource-group 
 
 ## Global Reach: outro problema, outra solução
 
-FastPath e latência entre on-premises e Azure. Global Reach e conectividade entre dois ambientes on-premises via backbone da Microsoft.
+FastPath é latência entre on-premises e Azure. Global Reach é conectividade entre dois ambientes on-premises via backbone da Microsoft.
 
 Se você tem datacenter em São Paulo (circuito ER para Brazil South) e escritório em Lisboa (circuito ER para West Europe), sem Global Reach o tráfego entre eles vai pela internet. Com Global Reach, vai pelo backbone Microsoft.
 
@@ -51,7 +51,7 @@ az network express-route peering connection create   --name connection-sp-lisboa
 
 Para ambientes com vários circuitos ExpressRoute (HA ou múltiplos provedores), o Megaport oferece uma fabric de interconexão. Em vez de contratar um circuito físico dedicado para cada destino, você tem uma porta no Megaport e cria Virtual Cross Connects para os peering points da Microsoft.
 
-A latência adicional do Megaport e tipicamente menos de 1ms, irrelevante para a maioria dos casos.
+A latência adicional do Megaport é tipicamente menos de 1ms, irrelevante para a maioria dos casos.
 
 ## Quando cada um resolve
 

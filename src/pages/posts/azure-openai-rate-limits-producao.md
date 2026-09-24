@@ -8,9 +8,9 @@ readTime: "9 min"
 description: "Você vai atingir o rate limit. A questão é se o sistema degrada em silêncio ou entrega um 429 na cara do usuário."
 ---
 
-Em desenvolvimento, rate limit e inconveniente. Em produção, e incidente.
+Em desenvolvimento, rate limit é inconveniente. Em produção, é incidente.
 
-Você vai atingir rate limit. A questão e se o sistema vai degradar graciosamente ou mostrar HTTP 429 direto para o usuário.
+Você vai atingir rate limit. A questão é se o sistema vai degradar graciosamente ou mostrar HTTP 429 direto para o usuário.
 
 ## O que cada limite significa
 
@@ -73,12 +73,12 @@ def chamar_com_fallback(messages: list) -> str:
     raise Exception('Todos os deployments com rate limit')
 ```
 
-## PTU: quando o pay-as-you-go não e suficiente
+## PTU: quando o pay-as-you-go não é suficiente
 
 Provisioned Throughput Units garantem throughput sem throttling. Você paga por hora de capacidade reservada. Faz sentido quando você usa mais de 60-70% da capacidade de forma consistente.
 
 <div class="callout">
-<strong>Monitore TPM e RPM separadamente.</strong> Rate limit por RPM = distribuir requisições. Rate limit por TPM = reduzir o contexto. Saber qual dos dois e qual define a solução certa.
+<strong>Monitore TPM e RPM separadamente.</strong> Rate limit por RPM = distribuir requisições. Rate limit por TPM = reduzir o contexto. Saber qual dos dois é qual define a solução certa.
 </div>
 
-Rate limit bem tratado e invisível para o usuário. Mal tratado, vira 429 na tela.
+Rate limit bem tratado é invisível para o usuário. Mal tratado, vira 429 na tela.

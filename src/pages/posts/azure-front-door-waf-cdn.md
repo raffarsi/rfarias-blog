@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Azure Front Door: WAF, CDN e balanceamento global explicados"
-category: "Azure"
-tag: "azure"
+category: "Networking"
+tag: "networking"
 date: "08 Jan 2026"
 readTime: "9 min"
 description: "Como o Azure Front Door combina WAF, CDN e roteamento global, e quando usá-lo em vez do Application Gateway."

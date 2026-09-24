@@ -8,11 +8,11 @@ readTime: "11 min"
 description: "Como aplicar os princípios de Zero Trust em toda a stack de uma aplicação com Azure OpenAI: rede, identidade e dados. Guia prático com Bicep e Python."
 ---
 
-Toda semana aparece uma noticia de vazamento de dados envolvendo IA. E quando você vai ler os detalhes, quase sempre o problema não foi o modelo. Foi a forma como ele foi conectado ao mundo.
+Toda semana aparece uma notícia de vazamento de dados envolvendo IA. E quando você vai ler os detalhes, quase sempre o problema não foi o modelo. Foi a forma como ele foi conectado ao mundo.
 
 API key hardcoded no repositório. Azure OpenAI com acesso público habilitado. Sem logs de auditoria. Sem validação do que entra e do que sai.
 
-Zero Trust para IA não e sobre desconfiar do modelo. E sobre assumir que qualquer camada pode ser comprometida e projetar o sistema para sobreviver a isso.
+Zero Trust para IA não é sobre desconfiar do modelo. É sobre assumir que qualquer camada pode ser comprometida e projetar o sistema para sobreviver a isso.
 
 ## As três camadas que precisam funcionar juntas
 
@@ -36,7 +36,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
 }
 ```
 
-Com `publicNetworkAccess: Disabled`, qualquer chamada de fora da VNet recebe 403, mesmo com API key valida.
+Com `publicNetworkAccess: Disabled`, qualquer chamada de fora da VNet recebe 403, mesmo com API key válida.
 
 ## Camada de identidade: sem API keys em produção
 
@@ -117,4 +117,4 @@ def processar(user_input: str) -> str:
 - [ ] Content Safety verificando input e output
 - [ ] Logs de auditoria no Log Analytics
 
-Zero Trust não e um estado que você atinge. E um processo de eliminar suposições de confiança, uma camada por vez. A maioria dos comprometimentos que leio poderia ser evitada com só a primeira camada implementada corretamente.
+Zero Trust não é um estado que você atinge. É um processo de eliminar suposições de confiança, uma camada por vez. A maioria dos comprometimentos que leio poderia ser evitada com só a primeira camada implementada corretamente.

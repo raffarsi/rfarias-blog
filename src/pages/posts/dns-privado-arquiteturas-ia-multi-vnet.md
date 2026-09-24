@@ -17,21 +17,21 @@ next:
   slug: "latencia-rede-pipelines-rag-azure"
 ---
 
-O Private Endpoint está configurado. O IP privado está correto. O `nslookup` a partir do Azure Cloud Shell retorna o IP público. A aplicação não consegue conectar. E o tipo de incidente que dura horas porque as pessoas olham para a configuração de rede quando o problema e de DNS.
+O Private Endpoint está configurado. O IP privado está correto. O `nslookup` a partir do Azure Cloud Shell retorna o IP público. A aplicação não consegue conectar. É o tipo de incidente que dura horas porque as pessoas olham para a configuração de rede quando o problema é de DNS.
 
 Esse artigo cobre os erros de DNS mais comuns em arquiteturas multi-VNet com IA generativa.
 
-## Por que o problema de DNS e especifico de IA
+## Por que o problema de DNS é específico de IA
 
 Arquiteturas de IA tipicamente tem: Azure OpenAI com Private Endpoint, Azure AI Search com Private Endpoint, Storage com Private Endpoint, e uma aplicação em App Service ou AKS que precisa alcançar todos eles. Três serviços, três zonas Private DNS (`privatelink.openai.azure.com`, `privatelink.search.windows.net`, `privatelink.blob.core.windows.net`), e potencialmente vários spokes ou ambientes.
 
-A probabilidade de erro de DNS e proporcional ao numero de Private Endpoints.
+A probabilidade de erro de DNS é proporcional ao número de Private Endpoints.
 
 ## Erro 1: zona Private DNS vinculada ao spoke, não ao hub
 
 O erro mais frequente. Você cria o Private Endpoint no spoke, cria a zona Private DNS, e vincula ao spoke. Funciona da VNet do spoke. Mas quando a aplicação está em outro spoke, ou quando os servidores on-premises tentam acessar, a resolução falha.
 
-A regra: **todas as zonas Private DNS devem estar vinculadas ao hub**, onde o DNS Resolver está. O resolver no hub e o que responde consultas de todos os spokes e do on-premises.
+A regra: **todas as zonas Private DNS devem estar vinculadas ao hub**, onde o DNS Resolver está. O resolver no hub é o que responde consultas de todos os spokes e do on-premises.
 
 ```bash
 # Correto: vincular ao hub
@@ -53,7 +53,7 @@ Sem isso, o App Service usa o DNS público do Azure (168.63.129.16) e resolve o 
 
 ## Erro 3: AKS sem configuração de DNS customizado
 
-Para AKS, o DNS customizado e configurado na VNet:
+Para AKS, o DNS customizado é configurado na VNet:
 
 ```bicep
 resource vnetSpoke 'Microsoft.Network/virtualNetworks@2023-09-01' = {

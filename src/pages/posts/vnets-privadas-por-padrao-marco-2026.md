@@ -18,17 +18,17 @@ next:
 
 ---
 
-Em marco de 2026, o Azure mudou o comportamento padrão de Virtual Networks: recursos criados em VNets novas não recebem mais acesso público por padrão. Se você tem automação de infraestrutura, scripts de deploy ou pipelines que assumem que VMs e outros recursos vão ter conectividade de saída sem configuração explicita, isso quebrou silenciosamente.
+Em março de 2026, o Azure mudou o comportamento padrão de Virtual Networks: recursos criados em VNets novas não recebem mais acesso público por padrão. Se você tem automação de infraestrutura, scripts de deploy ou pipelines que assumem que VMs e outros recursos vão ter conectividade de saída sem configuração explícita, isso quebrou silenciosamente.
 
 Vale auditar o que você tem antes de descobrir num incidente.
 
 ## O que mudou exatamente
 
-Antes de marco de 2026: VNets novas tinham "default outbound access" habilitado. VMs sem IP público conseguiam acessar a internet via um IP efêmero gerenciado pelo Azure.
+Antes de março de 2026: VNets novas tinham "default outbound access" habilitado. VMs sem IP público conseguiam acessar a internet via um IP efêmero gerenciado pelo Azure.
 
 Depois: VNets novas não tem esse comportamento. VMs sem IP público e sem NAT Gateway ou Load Balancer configurado não tem saída para internet.
 
-VNets existentes criadas antes da mudança continuam funcionando como antes. O impacto e só em VNets criadas apos a mudança.
+VNets existentes criadas antes da mudança continuam funcionando como antes. O impacto é só em VNets criadas após a mudança.
 
 ## Como identificar o que está afetado
 
@@ -96,4 +96,4 @@ Se você tem VMs ou containers que só precisam acessar recursos via Private End
 
 O problema aparece em workloads que precisam baixar dependências, acessar APIs externas, atualizar pacotes ou qualquer coisa que saia da VNet para a internet. Esses são os cenários que quebraram.
 
-A mudança e correta do ponto de vista de segurança: saída para internet deve ser configurada explicitamente, não habilitada por padrão. Mas se você não estava acompanhando, e uma surpresa desagradável.
+A mudança é correta do ponto de vista de segurança: saída para internet deve ser configurada explicitamente, não habilitada por padrão. Mas se você não estava acompanhando, é uma surpresa desagradável.

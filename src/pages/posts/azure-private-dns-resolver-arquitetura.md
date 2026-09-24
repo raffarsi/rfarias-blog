@@ -8,15 +8,15 @@ readTime: "9 min"
 description: "Funciona no primeiro spoke. No segundo já não resolve, e no on-premises também não. Centralizar o DNS no hub é o que faz a topologia escalar."
 ---
 
-Você criou o Private Endpoint, configurou a zona Private DNS, vinculou a VNet. A VM no spoke resolve o nome certo e alcanca o recurso. Até ai tudo bem.
+Você criou o Private Endpoint, configurou a zona Private DNS, vinculou a VNet. A VM no spoke resolve o nome certo e alcança o recurso. Até aí tudo bem.
 
-Ai você adiciona um segundo spoke, e ele não resolve. Ai o servidor on-premises tenta acessar e também não resolve. Cada novo elemento na topologia exige configuração manual de DNS. Escalar assim não funciona.
+Aí você adiciona um segundo spoke, e ele não resolve. Aí o servidor on-premises tenta acessar e também não resolve. Cada novo elemento na topologia exige configuração manual de DNS. Escalar assim não funciona.
 
 O Private DNS Resolver centraliza tudo isso.
 
 ## O problema sem o Resolver
 
-Sem um resolvedor centralizado, cada spoke e cada servidor on-premises precisa de configuração individual para resolver `oai-producao.privatelink.openai.azure.com`. Em ambientes com dezenas de spokes e vários serviços PaaS, isso e inviável de gerenciar.
+Sem um resolvedor centralizado, cada spoke e cada servidor on-premises precisa de configuração individual para resolver `oai-producao.privatelink.openai.azure.com`. Em ambientes com dezenas de spokes e vários serviços PaaS, isso é inviável de gerenciar.
 
 ## Arquitetura centralizada no hub
 
@@ -99,4 +99,4 @@ Add-DnsServerConditionalForwarderZone `
   -MasterServers 10.0.4.4
 ```
 
-Novo Private Endpoint adicionado? A zona já está configurada no hub, o resolver já está ativo. Nenhuma configuração adicional nos spokes ou no on-premises. Esse e o ponto.
+Novo Private Endpoint adicionado? A zona já está configurada no hub, o resolver já está ativo. Nenhuma configuração adicional nos spokes ou no on-premises. Esse é o ponto.
