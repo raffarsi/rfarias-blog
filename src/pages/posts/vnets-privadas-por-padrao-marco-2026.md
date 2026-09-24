@@ -7,8 +7,8 @@ serie: "Série Azure Networking + IA Generativa"
 serieNum: 5
 serieSlug: "serie-azure-networking-ia"
 date: "2 Set 2026"
-readTime: "9 min"
-description: "A partir de 31 de março de 2026, VNets criadas no Azure nascem privadas por padrão. Se sua automação depende do comportamento antigo, ela vai quebrar. Guia completo de migração sem downtime."
+readTime: "6 min"
+description: "Com as versões de API lançadas depois de 31 de março de 2026, VNets novas nascem com sub-redes privadas. O pipeline não dá erro, a VM sobe, e ela simplesmente não sai para a internet. O que mudou, como achar o que depende do comportamento antigo e como migrar sem downtime."
 prev:
   title: "Azure Networking [4]: Latência de rede em pipelines RAG"
   slug: "latencia-rede-pipelines-rag-azure"
@@ -18,82 +18,127 @@ next:
 
 ---
 
-Em março de 2026, o Azure mudou o comportamento padrão de Virtual Networks: recursos criados em VNets novas não recebem mais acesso público por padrão. Se você tem automação de infraestrutura, scripts de deploy ou pipelines que assumem que VMs e outros recursos vão ter conectividade de saída sem configuração explícita, isso quebrou silenciosamente.
+Já vi acontecer: o pipeline de infraestrutura roda verde, a VNet é criada, a VM sobe, e o script de inicialização trava tentando baixar um pacote. Nenhum erro de deploy. A VM só não tem saída para a internet.
 
-Vale auditar o que você tem antes de descobrir num incidente.
+Ninguém mexeu no template. O que mudou foi o comportamento padrão do Azure, e a mudança tem um detalhe que pega muita gente de surpresa: ela depende da versão de API que o seu template usa.
 
-## O que mudou exatamente
+## O que mudou, exatamente
 
-Antes de março de 2026: VNets novas tinham "default outbound access" habilitado. VMs sem IP público conseguiam acessar a internet via um IP efêmero gerenciado pelo Azure.
+Durante anos, uma VM sem IP público e sem nenhum outro método de saída ainda conseguia acessar a internet. O Azure dava a ela um IP público implícito, que ninguém controlava e que podia mudar. Isso se chama default outbound access.
 
-Depois: VNets novas não tem esse comportamento. VMs sem IP público e sem NAT Gateway ou Load Balancer configurado não tem saída para internet.
+Com as versões de API lançadas depois de 31 de março de 2026, as sub-redes de VNets novas nascem com a propriedade `defaultOutboundAccess` igual a `false`. São as chamadas sub-redes privadas. Uma VM ali só sai para a internet se você configurar um método explícito.
 
-VNets existentes criadas antes da mudança continuam funcionando como antes. O impacto é só em VNets criadas após a mudança.
+Três pontos definem quem é afetado:
 
-## Como identificar o que está afetado
+**VNets existentes não mudam.** VMs antigas e novas dentro delas continuam com o comportamento antigo, a menos que alguém torne a sub-rede privada.
+
+**A versão de API decide.** Template, módulo ou ferramenta que ainda usa uma versão de API anterior continua criando VNets com o comportamento antigo. Por isso o mesmo ambiente pode ter as duas coisas, dependendo de quem criou cada rede. O portal, por sua vez, já cria sub-redes privadas por padrão, o que explica por que uma VNet criada à mão se comporta diferente da criada por um template antigo. Atualizar a versão de API de um módulo de rede, que parece uma mudança inofensiva, é o que costuma trazer a mudança para dentro de casa.
+
+**Nem toda sub-rede é afetada.** Sub-redes delegadas ou gerenciadas, usadas por serviços PaaS, não seguem essa regra.
+
+## O que quebra
+
+O que para de funcionar é tudo que depende de saída para a internet ou para endpoints públicos da Microsoft sem método explícito:
+
+**Ativação e atualização do Windows.** A própria documentação cita os dois como exemplos de serviços que não funcionam numa sub-rede privada sem saída explícita.
+
+**Instalação de pacotes e dependências.** `apt`, `yum`, `pip`, `npm`, imagens de container de registries públicos.
+
+**Chamadas para APIs externas.** Integrações com SaaS, webhooks, serviços de terceiros.
+
+**Rotas com próximo salto `Internet`.** Em sub-rede privada, elas deixam de funcionar.
+
+O que continua funcionando: acesso por Private Endpoint, que não usa a internet, e acesso a contas de Storage na mesma região, que a documentação lista como exceção. Workloads de IA que só falam com Azure OpenAI, AI Search e Storage por Private Endpoint não percebem a mudança.
+
+## Como achar o que depende do comportamento antigo
+
+Antes de migrar qualquer coisa, descubra quem usa default outbound access hoje. O Azure Advisor já faz isso: em Excelência Operacional, as recomendações "Add explicit outbound method to disable default outbound" listam as placas de rede de VMs e de scale sets que ainda usam o IP implícito.
+
+Para ver o estado das sub-redes:
 
 ```bash
-# Listar VMs sem IP publico e sem NAT Gateway
-az vm list --query "[].{Nome:name,RG:resourceGroup,IP:publicIps}"   --show-details -o table | grep None
-
-# Verificar subnets sem NAT Gateway associado
-az network vnet subnet list   --vnet-name vnet-producao   --resource-group rg-networking   --query "[?natGateway==null].{Nome:name,Prefix:addressPrefix}"   --output table
+az network vnet subnet list \
+  --resource-group rg-networking \
+  --vnet-name vnet-producao \
+  --query "[].{sub_rede:name, saida_padrao:defaultOutboundAccess, nat:natGateway.id}" \
+  --output table
 ```
 
-## Configurando saída corretamente com NAT Gateway
+Sub-rede com `saida_padrao` vazio ou `true`, sem NAT Gateway e sem rota para firewall ou NVA é candidata a depender do comportamento antigo, a menos que as VMs tenham IP público ou estejam atrás de um Load Balancer com regras de saída. Cruze com a lista do Advisor antes de mexer.
 
-A solução correta para saída de internet em VNets novas e NAT Gateway:
+## Os quatro métodos de saída explícita
+
+**NAT Gateway na sub-rede.** O método que a Microsoft recomenda para a maioria dos cenários. Saída com IPs fixos que você conhece e pode liberar em firewall de parceiro, sem expor nada para entrada.
+
+**Load Balancer Standard com regras de saída.** Faz sentido quando as VMs já estão atrás de um Load Balancer e você quer controlar a saída no mesmo lugar.
+
+**IP público Standard na placa de rede.** Serve para uma VM específica que realmente precisa ser alcançável de fora. Como padrão de saída, expõe mais do que precisa.
+
+**Firewall ou NVA com rota definida pelo usuário.** O desenho comum em hub-and-spoke corporativo: toda saída passa pelo Azure Firewall no hub, com inspeção e log. Se esse já é o seu padrão, a mudança afeta pouco, com uma exceção importante: rotas para service tags com próximo salto `Internet`, muito usadas para pular a inspeção, deixam de funcionar em sub-rede privada.
+
+## Migrando sem downtime
+
+A migração segura adiciona o método explícito antes de tirar o implícito. A ordem que eu uso:
+
+1. **Inventário.** Advisor e a consulta acima, sub-rede por sub-rede.
+2. **Método explícito.** Associe o NAT Gateway ou a rota para o firewall. A partir daí, a saída passa a usar o método explícito, que tem precedência sobre o implícito.
+3. **Validação.** De dentro de uma VM, confira qual IP a internet enxerga (`curl ifconfig.me`) e se atualizações e pacotes funcionam.
+4. **Sub-rede privada.** Só então marque a sub-rede como privada (`az network vnet subnet update ... --default-outbound false`). Isso evita que uma VM nova, criada sem querer fora do padrão, volte a depender do IP implícito. Atenção: a mudança só chega às VMs que já existem depois que elas forem paradas e desalocadas. Até lá elas mantêm o IP implícito, sem usá-lo enquanto o método explícito estiver lá. Programe essa desalocação na próxima janela de manutenção.
+
+O NAT Gateway em Bicep, com a sub-rede já privada. Na sub-rede uso a versão de API 2023-11-01, a mesma do exemplo da documentação; na referência de versões anteriores, a propriedade aparece como definível só na criação da sub-rede:
 
 ```bicep
-resource publicIpNat 'Microsoft.Network/publicIPAddresses@2023-09-01' = {
+resource pipNat 'Microsoft.Network/publicIPAddresses@2023-09-01' = {
   name: 'pip-nat-producao'
   location: location
   sku: { name: 'Standard' }
   properties: { publicIPAllocationMethod: 'Static' }
 }
 
-resource natGateway 'Microsoft.Network/natGateways@2023-09-01' = {
+resource nat 'Microsoft.Network/natGateways@2023-09-01' = {
   name: 'nat-producao'
   location: location
   sku: { name: 'Standard' }
   properties: {
     idleTimeoutInMinutes: 4
-    publicIpAddresses: [{ id: publicIpNat.id }]
+    publicIpAddresses: [ { id: pipNat.id } ]
   }
 }
 
-// Associar a cada subnet que precisa de saida para internet
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-09-01' = {
-  name: 'snet-app'
+resource snetApp 'Microsoft.Network/virtualNetworks/subnets@2023-11-01' = {
   parent: vnet
+  name: 'snet-app'
   properties: {
     addressPrefix: '10.1.1.0/24'
-    natGateway: { id: natGateway.id }
+    natGateway: { id: nat.id }
+    defaultOutboundAccess: false
   }
 }
 ```
 
-## O que fazer se você usa IaC
+## Se você usa Terraform ou Bicep
 
-Se você usa Terraform, Bicep ou ARM templates para criar VNets, inclua explicitamente a configuração de saída em todos os templates. Não assuma o comportamento padrão porque ele mudou.
+Declare a saída de forma explícita em todo template de rede, mesmo quando o comportamento padrão ainda te atende. Assim o resultado não muda quando alguém atualizar a versão de API ou do provider.
+
+No Terraform, a associação que liga o NAT Gateway à sub-rede é um recurso separado, e é ela que costuma faltar:
 
 ```hcl
-# Terraform: adicionar explicitamente
 resource "azurerm_subnet" "app" {
-  name                 = "snet-app"
-  # ... outros parametros
+  name                            = "snet-app"
+  resource_group_name             = azurerm_resource_group.rede.name
+  virtual_network_name            = azurerm_virtual_network.producao.name
+  address_prefixes                = ["10.1.1.0/24"]
+  default_outbound_access_enabled = false
 }
 
-resource "azurerm_nat_gateway_public_ip_association" "app" {
-  nat_gateway_id       = azurerm_nat_gateway.producao.id
-  public_ip_address_id = azurerm_public_ip.nat.id
+resource "azurerm_subnet_nat_gateway_association" "app" {
+  subnet_id      = azurerm_subnet.app.id
+  nat_gateway_id = azurerm_nat_gateway.producao.id
 }
 ```
 
-## Workloads que só acessam serviços privados
+## O que fica
 
-Se você tem VMs ou containers que só precisam acessar recursos via Private Endpoints (OpenAI, AI Search, Storage) e nunca acessam a internet, você não precisa de NAT Gateway. Esses recursos continuam funcionando sem configuração de saída.
+A mudança está certa do ponto de vista de segurança: saída para a internet tem que ser uma decisão, não um efeito colateral. O risco está em descobrir isso num deploy que passou verde e numa VM que não atualiza.
 
-O problema aparece em workloads que precisam baixar dependências, acessar APIs externas, atualizar pacotes ou qualquer coisa que saia da VNet para a internet. Esses são os cenários que quebraram.
-
-A mudança é correta do ponto de vista de segurança: saída para internet deve ser configurada explicitamente, não habilitada por padrão. Mas se você não estava acompanhando, é uma surpresa desagradável.
+No seu ambiente, alguém sabe dizer quais VMs ainda saem para a internet por um IP que ninguém configurou?

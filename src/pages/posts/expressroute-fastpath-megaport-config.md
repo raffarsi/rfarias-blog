@@ -4,62 +4,111 @@ title: "ExpressRoute FastPath e Global Reach: quando o bypass do gateway faz dif
 category: "Networking"
 tag: "networking"
 date: "01 Dez 2025"
-readTime: "10 min"
-description: "FastPath elimina o gateway do caminho de dados para alto throughput. Global Reach conecta circuitos ExpressRoute diferentes. Quando cada um se justifica e o impacto real na latência."
+readTime: "5 min"
+description: "O circuito é grande, mas a vazão não passa de uma fração dele. Às vezes o gargalo é o gateway, e o FastPath o tira do caminho. O que o FastPath resolve, onde ele não ajuda, o que depende de ExpressRoute Direct e onde entra o Global Reach."
 ---
 
-ExpressRoute tem dois números que as pessoas olham: bandwidth e latência. Mas há um terceiro gargalo que raramente aparece na conversa inicial: o VNet Gateway no caminho de dados. Para tráfego de alto throughput entre VMs on-premises e recursos Azure, o gateway pode ser o limitador real, não o circuito.
+Um time me procurou com uma reclamação que eu já ouvi em mais de um lugar: o circuito ExpressRoute tinha banda de sobra, mas a transferência entre o datacenter e as VMs no Azure não passava de uma fração dela. Cogitaram trocar de provedor, falaram em aumentar o circuito, e ninguém tinha olhado para o gateway.
 
-FastPath bypassa esse problema.
+Todo tráfego que chega à VNet pelo private peering do ExpressRoute passa, por padrão, pelo gateway de rede virtual. E cada SKU de gateway tem o seu próprio teto de banda e de pacotes por segundo. Se o gateway é menor que o circuito, o circuito maior não muda nada.
 
-## O que o FastPath faz (e o que não faz)
+É esse o problema que o FastPath resolve, e só esse.
 
-O fluxo padrão:
+## O que o FastPath faz
+
+Sem FastPath:
+
 ```
-On-premises -> Edge da Microsoft -> VNet Gateway -> VMs/recursos
+On-premises -> borda da Microsoft -> gateway ExpressRoute -> VMs
 ```
 
 Com FastPath:
+
 ```
-On-premises -> Edge da Microsoft -> VMs diretamente
-             (gateway so para plano de controle BGP)
+On-premises -> borda da Microsoft -> VMs
+               (gateway continua só na troca de rotas BGP)
 ```
 
-O gateway sai do caminho de dados. Latência reduz, throughput aumenta. Mas há uma limitação crítica: **FastPath não funciona para tráfego destinado a Private Endpoints**. Esse tráfego sempre passa pelo gateway, independente de FastPath estar habilitado. Se o seu caso de uso principal é acessar serviços PaaS (Storage, OpenAI, SQL) via Private Endpoints a partir do on-premises, FastPath não vai ajudar.
+O gateway sai do caminho dos dados, mas continua existindo: é ele que troca as rotas entre a VNet e o on-premises. O ganho é menos um salto, menor latência e vazão que deixa de depender do teto do gateway.
 
-## Habilitando FastPath
+Para usar, o gateway precisa ser Ultra Performance, ErGw3AZ ou ErGwScale com pelo menos 10 unidades de escala. No Virtual WAN, o FastPath só vale para ExpressRoute Direct: vem ligado por padrão em gateways com pelo menos 5 unidades de escala.
 
-Requer circuito com bandwidth de 1 Gbps+ e gateway UltraPerformance ou ErGw3AZ:
+A habilitação é feita na conexão entre o circuito e o gateway:
 
-```bash
-az network vnet-gateway update   --name er-gateway-hub   --resource-group rg-networking   --gateway-type ExpressRoute   --sku ErGw3AZ
-
-az network vpn-connection update   --name connection-er-prod   --resource-group rg-networking   --express-route-gateway-bypass true
+```powershell
+$conexao = Get-AzVirtualNetworkGatewayConnection -Name "conn-er-prod" -ResourceGroupName "rg-networking"
+$conexao.ExpressRouteGatewayBypass = $true
+Set-AzVirtualNetworkGatewayConnection -VirtualNetworkGatewayConnection $conexao
 ```
+
+Dois detalhes da documentação: numa conexão que já tinha FastPath, o suporte a peering e UDR só passa a valer depois de desligar e ligar o FastPath de novo; e o suporte a Private Link exige também `EnablePrivateLinkFastPath = $true` na conexão.
+
+## Onde ele não ajuda
+
+A parte que mais gera frustração é que o FastPath tem limites claros, e a maioria dos ambientes corporativos esbarra em algum deles:
+
+**Load balancers internos e serviços PaaS em spokes.** O tráfego para eles continua passando pelo gateway. Load balancer interno no hub funciona com FastPath.
+
+**Azure Firewall em spoke.** Só é suportado com o firewall no hub.
+
+**Private DNS Resolver em spoke.** Mesmo caso, só no hub.
+
+**Peering global.** Não é suportado: hub e spokes precisam estar na mesma região.
+
+**Conectividade entre regiões.** Não é suportada para VNets, Private Endpoints e Private Link.
+
+Se a carga que você quer acelerar mora num desses lugares, o FastPath não muda nada, e a conversa volta para o tamanho do gateway.
+
+## O que depende de ExpressRoute Direct
+
+Aqui mora a parte que mais confunde. Parte dos recursos do FastPath só existe para quem usa ExpressRoute Direct, que é a conexão direta às portas da Microsoft, sem um circuito de provedor no meio:
+
+| Recurso | Circuito de provedor | ExpressRoute Direct | Situação |
+|---------|:--------------------:|:-------------------:|----------|
+| FastPath para VMs na VNet do hub | Sim | Sim | GA |
+| FastPath para spokes via peering | Não | Sim | GA |
+| FastPath com UDR | Não | Sim | GA |
+| IPv6 | Não | Sim | GA |
+| Private Endpoints e Private Link | Não | Sim | GA limitado, com inscrição |
+| FastPath no Virtual WAN | Não | Sim | GA |
+
+Durante muito tempo, a resposta curta foi que o FastPath não funcionava com Private Endpoints. Hoje funciona, com várias condições: só com ExpressRoute Direct, com inscrição prévia, implantação de 4 a 6 semanas depois da aprovação, numa lista fechada de regiões e para uma lista fechada de serviços (Storage, Key Vault, Cosmos DB e serviços Private Link de terceiros). Azure OpenAI e SQL não estão nessa lista, e Brazil South não aparece entre as regiões suportadas. Para quem acessa esses serviços por Private Endpoint a partir do on-premises no Brasil, o caminho ainda passa pelo gateway.
 
 ## Global Reach: outro problema, outra solução
 
-FastPath é latência entre on-premises e Azure. Global Reach é conectividade entre dois ambientes on-premises via backbone da Microsoft.
+FastPath é sobre o caminho entre on-premises e Azure. Global Reach é sobre ligar dois ambientes on-premises entre si, usando o backbone da Microsoft.
 
-Se você tem datacenter em São Paulo (circuito ER para Brazil South) e escritório em Lisboa (circuito ER para West Europe), sem Global Reach o tráfego entre eles vai pela internet. Com Global Reach, vai pelo backbone Microsoft.
+Com um datacenter em São Paulo, com circuito no peering location São Paulo, e um escritório em Lisboa, com circuito num peering location europeu, sem Global Reach o tráfego entre os dois vai por outro caminho, normalmente internet ou MPLS próprio. Com Global Reach, os dois circuitos se ligam e o tráfego passa pela rede da Microsoft.
 
 ```bash
-az network express-route peering connection create   --name connection-sp-lisboa   --circuit-name er-circuit-saopaulo   --peering-name AzurePrivatePeering   --resource-group rg-networking   --peer-circuit $(az network express-route show     --name er-circuit-lisboa --resource-group rg-networking --query id -o tsv)   --address-prefix 192.168.100.0/29
+az network express-route peering connection create \
+  --resource-group rg-networking \
+  --circuit-name er-circuito-saopaulo \
+  --peering-name AzurePrivatePeering \
+  --name conn-sp-lisboa \
+  --peer-circuit $(az network express-route show --name er-circuito-lisboa --resource-group rg-networking --query id -o tsv) \
+  --address-prefix 192.168.100.0/29
 ```
 
-## Megaport: simplificando múltiplos circuitos
+São Paulo está na lista de peering locations com Global Reach. Ligar circuitos em regiões geopolíticas diferentes, como no exemplo, exige o complemento Premium nos circuitos. Vale colocar isso na conta antes de prometer a conexão.
 
-Para ambientes com vários circuitos ExpressRoute (HA ou múltiplos provedores), o Megaport oferece uma fabric de interconexão. Em vez de contratar um circuito físico dedicado para cada destino, você tem uma porta no Megaport e cria Virtual Cross Connects para os peering points da Microsoft.
+## E o Megaport?
 
-A latência adicional do Megaport é tipicamente menos de 1ms, irrelevante para a maioria dos casos.
+Provedores com fabric de interconexão, como o Megaport, resolvem um problema diferente: em vez de contratar um circuito físico para cada destino, você tem uma porta no provedor e cria conexões virtuais para a Microsoft e para outras nuvens. É uma decisão de modelo de contratação e de operação, não de desempenho. Não confunda com FastPath: com provedor, os recursos da tabela que exigem ExpressRoute Direct continuam indisponíveis.
 
-## Quando cada um resolve
+## Como decidir antes de gastar
 
-| Problema | Solução |
-|----------|---------|
-| Latência alta entre VMs on-premises e VMs Azure | FastPath |
-| Throughput limitado pelo gateway | FastPath + gateway maior SKU |
-| Conectar dois datacenters via backbone Microsoft | Global Reach |
-| Múltiplos provedores ou circuitos, complexidade operacional | Megaport |
+| Sintoma | Primeiro passo |
+|---------|----------------|
+| Vazão bem abaixo do circuito, VMs no hub | Olhar o SKU do gateway; FastPath se o gateway for compatível |
+| Vazão baixa para PaaS ou Private Endpoint | FastPath provavelmente não ajuda; avaliar gateway maior |
+| Latência alta em todo o tráfego | Medir antes; o problema pode estar no roteamento on-premises |
+| Dois datacenters falando pela internet | Global Reach |
 
-Meca o circuito atual com Connection Monitor por 30 dias antes de decidir qualquer upgrade. O problema pode estar no roteamento on-premises, não no lado Azure.
+Antes de qualquer mudança, meça. O Connection Monitor, do Network Watcher, mostra latência e perda ponta a ponta ao longo de dias. Já vi upgrade de circuito aprovado para um problema que estava num roteador on-premises.
+
+## O que fica
+
+FastPath é uma ferramenta boa para um problema específico: o gateway como gargalo de tráfego para VMs. Fora disso, a lista de exceções é longa, e parte do que ele promete depende de ExpressRoute Direct.
+
+No seu ambiente, alguém já comparou o teto do gateway com o tamanho do circuito que a empresa paga?
