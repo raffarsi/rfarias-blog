@@ -427,10 +427,4 @@ function createScreen(name) {
   document.head.appendChild(style);
 })();
 
-// ─── 8. ADICIONAR ITENS DE MENU NO DASHBOARD ────────────────────────────────
-
-
-  }, 500);
-});
-
 console.log('[features.js] Módulo carregado: Revisão de Erros, Progresso por Domínio, Flashcards, Filtro de Domínio.');
