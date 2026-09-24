@@ -4,118 +4,90 @@ title: "Backup e Disaster Recovery no Azure: RPO, RTO e como escolher a estraté
 category: "Infra"
 tag: "infra"
 date: "22 Jan 2026"
-readTime: "10 min"
-description: "Como calcular RPO e RTO e quando usar Azure Backup, ASR ou geo-replication para cada tipo de workload."
+readTime: "5 min"
+description: "Backup e DR resolvem problemas diferentes, e o que decide a estratégia são dois números combinados com o negócio. Azure Backup, Site Recovery e replicação de dados, a proteção contra ransomware e o teste que quase ninguém faz."
 ---
 
-Backup e Disaster Recovery são frequentemente tratados como a mesma coisa, mas não são. Backup protege contra perda de dados (deletar acidentalmente, corrupção). DR protege contra indisponibilidade de infraestrutura (falha de datacenter, região Azure fora do ar). A estratégia certa depende de dois números: RPO e RTO.
+O backup rodava todo dia, com relatório verde. Quando precisaram restaurar um servidor inteiro, descobriram que ninguém sabia quanto tempo aquilo levava. Levou a tarde toda, e o sistema que dependia dele ficou fora do ar enquanto isso.
 
-## RPO e RTO: os dois números que definem sua estratégia
+Backup e disaster recovery costumam ser tratados como a mesma coisa, e não são. Backup protege contra perda de dados: alguém apagou, algo corrompeu, um ransomware criptografou. DR protege contra indisponibilidade: a região ficou fora, a zona caiu, o ambiente precisa subir em outro lugar. Os dois são necessários, e o que define cada um são dois números.
 
-**RPO (Recovery Point Objective):** quanto de dado você pode perder? Se seu RPO é 1 hora, você precisa de backup a cada hora: um incidente pode te fazer perder no máximo 1 hora de dados.
+## RPO e RTO, combinados com o negócio
 
-**RTO (Recovery Time Objective):** quanto tempo você pode ficar fora do ar? Se seu RTO é 4 horas, sua solução de recuperação precisa restaurar tudo em 4 horas.
+**RPO** é quanto dado se pode perder. Um RPO de 1 hora significa que, no pior caso, a última hora de dados some.
 
-Quanto menor o RPO e RTO, mais cara é a solução.
+**RTO** é quanto tempo se pode ficar fora do ar. Um RTO de 4 horas significa que a recuperação completa precisa caber em 4 horas.
 
-## Azure Backup: proteção de dados
+Quanto menores os dois números, mais cara a solução. Por isso eles não são decisão da equipe de TI sozinha: quem define é quem sente o impacto, e quem paga a conta precisa entender o que está comprando. O erro mais comum que eu vejo é o RPO e o RTO existirem só no contrato, sem nenhuma solução desenhada para cumpri-los.
 
-Para VMs, SQL Server, Storage e outros recursos:
+## Azure Backup: proteção dos dados
+
+O Azure Backup guarda cópias em cofres gerenciados. São dois tipos: o **Recovery Services vault**, para VMs, SQL Server e SAP HANA em VMs, Azure Files e servidores on-premises; e o **Backup vault**, para cargas mais novas, como Azure Disks, Blob, PostgreSQL e AKS. O Cosmos DB tem backup próprio, periódico ou contínuo, fora do Azure Backup.
+
+Para VMs, há duas políticas. A **Standard** faz um backup por dia. A **Enhanced** permite várias por dia, a cada 4, 6, 8, 12 ou 24 horas, e é exigida por alguns tipos de disco, como Premium SSD v2 e Ultra Disk. Se o RPO do sistema é menor que um dia, a política Standard não cumpre.
 
 ```bash
-# Criar vault de backup
 az backup vault create \
-  --name vault-backup-producao \
+  --name rsv-producao \
   --resource-group rg-backup \
   --location brazilsouth
 
-# Configurar politica de backup para VM (diario + retencao 30 dias)
-az backup policy create \
-  --vault-name vault-backup-producao \
-  --resource-group rg-backup \
-  --name politica-vms \
-  --backup-management-type AzureIaasVM \
-  --policy '{
-    "schedulePolicy": {
-      "schedulePolicyType": "SimpleSchedulePolicy",
-      "scheduleRunFrequency": "Daily",
-      "scheduleRunTimes": ["2026-01-01T02:00:00Z"]
-    },
-    "retentionPolicy": {
-      "retentionPolicyType": "LongTermRetentionPolicy",
-      "dailySchedule": {"retentionDuration": {"count": 30, "durationType": "Days"}}
-    }
-  }'
-
-# Habilitar backup em uma VM
 az backup protection enable-for-vm \
-  --vault-name vault-backup-producao \
+  --vault-name rsv-producao \
   --resource-group rg-backup \
-  --vm minha-vm-producao \
-  --policy-name politica-vms
+  --vm $(az vm show --name vm-erp01 --resource-group rg-erp --query id -o tsv) \
+  --policy-name DefaultPolicy
 ```
 
-## Azure Site Recovery (ASR): replicação para DR
+A `DefaultPolicy` é a política Standard, com um backup por dia. Para RPO menor que isso, ou para VMs com Premium SSD v2 e Ultra Disk, crie e use uma política Enhanced.
 
-Para replicar VMs entre regiões com failover automático:
+Em escala, o caminho é Azure Policy: uma política que habilita o backup em toda VM com determinada tag evita a VM nova que ninguém lembrou de proteger.
 
-```bash
-# Criar vault de recuperacao
-az recoveryservices vault create \
-  --name vault-asr \
-  --resource-group rg-dr \
-  --location eastus  # regiao de DR (diferente da producao)
+## Backup que sobrevive a um ransomware
 
-# Habilitar replicacao de uma VM
-# (configuracao completa e feita pelo portal ou ARM template)
-az site-recovery protection-container create \
-  --fabric-name fabric-brazilsouth \
-  --name container-vms \
-  --resource-group rg-dr \
-  --vault-name vault-asr
-```
+Um ataque de ransomware bem feito tenta apagar os backups antes de criptografar os dados. O Azure Backup tem três camadas para isso:
 
-Com ASR, as VMs são replicadas continuamente para a região de DR. RPO típico: 15 segundos para VMs VMware/Hyper-V, poucos minutos para VMs Azure.
+**Soft delete.** Backups apagados ficam recuperáveis por um período, de 14 dias em diante. É a rede de segurança contra exclusão, acidental ou não.
 
-## Geo-replication para dados: quando usar
+**Cofre imutável.** Impede que pontos de recuperação sejam apagados ou tenham a retenção reduzida antes do prazo. Na opção travada, nem o administrador consegue desfazer.
 
-| Serviço | Opção de Geo-replication | RPO típico |
-|---------|--------------------------|------------|
-| Azure SQL Database | Active Geo-Replication | < 5 segundos |
-| Azure Storage | GRS/GZRS | < 15 minutos |
-| Azure Cosmos DB | Multi-region writes | < 1 segundo |
-| Azure AI Search | Serviço separado + reindexação | Horas |
+**Autorização multiusuário.** Operações destrutivas, como desligar o soft delete, exigem a aprovação de uma segunda pessoa, por meio de um Resource Guard em outra assinatura ou outro tenant. Uma credencial de administrador roubada, sozinha, não apaga os backups.
 
-```bash
-# SQL Database com replica em outra regiao
-az sql db replica create \
-  --name banco-producao \
-  --server sql-server-br \
-  --resource-group rg-dados \
-  --partner-server sql-server-us \
-  --partner-resource-group rg-dados-dr \
-  --partner-region eastus
+Para ambiente regulado, eu considero as três o mínimo.
 
-# Storage com geo-redundancia automatica
-az storage account create \
-  --name storageproducao \
-  --resource-group rg-dados \
-  --sku Standard_GZRS  # Zone + Geo redundant
-```
+## Site Recovery: a VM subindo em outra região
 
-## Escolhendo a estratégia por RPO/RTO
+O Azure Site Recovery replica continuamente as VMs para outra região e permite o failover quando a região principal fica indisponível. Na replicação entre regiões do Azure, ele gera pontos de recuperação consistentes com falha (crash-consistent) a cada cinco minutos, o que coloca o RPO de VMs na casa dos minutos. Pontos consistentes com a aplicação têm frequência própria, configurada na política de replicação.
+
+A configuração envolve várias peças (cofre na região de destino, política de replicação, mapeamento de rede), e a automação costuma ser feita por PowerShell, pela extensão `site-recovery` da CLI ou por template. O ponto que mais importa não é o comando: é o **plano de recuperação**, que define a ordem em que as VMs sobem, os scripts entre uma etapa e outra e o que muda de endereço na região de destino.
+
+## Replicação dos dados
+
+VM é só uma parte. Os dados têm os seus próprios mecanismos, e o RPO de cada um é diferente:
+
+| Serviço | Mecanismo | O que esperar |
+|---------|-----------|---------------|
+| Azure SQL Database | Failover groups ou geo-replicação ativa | Replicação assíncrona; o RPO depende das alterações ainda não replicadas, e o atraso pode ser monitorado |
+| Azure Storage | GRS ou GZRS | Replicação assíncrona; a propriedade Last Sync Time mostra até onde a cópia secundária está atualizada |
+| Azure Cosmos DB | Múltiplas regiões | RPO abaixo de 15 minutos nos níveis de consistência mais usados |
+
+A pergunta que a tabela responde: o dado mais crítico do sistema consegue cumprir o RPO combinado? Se a resposta depender de um mecanismo assíncrono, o RPO real é o atraso da replicação no pior momento, não no momento médio.
+
+## Escolhendo por RPO e RTO
 
 | RPO | RTO | Estratégia |
 |-----|-----|------------|
-| 24 horas | 4 horas | Azure Backup diário + restore manual |
-| 4 horas | 1 hora | Azure Backup horário + ASR para VMs críticas |
-| 15 minutos | 15 minutos | ASR contínuo + SQL Active Geo-Replication |
-| < 1 minuto | < 5 minutos | Active-Active multi-região (custo muito maior) |
+| 24 horas | 1 dia | Azure Backup com política Standard e restauração manual |
+| Algumas horas | Algumas horas | Backup com política Enhanced e Site Recovery para as VMs críticas |
+| Minutos | Menos de 1 hora | Site Recovery com plano de recuperação testado e replicação dos dados |
+| Próximo de zero | Minutos | Ativo-ativo em mais de uma região, com custo e complexidade à altura |
 
-<div class="callout">
-<strong>Teste o RTO real, não o estimado.</strong> A maioria das organizações sabe o RTO teórico mas nunca testou quanto tempo leva de fato para restaurar. Faça um teste de DR anual: só assim você sabe se o RTO real está dentro do acordado em contrato.
-</div>
+## O teste que quase ninguém faz
 
-## Conclusão
+O RTO que vale é o medido, não o estimado. O Site Recovery permite um failover de teste numa rede isolada, sem afetar a produção. Fazer isso pelo menos uma vez por ano, com cronômetro, é o que transforma o número do contrato em um número verdadeiro. O mesmo vale para a restauração de backup: restaurar de verdade, não só conferir que o job terminou.
 
-Backup e DR são necessidades diferentes com soluções diferentes. Azure Backup protege dados contra perda ou corrupção. ASR e geo-replication protegem contra indisponibilidade de infraestrutura. A escolha da estratégia certa começa pelos números de RPO e RTO, e esses números devem ser definidos com o negócio, não pela equipe de TI unilateralmente.
+## O que fica
+
+Backup e DR são decisões de negócio implementadas pela infraestrutura. Primeiro os números, combinados com quem sente o impacto; depois a solução que cumpre esses números; e, por fim, o teste que prova que ela cumpre.
+
+Quando foi a última vez que alguém restaurou, de verdade, um sistema inteiro a partir do backup no seu ambiente?
