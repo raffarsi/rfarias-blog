@@ -39,7 +39,7 @@ VNet-IA-Juridico ──┤── peering direto ──── VNet-Corporativa
 VNet-IA-Finance  ──┘
 ```
 
-Cada VNet tem seu próprio Azure Firewall (ou não tem), suas próprias regras de NSG, seus próprios Private Endpoints para os mesmos serviços (Azure OpenAI, AI Search), sua própria saída para internet, necessária para chamadas a modelos do Model Catalog, por exemplo. O custo de infraestrutura multiplica, a governança fragmenta, e auditar quem acessa o quê vira um pesadelo.
+Cada VNet tem seu próprio Azure Firewall (ou não tem), suas próprias regras de NSG, seus próprios Private Endpoints para os mesmos serviços (Azure OpenAI, AI Search), sua própria saída para internet, para pacotes e APIs externas. O custo de infraestrutura multiplica, a governança fragmenta, e auditar quem acessa o quê vira um pesadelo.
 
 ## Onde cada componente entra na topologia hub-and-spoke
 
@@ -47,12 +47,12 @@ O padrão correto é tratar workloads de IA generativa como qualquer outro spoke
 
 ```
                     VNet HUB
-              ┌─────────────────┐
+              ┌──────────────────┐
               │  Azure Firewall  │
               │  VPN/ER Gateway  │
               │  DNS Resolver    │
               │  Bastion         │
-              └────────┬────────┘
+              └────────┬─────────┘
                        │ peering
           ┌────────────┴────────────┐
           │                         │
@@ -76,9 +76,11 @@ O padrão correto é tratar workloads de IA generativa como qualquer outro spoke
 Diferente de uma carga de trabalho tradicional, um spoke de IA generativa frequentemente precisa de saída controlada para:
 
 - **Azure OpenAI endpoints**, se o recurso está no próprio spoke, o tráfego é interno. Se está em outro spoke ou hub, passa pelo firewall
-- **Model Catalog**, para modelos gerenciados da Microsoft e de parceiros, o tráfego precisa de saída para internet via firewall
+- **Modelos do Foundry**, os modelos implantados no recurso Foundry (endpoints `*.services.ai.azure.com`, `*.cognitiveservices.azure.com` e `*.openai.azure.com`) são acessados pelo Private Endpoint do recurso, sem saída para internet. Liberar esses domínios para a internet no firewall contradiz o desenho privado
 - **Repositórios de pacotes**, durante build e atualização de containers (PyPI, npm, MCR)
 - **GitHub Copilot / APIs externas**, quando agentes chamam ferramentas externas
+
+Em VNets criadas com versões de API lançadas depois de 31 de março de 2026, as sub-redes já nascem privadas, sem a saída implícita para a internet. Com o firewall no hub, isso deixa de ser surpresa e vira desenho: toda saída passa por ele.
 
 No Azure Firewall do hub, você precisa de regras de aplicação explícitas para cada destino:
 
@@ -97,17 +99,10 @@ resource fwPolicyRuleCollectionGroup 'Microsoft.Network/firewallPolicies/ruleCol
       rules: [
         {
           ruleType: 'ApplicationRule'
-          name: 'allow-model-catalog'
-          targetFqdns: ['*.models.ai.azure.com', '*.cognitiveservices.azure.com']
-          protocols: [{ protocolType: 'Https', port: 443 }]
-          sourceAddresses: ['10.1.0.0/16']  // spoke IA
-        },
-        {
-          ruleType: 'ApplicationRule'
           name: 'allow-pypi'
           targetFqdns: ['pypi.org', 'files.pythonhosted.org']
           protocols: [{ protocolType: 'Https', port: 443 }]
-          sourceAddresses: ['10.1.0.0/16']
+          sourceAddresses: ['10.1.0.0/16']  // spoke IA
         }
       ]
     }]
@@ -121,18 +116,21 @@ Mesmo dentro do spoke, vale segmentar por função com subnets separadas:
 
 ```
 VNet Spoke IA (10.1.0.0/16)
-├── snet-agents         (10.1.1.0/24)  ← AI Foundry, App Service, AKS
-├── snet-private-endpoints (10.1.2.0/26) ← PEs dos serviços PaaS
-└── snet-data           (10.1.3.0/24)  ← Storage, integração com dados do domínio
+├── snet-agents-foundry    (10.1.1.0/24)  ← agentes do Foundry, delegada a Microsoft.App/environments
+├── snet-app-integration   (10.1.2.0/26)  ← VNet Integration do App Service, delegada a Microsoft.Web/serverFarms
+├── snet-private-endpoints (10.1.3.0/26)  ← PEs de OpenAI, AI Search e Storage
+└── snet-aks               (10.1.4.0/22)  ← nós do AKS
 ```
 
-O motivo não é burocracia, é controle de NSG. Um NSG na `snet-private-endpoints` pode bloquear qualquer tráfego que não venha da `snet-agents`, garantindo que só os agentes do domínio acessem os Private Endpoints daquele spoke. Sem essa separação, qualquer recurso dentro da VNet pode chamar o Azure OpenAI ou o AI Search diretamente.
+Cada serviço de computação fica na sua sub-rede, e não é só organização: a sub-rede dos agentes do Foundry precisa ser delegada a `Microsoft.App/environments`, exclusiva de um único recurso Foundry, com tamanho recomendado /24. A integração do App Service exige outra delegação. Os dois não cabem na mesma sub-rede, nem com o AKS.
+
+O ganho é controle de NSG. Um NSG na `snet-private-endpoints` pode bloquear qualquer tráfego que não venha das sub-redes de aplicação, garantindo que só as cargas do domínio acessem os Private Endpoints daquele spoke. Sem essa separação, qualquer recurso dentro da VNet pode chamar o Azure OpenAI ou o AI Search diretamente.
 
 ## Escala: um hub, múltiplos spokes de IA por domínio de negócio
 
-Conforme a adoção cresce, o padrão recomendado é um spoke de IA por domínio de negócio (RH, Jurídico, Financeiro), cada um com seu próprio Azure AI Search indexando os dados do domínio e seu próprio conjunto de agentes:
+Conforme a adoção cresce, o padrão recomendado é um spoke de IA por domínio de negócio (RH, Jurídico, Financeiro), cada um com seu próprio Azure AI Search indexando os dados do domínio e seu próprio conjunto de agentes.
 
-A separação de rede vira, na prática, um controle de segurança de dados, não só de infraestrutura. Um agente do domínio de RH fisicamente não consegue acessar o índice de busca do domínio Jurídico, porque estão em VNets diferentes com Private Endpoints separados.
+A separação vira, na prática, um controle de segurança de dados, não só de infraestrutura. Mas VNets diferentes sozinhas não garantem isso: com tráfego entre spokes passando pelo firewall do hub e zonas de DNS compartilhadas, o spoke de RH consegue alcançar o índice do Jurídico pela rede. O que impede o acesso é a combinação de regra de firewall negando o tráfego entre esses spokes e RBAC no índice que não inclui a identidade dos agentes de RH.
 
 ## Conclusão
 

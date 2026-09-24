@@ -3,19 +3,14 @@ layout: ../../layouts/PostLayout.astro
 title: "ExpressRoute 400G: vale a pena migrar? Cenários onde o upgrade compensa"
 category: "Networking"
 tag: "networking"
-serie: "Série Azure Networking + IA Generativa"
-serieNum: 1
-serieSlug: "serie-azure-networking-ia"
 date: "8 Set 2026"
 readTime: "9 min"
-description: "A Microsoft agora oferece portas ExpressRoute Direct de 400 Gbps. Mas a pergunta certa não é 'dá pra ter', é 'eu preciso disso ou só quero o número maior'."
-next:
-  title: "Azure Networking [4]: Latência de rede em pipelines RAG"
-  slug: "latencia-rede-pipelines-rag-azure"
-
+description: "A Microsoft começou a oferecer portas ExpressRoute Direct de 400 Gbps. Mas a pergunta certa não é 'dá pra ter', é 'eu preciso disso ou só quero o número maior'."
 ---
 
-A Microsoft passou a oferecer portas ExpressRoute Direct de 400 Gbps em locais selecionados. A notícia circulou, os slides apareceram nas apresentações e inevitavelmente alguém no seu comitê de arquitetura vai perguntar: *"precisamos migrar para 400G?"*
+*Atualizado em setembro de 2026.*
+
+A Microsoft passou a oferecer portas ExpressRoute Direct de 400 Gbps, por enquanto sem disponibilidade geral: só em locais selecionados e com inscrição prévia. A notícia circulou, os slides apareceram nas apresentações e inevitavelmente alguém no seu comitê de arquitetura vai perguntar: *"precisamos migrar para 400G?"*
 
 A resposta honesta: **depende, e na maioria dos casos, não.**
 
@@ -33,11 +28,11 @@ Se você ainda usa ExpressRoute via provedor (o modelo mais comum, onde o proved
 
 Existem três cenários onde o upgrade se justifica tecnicamente:
 
-**Migração massiva de dados para Azure em janela de tempo definida.** Quando você está movendo um datacenter completo ou volumes de storage na casa dos exabytes e tem um prazo. Nesse cenário, throughput é o gargalo real, cada Gbps a mais encurta a janela de migração.
+**Migração massiva de dados para Azure em janela de tempo definida.** Quando você está movendo um datacenter completo ou volumes de storage na casa dos petabytes e tem um prazo. Nesse cenário, throughput é o gargalo real, cada Gbps a mais encurta a janela de migração.
 
-**Cargas de HPC e treinamento de modelos de IA em escala.** Clusters de GPU trocando grandes volumes de dados entre on-premises e Azure de forma contínua. Estamos falando de treinamento distribuído de modelos grandes, onde os nós precisam sincronizar gradientes e mover checkpoints de dezenas de gigabytes frequentemente.
+**Cargas de HPC e treinamento de modelos de IA em escala.** Clusters de GPU trocando grandes volumes de dados entre on-premises e Azure de forma contínua. Aqui o que atravessa a WAN são datasets e checkpoints de dezenas ou centenas de gigabytes, movidos com frequência. A sincronização de gradientes entre nós acontece dentro do cluster, pela rede InfiniBand, e não passa pelo ExpressRoute.
 
-**Consolidação de múltiplos circuitos 100G.** Se você tem 3 ou 4 circuitos de 100G para atender a demanda, um único circuito de 400G pode reduzir complexidade operacional e custo de portas físicas, dependendo do modelo de precificação do seu provedor de colocation.
+**Consolidação de múltiplos circuitos 100G.** Se você tem 3 ou 4 pares de portas de 100G para atender a demanda, um par de portas de 400G pode reduzir complexidade operacional e custo de portas físicas, dependendo do modelo de precificação do seu provedor de colocation. As portas do ExpressRoute Direct vêm sempre em par, e sobre elas você cria circuitos de vários tamanhos. Só pese a contrapartida: consolidar em menos portas também concentra os domínios de falha.
 
 ## Quando 400G é over-engineering
 
@@ -47,7 +42,7 @@ Aqui está o ponto que raramente aparece nas apresentações de vendas:
 
 Um pipeline RAG (Retrieval-Augmented Generation) típico não move terabytes por segundo entre on-premises e Azure. Ele move requisições HTTP relativamente pequenas: uma query de busca vetorial, um contexto de alguns kilobytes, uma resposta do modelo. O gargalo nesses sistemas raramente é a largura de banda da conexão WAN.
 
-Se o circuito atual de 1G, 10G ou mesmo 100G não está saturado, e você pode verificar isso com métricas reais no Network Watcher e Connection Monitor, o upgrade para 400G não vai resolver nenhum problema real. Vai apenas aumentar a fatura mensal.
+Se o circuito atual de 1G, 10G ou mesmo 100G não está saturado, e você pode verificar isso com as métricas de utilização do circuito e das portas no Azure Monitor, o upgrade para 400G não vai resolver nenhum problema real. Vai apenas aumentar a fatura mensal.
 
 <div class="callout">
 <strong>Regra prática:</strong> Antes de qualquer conversa sobre upgrade de capacidade, colete métricas de utilização real do circuito atual por pelo menos 30 dias, incluindo os picos, não só as médias. A média pode estar em 15% enquanto os picos chegam a 90%. Ou os picos podem chegar a 20%. São decisões completamente diferentes.
@@ -57,7 +52,7 @@ Se o circuito atual de 1G, 10G ou mesmo 100G não está saturado, e você pode v
 
 O processo que uso para avaliar upgrades de circuito:
 
-**1. Meça o circuito atual com granularidade adequada.** No Azure Monitor, configure métricas de BitsInPerSecond e BitsOutPerSecond no seu circuito ExpressRoute com agregação de 1 minuto (não 5 minutos, você perde os picos). Colete por 30 dias mínimo, cobrindo ciclos de negócio completos.
+**1. Meça o circuito atual com granularidade adequada.** No Azure Monitor, use as métricas BitsInPerSecond e BitsOutPerSecond do circuito com granularidade de 1 minuto e agregação Máximo (com 5 minutos, você perde os picos). Em ExpressRoute Direct, olhe também as métricas das portas físicas (PortBitsInPerSecond e PortBitsOutPerSecond). Connection Monitor serve para latência e perda, não para utilização. Colete por 30 dias mínimo, cobrindo ciclos de negócio completos.
 
 ```bash
 # Verificar utilização do circuito via CLI
@@ -82,7 +77,7 @@ az monitor metrics list \
 
 Onde o 400G genuinamente entra em cena para IA é em cenários de **treinamento distribuído de modelos** ou **movimentação de datasets de treinamento**:
 
-- Você tem um cluster de GPUs on-premises e quer usar Azure NDv5 para ampliar a capacidade de treinamento
+- Você tem um cluster de GPUs on-premises e quer usar VMs da série ND (como ND H100 v5 ou ND H200 v5) para ampliar a capacidade de treinamento
 - Você precisa mover datasets de treinamento de dezenas de TB regularmente entre sua infraestrutura e o Azure
 - Sua organização está construindo modelos proprietários (não apenas consumindo modelos gerenciados) e o ciclo de treino envolve grandes transferências de dados
 

@@ -14,6 +14,8 @@ prev:
   slug: "azure-firewall-explicit-proxy-vs-udr"
 ---
 
+*Atualizado em setembro de 2026.*
+
 Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure, com Azure Firewall Premium integrado ao Virtual WAN, já faz boa parte do que você paga por ela. Vale migrar tudo?
 
 A resposta que a maioria das arquiteturas corporativas precisa ouvir: **não precisa ser tudo ou nada**. E entender por quê muda completamente a conversa sobre custo e complexidade operacional.
@@ -32,10 +34,10 @@ Em 2026, o cenário mudou. A Secured Hub tem inspeção TLS, IDPS, Web Categorie
 
 **Pontos fortes:**
 
-- **Integração nativa com o ecossistema Azure**, sem overhead de gerenciamento de uma NVA separada. Políticas de roteamento, Private Endpoints, DNS Resolver e o Firewall estão no mesmo plano de controle
+- **Integração nativa com o ecossistema Azure**, sem overhead de gerenciamento de uma NVA separada. Firewall, routing intent e conexões das VNets são gerenciados pelo próprio Virtual WAN e pelo Firewall Manager. (O DNS Private Resolver não vai no hub gerenciado: ele fica numa VNet spoke de serviços compartilhados.)
 - **Escalabilidade automática**, o Azure Firewall escala horizontalmente sem intervenção. Sem dimensionamento manual de instâncias de NVA
 - **Custo previsível**, modelo de instância + processamento de dados, sem licenças por throughput ou por feature
-- **Menor latência para workloads de IA**, tráfego entre spokes e serviços PaaS (Azure OpenAI, AI Search) passa pelo Firewall sem sair do backbone Microsoft
+- **Menos peças no caminho**, quando a inspeção fica só no Azure Firewall, não existe uma NVA a mais entre os spokes e os serviços PaaS (Azure OpenAI, AI Search) para dimensionar, atualizar e diagnosticar
 
 **Limitações:**
 - Sem SD-WAN nativo, zero-touch provisioning de branches, application-aware routing e link quality monitoring não existem
@@ -48,7 +50,7 @@ Em 2026, o cenário mudou. A Secured Hub tem inspeção TLS, IDPS, Web Categorie
 
 - **SD-WAN completo**, application steering, link health monitoring (latência, jitter, perda de pacote por aplicação), zero-touch provisioning de branches
 - **Consistência de política on-premises e cloud**, a mesma plataforma FortiManager gerencia firewalls físicos em filiais e a NVA no hub. Para empresas com dezenas de filiais Fortinet, isso é significativo
-- **FortiGuard Intelligence**, threat feeds proprietários com atualizações mais frequentes que o Azure Firewall Threat Intelligence
+- **FortiGuard Intelligence**, threat feeds proprietários da Fortinet, que a mesma equipe já opera nas filiais
 - **Casos edge de deep inspection**, cenários onde a inspeção de protocolos industriais (OT/ICS) ou customização avançada de assinaturas é necessária
 
 **Limitações:**
@@ -69,7 +71,7 @@ Em 2026, o cenário mudou. A Secured Hub tem inspeção TLS, IDPS, Web Categorie
 | Link quality monitoring | ❌ | ✅ |
 | Gestão centralizada com on-prem | Parcial (Firewall Manager) | ✅ (FortiManager unificado) |
 | Integração nativa Azure PaaS | ✅ Nativa | Overhead adicional |
-| Escalabilidade automática | ✅ | Manual / VMSS |
+| Escalabilidade automática | ✅ | Manual (unidades de infraestrutura escolhidas no deploy) |
 | Custo de licenciamento | Incluído no Azure Firewall | Adicional |
 
 ## Topologias de coexistência, a migração não é tudo ou nada
@@ -80,7 +82,7 @@ A divisão mais comum e que faz mais sentido para a maioria:
 
 ```
 Filiais com Fortinet SD-WAN
-  ↓ SD-WAN overlay (aplicação-aware)
+  ↓ SD-WAN overlay (application-aware)
 Fortinet Hub On-Premises (FortiGate)
   ↓ ExpressRoute / VPN
 Azure Virtual WAN Hub
@@ -92,33 +94,43 @@ Azure Virtual WAN Hub
 
 **Por que funciona:** o Fortinet continua gerenciando o que faz melhor, SD-WAN entre filiais, QoS para voz/vídeo, zero-touch provisioning. O Azure Firewall cuida do tráfego dentro do Azure e da saída controlada para internet dos workloads cloud.
 
-### Topologia 2: Fortinet NVA no hub do Virtual WAN + Secured Hub em spokes críticos
+### Topologia 2: Fortinet NVA e Azure Firewall no mesmo hub, com routing intent
 
-Para organizações que precisam de consistência de política FortiManager em todo o stack:
+Para organizações que precisam de consistência de política FortiManager e ainda querem o Azure Firewall: o Virtual WAN permite as duas coisas no mesmo hub. Quem decide o que vai para cada uma é o routing intent, por exemplo internet pelo Azure Firewall e tráfego privado pela NVA Fortinet, ou o inverso.
 
 ```bicep
-// Hub com Fortinet NVA
-resource vwanHub 'Microsoft.Network/virtualHubs@2023-09-01' = {
+resource vwanHub 'Microsoft.Network/virtualHubs@2024-05-01' = {
   name: 'hub-corporativo'
+  location: location
   properties: {
     virtualWan: { id: vwan.id }
-    addressPrefix: '10.0.0.0/24'
-    // NVA Fortinet provisionada via Azure Marketplace
-    // Roteamento configurado via VirtualHubRouteTableV2
+    addressPrefix: '10.0.0.0/22'   // mínimo /22 com Azure Firewall no hub; não muda depois de criado
   }
 }
 
-// Spoke de IA com Private Endpoints, tráfego não passa pela NVA
-resource spokeIA 'Microsoft.Network/virtualNetworks@2023-09-01' = {
-  name: 'vnet-spoke-ia'
+// NVA Fortinet (provisionada pelo Marketplace) e Azure Firewall já no hub
+resource intencao 'Microsoft.Network/virtualHubs/routingIntent@2024-05-01' = {
+  parent: vwanHub
+  name: 'routing-intent'
   properties: {
-    addressSpace: { addressPrefixes: ['10.1.0.0/16'] }
-    // Peering com o hub via Virtual WAN
-    // Private Endpoints do OpenAI e AI Search ficam aqui
-    // Tráfego IA → OpenAI é privado, não passa pela NVA
+    routingPolicies: [
+      { name: 'InternetTraffic', destinations: [ 'Internet' ], nextHop: azureFirewall.id }
+      { name: 'PrivateTrafficPolicy', destinations: [ 'PrivateTraffic' ], nextHop: fortinetNva.id }
+    ]
+  }
+}
+
+// No Virtual WAN, o spoke se liga ao hub por conexão de VNet, não por peering comum
+resource conexaoSpokeIA 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2024-05-01' = {
+  parent: vwanHub
+  name: 'conn-spoke-ia'
+  properties: {
+    remoteVirtualNetwork: { id: spokeIA.id }   // Private Endpoints do OpenAI e AI Search ficam no spoke
   }
 }
 ```
+
+Dois cuidados. O tamanho do hub não pode ser alterado depois de criado, e com Azure Firewall o mínimo é /22. E a NVA no hub não escala sozinha: a capacidade vem das unidades de infraestrutura escolhidas no deploy, e a versão SD-WAN mais NGFW da Fortinet aceita até 20.
 
 ### Topologia 3: migração gradual com coexistência temporária
 

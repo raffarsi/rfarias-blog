@@ -5,8 +5,10 @@ category: "IA Generativa"
 tag: "ia-generativa"
 date: "17 Set 2026"
 readTime: "9 min"
-description: "Antes de dividir um problema em vários agentes de IA, entenda o que muda de responsabilidade, custo e governança no Azure AI Foundry."
+description: "Antes de dividir um problema em vários agentes de IA, entenda o que muda de responsabilidade, custo e governança no Microsoft Foundry (antigo Azure AI Foundry)."
 ---
+
+*Atualizado em setembro de 2026: o Azure AI Foundry agora se chama Microsoft Foundry, e o recurso de agentes conectados ficou restrito ao modelo clássico. A seção sobre o orquestrador já reflete as opções atuais.*
 
 Um time me perguntou essa semana quantos agentes eles precisavam para automatizar um fluxo de triagem de chamados. A resposta que eu dei não foi um número. Foi outra pergunta: quem vai ser responsável quando um desses agentes responder errado?
 
@@ -27,7 +29,7 @@ Se nenhum desses quatro pontos aparece no seu caso, multiagente provavelmente va
 
 ## O orquestrador é a peça que decide, não a que sabe tudo
 
-No Azure AI Foundry, o padrão mais direto de multiagente é o de agentes conectados: você registra agentes especializados como se fossem ferramentas do agente principal. O orquestrador não precisa saber como cada agente executa sua tarefa. Ele precisa saber quando chamar cada um.
+No Microsoft Foundry, o jeito de fazer isso mudou. Os agentes conectados, em que você registrava agentes especializados como ferramentas do agente principal, existem só no Foundry clássico, em preview, e não são suportados no Agent Service atual. O caminho recomendado hoje é a ferramenta A2A (agent-to-agent), que é GA: o agente principal chama os especializados como ferramentas, pelo protocolo aberto A2A. Para orquestração escrita em código, a peça é o Microsoft Agent Framework. A ideia de fundo não mudou: o orquestrador não precisa saber como cada agente executa sua tarefa. Ele precisa saber quando chamar cada um.
 
 Isso parece um detalhe pequeno, mas muda o design inteiro. Um erro comum é tratar o orquestrador como um agente "mais inteligente" que os outros, quando na prática ele é o agente com o prompt de sistema mais crítico do fluxo inteiro. Se ele classifica errado a intenção do usuário e chama o agente de suporte técnico para uma pergunta financeira, o agente errado vai produzir uma resposta coerente e completamente inútil, porque o problema não estava na execução, estava no roteamento.
 

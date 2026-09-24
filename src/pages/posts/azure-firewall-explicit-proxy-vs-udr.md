@@ -35,7 +35,7 @@ Isso dificulta cenários onde:
 
 ## Como funciona o Explicit Proxy
 
-No modo Explicit Proxy, o Azure Firewall expõe um endpoint de proxy na porta 8080 (HTTP) e 8443 (HTTPS). As aplicações são configuradas para usar esse endpoint explicitamente, via variáveis de ambiente ou configuração do runtime.
+No modo Explicit Proxy, que hoje é GA e funciona nos tiers Standard e Premium, o Azure Firewall expõe um endpoint de proxy nas portas que você define na política (neste exemplo, 8080 para HTTP e 8443 para HTTPS; uma única porta também pode atender os dois). As aplicações são configuradas para usar esse endpoint explicitamente, via variáveis de ambiente ou configuração do runtime.
 
 A diferença fundamental: em vez de o tráfego ser redirecionado de forma transparente pela tabela de rotas, a aplicação **sabe** que está usando um proxy e estabelece conexão com ele diretamente usando o protocolo CONNECT para HTTPS.
 
@@ -43,7 +43,7 @@ A diferença fundamental: em vez de o tráfego ser redirecionado de forma transp
 
 Para cargas de IA generativa especificamente, o Explicit Proxy tende a se encaixar bem quando:
 
-**Agentes e runtimes em containers.** Frameworks como LangChain, Semantic Kernel e AutoGen respeitam as variáveis de ambiente `HTTP_PROXY` e `HTTPS_PROXY` nativamente. Configurar via variável de ambiente no pod é mais limpo do que gerenciar UDRs por subnet.
+**Agentes e runtimes em containers.** Frameworks como LangChain e Microsoft Agent Framework (sucessor do Semantic Kernel e do AutoGen) respeitam as variáveis de ambiente `HTTP_PROXY` e `HTTPS_PROXY` nativamente. Configurar via variável de ambiente no pod é mais limpo do que gerenciar UDRs por subnet.
 
 **Controle granular por workload.** Com UDR, toda a subnet vai pelo firewall. Com Explicit Proxy, você decide por aplicação quem usa o proxy e quem não usa, útil quando parte do tráfego deve ir direto para endpoints privados dentro da VNet.
 
@@ -54,12 +54,12 @@ Para cargas de IA generativa especificamente, o Explicit Proxy tende a se encaix
 Habilitar o Explicit Proxy na Firewall Policy via Bicep:
 
 ```bicep
-resource firewallPolicy 'Microsoft.Network/firewallPolicies@2023-09-01' = {
+resource firewallPolicy 'Microsoft.Network/firewallPolicies@2025-09-01' = {
   name: 'fwpolicy-hub'
   location: location
   properties: {
     sku: {
-      tier: 'Premium'  // Explicit Proxy requer Premium
+      tier: 'Standard'  // Explicit Proxy funciona no Standard; Premium só se for usar TLS Inspection
     }
     explicitProxy: {
       enableExplicitProxy: true
@@ -81,11 +81,11 @@ env:
   - name: HTTPS_PROXY
     value: "http://10.0.1.4:8080"
   - name: NO_PROXY
-    value: "169.254.169.254,10.0.0.0/8,*.internal.empresa.com"
+    value: "169.254.169.254,168.63.129.16,10.0.0.0/8,.svc,.cluster.local,.internal.empresa.com"
 ```
 
 <div class="callout">
-<strong>Atenção ao NO_PROXY:</strong> Sempre inclua o IMDS (169.254.254.254), os ranges privados da VNet e os endpoints internos. Sem isso, o tráfego para o Azure Instance Metadata Service e para serviços internos vai tentar passar pelo proxy, causando falhas silenciosas difíceis de diagnosticar.
+<strong>Atenção ao NO_PROXY:</strong> Sempre inclua o IMDS (169.254.169.254), o IP da plataforma Azure (168.63.129.16), os ranges privados da VNet, os sufixos internos do Kubernetes (<code>.svc</code> e <code>.cluster.local</code>) e os endpoints internos. Sem isso, esse tráfego tenta passar pelo proxy e falha de forma silenciosa. Cuidado também com faixas em notação CIDR: nem todo runtime entende CIDR no NO_PROXY (o curl e o Python, por exemplo), então teste no runtime que você usa.
 </div>
 
 ## A pegadinha: TLS Inspection e certificados
@@ -98,21 +98,35 @@ O problema: esse certificado intermediário precisa ser confiado pelos clientes.
 
 **Como resolver:**
 
-1. Gere ou importe um certificado CA intermediário no Key Vault:
+1. Emita um certificado de CA intermediária, de preferência pela PKI corporativa, que já distribui a CA raiz para as máquinas. A política padrão do Key Vault não serve: ela gera um certificado comum, e o firewall exige uma CA intermediária com requisitos específicos (flag de CA ligada, `KeyCertSign` e `BasicConstraints` críticos, path length maior ou igual a 1, chave RSA de pelo menos 4096 bits, PFX sem senha). Importe no Key Vault, crie uma identidade gerenciada atribuída pelo usuário com permissão Get e List em segredos, e referencie o certificado na política, que precisa ser Premium:
 
-```bash
-# Criar certificado CA no Key Vault
-az keyvault certificate create \
-  --vault-name kv-hub \
-  --name fw-tls-ca \
-  --policy "$(az keyvault certificate get-default-policy)" 
-
-# Referenciar na Firewall Policy
-az network firewall policy update \
-  --name fwpolicy-hub \
-  --resource-group rg-hub \
-  --key-vault-secret-id "https://kv-hub.vault.azure.net/secrets/fw-tls-ca"
+```bicep
+resource firewallPolicy 'Microsoft.Network/firewallPolicies@2025-09-01' = {
+  name: 'fwpolicy-hub'
+  location: location
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: { '${idFirewall.id}': {} }
+  }
+  properties: {
+    sku: { tier: 'Premium' }   // TLS Inspection exige Premium
+    transportSecurity: {
+      certificateAuthority: {
+        name: 'fw-tls-ca'
+        keyVaultSecretId: 'https://kv-hub.vault.azure.net/secrets/fw-tls-ca'
+      }
+    }
+    explicitProxy: {
+      enableExplicitProxy: true
+      httpPort: 8080
+      httpsPort: 8443
+      enablePacFile: false
+    }
+  }
+}
 ```
+
+Depois disso, a inspeção é ligada regra a regra, nas regras de aplicação (`terminateTLS: true`). Só o tráfego dessas regras é descriptografado. Para ambientes de teste, o portal tem uma opção que gera automaticamente a identidade, o Key Vault e uma CA autoassinada.
 
 2. Distribua o certificado CA como trusted nos containers:
 
@@ -122,7 +136,7 @@ COPY fw-ca.crt /usr/local/share/ca-certificates/fw-ca.crt
 RUN update-ca-certificates
 ```
 
-Ou via ConfigMap no AKS:
+Ou via ConfigMap no AKS, montado como volume no pod. O ConfigMap sozinho não instala nada: é preciso montar o arquivo e apontar o runtime para ele. No AKS, a configuração de proxy do cluster (`--http-proxy-config`, com o campo `trustedCa`) instala a CA nos nós e injeta as variáveis de proxy nos pods, mas o trust store da imagem do container continua precisando da CA, ou das variáveis de bundle descritas abaixo.
 
 ```yaml
 apiVersion: v1
@@ -136,7 +150,7 @@ data:
     -----END CERTIFICATE-----
 ```
 
-**Este é o motivo mais comum de "erro de certificado" depois de habilitar TLS Inspection em ambientes de container.** O container usa o trust store do SO, se o certificado CA do firewall não estiver lá, toda requisição HTTPS via proxy vai falhar.
+**Este é o motivo mais comum de "erro de certificado" depois de habilitar TLS Inspection em ambientes de container.** E tem uma armadilha a mais para quem trabalha com IA em Python: `requests`, `httpx` e o SDK da OpenAI não usam o trust store do sistema operacional, usam o pacote `certifi`. Instalar a CA no sistema não basta. Aponte as variáveis `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE` para um bundle que inclua a CA do firewall.
 
 ## Explicit Proxy vs UDR: quando cada um faz sentido
 
@@ -145,7 +159,7 @@ data:
 | Aplicação proxy-aware | Não necessário | Necessário |
 | Controle por pod/deployment | Não | Sim |
 | Interceptação transparente de toda subnet | Sim | Não |
-| TLS Inspection em containers | Complexo | Mais direto |
+| TLS Inspection em containers | Exige a CA do firewall no trust store | Exige a CA do firewall no trust store |
 | Ambientes legados sem suporte a proxy | Funciona | Pode não funcionar |
 
 **Explicit Proxy não substitui o forced tunneling via UDR em todos os cenários**, para interceptação transparente de subnets inteiras (incluindo workloads que não suportam configuração de proxy), o UDR continua sendo o modelo correto.
