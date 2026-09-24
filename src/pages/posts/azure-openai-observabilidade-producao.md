@@ -8,7 +8,7 @@ readTime: "5 min"
 description: "\"Está lento\" e \"respondeu errado\" são as duas reclamações que todo pipeline RAG recebe. Sem trace por etapa, a resposta é sempre \"não sei\". O que medir, como instrumentar com OpenTelemetry e as consultas que encurtam o diagnóstico."
 ---
 
-Um time me questionou por que o assistente interno estava lento. Não era uma pergunta difícil, mas ninguém sabia responder. O painel mostrava a latência total da chamada, e só isso.
+"O assistente está lento." A reclamação chegou, e ninguém no time sabia dizer onde. O painel mostrava a latência total da chamada, e só isso.
 
 Era o embedding? A busca? A geração? A rede entre os serviços? Cada pessoa tinha um palpite, e cada palpite levava a uma mudança diferente.
 

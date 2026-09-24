@@ -8,7 +8,7 @@ readTime: "5 min"
 description: "O modelo não executa nada: ele pede, e quem executa é o seu código. É nesse intervalo que mora a segurança do agente, e é ali que eu vejo a maioria dos projetos errar."
 ---
 
-Um time me questionou sobre um agente de RH que estava em desenho. A pergunta foi simples: "se o agente consegue criar uma solicitação de férias, o que impede ele de criar para outra pessoa?"
+"Se o agente consegue criar uma solicitação de férias, o que impede ele de criar para outra pessoa?" A pergunta veio de um time que revisava um agente de RH ainda em desenho.
 
 A resposta honesta, naquele primeiro desenho, era: nada. A função recebia a matrícula como parâmetro, e quem preenchia o parâmetro era o modelo. Bastava o usuário escrever "abre férias para a matrícula tal" e o modelo, prestativo como sempre, preenchia.
 

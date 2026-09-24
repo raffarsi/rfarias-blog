@@ -8,7 +8,7 @@ readTime: "5 min"
 description: "O circuito é grande, mas a vazão não passa de uma fração dele. Às vezes o gargalo é o gateway, e o FastPath o tira do caminho. O que o FastPath resolve, onde ele não ajuda, o que depende de ExpressRoute Direct e onde entra o Global Reach."
 ---
 
-Um time me procurou com uma reclamação que eu já ouvi em mais de um lugar: o circuito ExpressRoute tinha banda de sobra, mas a transferência entre o datacenter e as VMs no Azure não passava de uma fração dela. Cogitaram trocar de provedor, falaram em aumentar o circuito, e ninguém tinha olhado para o gateway.
+O circuito ExpressRoute tem banda de sobra. A transferência entre o datacenter e as VMs no Azure não passa de uma fração dela. Já ouvi essa reclamação em mais de um lugar, e a conversa quase sempre vai para trocar de provedor ou aumentar o circuito, sem ninguém olhar para o gateway.
 
 Todo tráfego que chega à VNet pelo private peering do ExpressRoute passa, por padrão, pelo gateway de rede virtual. E cada SKU de gateway tem o seu próprio teto de banda e de pacotes por segundo. Se o gateway é menor que o circuito, o circuito maior não muda nada.
 

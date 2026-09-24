@@ -8,7 +8,7 @@ readTime: "6 min"
 description: "Você vai atingir o rate limit. A questão é se o sistema degrada em silêncio ou entrega um 429 na cara do usuário. O que conta no limite, por que ele estoura antes do que a conta indica e o que fazer em cada caso."
 ---
 
-Já vi acontecer mais de uma vez: a aplicação passa semanas em teste com meia dúzia de pessoas, tudo funciona, e no primeiro dia de uso real aparece HTTP 429 na tela do usuário.
+Semanas de teste com meia dúzia de pessoas, tudo funcionando. No primeiro dia de uso real, aparece HTTP 429 na tela do usuário. É uma cena que eu já vi mais de uma vez.
 
 O time olha o painel e não entende. O consumo do minuto está bem abaixo da cota. Como pode estar dando limite?
 

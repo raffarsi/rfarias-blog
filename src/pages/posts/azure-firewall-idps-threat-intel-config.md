@@ -8,7 +8,7 @@ readTime: "5 min"
 description: "Ligar o IDPS em modo de bloqueio no primeiro dia é o jeito mais rápido de derrubar tráfego legítimo. A sequência que funciona: o que cada recurso faz, duas semanas lendo alertas, exceções com critério e só então o bloqueio."
 ---
 
-Já vi acontecer: o time sobe o Azure Firewall Premium, liga o IDPS direto em modo de bloqueio porque "é para isso que pagamos o Premium", e na manhã seguinte as VMs param de receber atualização, um agente de monitoramento para de reportar e ninguém entende por quê. O firewall estava fazendo exatamente o que foi mandado.
+"É para isso que pagamos o Premium." Com esse argumento, o IDPS do Azure Firewall vai direto para o modo de bloqueio no primeiro dia, e na manhã seguinte as VMs param de receber atualização, um agente de monitoramento para de reportar e ninguém entende por quê. O firewall estava fazendo exatamente o que foi mandado.
 
 O cenário oposto também é comum: IDPS ligado só em alerta, centenas de alertas por dia, e ninguém olhando. Seis meses depois, alguém pergunta se o recurso está servindo para alguma coisa.
 

@@ -18,7 +18,7 @@ next:
 
 ---
 
-Já vi acontecer: o pipeline de infraestrutura roda verde, a VNet é criada, a VM sobe, e o script de inicialização trava tentando baixar um pacote. Nenhum erro de deploy. A VM só não tem saída para a internet.
+O pipeline de infraestrutura roda verde. A VNet é criada, a VM sobe, e o script de inicialização trava tentando baixar um pacote. Nenhum erro de deploy. A VM só não tem saída para a internet.
 
 Ninguém mexeu no template. O que mudou foi o comportamento padrão do Azure, e a mudança tem um detalhe que pega muita gente de surpresa: ela depende da versão de API que o seu template usa.
 

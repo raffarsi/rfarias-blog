@@ -19,7 +19,7 @@ next:
 
 O Private Endpoint está criado. O IP privado está certo. O acesso público ao Azure OpenAI foi desligado, como manda a boa prática. E a aplicação devolve 403, ou fica esperando até dar timeout.
 
-Um time me procurou exatamente com isso depois de passar uma tarde revisando NSG, rota e firewall. Não era nada disso. O nome do serviço resolvia para o IP público, que estava bloqueado. A chamada nem chegava perto do Private Endpoint.
+Esse era o cenário de um time que passou uma tarde inteira revisando NSG, rota e firewall. Não era nada disso. O nome do serviço resolvia para o IP público, que estava bloqueado. A chamada nem chegava perto do Private Endpoint.
 
 É o tipo de incidente que dura horas porque as pessoas olham para a rede quando o problema é DNS. Em arquitetura de IA, isso se multiplica: Azure OpenAI, AI Search e Storage, cada um com o seu Private Endpoint e a sua zona, e uma aplicação que precisa alcançar todos.
 

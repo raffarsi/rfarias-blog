@@ -8,7 +8,7 @@ readTime: "5 min"
 description: "Uma chave de API no repositório, um recurso com acesso público e nenhum log: é assim que a maioria dos incidentes com IA começa. Zero Trust aplicado a uma aplicação com Azure OpenAI, camada por camada, e por onde começar quando o ambiente já existe."
 ---
 
-Já vi acontecer: uma varredura de segredos encontra uma chave do Azure OpenAI num repositório. A chave estava num arquivo de configuração de um protótipo, o protótipo virou produção, e o recurso aceitava chamadas de qualquer lugar da internet. Ninguém sabia dizer se a chave tinha sido usada por outra pessoa, porque não havia log de quem chamava o modelo.
+Uma varredura de segredos encontra uma chave do Azure OpenAI num repositório. A chave estava num arquivo de configuração de um protótipo, o protótipo virou produção, e o recurso aceitava chamadas de qualquer lugar da internet. Ninguém sabia dizer se a chave tinha sido usada por outra pessoa, porque não havia log de quem chamava o modelo.
 
 Nada disso é um problema do modelo. É a forma como ele foi conectado ao resto do mundo.
 

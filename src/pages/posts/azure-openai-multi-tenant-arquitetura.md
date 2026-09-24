@@ -8,7 +8,7 @@ readTime: "6 min"
 description: "RH, Jurídico e Financeiro no mesmo recurso funciona até o dia em que um departamento consome a cota de todos, ou em que alguém pergunta se os documentos de um podem aparecer para o outro. Os níveis de isolamento, o critério para escolher cada um e o que colocar entre os tenants e o modelo."
 ---
 
-Um time me procurou com dois problemas que apareceram na mesma semana. O primeiro: um processo em lote do Financeiro consumiu a cota inteira do deployment e o assistente do RH passou a devolver erro 429 durante a tarde. O segundo: a auditoria perguntou se um documento do Jurídico poderia, em alguma circunstância, aparecer numa resposta para alguém do RH.
+Dois problemas apareceram na mesma semana numa plataforma de IA compartilhada entre departamentos. O primeiro: um processo em lote do Financeiro consumiu a cota inteira do deployment e o assistente do RH passou a devolver erro 429 durante a tarde. O segundo: a auditoria perguntou se um documento do Jurídico poderia, em alguma circunstância, aparecer numa resposta para alguém do RH.
 
 A plataforma era uma só, com um recurso, um deployment e um índice de busca. Tinha nascido para um departamento e foi recebendo os outros. Nenhum dos dois problemas era de modelo. Eram de isolamento, e isolamento é uma decisão que precisa ser tomada antes, não descoberta depois.
 

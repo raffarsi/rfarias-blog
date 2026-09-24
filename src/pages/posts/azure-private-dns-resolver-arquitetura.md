@@ -8,9 +8,9 @@ readTime: "5 min"
 description: "Funciona no primeiro spoke. No segundo já não resolve, e no on-premises também não. Como montar o Private DNS Resolver no hub, as duas formas de os spokes o usarem e os erros que criam loop de DNS."
 ---
 
-Já vi essa sequência acontecer mais de uma vez. O time cria o Private Endpoint, cria a zona Private DNS, vincula à VNet. A VM do spoke resolve o nome para o IP privado e acessa o recurso. Tudo certo.
+Com um spoke só, tudo funciona. O Private Endpoint está criado, a zona Private DNS está vinculada à VNet, e a VM resolve o nome para o IP privado. O problema aparece quando a topologia cresce.
 
-Aí entra um segundo spoke, e ele não resolve. Depois o servidor on-premises tenta acessar o mesmo serviço e recebe o IP público, que está bloqueado. Cada peça nova da topologia vira um chamado de DNS.
+O segundo spoke não resolve. O servidor on-premises recebe o IP público, que está bloqueado. Cada peça nova vira um chamado de DNS, numa sequência que eu já vi se repetir em mais de um ambiente.
 
 O problema não é o Private Endpoint. É que a resolução de nomes foi montada para uma VNet, e a topologia tem várias.
 
