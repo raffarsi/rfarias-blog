@@ -20,8 +20,6 @@ next:
 
 Trocar UDR por Explicit Proxy no Azure Firewall parece uma mudança simples. Você lê a documentação, habilita o proxy na Firewall Policy, aponta a variável `HTTPS_PROXY` nas aplicações e pronto. Até você esquecer do certificado, e derrubar todo o tráfego de saída dos containers de produção.
 
-Este é o artigo 6 de 20 da série **Azure Networking + IA Generativa**. Aqui cubro o que o modelo tradicional não resolve, quando o Explicit Proxy genuinamente compensa e a pegadinha de TLS Inspection que já derrubou ambientes em produção.
-
 ## O modelo tradicional e sua limitação
 
 Até recentemente, forçar tráfego de saída através do Azure Firewall exigia rotas definidas pelo usuário (UDR) apontando `0.0.0.0/0` para o IP privado do firewall. Funciona bem para a maioria dos cenários, o tráfego é redirecionado na camada de rede, de forma transparente para a aplicação.
@@ -166,12 +164,8 @@ data:
 
 Mas para plataformas de containers e agentes de IA que já operam bem com variáveis de proxy padrão, o Explicit Proxy elimina a fragilidade de gerenciar tabelas de rotas por subnet e permite controle mais granular por workload.
 
-## Conclusão
+## O que fica
 
-O Explicit Proxy no Azure Firewall é uma adição bem-vinda, especialmente para ambientes containerizados e agentes de IA. A configuração em si não é complexa. O ponto crítico é **preparar o trust store dos containers antes de habilitar TLS Inspection**, não depois.
+A configuração do Explicit Proxy é simples. O ponto crítico é a ordem: distribuir a CA do firewall nos trust stores dos containers e dos runtimes, validar em ambiente de teste e só então ligar a TLS Inspection. Na ordem inversa, todas as requisições HTTPS passam a falhar ao mesmo tempo, e o diagnóstico leva horas.
 
-Se você seguir a ordem correta, distribuir o certificado CA, validar em ambiente de teste, depois habilitar a inspeção, a transição de UDR para Explicit Proxy é tranquila. Se inverter essa ordem, vai gastar algumas horas entendendo por que todas as requisições HTTPS estão falhando ao mesmo tempo.
-
----
-
-*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+Se a TLS Inspection fosse ligada hoje no seu firewall, quantas das suas aplicações confiariam no certificado dele?

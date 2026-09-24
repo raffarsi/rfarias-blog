@@ -81,14 +81,8 @@ Onde o 400G genuinamente entra em cena para IA é em cenários de **treinamento 
 
 Se sua organização está **apenas consumindo** modelos gerenciados (Azure OpenAI, Model Catalog) e fazendo RAG sobre documentos internos, o throughput do ExpressRoute quase certamente não é o seu gargalo. O investimento em 400G rende menos do que melhorar a arquitetura do pipeline, otimizar os embeddings ou reduzir a latência do banco vetorial.
 
-## Conclusão
+## O que fica
 
-O ExpressRoute 400G é uma ferramenta poderosa para um problema específico: **throughput agregado saturado em cenários de escala que realmente demandam essa capacidade**.
+O ExpressRoute 400G é uma ferramenta poderosa para um problema específico: throughput agregado saturado em cenários que realmente demandam essa capacidade. Na maioria dos casos de IA generativa corporativa, o dinheiro rende mais em arquitetura do que em banda que não vai ser usada. A pergunta certa nunca é "dá para ter 400G?", e sim "eu tenho um problema que 400G resolve?".
 
-Antes de considerar o upgrade, meça o circuito atual. Na maioria dos casos de IA generativa corporativa, o dinheiro rende mais investido em otimização de arquitetura do que em largura de banda que não vai ser utilizada.
-
-A pergunta certa nunca é "dá pra ter 400G?", sempre é "eu tenho um problema que 400G resolve?"
-
----
-
-*Este artigo faz parte da série **Azure Networking + IA Generativa**, onde exploro as decisões de rede que impactam arquiteturas de IA em produção, com base em casos reais do ambiente corporativo.*
+Qual foi o pico real de utilização do seu circuito no último mês?

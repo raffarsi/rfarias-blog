@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Hub-and-spoke para workloads de IA generativa: onde colocar Azure AI Foundry, Search e Storage na topologia"
-category: "IA Generativa"
-tag: "ia-generativa"
+category: "Networking"
+tag: "networking"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 2
 serieSlug: "serie-azure-networking-ia"
@@ -20,8 +20,6 @@ next:
 Quantas VNets isoladas de IA já existem na sua empresa? Se a resposta for "mais de uma", este artigo é para você.
 
 Quando um time começa a desenhar a rede para uma plataforma de agentes de IA, a tendência natural é criar uma VNet isolada só para IA e conectá-la ao resto da empresa via peering direto. Funciona no piloto. Mas quebra a governança assim que a segunda, terceira e quarta squad de IA aparecem, cada uma criando sua própria VNet, seu próprio firewall, suas próprias regras de saída para a internet.
-
-Este é o artigo 2 de 20 da série **Azure Networking + IA Generativa**. Aqui mostro onde cada peça entra na topologia hub-and-spoke e o erro de segmentação que trava a governança assim que o segundo time de IA aparece.
 
 ## Por que a topologia "óbvia" costuma estar errada
 
@@ -132,12 +130,8 @@ Conforme a adoção cresce, o padrão recomendado é um spoke de IA por domínio
 
 A separação vira, na prática, um controle de segurança de dados, não só de infraestrutura. Mas VNets diferentes sozinhas não garantem isso: com tráfego entre spokes passando pelo firewall do hub e zonas de DNS compartilhadas, o spoke de RH consegue alcançar o índice do Jurídico pela rede. O que impede o acesso é a combinação de regra de firewall negando o tráfego entre esses spokes e RBAC no índice que não inclui a identidade dos agentes de RH.
 
-## Conclusão
+## O que fica
 
-Tratar a carga de IA generativa como "só mais um spoke" em vez de uma ilha separada é o que permite aplicar as mesmas políticas de governança, segurança e auditoria que o restante da infraestrutura Azure já tem. O hub central não é overhead, é o que torna possível escalar de um piloto para N squads de IA sem multiplicar o custo operacional e perder o controle de quem acessa o quê.
+Tratar a carga de IA generativa como mais um spoke, e não como uma ilha, é o que permite aplicar a ela a mesma governança, segurança e auditoria que o resto da infraestrutura já tem. O hub não é custo extra: é o que deixa um piloto virar dez squads de IA sem multiplicar firewalls, regras de saída e Private Endpoints duplicados. O componente que mais falha em silêncio nessa topologia é o DNS privado, tema do artigo sobre [DNS privado em arquiteturas de IA](/posts/dns-privado-arquiteturas-ia-multi-vnet/).
 
-O próximo artigo cobre o componente que mais falha silenciosamente nessa topologia: o DNS privado.
-
----
-
-*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+Quantas VNets de IA existem hoje na sua empresa fora do hub, cada uma com a sua própria saída para a internet?

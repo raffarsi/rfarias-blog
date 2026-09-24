@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Seu Azure OpenAI está exposto na internet, e você provavelmente sabe"
-category: "IA Generativa"
-tag: "ia-generativa"
+category: "Networking"
+tag: "networking"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 1
 serieSlug: "serie-azure-networking-ia"
@@ -15,8 +15,6 @@ next:
 ---
 
 É mais comum do que parece. O pipeline de RAG sobe em produção com Azure OpenAI e Azure AI Search acessíveis via rede pública "só por enquanto, depois a gente fecha". Ninguém mexe depois, o pipeline já está funcionando, a entrega foi feita, e a única linha de defesa vira uma API key ou o Microsoft Entra ID.
-
-Este é o artigo 1 de 20 da série **Azure Networking + IA Generativa**. Aqui mostro exatamente o risco disso e como eliminar a exposição com Private Link de ponta a ponta, sem travar a experiência de desenvolvimento.
 
 ## O problema: "temporariamente" vira permanente
 
@@ -154,12 +152,8 @@ A resposta é que isso não precisa travar o dev:
 <strong>Regra prática:</strong> Nunca suba para produção com <code>publicNetworkAccess: Enabled</code> em Azure OpenAI ou Azure AI Search. Se o pipeline precisou de acesso público para funcionar durante o desenvolvimento, o ticket de fechar a rede deve ser parte da definição de "done" da sprint, não um item de backlog.
 </div>
 
-## Conclusão
+## O que fica
 
-A exposição de Azure OpenAI e Azure AI Search na internet não é um problema de configuração difícil, é um problema de priorização. A solução técnica tem três passos: criar Private Endpoints, desabilitar `publicNetworkAccess` nos recursos e garantir que o DNS privado resolva corretamente os FQDNs dos serviços.
+Fechar o acesso de rede não é um problema técnico difícil. É um problema de prioridade: a solução cabe em três passos (Private Endpoint, acesso público desligado e DNS privado resolvendo os nomes dos serviços), e o terceiro é onde a maioria das implantações tropeça. Os erros mais comuns estão no artigo sobre [DNS privado em arquiteturas de IA](/posts/dns-privado-arquiteturas-ia-multi-vnet/).
 
-O terceiro passo, DNS privado, é onde a maioria dos problemas aparecem, e é o tema do próximo artigo da série.
-
----
-
-*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+No seu ambiente, o ticket de "fechar a rede depois" ainda está aberto?

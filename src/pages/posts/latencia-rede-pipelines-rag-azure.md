@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Latência de rede em pipelines RAG: o que medir entre Azure AI Search e Azure OpenAI"
-category: "IA Generativa"
-tag: "ia-generativa"
+category: "Networking"
+tag: "networking"
 serie: "Série Azure Networking + IA Generativa"
 serieNum: 4
 serieSlug: "serie-azure-networking-ia"
@@ -19,8 +19,6 @@ prev:
 ---
 
 Sua consulta RAG parece lenta. Você olha para o tempo de resposta do modelo e assume que é o modelo o culpado, afinal, geração de texto leva segundos. Mas quando você começa a medir cada componente separadamente, descobre que a rede está contribuindo com uma fatia relevante da latência total, e essa fatia pode ser otimizada.
-
-Este é o artigo 4 de 20 da série **Azure Networking + IA Generativa**. Aqui decomponho os quatro saltos de rede escondidos dentro de uma única consulta RAG e explico os três fatores de rede que mais impactam a latência do pipeline.
 
 ## Por que latência de rede importa num pipeline que já é "lento por natureza"
 
@@ -190,12 +188,8 @@ Envie esses dados para o Application Insights e monitore o P50, P90 e P99 de cad
 <strong>Regra de ouro:</strong> Latência em pipelines RAG costuma ser tratada como problema exclusivo de modelo ("o GPT está lento"), quando parte relevante do problema é rede. Medir os dois componentes separadamente é o primeiro passo antes de qualquer otimização, porque a solução para problema de rede (colocalização de recursos, Private Endpoints) é completamente diferente da solução para problema de modelo (streaming, caching de respostas, modelos menores para casos simples).
 </div>
 
-## Conclusão
+## O que fica
 
-Os três fatores de rede que mais impactam latência em pipelines RAG, região dos recursos, Private Link vs. endpoint público com firewall no caminho, e o overhead do Semantic Ranker, têm soluções diretas. Mas só depois de medir.
+Os três fatores de rede que mais pesam na latência de um pipeline RAG, a região dos recursos, o caminho até os serviços e o custo do Semantic Ranker, têm soluções diretas. Mas nenhuma delas deve ser aplicada antes de medir cada salto separadamente, porque a solução para um problema de rede é completamente diferente da solução para um problema de modelo.
 
-Se você não sabe quanto tempo cada salto leva no seu pipeline atual, comece instrumentando. A distribuição P99 de cada componente vai apontar onde está o problema real antes de você gastar tempo otimizando a coisa errada.
-
----
-
-*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+Se o seu assistente ficasse lento amanhã, você saberia dizer em qual dos quatro saltos o tempo foi parar?

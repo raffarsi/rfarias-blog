@@ -18,8 +18,6 @@ Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure, com Azure Fi
 
 A resposta que a maioria das arquiteturas corporativas precisa ouvir: **não precisa ser tudo ou nada**. E entender por quê muda completamente a conversa sobre custo e complexidade operacional.
 
-Este é o artigo 7 de 20 da série **Azure Networking + IA Generativa**.
-
 ## O contexto: por que essa comparação importa agora
 
 O Azure Virtual WAN com Secured Hub (Azure Firewall integrado) evoluiu significativamente nos últimos dois anos. Muitas organizações que adotaram Fortinet SD-WAN como NVA (Network Virtual Appliance) no hub fizeram essa escolha quando o Virtual WAN ainda não oferecia o nível de controle de política que o Fortinet proporcionava.
@@ -162,12 +160,8 @@ Migre quando:
 <strong>O custo real da NVA:</strong> Além do licenciamento Fortinet, considere: horas de engenharia para sizing e patching, custo de VMs para HA (mínimo 2 instâncias), e o overhead de latência para tráfego que passa pela NVA antes de chegar a serviços Azure nativos. Em ambientes onde 80% do tráfego é cloud-native, esse custo raramente se paga.
 </div>
 
-## Conclusão
+## O que fica
 
-A Secured Hub nativa do Azure chegou em um ponto onde cobre a maioria dos casos de uso de inspeção de tráfego cloud sem a complexidade operacional de uma NVA. O Fortinet SD-WAN continua sendo a melhor escolha para o problema que ele foi feito para resolver: conectividade inteligente entre filiais com visibilidade de qualidade de link por aplicação.
+A Secured Hub nativa cobre hoje a maior parte da inspeção de tráfego na nuvem sem a operação de uma NVA. O Fortinet SD-WAN continua sendo a melhor ferramenta para o problema que ele nasceu para resolver: conectividade inteligente entre filiais, com visibilidade da qualidade do link por aplicação. Para a maioria das empresas, a arquitetura que faz sentido é a coexistência, com o Fortinet nas filiais e a Secured Hub no perímetro da nuvem.
 
-A arquitetura que faz mais sentido para a maioria das empresas em 2026 é a coexistência: **Fortinet gerenciando branches e SD-WAN on-premises, Secured Hub gerenciando o perímetro cloud**. Não é rendição de um para o outro, é cada ferramenta no problema certo.
-
----
-
-*Série **Azure Networking + IA Generativa**, arquitetura de referência, decisões de rede e os erros mais comuns em produção. Publicado às terças e quintas.*
+No seu ambiente, qual parte do tráfego que passa pela NVA no hub realmente precisa de SD-WAN?
