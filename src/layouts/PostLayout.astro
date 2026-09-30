@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
 
 
 interface Props {
@@ -109,6 +110,12 @@ const tocHeadings = headings.filter(h => h.depth === 2);
         </a>
       </div>
     )}
+
+    <RelatedPosts
+      slug={articleSlug}
+      tag={frontmatter.tag}
+      excluir={[frontmatter.prev?.slug, frontmatter.next?.slug].filter(Boolean)}
+    />
   </article>
 </BaseLayout>
 
