@@ -1,0 +1,85 @@
+---
+// Bloco "Continue lendo" no fim do artigo. Só aparece quando há relacionados já publicados.
+import { listarPublicados, relacionados, areaDaTag, AREAS } from '../lib/areas.mjs';
+
+interface Props {
+  slug: string;
+  tag: string;
+  excluir?: string[];
+}
+const { slug, tag, excluir = [] } = Astro.props;
+
+const modulos = import.meta.glob('../pages/posts/*.md', { eager: true });
+const posts = listarPublicados(modulos);
+const lista = relacionados(posts, { slug, tag, excluir });
+const area = areaDaTag(tag);
+---
+
+{lista.length > 0 && (
+  <section class="related" aria-labelledby="related-title">
+    <h2 id="related-title" class="related-title">Continue lendo</h2>
+    <div class="related-grid">
+      {lista.map((p) => (
+        <a href={`/posts/${p.slug}/`} class="related-card">
+          <span class="related-meta">{p.category} · {p.readTime}</span>
+          <span class="related-name">{p.title}</span>
+        </a>
+      ))}
+    </div>
+    {area && (
+      <a href={`/${area}/`} class="related-area">Todos os artigos de {AREAS[area].titulo} →</a>
+    )}
+  </section>
+)}
+
+<style>
+  .related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .related-title {
+    font-size: 1.125rem;
+    margin: 0 0 1rem;
+    color: var(--text);
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .related-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+  .related-card:hover { border-color: var(--blue); }
+  .related-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .related-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .related-area {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .related-area:hover { text-decoration: underline; }
+  @media (max-width: 768px) {
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>

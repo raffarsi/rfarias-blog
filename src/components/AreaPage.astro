@@ -1,0 +1,80 @@
+---
+// Página de área (Networking ou Compute): artigos publicados da área, agrupados por assunto.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { listarPublicados, agruparArea } from '../lib/areas.mjs';
+
+interface Props { area: 'networking' | 'compute' }
+const { area } = Astro.props;
+
+const modulos = import.meta.glob('../pages/posts/*.md', { eager: true });
+const dados = agruparArea(listarPublicados(modulos), area);
+const outra = area === 'networking' ? { href: '/compute/', nome: 'Azure Compute' } : { href: '/networking/', nome: 'Azure Networking' };
+---
+
+<BaseLayout
+  title={`${dados.titulo}: artigos | rfarias`}
+  description={`${dados.subtitulo} Artigos de Rafael Farias.`}
+>
+  <div class="container area-page">
+    <header class="area-header">
+      <p class="area-kicker">Área</p>
+      <h1>{dados.titulo}</h1>
+      <p class="area-sub">{dados.subtitulo}</p>
+      <p class="area-count">{dados.total} artigos · <a href={outra.href}>ver {outra.nome}</a> · <a href="/artigos">todos os artigos</a></p>
+      <nav class="area-toc" aria-label="Assuntos">
+        {dados.grupos.map((g, i) => (
+          <a href={`#assunto-${i}`}>{g.nome} <span>{g.posts.length}</span></a>
+        ))}
+      </nav>
+    </header>
+
+    {dados.grupos.map((g, i) => (
+      <section class="area-group" id={`assunto-${i}`}>
+        <h2>{g.nome}</h2>
+        <ul class="area-list">
+          {g.posts.map((p) => (
+            <li>
+              <a href={`/posts/${p.slug}/`} class="area-item">
+                <span class="area-item-title">{p.title}</span>
+                <span class="area-item-excerpt">{p.excerpt}</span>
+                <span class="area-item-meta">{p.date} · {p.readTime}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .area-page { padding-top: 2.5rem; padding-bottom: 3rem; max-width: 880px; }
+  .area-kicker {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--blue); margin: 0 0 0.5rem;
+  }
+  .area-header h1 { margin: 0 0 0.75rem; }
+  .area-sub { color: var(--text-muted); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 0.75rem; }
+  .area-count { font-size: 0.875rem; color: var(--text-muted); margin: 0 0 1.25rem; }
+  .area-count a { color: var(--blue); }
+  .area-toc { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .area-toc a {
+    font-size: 0.8125rem; padding: 0.375rem 0.75rem; border: 1px solid var(--border);
+    border-radius: 999px; color: var(--text); text-decoration: none; background: var(--surface);
+  }
+  .area-toc a:hover { border-color: var(--blue); }
+  .area-toc span { color: var(--text-muted); margin-left: 0.25rem; }
+  .area-group { margin-top: 2.25rem; scroll-margin-top: 5rem; }
+  .area-group h2 {
+    font-size: 1.125rem; margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .area-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.625rem; }
+  .area-item {
+    display: flex; flex-direction: column; gap: 0.25rem; padding: 0.875rem 1rem;
+    border: 1px solid var(--border); border-radius: 10px; background: var(--surface); text-decoration: none;
+  }
+  .area-item:hover { border-color: var(--blue); }
+  .area-item-title { font-weight: 600; color: var(--text); line-height: 1.4; }
+  .area-item-excerpt { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
+  .area-item-meta { font-size: 0.75rem; color: var(--text-muted); }
+</style>
