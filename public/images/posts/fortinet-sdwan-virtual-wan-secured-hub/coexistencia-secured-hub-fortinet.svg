@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Topologia 1 de coexistência: filiais com Fortinet SD-WAN ligadas por overlay SD-WAN a um hub Fortinet on-premises, que se conecta por ExpressRoute ou VPN ao hub do Azure Virtual WAN com Azure Firewall Premium (Secured Hub), que atende os spokes IA, App e Data e a saída controlada para internet">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Coexistência: Fortinet nas filiais, Secured Hub na nuvem</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Topologia 1 do artigo, a divisão mais comum: Secured Hub para cloud, Fortinet para branches</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- ZONA ON-PREMISES -->
+    <rect x="60" y="120" width="340" height="260" rx="10" fill="#FFFFFF" stroke="#8593A8" stroke-width="1.5" stroke-dasharray="8 6"/>
+    <text x="80" y="146" font-size="13" font-weight="700" letter-spacing="1.2" fill="#8593A8">ON-PREMISES</text>
+
+    <g font-size="14" fill="#10233F" text-anchor="middle">
+      <rect x="80" y="165" width="110" height="54" rx="6" fill="#EEF3FB" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="135" y="188" font-weight="700">Filial</text><text x="135" y="207" font-size="12" fill="#4A5568">Fortinet SD-WAN</text>
+      <rect x="80" y="235" width="110" height="54" rx="6" fill="#EEF3FB" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="135" y="258" font-weight="700">Filial</text><text x="135" y="277" font-size="12" fill="#4A5568">Fortinet SD-WAN</text>
+      <rect x="80" y="305" width="110" height="54" rx="6" fill="#EEF3FB" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="135" y="328" font-weight="700">Filial</text><text x="135" y="347" font-size="12" fill="#4A5568">Fortinet SD-WAN</text>
+
+      <rect x="250" y="205" width="130" height="114" rx="8" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+      <text x="315" y="244" font-weight="700">Fortinet Hub</text>
+      <text x="315" y="264" font-weight="700">On-Premises</text>
+      <text x="315" y="286" font-size="12" fill="#4A5568">(FortiGate)</text>
+    </g>
+
+    <g stroke="#1A56DB" stroke-width="2" fill="none" marker-end="url(#seta)">
+      <line x1="190" y1="192" x2="247" y2="236"/>
+      <line x1="190" y1="262" x2="247" y2="262"/>
+      <line x1="190" y1="332" x2="247" y2="288"/>
+    </g>
+
+
+    <!-- ZONA AZURE -->
+    <rect x="560" y="120" width="380" height="260" rx="10" fill="#FFFFFF" stroke="#8593A8" stroke-width="1.5" stroke-dasharray="8 6"/>
+    <text x="580" y="146" font-size="13" font-weight="700" letter-spacing="1.2" fill="#8593A8">AZURE</text>
+
+    <rect x="580" y="165" width="150" height="194" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="655" y="190" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Virtual WAN Hub</text>
+    <rect x="594" y="214" width="122" height="96" rx="6" fill="#1A56DB"/>
+    <g font-size="13" fill="#FFFFFF" text-anchor="middle">
+      <text x="655" y="243" font-weight="700">Azure Firewall</text>
+      <text x="655" y="262" font-weight="700">Premium</text>
+      <text x="655" y="290" font-size="12">(Secured Hub)</text>
+    </g>
+
+    <g font-size="14" fill="#10233F" text-anchor="middle">
+      <rect x="770" y="165" width="150" height="54" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="845" y="188" font-weight="700">Spoke IA</text><text x="845" y="207" font-size="12" fill="#4A5568">AI Foundry, OpenAI</text>
+      <rect x="770" y="235" width="150" height="54" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="845" y="258" font-weight="700">Spoke App</text><text x="845" y="277" font-size="12" fill="#4A5568">workloads corporativos</text>
+      <rect x="770" y="305" width="150" height="54" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+      <text x="845" y="328" font-weight="700">Spoke Data</text><text x="845" y="347" font-size="12" fill="#4A5568">bancos de dados, Storage</text>
+    </g>
+
+    <g stroke="#1A56DB" stroke-width="2" fill="none" marker-end="url(#seta)">
+      <line x1="730" y1="192" x2="767" y2="192"/>
+      <line x1="730" y1="262" x2="767" y2="262"/>
+      <line x1="730" y1="332" x2="767" y2="332"/>
+    </g>
+
+    <!-- LINK -->
+    <line x1="383" y1="262" x2="577" y2="262" stroke="#1A56DB" stroke-width="2.5" marker-start="url(#seta)" marker-end="url(#seta)"/>
+    <text x="480" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#1A56DB">ExpressRoute / VPN</text>
+
+    <!-- INTERNET -->
+    <line x1="655" y1="359" x2="655" y2="417" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+    <text x="643" y="400" text-anchor="end" font-size="13" fill="#4A5568">saída controlada</text>
+    <rect x="600" y="420" width="110" height="44" rx="22" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2"/>
+    <text x="655" y="447" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Internet</text>
+
+    <!-- LEGENDAS -->
+    <text x="60" y="414" font-size="14" font-weight="700" fill="#1A56DB">Fortinet faz o que faz melhor</text>
+    <text x="60" y="438" font-size="14" fill="#4A5568">SD-WAN entre filiais (overlay application-aware),</text>
+    <text x="60" y="460" font-size="14" fill="#4A5568">QoS para voz/vídeo, zero-touch provisioning.</text>
+
+    <text x="745" y="414" font-size="14" font-weight="700" fill="#1A56DB">Azure Firewall cuida</text>
+    <text x="745" y="438" font-size="14" fill="#4A5568">do tráfego dentro do Azure</text>
+    <text x="745" y="460" font-size="14" fill="#4A5568">e da saída dos workloads.</text>
+  </g>
+
+  <text x="60" y="524" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">No hub do Virtual WAN fica só o Azure Firewall. O Fortinet continua nas filiais e no hub on-premises.</text>
+</svg>
