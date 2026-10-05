@@ -50,6 +50,8 @@ Se o circuito atual de 1G, 10G ou mesmo 100G não está saturado, e você pode v
 
 O processo que uso para avaliar upgrades de circuito:
 
+![Árvore de decisão para ExpressRoute 400G: se o circuito não satura de forma sustentada, se não usa ExpressRoute Direct com portas de 100G no limite ou se a demanda não é migração massiva, HPC ou treinamento de IA em escala ou consolidação de 3 ou 4 pares de 100G, 400G é over-engineering; caso contrário, 400G faz sentido](/images/posts/expressroute-400g-vale-a-pena-migrar/decidir-400g.svg)
+
 **1. Meça o circuito atual com granularidade adequada.** No Azure Monitor, use as métricas BitsInPerSecond e BitsOutPerSecond do circuito com granularidade de 1 minuto e agregação Máximo (com 5 minutos, você perde os picos). Em ExpressRoute Direct, olhe também as métricas das portas físicas (PortBitsInPerSecond e PortBitsOutPerSecond). Connection Monitor serve para latência e perda, não para utilização. Colete por 30 dias mínimo, cobrindo ciclos de negócio completos.
 
 ```bash

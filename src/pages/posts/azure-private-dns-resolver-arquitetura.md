@@ -32,6 +32,8 @@ O Private DNS Resolver resolve os dois lados. Ele coloca um endereço IP de verd
 
 Cada endpoint precisa de uma sub-rede só para ele, delegada a `Microsoft.Network/dnsResolvers`, com tamanho entre /28 e /24. Inbound e outbound não dividem sub-rede. Nenhum outro recurso pode ficar nessas sub-redes. Planeje as duas junto com o endereçamento do hub, porque abrir espaço depois costuma ser mais difícil.
 
+![Diagrama do Azure Private DNS Resolver no hub: o DNS on-premises encaminha openai.azure.com e search.windows.net para o inbound endpoint 10.0.4.4, que responde pelas zonas privatelink vinculadas ao hub; no sentido inverso, o ruleset envia empresa.local pelo outbound endpoint ao DNS da empresa em 192.168.1.10, passando pela conectividade híbrida](/images/posts/azure-private-dns-resolver-arquitetura/resolver-inbound-outbound.svg)
+
 ```
 On-premises (DNS da empresa)
   -> encaminhador condicional: openai.azure.com, search.windows.net -> 10.0.4.4

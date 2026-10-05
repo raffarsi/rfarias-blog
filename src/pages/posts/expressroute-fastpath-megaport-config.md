@@ -31,6 +31,8 @@ On-premises -> borda da Microsoft -> VMs
 
 O gateway sai do caminho dos dados, mas continua existindo: é ele que troca as rotas entre a VNet e o on-premises. O ganho é menos um salto, menor latência e vazão que deixa de depender do teto do gateway.
 
+![Comparação do caminho do tráfego via ExpressRoute: sem FastPath o tráfego passa pelo gateway ExpressRoute até as VMs; com FastPath vai da borda da Microsoft direto às VMs e o gateway fica só na troca de rotas BGP](/images/posts/expressroute-fastpath-megaport-config/com-e-sem-fastpath.svg)
+
 Para usar, o gateway precisa ser Ultra Performance, ErGw3AZ ou ErGwScale com pelo menos 10 unidades de escala. No Virtual WAN, o FastPath só vale para ExpressRoute Direct: vem ligado por padrão em gateways com pelo menos 5 unidades de escala.
 
 A habilitação é feita na conexão entre o circuito e o gateway:

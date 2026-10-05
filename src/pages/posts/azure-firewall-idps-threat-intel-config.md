@@ -22,6 +22,8 @@ Os dois aparecem juntos na política do firewall e costumam ser configurados jun
 
 **IDPS** existe só no Premium. Ele olha o conteúdo dos pacotes e compara com mais de 67.000 assinaturas em mais de 50 categorias. É muito mais granular, e por isso mesmo erra mais: uma assinatura genérica pode confundir tráfego legítimo com ataque.
 
+![Tráfego passando pelo Azure Firewall: Threat Intelligence compara origem e destino com a lista de reputação da Microsoft e começa em Alert and deny; IDPS inspeciona o conteúdo dos pacotes por assinaturas e começa em Alert](/images/posts/azure-firewall-idps-threat-intel-config/threat-intel-e-idps.svg)
+
 Por isso cada um começa num modo diferente:
 
 ```bicep

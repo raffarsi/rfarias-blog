@@ -32,6 +32,8 @@ O problema não é que a rede vai dominar o tempo total, provavelmente não vai.
 
 Uma consulta RAG típica com agente no Microsoft Foundry, Azure AI Search e Azure OpenAI tem a seguinte sequência de chamadas de rede:
 
+![Diagrama dos quatro saltos de rede de uma consulta RAG: salto 1 do usuário ao agente no Microsoft Foundry, salto 2 ao Azure OpenAI para o embedding, salto 3 ao Azure AI Search para a busca híbrida e salto 4 ao Azure OpenAI para a geração, com a resposta voltando em streaming ao usuário](/images/posts/latencia-rede-pipelines-rag-azure/quatro-saltos-rag.svg)
+
 ```
 Usuário → Agente (Foundry) → Azure OpenAI (embedding) → [vetor da pergunta]
                            → Azure AI Search          → [resultado da busca]

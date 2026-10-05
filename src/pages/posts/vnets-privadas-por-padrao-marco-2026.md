@@ -68,6 +68,8 @@ Sub-rede com `saida_padrao` vazio ou `true`, sem NAT Gateway e sem rota para fir
 
 ## Os quatro métodos de saída explícita
 
+![Comparação entre antes e depois: à esquerda, a VM numa sub-rede sem nada configurado sai para a internet pelo default outbound access, com um IP público implícito; à direita, numa sub-rede privada, a VM não tem saída implícita e só sai pelos quatro métodos explícitos: NAT Gateway na sub-rede, Load Balancer Standard com regras de saída, IP público Standard na placa de rede, e Firewall ou NVA com rota definida pelo usuário](/images/posts/vnets-privadas-por-padrao-marco-2026/saida-explicita.svg)
+
 **NAT Gateway na sub-rede.** O método que a Microsoft recomenda para a maioria dos cenários. Saída com IPs fixos que você conhece e pode liberar em firewall de parceiro, sem expor nada para entrada.
 
 **Load Balancer Standard com regras de saída.** Faz sentido quando as VMs já estão atrás de um Load Balancer e você quer controlar a saída no mesmo lugar.
