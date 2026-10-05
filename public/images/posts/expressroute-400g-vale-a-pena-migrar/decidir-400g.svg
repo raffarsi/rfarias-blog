@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Árvore de decisão para ExpressRoute 400G: três perguntas sobre saturação sustentada do circuito, uso de ExpressRoute Direct com portas de 100G no limite e cenário que exige 400G, levando a 400G faz sentido ou 400G é over-engineering">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+    <marker id="setaVerm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/>
+    </marker>
+    <marker id="setaVerde" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1E8E3E"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">400G: decidir com dados</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Três perguntas antes de qualquer conversa sobre upgrade de capacidade</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- Perguntas -->
+    <rect x="60" y="125" width="240" height="160" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="80" y="160" font-size="17" font-weight="700" fill="#10233F">1. O circuito satura?</text>
+    <text x="80" y="192" font-size="13" fill="#4A5568">30 dias, 1 minuto, agregação</text>
+    <text x="80" y="212" font-size="13" fill="#4A5568">Máximo: throughput batendo no</text>
+    <text x="80" y="232" font-size="13" fill="#4A5568">teto de forma sustentada, não</text>
+    <text x="80" y="252" font-size="13" fill="#4A5568">só em picos de 5 minutos</text>
+
+    <rect x="360" y="125" width="240" height="160" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="380" y="160" font-size="17" font-weight="700" fill="#10233F">2. Já usa Direct 100G?</text>
+    <text x="380" y="192" font-size="13" fill="#4A5568">ExpressRoute Direct com portas</text>
+    <text x="380" y="212" font-size="13" fill="#4A5568">de 100G chegando no limite de</text>
+    <text x="380" y="232" font-size="13" fill="#4A5568">saturação agregada</text>
+
+    <rect x="660" y="125" width="280" height="160" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="680" y="160" font-size="17" font-weight="700" fill="#10233F">3. Cenário que exige 400G?</text>
+    <text x="680" y="192" font-size="13" fill="#4A5568">Migração massiva com prazo definido,</text>
+    <text x="680" y="212" font-size="13" fill="#4A5568">HPC ou treinamento de IA em escala,</text>
+    <text x="680" y="232" font-size="13" fill="#4A5568">ou consolidar 3 ou 4 pares de</text>
+    <text x="680" y="252" font-size="13" fill="#4A5568">portas de 100G</text>
+
+    <!-- Sim entre perguntas -->
+    <line x1="300" y1="205" x2="358" y2="205" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+    <text x="330" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#1A56DB">Sim</text>
+    <line x1="600" y1="205" x2="658" y2="205" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+    <text x="630" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#1A56DB">Sim</text>
+
+    <!-- Não -->
+    <line x1="180" y1="285" x2="180" y2="388" stroke="#C0392B" stroke-width="2.5" marker-end="url(#setaVerm)"/>
+    <text x="192" y="342" font-size="14" font-weight="700" fill="#C0392B">Não</text>
+    <line x1="480" y1="285" x2="480" y2="388" stroke="#C0392B" stroke-width="2.5" marker-end="url(#setaVerm)"/>
+    <text x="492" y="342" font-size="14" font-weight="700" fill="#C0392B">Não</text>
+    <polyline points="710,285 710,435 602,435" fill="none" stroke="#C0392B" stroke-width="2.5" marker-end="url(#setaVerm)"/>
+    <text x="722" y="342" font-size="14" font-weight="700" fill="#C0392B">Não</text>
+
+    <!-- Sim final -->
+    <line x1="860" y1="285" x2="860" y2="388" stroke="#1E8E3E" stroke-width="2.5" marker-end="url(#setaVerde)"/>
+    <text x="872" y="342" font-size="14" font-weight="700" fill="#1E8E3E">Sim</text>
+
+    <!-- Resultados -->
+    <rect x="60" y="390" width="540" height="92" rx="10" fill="#FFFFFF" stroke="#C0392B" stroke-width="2.5"/>
+    <text x="80" y="420" font-size="17" font-weight="700" fill="#C0392B">400G é over-engineering</text>
+    <text x="80" y="444" font-size="13" fill="#4A5568">Circuito sem saturação: o upgrade só aumenta a fatura mensal.</text>
+    <text x="80" y="464" font-size="13" fill="#4A5568">Latência alta com throughput ok ou RAG: mais banda não resolve.</text>
+
+    <rect x="760" y="390" width="180" height="92" rx="10" fill="#FFFFFF" stroke="#1E8E3E" stroke-width="2.5"/>
+    <text x="780" y="420" font-size="17" font-weight="700" fill="#1E8E3E">400G faz sentido</text>
+    <text x="780" y="444" font-size="13" fill="#4A5568">Throughput agregado</text>
+    <text x="780" y="464" font-size="13" fill="#4A5568">saturado de verdade</text>
+  </g>
+
+  <text x="60" y="524" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">Olhe os picos, não só as médias: a média pode estar em 15% enquanto os picos chegam a 90%.</text>
+</svg>
