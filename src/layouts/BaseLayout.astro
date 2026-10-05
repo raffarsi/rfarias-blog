@@ -7,9 +7,12 @@ interface Props {
   description?: string;
   image?: string;
   type?: string;
+  articleDate?: string;
+  articleSection?: string;
+  headline?: string;
 }
 
-const { title = 'rfarias', description = 'Tecnologia, Cloud, IA e Carreira, por Rafael Farias', image, type } = Astro.props;
+const { title = 'rfarias', description = 'Tecnologia, Cloud, IA e Carreira, por Rafael Farias', image, type, articleDate, articleSection, headline } = Astro.props;
 
 const navItems = [
   { label: 'Início', href: '/' },
@@ -30,7 +33,7 @@ const currentPath = Astro.url.pathname;
   <meta name="description" content={description} />
   <title>{title}</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <SEO title={title} description={description} image={image} type={type} />
+  <SEO title={title} description={description} image={image} type={type} articleDate={articleDate} articleSection={articleSection} headline={headline} />
   <!-- Anti-FOUC: aplica tema antes de renderizar -->
   <script is:inline>
     (function() {

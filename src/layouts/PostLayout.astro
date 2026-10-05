@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
+import { instante } from '../lib/agenda.mjs';
 
 
 interface Props {
@@ -29,6 +30,9 @@ const hasOG = mvpSlugs.includes(articleSlug);
 const ogImage = hasOG ? `/og/${articleSlug}.png` : `/og-default.png`;
 const badgeClass = isTech ? 'badge-tech' : 'badge-carreira';
 const tocHeadings = headings.filter(h => h.depth === 2);
+// Data de publicação em ISO para os dados estruturados (o frontmatter usa "15 Nov 2025")
+const ms = instante(frontmatter.date, (frontmatter as any).hora);
+const articleDate = ms ? new Date(ms).toISOString() : undefined;
 ---
 
 <BaseLayout
@@ -36,6 +40,9 @@ const tocHeadings = headings.filter(h => h.depth === 2);
   description={frontmatter.description || `${frontmatter.title}, artigo por Rafael Farias sobre ${frontmatter.category}.`}
   image={ogImage}
   type="article"
+  articleDate={articleDate}
+  articleSection={frontmatter.category}
+  headline={frontmatter.title}
 >
   <article class="container post-page">
     {hasOG && (
