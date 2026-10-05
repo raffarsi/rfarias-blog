@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Antes: VM em sub-rede sem nada configurado sai para a internet pelo default outbound access, com IP público implícito. Depois: em sub-rede privada a VM não tem saída implícita e só sai por um dos quatro métodos explícitos: NAT Gateway na sub-rede, Load Balancer Standard com regras de saída, IP público Standard na placa de rede, ou Firewall ou NVA com rota definida pelo usuário.">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Saída para a internet: implícita ou explícita</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Em sub-rede privada, a VM só sai se você configurar um método explícito</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- divisor -->
+    <line x1="430" y1="120" x2="430" y2="490" stroke="#C9D8F0" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+    <!-- ANTES -->
+    <text x="60" y="134" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">ANTES: DEFAULT OUTBOUND ACCESS</text>
+    <rect x="150" y="160" width="160" height="40" rx="8" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2"/>
+    <text x="230" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Internet</text>
+
+    <text x="246" y="252" font-size="13" font-weight="700" fill="#10233F">IP público implícito</text>
+    <text x="246" y="272" font-size="13" fill="#4A5568">ninguém controla,</text>
+    <text x="246" y="290" font-size="13" fill="#4A5568">pode mudar</text>
+
+    <rect x="90" y="340" width="280" height="110" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <line x1="230" y1="370" x2="230" y2="204" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+    <rect x="170" y="370" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="230" y="395" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">VM</text>
+    <text x="230" y="414" text-anchor="middle" font-size="12" fill="#4A5568">sem IP público</text>
+
+    <text x="90" y="472" font-size="14" font-weight="700" fill="#1A56DB">Sub-rede sem nada configurado</text>
+    <text x="90" y="492" font-size="14" fill="#4A5568">A VM sai mesmo assim.</text>
+
+    <!-- DEPOIS -->
+    <text x="470" y="134" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">DEPOIS: SUB-REDE PRIVADA</text>
+    <rect x="620" y="160" width="160" height="40" rx="8" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2"/>
+    <text x="700" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Internet</text>
+
+    <!-- metodos -> internet -->
+    <g stroke="#1A56DB" stroke-width="2" fill="none" marker-end="url(#seta)">
+      <line x1="518" y1="232" x2="640" y2="203"/>
+      <line x1="640" y1="232" x2="680" y2="203"/>
+      <line x1="762" y1="232" x2="720" y2="203"/>
+      <line x1="884" y1="232" x2="760" y2="203"/>
+    </g>
+
+    <!-- quatro metodos -->
+    <g font-size="12" fill="#10233F" text-anchor="middle">
+      <rect x="462" y="232" width="112" height="68" rx="6" fill="#1A56DB"/>
+      <text x="518" y="262" fill="#FFFFFF" font-weight="700">NAT Gateway</text>
+      <text x="518" y="278" fill="#FFFFFF">na sub-rede</text>
+
+      <rect x="584" y="232" width="112" height="68" rx="6" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5"/>
+      <text x="640" y="254" font-weight="700">Load Balancer</text>
+      <text x="640" y="270">Standard com</text>
+      <text x="640" y="286">regras de saída</text>
+
+      <rect x="706" y="232" width="112" height="68" rx="6" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5"/>
+      <text x="762" y="254" font-weight="700">IP público</text>
+      <text x="762" y="270">Standard na</text>
+      <text x="762" y="286">placa de rede</text>
+
+      <rect x="828" y="232" width="112" height="68" rx="6" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5"/>
+      <text x="884" y="254" font-weight="700">Firewall ou NVA</text>
+      <text x="884" y="270">com rota definida</text>
+      <text x="884" y="286">pelo usuário</text>
+    </g>
+
+    <!-- VM -> metodos (relacao: um deles) -->
+    <g stroke="#1A56DB" stroke-width="1.5" stroke-dasharray="5 4" fill="none">
+      <line x1="590" y1="370" x2="518" y2="301"/>
+      <line x1="605" y1="370" x2="640" y2="301"/>
+      <line x1="620" y1="370" x2="762" y2="301"/>
+      <line x1="635" y1="370" x2="884" y2="301"/>
+    </g>
+
+    <rect x="480" y="340" width="460" height="110" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <!-- redesenha as linhas dentro da sub-rede por cima do fundo -->
+    <g stroke="#1A56DB" stroke-width="1.5" stroke-dasharray="5 4" fill="none">
+      <line x1="590" y1="370" x2="559" y2="340"/>
+      <line x1="605" y1="370" x2="610" y2="340"/>
+      <line x1="620" y1="370" x2="681" y2="340"/>
+      <line x1="635" y1="370" x2="759" y2="340"/>
+    </g>
+    <rect x="552" y="370" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="612" y="405" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">VM</text>
+
+    <!-- saida implicita bloqueada -->
+    <line x1="676" y1="400" x2="748" y2="400" stroke="#C0392B" stroke-width="2" stroke-dasharray="5 4"/>
+    <line x1="752" y1="391" x2="770" y2="409" stroke="#C0392B" stroke-width="3"/>
+    <line x1="770" y1="391" x2="752" y2="409" stroke="#C0392B" stroke-width="3"/>
+    <text x="782" y="397" font-size="13" font-weight="700" fill="#C0392B">sem saída</text>
+    <text x="782" y="414" font-size="13" font-weight="700" fill="#C0392B">implícita</text>
+
+    <text x="480" y="472" font-size="14" font-weight="700" fill="#1A56DB">Sub-rede privada: defaultOutboundAccess = false</text>
+    <text x="480" y="492" font-size="14" fill="#4A5568">A saída usa um dos quatro métodos explícitos.</text>
+  </g>
+
+  <text x="60" y="522" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">Saída para a internet tem que ser uma decisão, não um efeito colateral.</text>
+</svg>
