@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Antes e depois: à esquerda o Azure OpenAI com acesso público, alcançável pela internet pelo endpoint público; à direita o acesso público desabilitado, a aplicação na VNet chegando ao Private Endpoint, a zona DNS privada resolvendo o nome para o IP privado e o desenvolvedor entrando pelo Azure VPN Client e VPN Gateway do hub">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/></marker>
+    <marker id="setaR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C0392B"/></marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Antes e depois do Private Link</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Do endpoint público para Private Endpoint, DNS privado e acesso público desligado</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+
+    <!-- ANTES -->
+    <rect x="44" y="116" width="336" height="384" rx="12" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="64" y="146" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">ANTES</text>
+
+    <rect x="64" y="168" width="140" height="62" rx="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+    <text x="134" y="194" text-anchor="middle" font-size="13" fill="#10233F">Qualquer pessoa</text>
+    <text x="134" y="213" text-anchor="middle" font-size="13" fill="#10233F">na internet</text>
+
+    <rect x="220" y="168" width="140" height="62" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="290" y="204" text-anchor="middle" font-size="13" fill="#10233F">Aplicação</text>
+
+    <line x1="140" y1="232" x2="186" y2="298" stroke="#C0392B" stroke-width="2" marker-end="url(#setaR)"/>
+    <line x1="284" y1="232" x2="238" y2="298" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="142" y="302" width="140" height="28" rx="14" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+    <text x="212" y="321" text-anchor="middle" font-size="13" fill="#C0392B">endpoint público</text>
+
+    <rect x="102" y="340" width="220" height="82" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="212" y="369" text-anchor="middle" font-size="16" font-weight="700" fill="#10233F">Azure OpenAI</text>
+    <text x="212" y="392" text-anchor="middle" font-size="13" fill="#4A5568">publicNetworkAccess:</text>
+    <text x="212" y="410" text-anchor="middle" font-size="13" font-weight="700" fill="#C0392B">Enabled</text>
+
+    <text x="64" y="452" font-size="14" font-weight="700" fill="#C0392B">Única defesa: API key</text>
+    <text x="64" y="476" font-size="13" fill="#4A5568">Chave vazada dá acesso ao modelo.</text>
+
+    <!-- DEPOIS -->
+    <rect x="404" y="116" width="552" height="384" rx="12" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="424" y="146" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">DEPOIS</text>
+
+    <!-- VNet -->
+    <rect x="424" y="160" width="276" height="232" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="440" y="182" font-size="13" font-weight="700" fill="#1A56DB">VNet Spoke de IA (10.1.0.0/16)</text>
+
+    <rect x="440" y="196" width="244" height="64" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="452" y="216" font-size="12" fill="#8593A8">snet-app-integration</text>
+    <text x="452" y="242" font-size="14" font-weight="700" fill="#10233F">Aplicação (App Service)</text>
+
+    <line x1="562" y1="262" x2="562" y2="300" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="440" y="304" width="244" height="72" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="452" y="324" font-size="12" fill="#8593A8">snet-private-endpoints</text>
+    <text x="452" y="348" font-size="14" font-weight="700" fill="#10233F">Private Endpoint</text>
+    <text x="452" y="367" font-size="12" fill="#4A5568">IP privado do pe-openai</text>
+
+    <!-- PE para OpenAI -->
+    <line x1="686" y1="340" x2="770" y2="340" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="774" y="300" width="166" height="80" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="857" y="328" text-anchor="middle" font-size="16" font-weight="700" fill="#10233F">Azure OpenAI</text>
+    <text x="857" y="349" text-anchor="middle" font-size="13" fill="#4A5568">publicNetworkAccess:</text>
+    <text x="857" y="367" text-anchor="middle" font-size="13" font-weight="700" fill="#1E8E3E">Disabled</text>
+
+    <!-- DNS -->
+    <rect x="774" y="168" width="166" height="96" rx="8" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="857" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Zona DNS privada</text>
+    <text x="857" y="213" text-anchor="middle" font-size="12" fill="#4A5568">privatelink.openai</text>
+    <text x="857" y="229" text-anchor="middle" font-size="12" fill="#4A5568">.azure.com</text>
+    <text x="857" y="251" text-anchor="middle" font-size="12" font-weight="700" fill="#1A56DB">nome → IP privado</text>
+    <line x1="772" y1="228" x2="688" y2="228" stroke="#1A56DB" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#seta)"/>
+
+    <!-- Internet bloqueada -->
+    <rect x="774" y="424" width="166" height="56" rx="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+    <text x="857" y="447" text-anchor="middle" font-size="13" fill="#10233F">Internet</text>
+    <text x="857" y="467" text-anchor="middle" font-size="12" fill="#C0392B">sem acesso público</text>
+    <line x1="857" y1="422" x2="857" y2="388" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <g stroke="#C0392B" stroke-width="2.5" stroke-linecap="round">
+      <line x1="849" y1="397" x2="865" y2="413"/>
+      <line x1="865" y1="397" x2="849" y2="413"/>
+    </g>
+
+    <!-- Dev -->
+    <rect x="424" y="424" width="132" height="56" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="490" y="447" text-anchor="middle" font-size="13" font-weight="700" fill="#10233F">Desenvolvedor</text>
+    <text x="490" y="467" text-anchor="middle" font-size="12" fill="#4A5568">Azure VPN Client</text>
+    <line x1="558" y1="452" x2="590" y2="452" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+    <rect x="594" y="424" width="106" height="56" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="647" y="447" text-anchor="middle" font-size="13" fill="#10233F">VPN Gateway</text>
+    <text x="647" y="467" text-anchor="middle" font-size="12" fill="#4A5568">do hub</text>
+    <line x1="647" y1="422" x2="647" y2="396" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+  </g>
+
+  <text x="60" y="532" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">Depois: rede e identidade (Entra ID) como defesa, e o tráfego fica dentro do backbone da Microsoft.</text>
+</svg>
