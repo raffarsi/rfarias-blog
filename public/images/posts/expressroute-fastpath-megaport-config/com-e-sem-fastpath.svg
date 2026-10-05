@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Comparação lado a lado do caminho do tráfego do on-premises até as VMs na VNet via ExpressRoute: sem FastPath o tráfego passa pelo gateway ExpressRoute; com FastPath vai direto da borda da Microsoft às VMs e o gateway fica só na troca de rotas BGP">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/></marker>
+    <marker id="setaVerde" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1E8E3E"/></marker>
+    <marker id="setaCinza" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8593A8"/></marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Sem e com FastPath</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Tráfego do on-premises até as VMs na VNet pelo private peering do ExpressRoute</text>
+
+  <line x1="495" y1="128" x2="495" y2="480" stroke="#C9D8F0" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+
+    <!-- SEM FASTPATH -->
+    <text x="250" y="136" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">SEM FASTPATH</text>
+
+    <rect x="150" y="152" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="250" y="180" text-anchor="middle" font-size="15" fill="#10233F">On-premises</text>
+    <line x1="250" y1="198" x2="250" y2="228" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+
+    <rect x="150" y="230" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="250" y="258" text-anchor="middle" font-size="15" fill="#10233F">Borda da Microsoft</text>
+
+    <rect x="60" y="300" width="380" height="172" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="76" y="322" font-size="13" font-weight="700" letter-spacing="1" fill="#8593A8">VNET</text>
+
+    <line x1="250" y1="276" x2="250" y2="329" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+    <rect x="150" y="332" width="200" height="50" rx="6" fill="#FFFFFF" stroke="#C0392B" stroke-width="2.5"/>
+    <text x="250" y="362" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Gateway ExpressRoute</text>
+    <line x1="250" y1="382" x2="250" y2="408" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+
+    <rect x="150" y="410" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="250" y="438" text-anchor="middle" font-size="15" fill="#10233F">VMs</text>
+
+    <text x="60" y="502" font-size="14" font-weight="700" fill="#C0392B">Gateway no caminho dos dados</text>
+    <text x="60" y="522" font-size="14" fill="#4A5568">Vazão presa ao teto de banda e PPS do SKU</text>
+
+    <!-- COM FASTPATH -->
+    <text x="750" y="136" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">COM FASTPATH</text>
+
+    <rect x="580" y="152" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="680" y="180" text-anchor="middle" font-size="15" fill="#10233F">On-premises</text>
+    <line x1="680" y1="198" x2="680" y2="228" stroke="#1E8E3E" stroke-width="2.5" marker-end="url(#setaVerde)"/>
+
+    <rect x="580" y="230" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="680" y="258" text-anchor="middle" font-size="15" fill="#10233F">Borda da Microsoft</text>
+
+    <rect x="550" y="300" width="390" height="172" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="566" y="322" font-size="13" font-weight="700" letter-spacing="1" fill="#8593A8">VNET</text>
+
+    <line x1="680" y1="276" x2="680" y2="408" stroke="#1E8E3E" stroke-width="2.5" marker-end="url(#setaVerde)"/>
+    <text x="668" y="372" text-anchor="end" font-size="12" fill="#1E8E3E">dados direto</text>
+
+    <rect x="580" y="410" width="200" height="46" rx="6" fill="#FFFFFF" stroke="#1E8E3E" stroke-width="2"/>
+    <text x="680" y="438" text-anchor="middle" font-size="15" fill="#10233F">VMs</text>
+
+    <line x1="780" y1="262" x2="852" y2="328" stroke="#8593A8" stroke-width="1.8" stroke-dasharray="6 5" marker-start="url(#setaCinza)" marker-end="url(#setaCinza)"/>
+    <rect x="770" y="332" width="156" height="70" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="848" y="355" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Gateway</text>
+    <text x="848" y="373" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">ExpressRoute</text>
+    <text x="848" y="392" text-anchor="middle" font-size="12" fill="#4A5568">só troca de rotas BGP</text>
+
+    <text x="550" y="502" font-size="14" font-weight="700" fill="#1E8E3E">Gateway fora do caminho dos dados</text>
+    <text x="550" y="522" font-size="13" fill="#4A5568">Requer Ultra Performance, ErGw3AZ ou ErGwScale (10+ unidades)</text>
+  </g>
+</svg>
