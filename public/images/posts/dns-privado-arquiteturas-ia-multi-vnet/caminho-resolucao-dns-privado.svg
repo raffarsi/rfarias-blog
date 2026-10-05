@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Caminho de uma consulta DNS para o Azure OpenAI com Private Endpoint numa arquitetura multi-VNet: a aplicação no spoke pergunta oai-producao.openai.azure.com ao Private DNS Resolver no hub (10.0.4.4), que responde com a zona privatelink.openai.azure.com vinculada à VNet do hub e devolve o IP privado do Private Endpoint no spoke de IA. Em vermelho, o Erro 1: se a zona está vinculada só ao spoke, o resolver não a enxerga e a consulta volta com o IP público.">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+    <marker id="seta-verde" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1E8E3E"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Caminho da resolução DNS privada</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Uma consulta ao Azure OpenAI com Private Endpoint, de um spoke até o IP privado</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+
+    <!-- Spoke da aplicacao -->
+    <rect x="60" y="140" width="220" height="180" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="170" y="166" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Spoke da aplicação</text>
+    <rect x="74" y="180" width="192" height="76" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="170" y="203" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">App ou VM</text>
+    <text x="170" y="224" text-anchor="middle" font-size="12" fill="#4A5568">pergunta</text>
+    <text x="170" y="242" text-anchor="middle" font-size="12" fill="#4A5568">oai-producao.openai.azure.com</text>
+    <text x="170" y="282" text-anchor="middle" font-size="13" fill="#4A5568">DNS da VNet</text>
+    <text x="170" y="302" text-anchor="middle" font-size="14" font-weight="700" fill="#1A56DB">10.0.4.4</text>
+
+    <!-- Hub -->
+    <rect x="380" y="140" width="240" height="180" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="500" y="166" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">VNet do hub</text>
+    <rect x="400" y="180" width="200" height="76" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="500" y="207" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Private DNS Resolver</text>
+    <text x="500" y="228" text-anchor="middle" font-size="13" fill="#4A5568">inbound endpoint</text>
+    <text x="500" y="246" text-anchor="middle" font-size="13" font-weight="700" fill="#1A56DB">10.0.4.4</text>
+    <text x="500" y="284" text-anchor="middle" font-size="13" fill="#4A5568">Responde com as zonas</text>
+    <text x="500" y="302" text-anchor="middle" font-size="13" fill="#4A5568">vinculadas a esta VNet</text>
+
+    <!-- Spoke de IA -->
+    <rect x="720" y="140" width="220" height="180" rx="10" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="830" y="166" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Spoke de IA</text>
+    <rect x="740" y="180" width="180" height="76" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="830" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Private Endpoint</text>
+    <text x="830" y="234" text-anchor="middle" font-size="13" fill="#4A5568">Azure OpenAI</text>
+    <text x="830" y="284" text-anchor="middle" font-size="13" fill="#4A5568">Acesso público</text>
+    <text x="830" y="302" text-anchor="middle" font-size="13" fill="#4A5568">desligado</text>
+
+    <!-- 1. consulta -->
+    <line x1="282" y1="206" x2="376" y2="206" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+    <text x="330" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#10233F">1. consulta</text>
+    <!-- 3. resposta -->
+    <line x1="378" y1="270" x2="284" y2="270" stroke="#1E8E3E" stroke-width="2" marker-end="url(#seta-verde)"/>
+    <text x="330" y="292" text-anchor="middle" font-size="13" font-weight="700" fill="#1E8E3E">3. IP privado</text>
+
+    <!-- 2. vinculo da zona ao hub -->
+    <line x1="500" y1="320" x2="500" y2="380" stroke="#1A56DB" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="516" y="346" font-size="13" font-weight="700" fill="#10233F">2. zona vinculada</text>
+    <text x="516" y="364" font-size="13" font-weight="700" fill="#10233F">à VNet do hub</text>
+
+    <!-- Zona privada -->
+    <rect x="380" y="380" width="240" height="92" rx="10" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2"/>
+    <text x="500" y="405" text-anchor="middle" font-size="14" font-weight="700" fill="#10233F">Zona Private DNS</text>
+    <text x="500" y="428" text-anchor="middle" font-size="13" fill="#1A56DB">privatelink.openai.azure.com</text>
+    <text x="500" y="452" text-anchor="middle" font-size="13" fill="#4A5568">registro com o IP privado</text>
+
+    <!-- registro aponta para o PE -->
+    <path d="M620,426 L830,426 L830,324" fill="none" stroke="#1A56DB" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#seta)"/>
+    <text x="640" y="450" font-size="13" fill="#4A5568">aponta para o IP</text>
+    <text x="640" y="468" font-size="13" fill="#4A5568">do Private Endpoint</text>
+
+    <!-- Erro 1 -->
+    <line x1="332" y1="352" x2="486" y2="352" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <line x1="493" y1="345" x2="507" y2="359" stroke="#C0392B" stroke-width="2.5"/>
+    <line x1="507" y1="345" x2="493" y2="359" stroke="#C0392B" stroke-width="2.5"/>
+    <rect x="60" y="340" width="272" height="100" rx="8" fill="#FFFFFF" stroke="#C0392B" stroke-width="1.5"/>
+    <text x="76" y="364" font-size="13" font-weight="700" fill="#C0392B">Erro 1: zona vinculada ao spoke,</text>
+    <text x="76" y="382" font-size="13" font-weight="700" fill="#C0392B">não ao hub</text>
+    <text x="76" y="404" font-size="13" fill="#4A5568">O resolver não enxerga a zona</text>
+    <text x="76" y="422" font-size="13" fill="#4A5568">e a consulta volta com IP público.</text>
+  </g>
+
+  <text x="60" y="512" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">Todas as zonas privatelink vinculadas ao hub, e todo mundo pergunta ao resolver.</text>
+</svg>
