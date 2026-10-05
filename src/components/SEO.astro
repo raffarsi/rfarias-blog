@@ -7,6 +7,7 @@ interface Props {
   articleDate?: string;
   articleAuthor?: string;
   articleSection?: string;
+  headline?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   articleDate,
   articleAuthor = 'Rafael Farias da Silva',
   articleSection,
+  headline,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -26,7 +28,10 @@ const imageURL = image.startsWith('http') ? image : new URL(image, Astro.site);
 const jsonLd = type === 'article' ? {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: title,
+  headline: headline || title,
+  inLanguage: 'pt-BR',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL.toString() },
+  ...(articleSection ? { articleSection } : {}),
   description,
   image: imageURL,
   author: {
