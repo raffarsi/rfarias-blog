@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Comparação lado a lado: com UDR, a rota 0.0.0.0/0 da sub-rede desvia o tráfego da aplicação para o IP privado do Azure Firewall sem que ela saiba; com Explicit Proxy, a aplicação é configurada para usar o firewall como proxy nas portas 8080 e 8443 e o firewall conecta ao destino na internet">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">UDR vs Explicit Proxy</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Dois jeitos de levar o tráfego de saída até o Azure Firewall</text>
+
+  <line x1="500" y1="130" x2="500" y2="520" stroke="#C9D8F0" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+
+    <!-- ESQUERDA: UDR -->
+    <text x="270" y="140" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">CAMINHO 1</text>
+    <text x="270" y="165" text-anchor="middle" font-size="17" font-weight="700" fill="#10233F">UDR (forced tunneling)</text>
+
+    <rect x="120" y="185" width="300" height="62" rx="8" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="270" y="211" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Aplicação na sub-rede</text>
+    <text x="270" y="233" text-anchor="middle" font-size="13" fill="#4A5568">Requisição direta para o destino</text>
+
+    <line x1="270" y1="247" x2="270" y2="266" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="95" y="268" width="350" height="44" rx="6" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="270" y="287" text-anchor="middle" font-size="13" font-weight="700" fill="#10233F">Tabela de rotas: 0.0.0.0/0</text>
+    <text x="270" y="304" text-anchor="middle" font-size="13" fill="#4A5568">próximo salto: IP privado do firewall</text>
+
+    <line x1="270" y1="312" x2="270" y2="328" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="120" y="330" width="300" height="62" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="270" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">Azure Firewall</text>
+    <text x="270" y="378" text-anchor="middle" font-size="13" fill="#FFFFFF">Inspeciona por FQDN ou por IP</text>
+
+    <line x1="270" y1="392" x2="270" y2="428" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+
+    <rect x="170" y="430" width="200" height="40" rx="20" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5"/>
+    <text x="270" y="455" text-anchor="middle" font-size="14" fill="#10233F">Destino na internet</text>
+
+    <text x="60" y="500" font-size="14" font-weight="700" fill="#1A56DB">O cliente não sabe que existe firewall</text>
+    <text x="60" y="520" font-size="14" fill="#4A5568">O tráfego é desviado pela rota da sub-rede.</text>
+
+    <!-- DIREITA: EXPLICIT PROXY -->
+    <text x="730" y="140" text-anchor="middle" font-size="14" font-weight="700" letter-spacing="1.2" fill="#8593A8">CAMINHO 2</text>
+    <text x="730" y="165" text-anchor="middle" font-size="17" font-weight="700" fill="#10233F">Explicit Proxy</text>
+
+    <rect x="580" y="185" width="300" height="62" rx="8" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="730" y="211" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Aplicação proxy-aware</text>
+    <text x="730" y="233" text-anchor="middle" font-size="13" fill="#4A5568">HTTP_PROXY e HTTPS_PROXY configurados</text>
+
+    <line x1="730" y1="247" x2="730" y2="328" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+    <text x="744" y="282" font-size="13" font-weight="700" fill="#10233F">Conecta direto ao proxy</text>
+    <text x="744" y="300" font-size="13" fill="#4A5568">CONNECT para HTTPS</text>
+
+    <rect x="580" y="330" width="300" height="62" rx="8" fill="#1A56DB" stroke="#1A56DB" stroke-width="2"/>
+    <text x="730" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">Azure Firewall como proxy</text>
+    <text x="730" y="378" text-anchor="middle" font-size="13" fill="#FFFFFF">Portas 8080 (HTTP) e 8443 (HTTPS)</text>
+
+    <line x1="730" y1="392" x2="730" y2="428" stroke="#1A56DB" stroke-width="2" marker-end="url(#seta)"/>
+    <text x="744" y="415" font-size="13" fill="#4A5568">O firewall conecta ao destino</text>
+
+    <rect x="630" y="430" width="200" height="40" rx="20" fill="#FFFFFF" stroke="#1A56DB" stroke-width="1.5"/>
+    <text x="730" y="455" text-anchor="middle" font-size="14" fill="#10233F">Destino na internet</text>
+
+    <text x="520" y="500" font-size="14" font-weight="700" fill="#1A56DB">A aplicação sabe que usa um proxy</text>
+    <text x="520" y="520" font-size="14" fill="#4A5568">Configurada por aplicação, sem depender da rota.</text>
+  </g>
+</svg>
