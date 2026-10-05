@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 562" width="1000" height="562" role="img" aria-label="Tráfego passando pelo Azure Firewall, cuja política tem duas camadas: Threat Intelligence, que compara origem e destino com a lista de reputação da Microsoft e começa em Alert and deny, e IDPS, que inspeciona o conteúdo dos pacotes por assinaturas e começa em Alert">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1A56DB"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="562" fill="#FFFFFF"/>
+
+  <text x="60" y="58" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#10233F">Threat Intelligence e IDPS não são a mesma coisa</text>
+  <text x="60" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#4A5568">Duas camadas na mesma política do firewall, olhando partes diferentes do tráfego</text>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- Origem -->
+    <rect x="60" y="262" width="120" height="80" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="120" y="297" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Origem</text>
+    <text x="120" y="318" text-anchor="middle" font-size="13" fill="#4A5568">tráfego</text>
+    <line x1="182" y1="302" x2="232" y2="302" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+
+    <!-- Firewall -->
+    <rect x="240" y="122" width="520" height="362" rx="12" fill="#EEF3FB" stroke="#1A56DB" stroke-width="2.5"/>
+    <text x="262" y="152" font-size="14" font-weight="700" letter-spacing="1.2" fill="#1A56DB">AZURE FIREWALL · POLÍTICA</text>
+
+    <!-- Threat Intelligence -->
+    <rect x="262" y="168" width="476" height="140" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="282" y="196" font-size="18" font-weight="700" fill="#10233F">Threat Intelligence</text>
+    <text x="718" y="196" text-anchor="end" font-size="13" fill="#8593A8">Standard e Premium</text>
+    <text x="282" y="224" font-size="14" font-weight="700" fill="#1A56DB">Reputação</text>
+    <text x="370" y="224" font-size="14" fill="#10233F">compara origem e destino com a lista da</text>
+    <text x="370" y="244" font-size="14" fill="#10233F">Microsoft de IPs, FQDNs e URLs maliciosos</text>
+    <text x="282" y="274" font-size="13" fill="#4A5568">Falso positivo raro</text>
+    <rect x="530" y="258" width="188" height="28" rx="14" fill="#1A56DB"/>
+    <text x="624" y="277" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Começa em Alert and deny</text>
+
+    <!-- IDPS -->
+    <rect x="262" y="322" width="476" height="144" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="282" y="350" font-size="18" font-weight="700" fill="#10233F">IDPS</text>
+    <text x="718" y="350" text-anchor="end" font-size="13" fill="#8593A8">só Premium</text>
+    <text x="282" y="378" font-size="14" font-weight="700" fill="#1A56DB">Conteúdo</text>
+    <text x="370" y="378" font-size="14" fill="#10233F">compara os pacotes com 67.000+ assinaturas</text>
+    <text x="370" y="398" font-size="14" fill="#10233F">em 50+ categorias; direção pelos intervalos privados</text>
+    <text x="282" y="430" font-size="13" fill="#4A5568">Mais granular, erra mais</text>
+    <rect x="530" y="414" width="188" height="28" rx="14" fill="#FFFFFF" stroke="#1A56DB" stroke-width="2"/>
+    <text x="624" y="433" text-anchor="middle" font-size="13" font-weight="700" fill="#1A56DB">Começa em Alert</text>
+
+    <!-- Destino -->
+    <line x1="762" y1="302" x2="812" y2="302" stroke="#1A56DB" stroke-width="2.5" marker-end="url(#seta)"/>
+    <rect x="820" y="262" width="120" height="80" rx="8" fill="#FFFFFF" stroke="#C9D8F0" stroke-width="1.5"/>
+    <text x="880" y="297" text-anchor="middle" font-size="15" font-weight="700" fill="#10233F">Destino</text>
+    <text x="880" y="318" text-anchor="middle" font-size="13" fill="#4A5568">tráfego</text>
+  </g>
+
+  <text x="60" y="524" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-style="italic" fill="#4A5568">Reputação pode bloquear desde o início; inspeção de conteúdo começa só alertando.</text>
+</svg>
