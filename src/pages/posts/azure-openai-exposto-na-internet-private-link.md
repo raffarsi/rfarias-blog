@@ -10,7 +10,7 @@ date: "19 Ago 2026"
 readTime: "9 min"
 description: "Pipelines de RAG sobem com Azure OpenAI e Azure AI Search em acesso público 'por enquanto', e o 'por enquanto' nunca acaba. Como eliminar essa exposição com Private Link de ponta a ponta."
 next:
-  title: "Azure Networking [2]: Hub-and-spoke para IA generativa"
+  title: "Hub-and-spoke para IA generativa"
   slug: "hub-and-spoke-ia-generativa-azure"
 ---
 
@@ -124,6 +124,8 @@ resource peSearch 'Microsoft.Network/privateEndpoints@2023-09-01' = {
 ```
 
 ## Antes × Depois
+
+![Antes e depois: à esquerda o Azure OpenAI com acesso público, alcançável por qualquer pessoa na internet pelo endpoint público; à direita o acesso público desabilitado, a aplicação na VNet acessando o Private Endpoint, a zona DNS privada resolvendo o nome para o IP privado e o desenvolvedor entrando pelo Azure VPN Client e VPN Gateway do hub](/images/posts/azure-openai-exposto-na-internet-private-link/antes-depois-private-link.svg)
 
 | | Antes | Depois |
 |---|---|---|

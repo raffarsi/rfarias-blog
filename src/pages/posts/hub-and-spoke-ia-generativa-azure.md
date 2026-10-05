@@ -10,10 +10,10 @@ date: "21 Ago 2026"
 readTime: "10 min"
 description: "A topologia 'óbvia' para IA generativa quebra a governança assim que a segunda squad de IA aparece. O padrão hub-and-spoke resolve, mas só se você souber onde colocar cada componente."
 prev:
-  title: "Azure Networking [1]: Seu Azure OpenAI está exposto na internet"
+  title: "Seu Azure OpenAI está exposto na internet"
   slug: "azure-openai-exposto-na-internet-private-link"
 next:
-  title: "Azure Networking [3]: DNS privado em arquiteturas de IA multi-VNet"
+  title: "DNS privado em arquiteturas de IA multi-VNet"
   slug: "dns-privado-arquiteturas-ia-multi-vnet"
 ---
 
@@ -43,31 +43,11 @@ Cada VNet tem seu próprio Azure Firewall (ou não tem), suas próprias regras d
 
 O padrão correto é tratar workloads de IA generativa como qualquer outro spoke, conectado a um hub central que concentra os recursos compartilhados:
 
-```
-                    VNet HUB
-              ┌──────────────────┐
-              │  Azure Firewall  │
-              │  VPN/ER Gateway  │
-              │  DNS Resolver    │
-              │  Bastion         │
-              └────────┬─────────┘
-                       │ peering
-          ┌────────────┴────────────┐
-          │                         │
-   VNet Spoke IA-RH         VNet Spoke IA-Finance
-   ┌──────────────┐          ┌──────────────┐
-   │ AI Foundry   │          │ AI Foundry   │
-   │ (agentes)    │          │ (agentes)    │
-   │              │          │              │
-   │ snet-pe:     │          │ snet-pe:     │
-   │  PE-OpenAI   │          │  PE-OpenAI   │
-   │  PE-Search   │          │  PE-Search   │
-   └──────────────┘          └──────────────┘
-```
+![Topologia hub-and-spoke para IA generativa: VNet hub com Azure Firewall, gateway VPN ou ExpressRoute, DNS Resolver privado e Azure Bastion, ligada por peering aos spokes IA-RH e IA-Finance, cada um com agentes no Microsoft Foundry ou App Service e sub-rede snet-pe com PE do OpenAI e PE do Search; a saída para a internet passa pelo Azure Firewall do hub](/images/posts/hub-and-spoke-ia-generativa-azure/topologia-hub-spoke-ia.svg)
 
 **O hub concentra o que é compartilhado:** o Azure Firewall (ou NVA de terceiros) para inspeção de saída, o gateway de conectividade híbrida (VPN ou ExpressRoute), o DNS Resolver privado e o Azure Bastion para acesso administrativo seguro.
 
-**Cada spoke de IA concentra o que é específico do domínio:** os agentes no Azure AI Foundry ou App Service, os Private Endpoints para os serviços PaaS do domínio (cada spoke tem seus próprios PEs, não compartilhados entre domínios por questão de isolamento de dados), e os NSGs específicos do workload.
+**Cada spoke de IA concentra o que é específico do domínio:** os agentes no Microsoft Foundry (antigo Azure AI Foundry) ou App Service, os Private Endpoints para os serviços PaaS do domínio (cada spoke tem seus próprios PEs, não compartilhados entre domínios por questão de isolamento de dados), e os NSGs específicos do workload.
 
 ## Regras de saída que a maioria esquece
 

@@ -10,10 +10,10 @@ date: "2 Set 2026"
 readTime: "6 min"
 description: "Com as versões de API lançadas depois de 31 de março de 2026, VNets novas nascem com sub-redes privadas. O pipeline não dá erro, a VM sobe, e ela simplesmente não sai para a internet. O que mudou, como achar o que depende do comportamento antigo e como migrar sem downtime."
 prev:
-  title: "Azure Networking [4]: Latência de rede em pipelines RAG"
+  title: "Latência de rede em pipelines RAG"
   slug: "latencia-rede-pipelines-rag-azure"
 next:
-  title: "Azure Networking [6]: Azure Firewall com Explicit Proxy vs UDR"
+  title: "Azure Firewall com Explicit Proxy vs UDR"
   slug: "azure-firewall-explicit-proxy-vs-udr"
 
 ---

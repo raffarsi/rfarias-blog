@@ -10,10 +10,10 @@ date: "4 Set 2026"
 readTime: "10 min"
 description: "Trocar UDR por Explicit Proxy parece simples. Até você esquecer do certificado e derrubar todo o tráfego de saída. Guia completo com a pegadinha que ninguém vê chegando."
 prev:
-  title: "Azure Networking [5]: VNets privadas por padrão a partir de março de 2026"
+  title: "VNets privadas por padrão a partir de março de 2026"
   slug: "vnets-privadas-por-padrao-marco-2026"
 next:
-  title: "Azure Networking [7]: Fortinet SD-WAN vs Secured Hub nativa do Azure"
+  title: "Fortinet SD-WAN vs Secured Hub nativa do Azure"
   slug: "fortinet-sdwan-virtual-wan-secured-hub"
 
 ---
@@ -34,6 +34,8 @@ Isso dificulta cenários onde:
 ## Como funciona o Explicit Proxy
 
 No modo Explicit Proxy, que hoje é GA e funciona nos tiers Standard e Premium, o Azure Firewall expõe um endpoint de proxy nas portas que você define na política (neste exemplo, 8080 para HTTP e 8443 para HTTPS; uma única porta também pode atender os dois). As aplicações são configuradas para usar esse endpoint explicitamente, via variáveis de ambiente ou configuração do runtime.
+
+![Comparação lado a lado: à esquerda, com UDR, a rota 0.0.0.0/0 da sub-rede desvia o tráfego da aplicação para o IP privado do Azure Firewall sem que ela saiba; à direita, com Explicit Proxy, a aplicação é configurada para usar o firewall como proxy nas portas 8080 (HTTP) e 8443 (HTTPS), e o firewall conecta ao destino na internet](/images/posts/azure-firewall-explicit-proxy-vs-udr/udr-vs-explicit-proxy.svg)
 
 A diferença fundamental: em vez de o tráfego ser redirecionado de forma transparente pela tabela de rotas, a aplicação **sabe** que está usando um proxy e estabelece conexão com ele diretamente usando o protocolo CONNECT para HTTPS.
 

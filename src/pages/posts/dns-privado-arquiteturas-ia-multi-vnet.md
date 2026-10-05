@@ -10,10 +10,10 @@ date: "26 Ago 2026"
 readTime: "5 min"
 description: "O Private Endpoint está configurado certo. O recurso responde no IP privado. E mesmo assim a aplicação não conecta. Os 4 erros de DNS que fazem um Private Endpoint \"configurado certo\" não funcionar, e o roteiro para achar cada um em minutos."
 prev:
-  title: "Azure Networking [2], Hub-and-spoke para IA generativa"
+  title: "Hub-and-spoke para IA generativa"
   slug: "hub-and-spoke-ia-generativa-azure"
 next:
-  title: "Azure Networking [4], Latência de rede em pipelines RAG"
+  title: "Latência de rede em pipelines RAG"
   slug: "latencia-rede-pipelines-rag-azure"
 ---
 
@@ -37,6 +37,8 @@ Um pipeline RAG típico tem pelo menos três serviços privados, cada um com a s
 Some a isso os ambientes (desenvolvimento, homologação, produção) e os spokes de cada time. A chance de um erro de DNS cresce com o número de Private Endpoints, e ele sempre aparece como "a rede não funciona".
 
 Antes dos erros, a regra que evita a maioria deles: todas as zonas `privatelink` ficam vinculadas ao hub, onde está o Private DNS Resolver, e todo mundo pergunta ao resolver. Como montar isso está no artigo sobre [Private DNS Resolver](/posts/azure-private-dns-resolver-arquitetura/). Aqui o foco é o que dá errado.
+
+![Caminho da consulta DNS: a aplicação no spoke pergunta ao Private DNS Resolver no hub, que responde pela zona privatelink.openai.azure.com vinculada ao hub e devolve o IP privado do Private Endpoint; em vermelho, o ponto em que a zona vinculada só ao spoke faz a consulta voltar com IP público](/images/posts/dns-privado-arquiteturas-ia-multi-vnet/caminho-resolucao-dns-privado.svg)
 
 ## Erro 1: zona vinculada ao spoke, não ao hub
 

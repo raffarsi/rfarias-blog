@@ -10,7 +10,7 @@ date: "10 Set 2026"
 readTime: "11 min"
 description: "Você já paga pelo Fortinet SD-WAN. A Secured Hub nativa do Azure já faz metade do que você paga por ela. Vale migrar tudo? A migração não precisa ser tudo ou nada."
 prev:
-  title: "Azure Networking [6], Azure Firewall com Explicit Proxy vs UDR"
+  title: "Azure Firewall com Explicit Proxy vs UDR"
   slug: "azure-firewall-explicit-proxy-vs-udr"
 ---
 
@@ -89,6 +89,8 @@ Azure Virtual WAN Hub
 ```
 
 **Por que funciona:** o Fortinet continua gerenciando o que faz melhor, SD-WAN entre filiais, QoS para voz/vídeo, zero-touch provisioning. O Azure Firewall cuida do tráfego dentro do Azure e da saída controlada para internet dos workloads cloud.
+
+![Topologia 1 de coexistência: filiais com Fortinet SD-WAN ligadas a um hub Fortinet on-premises, conectado por ExpressRoute ou VPN ao hub do Virtual WAN com Azure Firewall Premium (Secured Hub), que atende os spokes IA, App e Data e a saída para internet](/images/posts/fortinet-sdwan-virtual-wan-secured-hub/coexistencia-secured-hub-fortinet.svg)
 
 ### Topologia 2: Fortinet NVA e Azure Firewall no mesmo hub, com routing intent
 
