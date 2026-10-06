@@ -34,7 +34,7 @@ const badgeClass = badgeStyles[tag] ?? 'badge-azure';
 const accentColor = accentColors[tag] ?? 'var(--blue)';
 ---
 
-<a href={`/posts/${slug}`} class="post-card">
+<a href={`/posts/${slug}/`} class="post-card">
   {coverImage && (
     <div class="post-card-cover">
       <img src={coverImage} alt={title} loading="lazy" />

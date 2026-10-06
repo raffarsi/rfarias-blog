@@ -20,7 +20,7 @@ const outra = area === 'networking' ? { href: '/compute/', nome: 'Azure Compute'
       <p class="area-kicker">Área</p>
       <h1>{dados.titulo}</h1>
       <p class="area-sub">{dados.subtitulo}</p>
-      <p class="area-count">{dados.total} artigos · <a href={outra.href}>ver {outra.nome}</a> · <a href="/artigos">todos os artigos</a></p>
+      <p class="area-count">{dados.total} artigos · <a href={outra.href}>ver {outra.nome}</a> · <a href="/artigos/">todos os artigos</a></p>
       <nav class="area-toc" aria-label="Assuntos">
         {dados.grupos.map((g, i) => (
           <a href={`#assunto-${i}`}>{g.nome} <span>{g.posts.length}</span></a>
