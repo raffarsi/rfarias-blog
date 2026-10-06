@@ -45,7 +45,7 @@ const series = [
   {
     nome: 'AZ-900 na prática', cert: 'AZ-900', color: '#0078D4', colorBg: '#E6F2FF',
     desc: 'Do zero ao exame Azure Fundamentals. Cloud, serviços, segurança e custos com exemplos reais.',
-    artigos: 6, tempo: '~54 min', slug: 'az900', treinamento: '/treinamentos/az-900',
+    artigos: 6, tempo: '~54 min', slug: 'az900', treinamento: '/treinamentos/az-900/',
     posts: [
       { num:1, slug:'az900-01-conceitos-nuvem', title:'Conceitos fundamentais de Cloud Computing', date:'3 Mar 2026', readTime:'8 min' },
       { num:2, slug:'az900-02-arquitetura-azure', title:'Arquitetura e componentes do Azure', date:'7 Mar 2026', readTime:'9 min' },
@@ -58,7 +58,7 @@ const series = [
   {
     nome: 'AI-901 na prática', cert: 'AI-901', color: '#7B2D8B', colorBg: '#F3E8FF',
     desc: 'IA, Machine Learning, Azure AI Services e IA Generativa para a certificação AI Fundamentals.',
-    artigos: 5, tempo: '~45 min', slug: 'ai901', treinamento: '/treinamentos/ai901',
+    artigos: 5, tempo: '~45 min', slug: 'ai901', treinamento: '/treinamentos/ai901/',
     posts: [
       { num:1, slug:'ai901-01-fundamentos-ia', title:'Fundamentos de IA e Machine Learning', date:'24 Mar 2026', readTime:'9 min' },
       { num:2, slug:'ai901-02-azure-ai-services', title:'Azure AI Services: visão e fala', date:'28 Mar 2026', readTime:'9 min' },
@@ -70,7 +70,7 @@ const series = [
   {
     nome: 'SC-900 na prática', cert: 'SC-900', color: '#C0392B', colorBg: '#FDEDEC',
     desc: 'Segurança, conformidade e identidade Microsoft para a certificação Security Fundamentals.',
-    artigos: 5, tempo: '~46 min', slug: 'sc900', treinamento: '/treinamentos/sc900',
+    artigos: 5, tempo: '~46 min', slug: 'sc900', treinamento: '/treinamentos/sc900/',
     posts: [
       { num:1, slug:'sc900-01-zero-trust-defesa', title:'Zero Trust e defesa em profundidade', date:'11 Abr 2026', readTime:'9 min' },
       { num:2, slug:'sc900-02-identidade-entra', title:'Identidade e acesso com Microsoft Entra ID', date:'14 Abr 2026', readTime:'10 min' },
@@ -82,7 +82,7 @@ const series = [
   {
     nome: 'DP-900 na prática', cert: 'DP-900', color: '#0E7A0D', colorBg: '#EAFAEA',
     desc: 'Dados relacionais, NoSQL, analytics e pipelines no Azure para a certificação Data Fundamentals.',
-    artigos: 5, tempo: '~46 min', slug: 'dp900', treinamento: '/treinamentos/dp900',
+    artigos: 5, tempo: '~46 min', slug: 'dp900', treinamento: '/treinamentos/dp900/',
     posts: [
       { num:1, slug:'dp900-01-conceitos-dados', title:'Conceitos fundamentais de dados', date:'28 Abr 2026', readTime:'9 min' },
       { num:2, slug:'dp900-02-dados-relacionais', title:'Dados relacionais no Azure', date:'2 Mai 2026', readTime:'9 min' },
@@ -105,7 +105,7 @@ const series = [
         <div class="serie-card">
           <div class="serie-card-header" style={`border-left: 4px solid ${s.color}`}>
             <div class="serie-cert-badge" style={`background:${s.colorBg};color:${s.color}`}>{s.cert}</div>
-            <h2 class="serie-card-title"><a href={`/series/${s.slug}`}>{s.nome}</a></h2>
+            <h2 class="serie-card-title"><a href={`/series/${s.slug}/`}>{s.nome}</a></h2>
             <p class="serie-card-desc">{s.desc}</p>
             <div class="serie-card-meta">
               <span>📄 {s.artigos} artigos</span>
@@ -118,18 +118,18 @@ const series = [
               <li class="serie-post-item">
                 <span class="serie-num">{p.num}</span>
                 <div class="serie-post-body">
-                  <a href={`/posts/${p.slug}`} class="serie-post-title">{p.title}</a>
+                  <a href={`/posts/${p.slug}/`} class="serie-post-title">{p.title}</a>
                   <span class="serie-post-meta">{p.date} · {p.readTime}</span>
                 </div>
               </li>
             ))}
             {s.posts.length > 4 && (
               <li class="serie-more-item">
-                <a href={`/series/${s.slug}`}>+ {s.posts.length - 4} artigos mais →</a>
+                <a href={`/series/${s.slug}/`}>+ {s.posts.length - 4} artigos mais →</a>
               </li>
             )}
           </ol>
-          <a href={`/series/${s.slug}`} class="serie-ver-tudo">Ver série completa →</a>
+          <a href={`/series/${s.slug}/`} class="serie-ver-tudo">Ver série completa →</a>
         </div>
       ))}
     </div>

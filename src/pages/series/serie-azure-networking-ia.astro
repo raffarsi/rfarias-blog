@@ -43,9 +43,9 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
   <div class="container serie-page">
 
     <nav class="serie-breadcrumb">
-      <a href="/artigos">Artigos</a>
+      <a href="/artigos/">Artigos</a>
       <span>›</span>
-      <a href="/series">Séries</a>
+      <a href="/series/">Séries</a>
       <span>›</span>
       <span>Azure Networking + IA Generativa</span>
     </nav>
@@ -79,7 +79,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
 
     <div class="serie-progress-hint">
       <span>💡 Leia em ordem: cada artigo constrói sobre o anterior.</span>
-      <a href={`/posts/${publicados[0].slug}`} class="btn-start-serie">Começar do início →</a>
+      <a href={`/posts/${publicados[0].slug}/`} class="btn-start-serie">Começar do início →</a>
     </div>
 
     <!-- Publicados -->
@@ -89,7 +89,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
         <li class="serie-post-row">
           <div class="spr-num" style={`background:${colorBg};color:${color}`}>{p.num}</div>
           <div class="spr-body">
-            <a href={`/posts/${p.slug}`} class="spr-title">{p.title}</a>
+            <a href={`/posts/${p.slug}/`} class="spr-title">{p.title}</a>
             <p class="spr-excerpt">{p.excerpt}</p>
             <div class="spr-meta">
               <span>{p.date}</span>
@@ -97,7 +97,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
               {i === 0 && <span class="spr-badge">Comece aqui</span>}
             </div>
           </div>
-          <a href={`/posts/${p.slug}`} class="spr-cta">Ler →</a>
+          <a href={`/posts/${p.slug}/`} class="spr-cta">Ler →</a>
         </li>
       ))}
     </ol>
@@ -129,7 +129,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
     </div>
 
     <div class="serie-footer">
-      <a href="/series" class="btn-outline-blue">← Ver todas as séries</a>
+      <a href="/series/" class="btn-outline-blue">← Ver todas as séries</a>
     </div>
 
   </div>
