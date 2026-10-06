@@ -69,7 +69,7 @@ const trilhas = [
     <div class="trilhas-grid">
       {trilhas.map(trilha => (
         trilha.status === 'disponivel' ? (
-          <a href={`/treinamentos/${trilha.slug}`} class="trilha-card">
+          <a href={`/treinamentos/${trilha.slug}/`} class="trilha-card">
             <div class="trilha-top">
               <span class="trilha-icon">{trilha.icon}</span>
               <span class="badge-disponivel">Disponível</span>
