@@ -60,7 +60,7 @@ const articleDate = ms ? new Date(ms).toISOString() : undefined;
           </div>
         </div>
         {frontmatter.serieSlug && (
-          <a href={`/series/${frontmatter.serieSlug}`} class="serie-banner-link">
+          <a href={`/series/${frontmatter.serieSlug}/`} class="serie-banner-link">
             Ver série completa →
           </a>
         )}
@@ -96,13 +96,13 @@ const articleDate = ms ? new Date(ms).toISOString() : undefined;
     {(frontmatter.prev || frontmatter.next) && (
       <nav class="post-nav">
         {frontmatter.prev ? (
-          <a href={`/posts/${frontmatter.prev.slug}`} class="post-nav-card prev-card">
+          <a href={`/posts/${frontmatter.prev.slug}/`} class="post-nav-card prev-card">
             <span class="nav-direction">← Anterior</span>
             <span class="nav-title">{frontmatter.prev.title}</span>
           </a>
         ) : <span />}
         {frontmatter.next ? (
-          <a href={`/posts/${frontmatter.next.slug}`} class="post-nav-card next-card">
+          <a href={`/posts/${frontmatter.next.slug}/`} class="post-nav-card next-card">
             <span class="nav-direction">Próximo →</span>
             <span class="nav-title">{frontmatter.next.title}</span>
           </a>
@@ -112,7 +112,7 @@ const articleDate = ms ? new Date(ms).toISOString() : undefined;
 
     {frontmatter.serieSlug && (
       <div class="serie-bottom-cta">
-        <a href={`/series/${frontmatter.serieSlug}`}>
+        <a href={`/series/${frontmatter.serieSlug}/`}>
           📚 Ver todos os artigos da série {frontmatter.serie} →
         </a>
       </div>
