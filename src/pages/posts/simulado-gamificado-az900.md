@@ -45,4 +45,4 @@ O ranking gerou uma dinâmica que não esperava: quem liderava o ranking começo
 
 A plataforma roda inteiramente no frontend, HTML, CSS e JavaScript puro, sem backend. Os dados ficam no localStorage. Essa decisão foi deliberada: qualquer aluno acessa de qualquer dispositivo sem criar conta, sem login, sem fricção.
 
-A plataforma está integrada ao blog, na seção [Treinamentos](/treinamentos). Os próximos passos são AI-900 e DP-900.
+A plataforma está integrada ao blog, na seção [Treinamentos](/treinamentos/). Os próximos passos são AI-900 e DP-900.
