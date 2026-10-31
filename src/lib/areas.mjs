@@ -12,13 +12,17 @@ export const AREAS = {
     titulo: 'Azure Networking',
     subtitulo: 'Conectividade, segurança de rede, DNS e arquitetura de rede no Azure, a partir de problemas reais de produção.',
     tags: ['networking'],
-    fixos: { 'azure-front-door-waf-cdn': 'Balanceamento e entrega global' },
+    fixos: {
+      'azure-front-door-waf-cdn': 'Balanceamento e entrega global',
+      // o slug contém "network-manager", mas o assunto é planejamento de endereços, não segurança
+      'ipam-virtual-network-manager-sobreposicao-ip': 'Topologia, roteamento e diagnóstico',
+    },
     grupos: [
       { nome: 'Conectividade híbrida', palavras: ['expressroute', 'vpn', 'hibrida', 'sdwan', 'route-server', 'virtual-wan'] },
-      { nome: 'Segurança de rede', palavras: ['firewall', 'nsg', 'asg', 'waf', 'ddos', 'bastion', 'network-manager', 'nva', 'network-policies', 'egress'] },
+      { nome: 'Segurança de rede', palavras: ['firewall', 'nsg', 'asg', 'waf', 'ddos', 'bastion', 'network-manager', 'nva', 'network-policies', 'egress', 'perimeter', 'encryption'] },
       { nome: 'Acesso privado e DNS', palavras: ['private', 'dns', 'vnet-integration', 'vnets-privadas'] },
       { nome: 'Balanceamento e entrega global', palavras: ['load-balancer', 'application-gateway', 'front-door', 'traffic-manager'] },
-      { nome: 'Topologia, roteamento e diagnóstico', palavras: ['hub', 'peering', 'topology', 'multi-region', 'nat-gateway', 'network-watcher', 'fundamentos', 'latencia'] },
+      { nome: 'Topologia, roteamento e diagnóstico', palavras: ['hub', 'peering', 'topology', 'multi-region', 'nat-gateway', 'network-watcher', 'fundamentos', 'latencia', 'ipam'] },
     ],
   },
   compute: {
@@ -27,7 +31,7 @@ export const AREAS = {
     tags: ['infra'],
     extras: ['aks-'],   // artigos de AKS com tag networking também aparecem aqui, no grupo de Kubernetes
     grupos: [
-      { nome: 'VMs, escala e capacidade', palavras: ['vmss', 'capacity', 'golden-image', 'gpu', 'onde-rodar'] },
+      { nome: 'VMs, escala e capacidade', palavras: ['vmss', 'capacity', 'golden-image', 'gpu', 'onde-rodar', 'spot-vms', 'proximity', 'dedicated-host', 'ephemeral'] },
       { nome: 'Kubernetes (AKS)', palavras: ['aks', 'kubernetes', 'network-policies'] },
       { nome: 'Operação, resiliência e governança', palavras: ['monitor', 'backup', 'arc'] },
     ],
