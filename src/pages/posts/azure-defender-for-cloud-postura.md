@@ -105,4 +105,4 @@ az security auto-provisioning-setting update \
 
 ## Conclusão
 
-O Defender for Cloud transforma segurança de reativa para proativa: em vez de descobrir problemas em auditorias ou incidentes, você vê continuamente o que está exposto e recebe um caminho claro de correção priorizado pelo impacto real. Para candidatura ao MVP de Azure, o Secure Score e a demonstração de conformidade são evidências concretas de domínio da área.
+O Defender for Cloud transforma segurança de reativa para proativa: em vez de descobrir problemas em auditorias ou incidentes, você vê continuamente o que está exposto e recebe um caminho claro de correção priorizado pelo impacto real. Para quem responde por um ambiente regulado, o Secure Score e o painel de conformidade regulatória ainda viram evidência concreta para apresentar à auditoria, desde que lidos com as ressalvas acima.
