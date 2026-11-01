@@ -1,5 +1,4 @@
 ---
-import MvpLogo from '../components/MvpLogo.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroPost from '../components/HeroPost.astro';
 import PostCard from '../components/PostCard.astro';
@@ -90,7 +89,6 @@ const counts = {
           </a>
           <a href="/sobre/" class="pl-link pl-sobre">Saiba mais →</a>
         </div>
-        <MvpLogo class="home-mvp" />
       </div>
     </div>
 
@@ -271,7 +269,6 @@ const counts = {
     color: var(--blue);
     white-space: nowrap;
   }
-  .personal-hero-right :global(.home-mvp) { padding-bottom: 0; }
   .personal-links {
     display: flex;
     gap: 0.625rem;

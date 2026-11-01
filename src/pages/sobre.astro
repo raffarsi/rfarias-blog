@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import MvpLogo from '../components/MvpLogo.astro';
 ---
 
 <BaseLayout title="Sobre | rfarias" description="Rafael Farias da Silva: Microsoft MVP em Azure Networking, Microsoft Certified Trainer (MCT), Software Engineer, IT Auditor, professor e palestrante, com 17+ anos em tecnologia.">
@@ -24,7 +23,6 @@ import MvpLogo from '../components/MvpLogo.astro';
           <div class="stat-item"><span class="stat-number">MCT</span><span class="stat-text">Microsoft Certified Trainer</span></div>
           <div class="stat-item"><span class="stat-number">MSc</span><span class="stat-text">IA em andamento</span></div>
         </div>
-        <MvpLogo class="about-mvp" />
       </div>
     </div>
 
@@ -250,12 +248,6 @@ import MvpLogo from '../components/MvpLogo.astro';
           Instagram
         </a>
       </div>
-
-      <p class="mvp-nota">
-        Microsoft MVP é um reconhecimento da Microsoft a profissionais independentes da comunidade técnica.
-        Não sou funcionário da Microsoft, e o conteúdo deste blog é de minha responsabilidade.
-        Microsoft is a registered trademark of Microsoft Corporation in the United States and/or other countries.
-      </p>
     </div>
   </div>
 </BaseLayout>
@@ -322,8 +314,6 @@ import MvpLogo from '../components/MvpLogo.astro';
 
   /* Content */
   .about-content { line-height: 1.7; font-size: 0.9375rem; }
-  .about-content .mvp-nota { margin-top: 2.5rem; font-size: 0.8125rem; line-height: 1.6; color: var(--text-muted, #64748b); }
-  .about-header :global(.about-mvp) { padding-bottom: 0; }
   .about-content p { margin-bottom: 1.25rem; color: var(--text); }
   .about-content h2 {
     font-family: var(--font-serif);
@@ -550,7 +540,6 @@ import MvpLogo from '../components/MvpLogo.astro';
 
   @media (max-width: 768px) {
     .about-header { flex-direction: column; text-align: center; align-items: center; }
-    .about-header :global(.about-mvp) { display: flex; justify-content: center; }
     .about-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-items: center; gap: 0.9rem 1rem; }
     .stat-item { align-items: center; text-align: center; max-width: 9rem; }
     .stat-text { white-space: normal; line-height: 1.3; }
