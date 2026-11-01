@@ -1,0 +1,19 @@
+---
+// Logo oficial do Microsoft MVP (kit da Microsoft, sem alteração além do tamanho).
+// Regras do Logo Guide: sempre junto do nome, menos destaque que o nome, altura mínima de 60px
+// e área livre de 2x a altura do "M" em volta (cerca de 28px nesta altura).
+// Claro: versão colorida "on light". Escuro: versão branca de uma cor, solta no fundo.
+const { class: extra = '' } = Astro.props;
+---
+<div class={`mvp-logo ${extra}`}>
+  <img class="mvp-claro" src="/images/mvp/microsoft-mvp-logo-claro.webp" width="185" height="64" alt="Microsoft Most Valuable Professional (MVP)" loading="lazy" />
+  <img class="mvp-escuro" src="/images/mvp/microsoft-mvp-logo-branco.webp" width="185" height="64" alt="Microsoft Most Valuable Professional (MVP)" loading="lazy" />
+</div>
+
+<style>
+  .mvp-logo { padding: 28px 0; line-height: 0; }
+  .mvp-logo img { height: 64px; width: auto; display: block; }
+  .mvp-escuro { display: none !important; }
+  :global([data-theme="dark"]) .mvp-claro { display: none !important; }
+  :global([data-theme="dark"]) .mvp-escuro { display: block !important; }
+</style>
