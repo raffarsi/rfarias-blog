@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Sobre | rfarias" description="Rafael Farias da Silva: Software Engineer, IT Auditor, Microsoft Certified Trainer (MCT), professor e palestrante, com 17+ anos em tecnologia.">
+<BaseLayout title="Sobre | rfarias" description="Rafael Farias da Silva: Microsoft MVP em Azure Networking, Microsoft Certified Trainer (MCT), Software Engineer, IT Auditor, professor e palestrante, com 17+ anos em tecnologia.">
   <div class="container about">
 
     <!-- Header -->
@@ -14,11 +14,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h1>Rafael Farias da Silva</h1>
         <p class="about-tagline">
           <a href="https://www.linkedin.com/in/rafael-farias-da-silva/" target="_blank" rel="noopener">
-            Software Engineer/IT Auditor | Professor Tech
+            Microsoft MVP Azure Networking | Software Engineer/IT Auditor | Professor Tech
           </a>
         </p>
         <div class="about-stats">
           <div class="stat-item"><span class="stat-number">17+</span><span class="stat-text">anos em tecnologia</span></div>
+          <div class="stat-item"><span class="stat-number">MVP</span><span class="stat-text">Azure Networking</span></div>
           <div class="stat-item"><span class="stat-number">MCT</span><span class="stat-text">Microsoft Certified Trainer</span></div>
           <div class="stat-item"><span class="stat-number">MSc</span><span class="stat-text">IA em andamento</span></div>
         </div>
@@ -30,7 +31,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="lead">
         Construo soluções em Cloud e IA Generativa no setor financeiro durante o dia, e ensino
         tecnologia à noite. Acredito que a interseção entre prática corporativa
-        e sala de aula é onde o aprendizado mais valioso acontece. Desde outubro de 2026 sou
+        e sala de aula é onde o aprendizado mais valioso acontece. Desde novembro de 2026 sou
+        Microsoft MVP em Azure Networking, reconhecimento da Microsoft a profissionais que
+        compartilham conhecimento com a comunidade técnica. Desde outubro de 2026 também sou
         Microsoft Certified Trainer (MCT), habilitado pela Microsoft a ministrar os cursos
         oficiais de certificação.
       </p>
@@ -52,6 +55,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span class="timeline-date">Atual</span>
             <h3>Professor Efetivo</h3>
             <p>Senac Osasco · Cursos técnicos de Informática, Desenvolvimento de Sistemas, Informática para Internet e Inteligência Artificial. Cursos preparatórios para certificações Microsoft Azure.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot current"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Desde 2026</span>
+            <h3>Microsoft MVP · Azure Networking</h3>
+            <p>Microsoft · Most Valuable Professional, reconhecimento a quem compartilha conhecimento com a comunidade técnica por meio de artigos, aulas, palestras e grupos de estudo.</p>
           </div>
         </div>
         <div class="timeline-item">
@@ -529,8 +540,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   @media (max-width: 768px) {
     .about-header { flex-direction: column; text-align: center; align-items: center; }
-    .about-stats { justify-content: center; flex-wrap: wrap; gap: 0.75rem 1rem; }
-    .stat-item { align-items: center; text-align: center; max-width: 6.5rem; }
+    .about-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); justify-items: center; gap: 0.9rem 1rem; }
+    .stat-item { align-items: center; text-align: center; max-width: 9rem; }
     .stat-text { white-space: normal; line-height: 1.3; }
     .stack-grid { grid-template-columns: 1fr; }
     .projects-grid { grid-template-columns: 1fr; }
