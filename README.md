@@ -6,7 +6,7 @@ Blog pessoal de **Rafael Farias da Silva** sobre tecnologia (Azure, Cloud, IA) e
 
 - [Astro](https://astro.build/) — gerador de sites estáticos
 - [Cloudflare Pages](https://pages.cloudflare.com/) — hospedagem + CDN global
-- [Decap CMS](https://decapcms.org/) — editor visual de posts
+- [Pages CMS](https://pagescms.org/) — painel para publicar artigos (configuração em `.pages.yml`)
 - Markdown — posts escritos em `.md`
 
 ## Desenvolvimento local
@@ -38,9 +38,7 @@ O site estará disponível em `http://localhost:4321`.
 
 ### Painel de administração (CMS)
 
-Acesse `seudominio.dev/admin/` para escrever e publicar posts pelo navegador.
-
-> **Nota:** Na primeira vez, o Decap CMS pedirá autorização para acessar seu repositório GitHub. Depois disso, cada post publicado vira um commit automático.
+Acesse [app.pagescms.org](https://app.pagescms.org), entre com o GitHub e abra `raffarsi/rfarias-blog` na branch `main`. Cada "Salvar" vira um commit e o Cloudflare Pages publica sozinho. O artigo só aparece no site na data e hora definidas (regra em `src/lib/agenda.mjs`).
 
 ## Estrutura
 
@@ -64,7 +62,6 @@ src/
 └── styles/
     └── global.css          # Design tokens
 public/
-├── admin/                  # Decap CMS
 ├── _headers                # Segurança + cache
 ├── _redirects              # www → apex
 └── robots.txt              # SEO
@@ -74,7 +71,7 @@ public/
 
 ### Via CMS (recomendado)
 
-Acesse `/admin/`, escolha "Posts — Tecnologia" ou "Posts — Carreira", clique "New" e escreva.
+No Pages CMS, abra "Artigos", clique "Add an entry", preencha os campos e salve. Data no padrão `18 Nov 2026`; fora desse padrão o artigo não entra no ar.
 
 ### Via Markdown
 
