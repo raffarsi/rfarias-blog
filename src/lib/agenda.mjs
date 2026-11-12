@@ -16,7 +16,22 @@ export function instante(dataPt, hora = HORA_PADRAO) {
     }
     return Infinity;
   }
-  const [h, min] = String(hora || HORA_PADRAO).split(':').map(Number);
+  // Hora sem aspas no frontmatter (hora: 14:30) chega como numero: o YAML le "14:30" como 14*60+30 = 870.
+  // Aqui o numero volta a ser 14:30. Hora invalida (ex.: 25:00, "10h") tambem nao publica.
+  // Numero abaixo de 60 (ex.: hora: 10) e ambiguo e e tratado como invalido.
+  const horaTxt = typeof hora === 'number'
+    ? (Number.isInteger(hora) && hora >= 60 ? `${Math.floor(hora / 60)}:${String(hora % 60).padStart(2, '0')}` : 'invalida')
+    : String(hora || HORA_PADRAO).trim();
+  const m = horaTxt.match(/^(\d{1,2}):(\d{2})$/);
+  const [h, min] = m ? [Number(m[1]), Number(m[2])] : [NaN, NaN];
+  if (!(h >= 0 && h <= 23 && min >= 0 && min <= 59)) {
+    const chave = `${dataPt} ${hora}`;
+    if (!avisados.has(chave)) {
+      avisados.add(chave);
+      console.warn(`[agenda] hora invalida "${hora}" em "${dataPt}": artigo fica fora do ar ate a hora ser corrigida (use ex.: 10:00)`);
+    }
+    return Infinity;
+  }
   const palpite = Date.UTC(ano, mes - 1, dia, h, min || 0);
   const local = new Date(palpite).toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' });
   return palpite - (Date.parse(local.replace(' ', 'T') + 'Z') - palpite);
