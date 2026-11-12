@@ -1,1 +1,100 @@
-este-pages-cms
+# Pages CMS (https://pagescms.org): painel para publicar artigos no rfarias.com sem mexer em código.
+# Cada "Salvar" vira um commit na branch aberta no painel. Na main, o Cloudflare Pages publica sozinho
+# e o artigo só aparece no site na data e hora definidas (regra de src/lib/agenda.mjs, padrão 10:00).
+
+media:
+  - name: diagramas
+    label: Diagramas e imagens dos artigos
+    input: public/images/posts
+    output: /images/posts
+    extensions: [svg, png, jpg, jpeg, webp]
+
+content:
+  - name: artigos
+    label: Artigos
+    type: collection
+    path: src/pages/posts
+    format: yaml-frontmatter
+    filename: "{fields.slug}.md"
+    view:
+      primary: title
+      sort: date
+      order: desc
+    fields:
+      - name: layout
+        type: string
+        hidden: true
+        default: ../../layouts/PostLayout.astro
+
+      - name: title
+        label: Título
+        type: string
+        required: true
+
+      - name: slug
+        label: "Endereço do artigo: preencher só em artigo NOVO (letras minúsculas, números e hífen; ex.: private-endpoint-dns-azure). Artigos antigos ficam em branco"
+        type: string
+
+      - name: category
+        label: Área
+        type: select
+        required: true
+        options:
+          values: [Networking, Infra, IA Generativa, IAM, Segurança, FinOps, Docência, Carreira]
+
+      - name: tag
+        label: "Tag (tem que combinar com a área: Networking = networking, Infra = infra, IA Generativa = ia-generativa, IAM = iam, Segurança = seguranca, FinOps = finops, Docência = docencia, Carreira = carreira)"
+        type: select
+        required: true
+        options:
+          values: [networking, infra, ia-generativa, iam, seguranca, finops, docencia, carreira]
+
+      - name: date
+        label: "Data de publicação (dia, mês abreviado, ano; ex.: 18 Nov 2026). Meses: Jan Fev Mar Abr Mai Jun Jul Ago Set Out Nov Dez. Fora desse padrão o artigo NÃO entra no ar"
+        type: string
+        required: true
+
+      - name: hora
+        label: "Hora de publicação (opcional; em branco = 10:00; formato 14:30). Fora desse padrão o artigo NÃO entra no ar"
+        type: string
+
+      - name: readTime
+        label: "Tempo de leitura (ex.: 8 min)"
+        type: string
+        required: true
+        default: 8 min
+
+      - name: description
+        label: Resumo (aparece no Google, no LinkedIn e nos cards)
+        type: text
+        required: true
+
+      # Campos antigos dos artigos de certificação. Ficam declarados para o painel não apagá-los ao salvar.
+      - name: serie
+        label: Série (legado, opcional)
+        type: string
+      - name: serieNum
+        label: Número na série (legado, opcional)
+        type: number
+      - name: serieSlug
+        label: Endereço da série (legado, opcional)
+        type: string
+      - name: prev
+        label: Artigo anterior (legado, opcional)
+        type: object
+        fields:
+          - { name: title, label: Título, type: string }
+          - { name: slug, label: Endereço, type: string }
+      - name: next
+        label: Próximo artigo (legado, opcional)
+        type: object
+        fields:
+          - { name: title, label: Título, type: string }
+          - { name: slug, label: Endereço, type: string }
+
+      # Texto do artigo em Markdown puro, para o painel não reformatar tabelas, código e diagramas dos artigos existentes.
+      - name: body
+        label: Texto do artigo (Markdown)
+        type: code
+        options:
+          language: markdown
