@@ -34,7 +34,7 @@ const badgeClass = isTech ? 'badge-tech' : 'badge-carreira';
 const tocHeadings = headings.filter(h => h.depth === 2);
 // Data de publicação em ISO para os dados estruturados (o frontmatter usa "15 Nov 2025")
 const ms = instante(frontmatter.date, (frontmatter as any).hora);
-const articleDate = ms ? new Date(ms).toISOString() : undefined;
+const articleDate = Number.isFinite(ms) && ms > 0 ? new Date(ms).toISOString() : undefined;
 ---
 
 <BaseLayout
