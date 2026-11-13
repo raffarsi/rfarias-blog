@@ -8,6 +8,7 @@
   --on-blue: #ffffff;
   --coral: #db5431;
   --coral-light: #fbe9e3;
+  --coral-text: #ad4020; /* coral para texto pequeno sobre fundo claro (contraste 5:1) */
   --bg: #fff8f3;
   --surface: #fffdfb;
   --surface-alt: #f5ece4;
@@ -35,6 +36,7 @@
   --on-blue: #1e3355;
   --coral: #fdbfb1;
   --coral-light: #3a3550;
+  --coral-text: #fdbfb1;
   --bg: #1e3355;
   --surface: #263f66;
   --surface-alt: #2c4672;
@@ -164,7 +166,7 @@ code {
 }
 
 .callout strong {
-  color: var(--coral);
+  color: var(--text);
 }
 
 /* Category badges */
@@ -184,7 +186,7 @@ code {
 
 .badge-carreira {
   background: var(--coral-light);
-  color: var(--coral);
+  color: var(--coral-text);
 }
 
 /* Utilities */
