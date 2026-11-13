@@ -20,6 +20,8 @@
   --mvp-band: #091f2c;
   --feature-from: #1e3355;
   --feature-to: #155ea1;
+  --foto-from: #e4edf6; /* fundo das fotos: claro no tema claro */
+  --foto-to: #c9dcee;
   --cta-bg: #fff8f3;
   --cta-text: #1e3355;
 
@@ -48,6 +50,8 @@
   --mvp-band: #091f2c;
   --feature-from: #091f2c;
   --feature-to: #1f5188;
+  --foto-from: #091f2c;
+  --foto-to: #1f5188;
   --cta-bg: #fff8f3;
   --cta-text: #1e3355;
 }

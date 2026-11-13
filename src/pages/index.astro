@@ -53,7 +53,7 @@ const trilhas = [
   <section class="numeros" aria-label="Em números">
     <div class="container numeros-grid">
       <div><strong>{allPosts.length}</strong><span>artigos publicados</span></div>
-      <div><strong>500+</strong><span>alunos formados no Senac</span></div>
+      <div><strong>500+</strong><span>alunos formados</span></div>
       <div><strong>90%+</strong><span>de aprovação em certificação Microsoft</span></div>
       <div><strong>17+</strong><span>anos em tecnologia</span></div>
     </div>
@@ -62,7 +62,7 @@ const trilhas = [
   <section class="mvp" aria-label="MVP Microsoft">
     <div class="container mvp-inner">
       <img src="/images/mvp/microsoft-mvp-logo-fundo-escuro.svg" alt="Microsoft MVP, Most Valuable Professional" class="mvp-logo" width="173" height="60" />
-      <p class="mvp-texto"><strong>Rafael Farias da Silva</strong>, MVP Microsoft. Profissional independente; as opiniões publicadas aqui são minhas.</p>
+      <p class="mvp-texto"><strong>Rafael Farias da Silva</strong>, MVP Microsoft. As opiniões publicadas aqui são minhas.</p>
     </div>
   </section>
 
@@ -126,7 +126,7 @@ const trilhas = [
   .btn-principal:hover { opacity: 0.92; }
   .btn-secundario { border: 1px solid var(--border); background: var(--surface); color: var(--text); }
   .btn-secundario:hover { border-color: var(--blue); }
-  .topo-foto { background: linear-gradient(160deg, var(--feature-from), var(--feature-to)); border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 5; display: flex; align-items: flex-end; justify-content: center; }
+  .topo-foto { background: linear-gradient(160deg, var(--foto-from), var(--foto-to)); border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 5; display: flex; align-items: flex-end; justify-content: center; }
   .topo-foto img { width: 125%; max-width: none; height: auto; display: block; }
 
   /* Números */
@@ -176,6 +176,7 @@ const trilhas = [
     .topo-grid { grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; padding-bottom: 2.5rem; }
     .topo-titulo { font-size: 2rem; }
     .topo-foto { max-width: 320px; aspect-ratio: 1 / 1; }
+    .topo-foto img { width: 100%; } /* no quadrado a foto inteira cabe; com 125% a cabeça era cortada */
     .numeros-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
     .trilhas-grid, .recentes-grid { grid-template-columns: 1fr; }
     .trilhas { padding-top: 3rem; }
