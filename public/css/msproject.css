@@ -765,3 +765,37 @@ body.pre-auth .student-badge {
   .result-stats-row { gap:0.5rem; }
   .result-stat { padding:0.75rem 1rem; }
 }
+
+/* ============================================================================
+   rfarias.com: paleta do site (redesign V7, nov/2026).
+   Fica no FIM do arquivo para valer sobre o tema original do simulador.
+   As cores vêm dos tokens do site (src/styles/global.css), nos dois temas.
+   O tema claro/escuro é o do site (botão do topo); o simulador só acompanha.
+   ============================================================================ */
+:root, [data-theme="dark"] {
+  --color-primary: var(--blue);
+  --color-primary-dark: var(--blue-dark);
+  --color-primary-light: var(--blue);
+  --bg-body: var(--bg);
+  --bg-surface: var(--surface);
+  --bg-surface-alt: var(--surface-alt);
+  --bg-header: var(--surface);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-muted);
+  --border-color: var(--border);
+  --focus-ring: 0 0 0 3px var(--blue-light);
+}
+/* Texto sobre o azul: branco no claro, marinho no escuro (contraste nos dois temas) */
+.nav-btn.active, .btn-primary, .btn-tab.active, .qnav-btn.qnav-current, .question-domain-tag { color: var(--on-blue); }
+.btn-primary:hover { color: var(--on-blue); }
+/* Seleções que usavam o azul antigo transparente */
+.btn-option.opt-selected, .qty-options .qty-btn.active, .qnav-btn.qnav-answered,
+.drag-item.selected, .mode-options .mode-btn.active, .ranking-you { background: var(--blue-light); }
+.ws-cell.ws-selecting { background: var(--blue-light); }
+/* Links para os artigos do blog */
+.article-link { color: var(--blue); background: var(--surface); border-color: var(--blue); }
+.article-link:hover { background: var(--blue); color: var(--on-blue); }
+/* Fundo da página igual ao do site (a regra do topo deste arquivo deixava transparente e aparecia branco) */
+html, body { background: var(--bg) !important; }
+/* Questão atual sempre em destaque, mesmo já respondida */
+.qnav-btn.qnav-current { background: var(--blue); border-color: var(--blue); color: var(--on-blue); }
