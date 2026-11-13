@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { listarPublicados } from '../../lib/areas.mjs';
 
 const series = [
   {
@@ -92,6 +93,26 @@ const series = [
     ]
   },
 ];
+
+// A lista de cada série vem do frontmatter dos artigos (serieSlug e serieNum), só com os já publicados.
+// Assim um artigo novo da série aparece sozinho. O título curto da lista acima é mantido quando existe.
+const modulos = import.meta.glob('../posts/*.md', { eager: true });
+const fmPorSlug = new Map(Object.entries(modulos).map(([c, m]: [string, any]) => [c.split('/').pop()!.replace(/\.md$/, ''), m.frontmatter || {}]));
+const publicados = listarPublicados(modulos);
+for (const s of series as any[]) {
+  const daSerie = publicados
+    .filter((p) => fmPorSlug.get(p.slug)?.serieSlug === s.slug)
+    .map((p) => {
+      const fixo = s.posts.find((x: any) => x.slug === p.slug);
+      return { num: Number(fmPorSlug.get(p.slug)?.serieNum) || fixo?.num || 0, slug: p.slug, title: fixo?.title ?? p.title, date: p.date, readTime: p.readTime };
+    })
+    .sort((a, b) => a.num - b.num);
+  if (daSerie.length > 0) {
+    s.posts = daSerie;
+    s.artigos = daSerie.length;
+    s.tempo = `~${daSerie.reduce((t, p) => t + (parseInt(p.readTime) || 0), 0)} min`;
+  }
+}
 ---
 
 <BaseLayout title="Séries | rfarias" description="Séries de artigos técnicos para certificações Azure.">
@@ -137,7 +158,7 @@ const series = [
 </BaseLayout>
 
 <style>
-  .series-hub { padding: 2rem 0 3rem; }
+  .series-hub { padding-top: 2rem; padding-bottom: 3rem; }
   .series-hub-header { margin-bottom: 2rem; }
   .series-hub-header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
   .series-hub-header p { color: var(--text-muted); font-size: 0.9375rem; max-width: 560px; }
