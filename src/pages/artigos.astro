@@ -270,6 +270,16 @@ const filters = [
         searchQuery = e.target.value.toLowerCase().trim();
         applyFilters();
       });
+      // Área vinda da home (/artigos/?cat=networking)
+      const catInicial = new URLSearchParams(location.search).get('cat');
+      const btnCat = catInicial && document.querySelector('.filter-btn[data-filter="' + CSS.escape(catInicial) + '"]');
+      if (btnCat) btnCat.click();
+      // Busca vinda da home (/artigos/?q=...)
+      const qInicial = new URLSearchParams(location.search).get('q');
+      if (qInicial) {
+        searchInput.value = qInicial;
+        searchInput.dispatchEvent(new Event('input'));
+      }
     }
   </script>
 </BaseLayout>
