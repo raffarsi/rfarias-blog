@@ -30,7 +30,7 @@ const { title, slug, category, date, readTime, excerpt } = Astro.props;
 <style>
   .hero {
     display: block;
-    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+    background: linear-gradient(135deg, var(--feature-from) 0%, var(--feature-to) 100%);
     border-radius: 14px;
     padding: 2.25rem;
     color: #fff;
@@ -95,7 +95,8 @@ const { title, slug, category, date, readTime, excerpt } = Astro.props;
 
   .hero-cta {
     display: inline-block;
-    background: var(--coral);
+    background: var(--cta-bg);
+    color: var(--cta-text);
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.5rem 1.25rem;
