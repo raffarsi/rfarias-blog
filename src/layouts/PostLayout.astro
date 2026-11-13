@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
+import ArtigoAjudou from '../components/ArtigoAjudou.astro';
 import { instante } from '../lib/agenda.mjs';
 import { listarPublicados } from '../lib/areas.mjs';
 import { trilhaDoArtigo } from '../lib/trilhas.mjs';
@@ -123,6 +124,8 @@ const rotuloSerie = frontmatter.serie ? `${frontmatter.serie}${frontmatter.serie
         <span class="pt-titulo">{proximoNaTrilha.titulo}</span>
       </a>
     )}
+
+    <ArtigoAjudou slug={articleSlug} />
 
     <section class="autor-box" aria-label="Sobre o autor">
       <span class="autor-box-foto" aria-hidden="true"><img src="/images/rafael-farias-recorte.webp" alt="" width="64" height="64" loading="lazy" /></span>

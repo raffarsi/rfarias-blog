@@ -1,0 +1,62 @@
+---
+// "Este artigo te ajudou?": dois botões no fim do artigo. O voto vai para /api/ajudou (functions/api/ajudou.js).
+// O navegador lembra que a pessoa já votou naquele artigo (localStorage), para não pedir de novo.
+interface Props { slug: string }
+const { slug } = Astro.props;
+---
+<section class="ajudou" data-slug={slug} aria-label="Avaliação do artigo">
+  <div class="ajudou-pergunta-linha" data-etapa="perguntar">
+    <p class="ajudou-pergunta">Este artigo te ajudou?</p>
+    <div class="ajudou-botoes">
+      <button type="button" class="ajudou-botao" data-voto="sim">Sim</button>
+      <button type="button" class="ajudou-botao" data-voto="nao">Não</button>
+    </div>
+  </div>
+  <p class="ajudou-retorno" data-etapa="obrigado" role="status" hidden>Obrigado pelo retorno!</p>
+  <p class="ajudou-retorno" data-etapa="erro" role="status" hidden>Não consegui registrar agora. Tente de novo mais tarde.</p>
+</section>
+
+<script>
+  const chave = (slug: string) => `rfarias-ajudou:${slug}`;
+  const lembrar = (slug: string) => { try { localStorage.setItem(chave(slug), '1'); } catch {} };
+  const jaVotou = (slug: string) => { try { return localStorage.getItem(chave(slug)) === '1'; } catch { return false; } };
+
+  function mostrar(caixa: HTMLElement, etapa: string) {
+    caixa.querySelectorAll<HTMLElement>('[data-etapa]').forEach((el) => { el.hidden = el.dataset.etapa !== etapa; });
+  }
+
+  document.querySelectorAll<HTMLElement>('.ajudou').forEach((caixa) => {
+    const slug = caixa.dataset.slug || '';
+    if (jaVotou(slug)) { mostrar(caixa, 'obrigado'); return; }
+    caixa.querySelectorAll<HTMLButtonElement>('.ajudou-botao').forEach((botao) => {
+      botao.addEventListener('click', async () => {
+        caixa.querySelectorAll<HTMLButtonElement>('.ajudou-botao').forEach((b) => (b.disabled = true));
+        try {
+          const r = await fetch('/api/ajudou', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ slug, voto: botao.dataset.voto }),
+          });
+          if (!r.ok) throw new Error(String(r.status));
+          lembrar(slug);
+          mostrar(caixa, 'obrigado');
+        } catch {
+          mostrar(caixa, 'erro');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .ajudou { max-width: 720px; margin-top: 3rem; padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+  .ajudou-pergunta-linha { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .ajudou-pergunta { font-weight: 600; font-size: 1rem; color: var(--text); margin: 0; }
+  .ajudou-botoes { display: flex; gap: 0.5rem; }
+  .ajudou-botao { min-height: 44px; min-width: 88px; padding: 0 1.25rem; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .ajudou-botao:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+  .ajudou-botao:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .ajudou-botao:disabled { opacity: 0.6; cursor: default; }
+  .ajudou [hidden] { display: none !important; }
+  .ajudou-retorno { margin: 0; font-weight: 600; color: var(--text-muted); }
+</style>
