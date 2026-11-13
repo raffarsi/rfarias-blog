@@ -97,7 +97,7 @@ const filters = [
     <!-- Linha 3: A partir de -->
     <div class="from-date-wrap" id="from-date-wrap">
       <span class="filter-label">A partir de:</span>
-      <select id="from-month" class="date-select">
+      <select id="from-month" class="date-select" aria-label="Mês inicial">
         <option value="">Mês</option>
         <option value="1">Janeiro</option>
         <option value="2">Fevereiro</option>
@@ -112,7 +112,7 @@ const filters = [
         <option value="11">Novembro</option>
         <option value="12">Dezembro</option>
       </select>
-      <select id="from-year" class="date-select">
+      <select id="from-year" class="date-select" aria-label="Ano inicial">
         <option value="">Ano</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
@@ -296,6 +296,8 @@ const filters = [
   .search-wrap { position: relative; max-width: 520px; }
   .search-input { width: 100%; padding: 0.75rem 2.5rem 0.75rem 2.75rem; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.9375rem; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
   .search-input:focus { border-color: var(--blue); }
+  .search-input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .date-select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
   .search-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
   .search-count { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
 
@@ -317,7 +319,7 @@ const filters = [
   .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
   .filter-btn.active { background: var(--blue); color: var(--on-blue); border-color: var(--blue); }
   .filter-count { background: rgba(0,0,0,0.12); font-size: 0.6875rem; font-weight: 700; padding: 1px 6px; border-radius: 20px; line-height: 1.4; }
-  .filter-btn.active .filter-count { background: rgba(255,255,255,0.25); }
+  .filter-btn.active .filter-count { background: var(--on-blue); color: var(--blue); }
 
   .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
 
