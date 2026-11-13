@@ -12,26 +12,10 @@ interface Props {
 
 const { title, slug, category, tag, date, readTime, excerpt, coverImage } = Astro.props;
 
-const badgeStyles: Record<string, string> = {
-  azure: 'badge-azure',
-  ia: 'badge-ia',
-  cloud: 'badge-cloud',
-  docencia: 'badge-docencia',
-  carreira: 'badge-carreira',
-  tech: 'badge-azure', // legado
-};
-
-const accentColors: Record<string, string> = {
-  azure: 'var(--blue)',
-  ia: '#6d28d9',
-  cloud: '#0891b2',
-  docencia: 'var(--coral)',
-  carreira: 'var(--coral)',
-  tech: 'var(--blue)',
-};
-
-const badgeClass = badgeStyles[tag] ?? 'badge-azure';
-const accentColor = accentColors[tag] ?? 'var(--blue)';
+// Selo de categoria com as cores do tema: azul para os temas técnicos, coral para docência e carreira
+const ehPessoal = tag === 'docencia' || tag === 'carreira';
+const badgeClass = ehPessoal ? 'badge-pessoal' : 'badge-tecnico';
+const accentColor = ehPessoal ? 'var(--coral-text)' : 'var(--blue)';
 ---
 
 <a href={`/posts/${slug}/`} class="post-card">
@@ -106,12 +90,8 @@ const accentColor = accentColors[tag] ?? 'var(--blue)';
   }
 
   /* Badges por categoria */
-  .badge-azure   { background: #e8effc; color: #1a56db; }
-  .badge-ia      { background: #ede9fe; color: #6d28d9; }
-  .badge-cloud   { background: #e0f2fe; color: #0891b2; }
-  .badge-docencia { background: #fdf0ee; color: #e8604c; }
-  .badge-carreira { background: #fdf0ee; color: #e8604c; }
-  .badge-tech    { background: #e8effc; color: #1a56db; }
+  .badge-tecnico { background: var(--blue-light); color: var(--blue); }
+  .badge-pessoal { background: var(--coral-light); color: var(--coral-text); }
 
   .post-card-cover {
     margin: -1.5rem -1.5rem 0.75rem -1.5rem;
