@@ -46,6 +46,7 @@ const currentPath = Astro.url.pathname;
   </script>
 </head>
 <body>
+  <a href="#conteudo" class="pular-conteudo">Pular para o conteúdo</a>
 
   <!-- Nav -->
   <nav class="nav">
@@ -94,7 +95,7 @@ const currentPath = Astro.url.pathname;
   </nav>
 
   <!-- Content -->
-  <main>
+  <main id="conteudo" tabindex="-1">
     <slot />
   </main>
 

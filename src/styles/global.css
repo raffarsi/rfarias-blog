@@ -206,3 +206,14 @@ code {
   h2 { font-size: 1.3rem; }
   .container { padding: 0 1rem; }
 }
+
+/* ── Acessibilidade (nov/2026) ── */
+/* Foco visível para quem navega pelo teclado */
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+/* Link "Pular para o conteúdo": aparece só quando recebe foco pelo teclado */
+.pular-conteudo { position: absolute; left: 1rem; top: -100px; z-index: 1000; padding: 0.75rem 1rem; border-radius: 10px; background: var(--blue); color: var(--on-blue); font-weight: 600; text-decoration: none; }
+.pular-conteudo:focus { top: 1rem; }
+/* Texto só para leitores de tela */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* Comentários nos blocos de código (tema catppuccin): cor mais clara para contraste 4.5:1 */
+.astro-code span[style*="#6C7086"] { color: #9399b2 !important; }

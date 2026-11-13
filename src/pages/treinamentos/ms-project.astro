@@ -15,7 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="container">
       <a href="/treinamentos/">← Treinamentos</a>
       <span class="sep">/</span>
-      <span class="current">MS Project · Gestão de Projetos</span>
+      <h1 class="current">MS Project · Gestão de Projetos</h1>
     </div>
   </div>
 
@@ -93,6 +93,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .az-breadcrumb a { color: var(--blue); font-weight: 500; }
   .az-breadcrumb .sep { margin: 0 0.5rem; color: var(--border); }
   .az-breadcrumb .current { font-weight: 600; color: var(--text); }
+  .az-breadcrumb h1.current { display: inline; font-family: inherit; font-size: inherit; line-height: inherit; letter-spacing: normal; margin: 0; }
 
   #app-header {
     position: sticky;
