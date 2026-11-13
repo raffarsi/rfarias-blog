@@ -288,7 +288,7 @@ const counts = {
 
   .training-banner {
     display: block;
-    background: linear-gradient(135deg, #0f3285 0%, #1a56db 60%, #3b73e8 100%);
+    background: linear-gradient(135deg, var(--feature-from) 0%, var(--feature-to) 100%);
     border-radius: 14px;
     padding: 2rem;
     color: #fff;
@@ -301,7 +301,7 @@ const counts = {
   .training-badge { display: inline-block; background: rgba(255,255,255,0.15); font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 0.75rem; }
   .training-banner h3 { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; max-width: 540px; }
   .training-banner-content p { font-size: 0.875rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 1rem; max-width: 520px; }
-  .training-cta { font-size: 0.875rem; font-weight: 600; color: #fff; background: var(--coral); padding: 0.5rem 1.25rem; border-radius: 8px; display: inline-block; }
+  .training-cta { font-size: 0.875rem; font-weight: 600; color: var(--cta-text); background: var(--cta-bg); padding: 0.5rem 1.25rem; border-radius: 8px; display: inline-block; }
   .training-stats-bar { display: flex; gap: 1.5rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.15); flex-wrap: wrap; }
   .training-stats-bar span { font-size: 0.75rem; color: rgba(255,255,255,0.7); white-space: nowrap; }
 
