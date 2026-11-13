@@ -36,7 +36,6 @@ const trilhas = [
   <section class="topo">
     <div class="container topo-grid">
       <div class="topo-texto">
-        <p class="selo">MVP Microsoft</p>
         <h1 class="topo-titulo">Azure, Cloud e IA Generativa com casos reais, sem enrolação.</h1>
         <p class="topo-sub">Sou Rafael Farias, MVP Microsoft e Microsoft Certified Trainer. Engenheiro de Software, professor no Senac Osasco e mestrando em Inteligência Artificial.</p>
         <div class="topo-acoes">
@@ -59,12 +58,6 @@ const trilhas = [
     </div>
   </section>
 
-  <section class="mvp" aria-label="MVP Microsoft">
-    <div class="container mvp-inner">
-      <img src="/images/mvp/microsoft-mvp-logo-fundo-escuro.svg" alt="Microsoft MVP, Most Valuable Professional" class="mvp-logo" width="173" height="60" />
-      <p class="mvp-texto"><strong>Rafael Farias da Silva</strong>, MVP Microsoft. As opiniões publicadas aqui são minhas.</p>
-    </div>
-  </section>
 
   <section id="trilhas" class="container trilhas">
     <div class="trilhas-topo">
@@ -108,6 +101,13 @@ const trilhas = [
       {recentes.map(post => <PostCard {...post} />)}
     </div>
   </section>
+
+  <section class="mvp" aria-label="MVP Microsoft">
+    <div class="container mvp-inner">
+      <img src="/images/mvp/microsoft-mvp-logo-fundo-escuro.svg" alt="Microsoft MVP, Most Valuable Professional" class="mvp-logo" width="173" height="60" />
+      <p class="mvp-texto"><strong>Rafael Farias da Silva</strong> · As opiniões publicadas aqui são minhas.</p>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -117,7 +117,6 @@ const trilhas = [
   .topo { background: var(--surface-alt); border-bottom: 1px solid var(--border); }
   .topo-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: center; padding-top: 3rem; padding-bottom: 3.5rem; }
   .topo-texto { display: flex; flex-direction: column; gap: 1.25rem; }
-  .selo { align-self: flex-start; font-size: 0.8125rem; font-weight: 600; color: var(--blue); background: var(--blue-light); padding: 0.375rem 0.875rem; border-radius: 999px; }
   .topo-titulo { font-size: 2.75rem; line-height: 1.12; letter-spacing: -0.02em; font-weight: 600; }
   .topo-sub { font-size: 1.125rem; line-height: 1.6; color: var(--text-muted); max-width: 34rem; }
   .topo-acoes { display: flex; gap: 0.75rem; flex-wrap: wrap; }
@@ -137,7 +136,7 @@ const trilhas = [
   .numeros-grid span { font-size: 0.875rem; color: var(--text-muted); }
 
   /* Faixa MVP: logo oficial claro direto sobre o azul escuro oficial do programa */
-  .mvp { background: var(--mvp-band); }
+  .mvp { background: var(--mvp-band); margin-top: 1rem; }
   .mvp-inner { display: flex; align-items: center; gap: 2rem; padding-top: 1.75rem; padding-bottom: 1.75rem; flex-wrap: wrap; }
   .mvp-logo { height: 60px; width: auto; flex-shrink: 0; }
   .mvp-texto { color: #c6d3e6; font-size: 0.9375rem; line-height: 1.6; flex: 1; min-width: 240px; }
