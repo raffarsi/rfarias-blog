@@ -38,7 +38,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
 
 <BaseLayout
   title="Série Azure Networking + IA Generativa | rfarias"
-  description="Série completa de 20 artigos sobre Azure Networking e IA Generativa: arquitetura de referência, decisões de rede e os erros mais comuns em produção."
+  description="Série planejada de 20 artigos sobre Azure Networking e IA Generativa: arquitetura de referência, decisões de rede e os erros mais comuns em produção."
 >
   <div class="container serie-page">
 
@@ -56,13 +56,12 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
       <h1 class="serie-hero-title">Azure Networking + IA Generativa</h1>
       <p class="serie-hero-desc">
         Arquitetura de referência, decisões de rede e os erros mais comuns em produção.
-        Uma série de {totalArtigos} artigos publicados às terças e quintas, com casos reais do ambiente corporativo.
+        Uma série planejada de {totalArtigos} artigos, com casos reais do ambiente corporativo.
       </p>
       <div class="serie-hero-meta">
         <span>📄 {totalArtigos} artigos planejados</span>
         <span>✅ {publicados.length} publicados</span>
         <span>⏱ ~{tempoTotal} min lidos até agora</span>
-        <span style="color:var(--blue)">📅 Terças e quintas</span>
       </div>
     </div>
 
@@ -117,7 +116,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
     <!-- CTA seguir -->
     <div class="serie-follow-cta">
       <div class="serie-follow-inner">
-        <p>Sigo publicando terças e quintas. Acompanhe no LinkedIn para não perder.</p>
+        <p>Os próximos artigos da série saem aqui e no LinkedIn. Acompanhe por lá para não perder.</p>
         <a
           href="https://linkedin.com/in/rafael-farias-da-silva"
           target="_blank" rel="noopener"
@@ -136,7 +135,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
 </BaseLayout>
 
 <style>
-  .serie-page { padding: 1.5rem 0 3rem; max-width: 780px; }
+  .serie-page { padding-top: 1.5rem; padding-bottom: 3rem; max-width: 780px; }
   .serie-breadcrumb { display:flex; gap:0.5rem; align-items:center; font-size:0.8125rem; color:var(--text-muted); margin-bottom:1.5rem; flex-wrap:wrap; }
   .serie-breadcrumb a { color:var(--blue); }
 
@@ -167,7 +166,7 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
   .spr-title:hover { color:var(--blue); }
   .spr-excerpt { font-size:0.8125rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.5rem; }
   .spr-meta { display:flex; gap:0.875rem; align-items:center; font-size:0.75rem; color:var(--text-muted); flex-wrap:wrap; }
-  .spr-badge { background:var(--blue); color:#fff; font-size:0.6875rem; font-weight:700; padding:2px 8px; border-radius:20px; }
+  .spr-badge { background:var(--blue); color: var(--on-blue); font-size:0.6875rem; font-weight:700; padding:2px 8px; border-radius:20px; }
   .spr-cta { flex-shrink:0; font-size:0.875rem; font-weight:700; color:var(--blue); align-self:center; white-space:nowrap; }
 
   .embreve-grid { display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem; }
@@ -179,12 +178,12 @@ const tempoTotal = publicados.reduce((a, p) => a + parseInt(p.readTime), 0);
 
   .serie-follow-cta { background:linear-gradient(135deg,#0f1f3d,#1a3a6b); border-radius:14px; padding:1.75rem; margin-bottom:1.5rem; text-align:center; }
   .serie-follow-inner p { color:rgba(255,255,255,0.85); margin-bottom:1rem; font-size:0.9375rem; }
-  .btn-linkedin { display:inline-block; background:var(--blue); color:#fff; font-weight:700; padding:0.625rem 1.5rem; border-radius:8px; font-size:0.875rem; transition:opacity 0.15s; }
+  .btn-linkedin { display:inline-block; background:var(--blue); color: var(--on-blue); font-weight:700; padding:0.625rem 1.5rem; border-radius:8px; font-size:0.875rem; transition:opacity 0.15s; }
   .btn-linkedin:hover { opacity:0.9; }
 
   .serie-footer { display:flex; gap:1rem; margin-top:1rem; }
   .btn-outline-blue { padding:0.625rem 1.25rem; border:1.5px solid var(--blue); color:var(--blue); border-radius:8px; font-weight:600; font-size:0.875rem; transition:all 0.15s; }
-  .btn-outline-blue:hover { background:var(--blue); color:#fff; }
+  .btn-outline-blue:hover { background:var(--blue); color: var(--on-blue); }
 
   @media(max-width:600px) {
     .serie-post-row { flex-wrap:wrap; gap:0.75rem; }

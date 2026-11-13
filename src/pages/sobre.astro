@@ -2,29 +2,35 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Sobre | rfarias" description="Rafael Farias da Silva: Microsoft MVP em Azure Networking, Microsoft Certified Trainer (MCT), Software Engineer, IT Auditor, professor e palestrante, com 17+ anos em tecnologia.">
+<BaseLayout title="Sobre | rfarias" description="Rafael Farias da Silva: MVP Microsoft, Microsoft Certified Trainer (MCT), Software Engineer, IT Auditor, professor e palestrante, com 17+ anos em tecnologia.">
   <div class="container about">
 
     <!-- Header -->
     <div class="about-header">
       <div class="about-avatar">
-        <img src="/images/rafael-farias.jpg" alt="Rafael Farias da Silva" width="160" height="160" />
+        <img src="/images/rafael-farias-recorte.webp" alt="Rafael Farias da Silva" width="160" height="160" />
       </div>
       <div>
         <h1>Rafael Farias da Silva</h1>
         <p class="about-tagline">
           <a href="https://www.linkedin.com/in/rafael-farias-da-silva/" target="_blank" rel="noopener">
-            Microsoft MVP Azure Networking | Software Engineer/IT Auditor | Professor Tech
+            MVP Microsoft · Microsoft Certified Trainer · Engenheiro de Software · Professor
           </a>
         </p>
         <div class="about-stats">
           <div class="stat-item"><span class="stat-number">17+</span><span class="stat-text">anos em tecnologia</span></div>
-          <div class="stat-item"><span class="stat-number">MVP</span><span class="stat-text">Azure Networking</span></div>
+          <div class="stat-item"><span class="stat-number">MVP</span><span class="stat-text">Microsoft</span></div>
           <div class="stat-item"><span class="stat-number">MCT</span><span class="stat-text">Microsoft Certified Trainer</span></div>
           <div class="stat-item"><span class="stat-number">MSc</span><span class="stat-text">IA em andamento</span></div>
         </div>
       </div>
     </div>
+
+    <!-- Selo do MVP: logo oficial junto do nome, sobre a faixa #091f2c -->
+    <section class="mvp-box" aria-label="MVP Microsoft">
+      <img src="/images/mvp/microsoft-mvp-logo-fundo-escuro.svg" alt="Microsoft MVP, Most Valuable Professional" class="mvp-logo" width="173" height="60" />
+      <p class="mvp-texto"><strong>Rafael Farias da Silva</strong>, MVP Microsoft. Profissional independente; as opiniões publicadas aqui são minhas.</p>
+    </section>
 
     <!-- Intro -->
     <div class="about-content">
@@ -32,7 +38,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         Construo soluções em Cloud e IA Generativa no setor financeiro durante o dia, e ensino
         tecnologia à noite. Acredito que a interseção entre prática corporativa
         e sala de aula é onde o aprendizado mais valioso acontece. Desde novembro de 2026 sou
-        Microsoft MVP em Azure Networking, reconhecimento da Microsoft a profissionais que
+        MVP Microsoft, reconhecimento da Microsoft a profissionais que
         compartilham conhecimento com a comunidade técnica. Desde outubro de 2026 também sou
         Microsoft Certified Trainer (MCT), habilitado pela Microsoft a ministrar os cursos
         oficiais de certificação.
@@ -61,7 +67,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="timeline-dot current"></div>
           <div class="timeline-content">
             <span class="timeline-date">Desde 2026</span>
-            <h3>Microsoft MVP · Azure Networking</h3>
+            <h3>MVP Microsoft</h3>
             <p>Microsoft · Most Valuable Professional, reconhecimento a quem compartilha conhecimento com a comunidade técnica por meio de artigos, aulas, palestras e grupos de estudo.</p>
           </div>
         </div>
@@ -273,17 +279,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    border: 3px solid var(--blue-light);
+    background: linear-gradient(160deg, var(--feature-from), var(--feature-to));
   }
 
   .about-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 12%;
   }
 
-  h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+  h1 { font-size: 2.25rem; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0.375rem; }
+
+  /* Selo do MVP */
+  .mvp-box { background: var(--mvp-band); border-radius: 16px; padding: 1.5rem 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .mvp-logo { height: 60px; width: auto; flex-shrink: 0; }
+  .mvp-texto { color: #c6d3e6; font-size: 0.9375rem; line-height: 1.6; flex: 1; min-width: 220px; margin: 0 !important; }
+  .mvp-texto strong { color: #fff8f3; font-size: 1.125rem; }
 
   .about-tagline { font-size: 1rem; color: var(--text-muted); margin-bottom: 1rem; }
   .about-tagline a { color: var(--blue); font-weight: 500; transition: opacity 0.15s; }
@@ -425,13 +437,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .tag.accent {
-    background: #ede9fe;
-    color: #6d28d9;
+    background: var(--surface-alt);
+    color: var(--text);
   }
 
   .tag.coral {
     background: var(--coral-light);
-    color: var(--coral);
+    color: var(--coral-text);
   }
 
   /* Projects */
@@ -454,7 +466,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .project-card.featured {
     border-color: var(--blue);
-    box-shadow: 0 2px 12px rgba(26, 86, 219, 0.06);
   }
 
   .project-icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
@@ -495,7 +506,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .event-badge {
     background: var(--blue);
-    color: #fff;
+    color: var(--on-blue);
     font-size: 0.6875rem;
     font-weight: 700;
     padding: 0.25rem 0.625rem;

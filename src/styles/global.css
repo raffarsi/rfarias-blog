@@ -1,19 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --blue: #1a56db;
-  --blue-dark: #0f3285;
-  --blue-light: #e8effc;
-  --coral: #e8604c;
-  --coral-light: #fdf0ee;
-  --bg: #fafbfd;
-  --surface: #ffffff;
-  --surface-alt: #f5f7fa;
-  --text: #1c1e21;
-  --text-muted: #5f6368;
-  --border: #e2e5ea;
-  --code-bg: #1e1e2e;
-  --code-text: #cdd6f4;
+  /* Paleta C "Marinho editorial" (redesign 2026), cores da paleta oficial do MVP */
+  --blue: #155ea1;
+  --blue-dark: #1e3355;
+  --blue-light: #e4edf6;
+  --on-blue: #ffffff;
+  --coral: #db5431;
+  --coral-light: #fbe9e3;
+  --coral-text: #ad4020; /* coral para texto pequeno sobre fundo claro (contraste 5:1) */
+  --bg: #fff8f3;
+  --surface: #fffdfb;
+  --surface-alt: #f5ece4;
+  --text: #1e3355;
+  --text-muted: #56607a;
+  --border: #e8ddd2;
+  --code-bg: #13233d;
+  --code-text: #e6edf7;
+  --mvp-band: #091f2c;
+  --feature-from: #1e3355;
+  --feature-to: #155ea1;
+  --cta-bg: #fff8f3;
+  --cta-text: #1e3355;
 
   --font-serif: 'Lora', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -22,19 +30,26 @@
 
 /* ── TEMA ESCURO ── */
 [data-theme="dark"] {
-  --blue: #4d8ef7;
-  --blue-dark: #2563eb;
-  --blue-light: #1e2d4a;
-  --coral: #f07060;
-  --coral-light: #2d1f1e;
-  --bg: #0f1117;
-  --surface: #1a1d27;
-  --surface-alt: #22263a;
-  --text: #e8eaf0;
-  --text-muted: #8b90a0;
-  --border: #2e3248;
-  --code-bg: #12141f;
-  --code-text: #cdd6f4;
+  --blue: #a9d5ed;
+  --blue-dark: #c6e3f3;
+  --blue-light: #2a4670;
+  --on-blue: #1e3355;
+  --coral: #fdbfb1;
+  --coral-light: #3a3550;
+  --coral-text: #fdbfb1;
+  --bg: #1e3355;
+  --surface: #263f66;
+  --surface-alt: #2c4672;
+  --text: #fff8f3;
+  --text-muted: #c6d3e6;
+  --border: #36507a;
+  --code-bg: #13233d;
+  --code-text: #e6edf7;
+  --mvp-band: #091f2c;
+  --feature-from: #091f2c;
+  --feature-to: #1f5188;
+  --cta-bg: #fff8f3;
+  --cta-text: #1e3355;
 }
 
 
@@ -151,7 +166,7 @@ code {
 }
 
 .callout strong {
-  color: var(--coral);
+  color: var(--text);
 }
 
 /* Category badges */
@@ -171,7 +186,7 @@ code {
 
 .badge-carreira {
   background: var(--coral-light);
-  color: var(--coral);
+  color: var(--coral-text);
 }
 
 /* Utilities */
