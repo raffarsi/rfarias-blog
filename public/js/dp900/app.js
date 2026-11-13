@@ -241,16 +241,15 @@ function showToast(message, important) {
 // ----------------------------------------------------------------------------
 // 5) TEMA CLARO/ESCURO
 // ----------------------------------------------------------------------------
+// O tema é o do site (botão do topo, src/layouts/BaseLayout.astro, chave "rfarias-theme").
+// O simulador só acompanha: não muda o tema da página nem o texto do botão.
 function applyTheme() {
-  document.documentElement.setAttribute("data-theme", STATE.theme);
-  const btn = document.getElementById("theme-toggle");
-  if (btn) btn.textContent = STATE.theme === "dark" ? "☀️ Modo claro" : "🌙 Modo escuro";
+  STATE.theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
 }
 
 function toggleTheme() {
-  STATE.theme = STATE.theme === "dark" ? "light" : "dark";
-  saveState();
-  applyTheme();
+  // O botão do site já trocou o tema; aqui só registra a escolha atual.
+  setTimeout(applyTheme, 0);
 }
 
 // ----------------------------------------------------------------------------
