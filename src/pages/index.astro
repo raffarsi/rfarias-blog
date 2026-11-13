@@ -2,6 +2,7 @@
 import { instante } from '../lib/agenda.mjs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
+import { TRILHAS, CERTIFICACOES, passosDaTrilha } from '../lib/trilhas.mjs';
 
 // Regra de publicacao agendada: um lugar so, em src/lib/agenda.mjs
 const AGORA = Date.now();
@@ -22,33 +23,12 @@ const allPosts = (await Astro.glob('./posts/*.md'))
   .sort((a, b) => instante(b.date, b.hora) - instante(a.date, a.hora));
 
 const recentes = allPosts.slice(0, 6);
-const porSlug = new Map(allPosts.map(p => [p.slug, p]));
-const contar = (...tags) => allPosts.filter(p => tags.includes(p.tag)).length;
+const contar = (tags) => allPosts.filter(p => tags.includes(p.tag)).length;
 
-// Trilhas aprovadas em 12/11/2026 (redesign/trilhas.md no Project). Artigo agendado ou removido some sozinho da trilha.
-const passos = slugs => slugs.map(s => porSlug.get(s)).filter(Boolean).map(p => ({ titulo: p.title, href: `/posts/${p.slug}/` }));
+// Trilhas: uma lista só, em src/lib/trilhas.mjs (também usada na página de artigo)
 const trilhas = [
-  { nome: 'Rede no Azure', desc: 'Do básico à arquitetura: VNets, NSG, conectividade privada e híbrida.', total: `${contar('networking')} artigos`,
-    cta: 'Ver todos de Networking', ctaHref: '/artigos/?cat=networking',
-    passos: passos(['azure-networking-fundamentos-vnet-subnet', 'nsg-na-pratica-regras-seguranca-rede', 'azure-vnet-peering-hub-spoke-basico', 'service-endpoint-ou-private-endpoint-azure', 'dns-privado-arquiteturas-ia-multi-vnet', 'troubleshooting-conectividade-hibrida-azure']) },
-  { nome: 'IA Generativa no Azure', desc: 'Do primeiro projeto à produção: dados, limites, rede e agentes.', total: `${contar('ia-generativa')} artigos`,
-    cta: 'Ver todos de IA Generativa', ctaHref: '/artigos/?cat=ia-generativa',
-    passos: passos(['azure-openai-primeiros-passos-corporativo', 'azure-openai-grounding-dados-corporativos', 'rag-chunking-estrategias-azure', 'azure-openai-rate-limits-producao', 'azure-openai-exposto-na-internet-private-link', 'multi-agent-azure-ai-foundry-orchestracao']) },
-  { nome: 'Compute e Infra', desc: 'VMs que aguentam produção: imagem, escala, capacidade e latência.', total: `${contar('infra')} artigos`,
-    cta: 'Ver todos de Infra', ctaHref: '/artigos/?cat=infra',
-    passos: passos(['golden-image-azure-compute-gallery-image-builder', 'vmss-flexible-autoscale-pico', 'spot-vms-azure-quando-vale-o-risco', 'azure-capacity-reservation-zonas-alocacao', 'proximity-placement-groups-latencia-vms', 'aks-upgrade-sem-downtime-surge-pdb']) },
-  { nome: 'Identidade e segurança', desc: 'Entra ID, acesso privilegiado, segredos e governança.', total: `${contar('iam', 'seguranca')} artigos`,
-    cta: 'Ver todos de IAM', ctaHref: '/artigos/?cat=iam',
-    passos: passos(['azure-ad-entra-id-o-que-mudou', 'azure-app-registrations-service-principals', 'azure-pim-privileged-identity-management', 'azure-key-vault-boas-praticas', 'azure-defender-for-cloud-postura', 'azure-blueprints-landing-zone']) },
-  { nome: 'Certificações Microsoft', desc: 'Séries de estudo com simulados, labs e ranking dentro do blog.', total: '5 certificações', destaque: true,
-    cta: 'Abrir os treinamentos', ctaHref: '/treinamentos/',
-    passos: [
-      { titulo: 'AZ-900 · Azure Fundamentals', href: '/series/az900/' },
-      { titulo: 'AI-901 · AI Fundamentals', href: '/series/ai901/' },
-      { titulo: 'SC-900 · Security, Compliance & Identity', href: '/series/sc900/' },
-      { titulo: 'DP-900 · Azure Data Fundamentals', href: '/series/dp900/' },
-      { titulo: 'AZ-104 · Azure Administrator', href: '/series/az104/' },
-    ] },
+  ...TRILHAS.map(t => ({ nome: t.nome, desc: t.desc, total: `${contar(t.tags)} artigos`, cta: t.cta, ctaHref: t.ctaHref, passos: passosDaTrilha(t, allPosts) })),
+  { ...CERTIFICACOES, destaque: true },
 ];
 ---
 
