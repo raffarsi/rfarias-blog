@@ -17,6 +17,10 @@
   --code-bg: #13233d;
   --code-text: #e6edf7;
   --mvp-band: #091f2c;
+  --feature-from: #1e3355;
+  --feature-to: #155ea1;
+  --cta-bg: #fff8f3;
+  --cta-text: #1e3355;
 
   --font-serif: 'Lora', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -40,6 +44,10 @@
   --code-bg: #13233d;
   --code-text: #e6edf7;
   --mvp-band: #091f2c;
+  --feature-from: #091f2c;
+  --feature-to: #1f5188;
+  --cta-bg: #fff8f3;
+  --cta-text: #1e3355;
 }
 
 
